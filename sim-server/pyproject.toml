@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[project]
+name = "simulation_server"
+version = "0.0.1"
+requires-python = ">=3.9"
+description = "ExaDigiT Simulation Server"
+readme = "README.md"
+# license = {file = "LICENSE.txt"}
+
+dependencies = [
+    "pydantic==2.11.9",
+    "pydantic-settings==2.10.1",
+    "loguru==0.7.3",
+    "SQLAlchemy==2.0.43",
+    "pydruid==0.6.9",
+    "python-snappy==0.7.3",
+    "jsonpath-ng==1.7.0",
+    "fastapi==0.116.2",
+    "uvicorn==0.35.0",
+    "sqlparse==0.5.3",
+    "kubernetes==33.1.0",
+    "tenacity==9.1.2",
+    "elasticsearch==7.17.12",
+    "requests==2.32.5",
+    "orjson==3.11.3",
+    "confluent_kafka==2.11.1",
+    "pyjson5==2.0.0",
+    "psutil==7.1.0",
+    "raps@{root:uri}/raps",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]

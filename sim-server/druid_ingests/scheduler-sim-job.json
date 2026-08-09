@@ -1,0 +1,96 @@
+{
+    "type": "kafka",
+    "spec": {
+        "ioConfig": {
+            "type": "kafka",
+            "topic": "svc-event-exadigit-schedulersimjob",
+            "consumerProperties": {
+                "bootstrap.servers": "placeholder:9092",
+                "druid.dynamic.config.provider": {
+                    "type": "environment",
+                    "variables": {
+                        "bootstrap.servers": "KAFKA_BOOTSTRAP",
+                        "security.protocol": "KAFKA_SECURITY_PROTOCOL",
+                        "sasl.mechanism": "KAFKA_SASL_MECHANISM",
+                        "sasl.jaas.config": "KAFKA_SASL_JAAS_CONFIG"
+                    }
+                }
+            },
+            "inputFormat": {
+                "type": "json"
+            },
+            "useEarliestOffset": false
+        },
+        "tuningConfig": {
+            "type": "kafka"
+        },
+        "dataSchema": {
+            "dataSource": "sens-svc-event-exadigit-scheduler-sim-job",
+            "timestampSpec": {
+                "column": "time_snapshot",
+                "format": "iso"
+            },
+            "transformSpec": {
+                "transforms": [
+                    {
+                        "type": "expression",
+                        "name": "time_submission",
+                        "expression": "timestamp_format(timestamp_parse(time_submission))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "time_start",
+                        "expression": "timestamp_format(timestamp_parse(time_start))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "time_end",
+                        "expression": "timestamp_format(timestamp_parse(time_end))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "nodes",
+                        "expression": "array_to_string(nodes, ',')"
+                    }
+                ]
+            },
+            "dimensionsSpec": {
+                "dimensions": [
+                    "sim_id",
+                    {
+                        "type": "string",
+                        "name": "job_id"
+                    },
+                    "name",
+                    {
+                        "type": "long",
+                        "name": "node_count"
+                    },
+                    {
+                        "type": "string",
+                        "name": "time_submission"
+                    },
+                    {
+                        "name": "time_limit",
+                        "type": "long"
+                    },
+                    {
+                        "type": "string",
+                        "name": "time_start"
+                    },
+                    {
+                        "type": "string",
+                        "name": "time_end"
+                    },
+                    "state_current",
+                    "nodes"
+                ]
+            },
+            "granularitySpec": {
+                "queryGranularity": "none",
+                "rollup": false,
+                "segmentGranularity": "week"
+            }
+        }
+    }
+}

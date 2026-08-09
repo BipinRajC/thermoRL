@@ -1,0 +1,107 @@
+{
+    "type": "kafka",
+    "spec": {
+        "ioConfig": {
+            "type": "kafka",
+            "topic": "svc-event-exadigit-sim",
+            "consumerProperties": {
+                "bootstrap.servers": "placeholder:9092",
+                "druid.dynamic.config.provider": {
+                    "type": "environment",
+                    "variables": {
+                        "bootstrap.servers": "KAFKA_BOOTSTRAP",
+                        "security.protocol": "KAFKA_SECURITY_PROTOCOL",
+                        "sasl.mechanism": "KAFKA_SASL_MECHANISM",
+                        "sasl.jaas.config": "KAFKA_SASL_JAAS_CONFIG"
+                    }
+                }
+            },
+            "inputFormat": {
+                "type": "json"
+            },
+            "useEarliestOffset": false
+        },
+        "tuningConfig": {
+            "type": "kafka"
+        },
+        "dataSchema": {
+            "dataSource": "svc-event-exadigit-sim",
+            "timestampSpec": {
+                "column": "!!!_no_such_column_!!!",
+                "missingValue": "2010-01-01T00:00:00Z"
+            },
+            "transformSpec": {
+                "transforms": [
+                    {
+                        "name": "__time",
+                        "type": "expression",
+                        "expression": "timestamp_parse(timestamp)"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "start",
+                        "expression": "timestamp_format(timestamp_parse(start))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "end",
+                        "expression": "timestamp_format(timestamp_parse(end))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "execution_start",
+                        "expression": "timestamp_format(timestamp_parse(execution_start))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "execution_end",
+                        "expression": "timestamp_format(timestamp_parse(execution_end))"
+                    },
+                    {
+                        "type": "expression",
+                        "name": "progress_date",
+                        "expression": "timestamp_format(timestamp_parse(progress_date))"
+                    }
+                ]
+            },
+            "dimensionsSpec": {
+                "dimensions": [
+                    "id",
+                    "user",
+                    "system",
+                    "state",
+                    {
+                        "type": "string",
+                        "name": "error_messages"
+                    },
+                    {
+                        "type": "string",
+                        "name": "start"
+                    },
+                    {
+                        "type": "string",
+                        "name": "end"
+                    },
+                    {
+                        "type": "string",
+                        "name": "execution_start"
+                    },
+                    {
+                        "type": "string",
+                        "name": "execution_end"
+                    },
+                    {
+                        "type": "string",
+                        "name": "progress_date"
+                    },
+                    "config"
+                ]
+            },
+            "granularitySpec": {
+                "queryGranularity": "none",
+                "rollup": false,
+                "segmentGranularity": "week"
+            }
+        }
+    }
+}

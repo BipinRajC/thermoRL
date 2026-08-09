@@ -1,0 +1,56 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: exadigit-simulation-server
+parameters:
+  # - name: ENV
+  #   value: stage
+  - name: NAMESPACE
+    value: my-namespace
+  - name: IMAGE
+objects:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: exadigit-simulation-dashboard
+      name: exadigit-simulation-dashboard
+      namespace: ${NAMESPACE}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: exadigit-simulation-dashboard
+      template:
+        metadata:
+          name: main
+          labels:
+            app: exadigit-simulation-dashboard
+        spec:
+          containers:
+            - image: ${IMAGE}
+              name: main
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+                limits:
+                  cpu: 100m
+                  memory: 250Mi
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: exadigit-simulation-dashboard
+      namespace: ${NAMESPACE}
+      labels:
+        app: exadigit-simulation-dashboard
+    spec:
+      ports:
+        - name: http
+          protocol: TCP
+          port: 8080
+          targetPort: 8080
+      type: ClusterIP
+      selector:
+        app: exadigit-simulation-dashboard

@@ -1,0 +1,129 @@
+{
+    "type": "kafka",
+    "spec": {
+        "ioConfig": {
+            "type": "kafka",
+            "topic": "svc-ts-exadigit-coolingsimcep",
+            "consumerProperties": {
+                "bootstrap.servers": "placeholder:9092",
+                "druid.dynamic.config.provider": {
+                    "type": "environment",
+                    "variables": {
+                        "bootstrap.servers": "KAFKA_BOOTSTRAP",
+                        "security.protocol": "KAFKA_SECURITY_PROTOCOL",
+                        "sasl.mechanism": "KAFKA_SASL_MECHANISM",
+                        "sasl.jaas.config": "KAFKA_SASL_JAAS_CONFIG"
+                    }
+                }
+            },
+            "inputFormat": {
+                "type": "json"
+            },
+            "useEarliestOffset": false
+        },
+        "tuningConfig": {
+            "type": "kafka"
+        },
+        "dataSchema": {
+            "dataSource": "svc-ts-exadigit-cooling-sim-cep",
+            "timestampSpec": {
+                "column": "timestamp",
+                "format": "iso"
+            },
+            "dimensionsSpec": {
+                "dimensions": [
+                    "sim_id",
+                    {
+                        "type": "double",
+                        "name": "htw_flowrate"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ctw_flowrate"
+                    },
+                    {
+                        "type": "double",
+                        "name": "htw_return_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "htw_supply_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ctw_return_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ctw_supply_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "htw_return_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "htw_supply_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ctw_return_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ctw_supply_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "power_consumption_htwps"
+                    },
+                    {
+                        "type": "double",
+                        "name": "power_consumption_ctwps"
+                    },
+                    {
+                        "type": "double",
+                        "name": "power_consumption_fan"
+                    },
+                    {
+                        "type": "double",
+                        "name": "htwp_speed"
+                    },
+                    {
+                        "type": "double",
+                        "name": "nctwps_staged"
+                    },
+                    {
+                        "type": "double",
+                        "name": "nhtwps_staged"
+                    },
+                    {
+                        "type": "double",
+                        "name": "pue_output"
+                    },
+                    {
+                        "type": "double",
+                        "name": "nehxs_staged"
+                    },
+                    {
+                        "type": "double",
+                        "name": "ncts_staged"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_return_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "cdu_loop_bypass_flowrate"
+                    }
+                ]
+            },
+            "granularitySpec": {
+                "queryGranularity": "none",
+                "rollup": false,
+                "segmentGranularity": "week"
+            }
+        }
+    }
+}

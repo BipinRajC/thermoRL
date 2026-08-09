@@ -1,0 +1,118 @@
+{
+    "type": "kafka",
+    "spec": {
+        "ioConfig": {
+            "type": "kafka",
+            "topic": "svc-ts-exadigit-schedulersimsystem",
+            "consumerProperties": {
+                "bootstrap.servers": "placeholder:9092",
+                "druid.dynamic.config.provider": {
+                    "type": "environment",
+                    "variables": {
+                        "bootstrap.servers": "KAFKA_BOOTSTRAP",
+                        "security.protocol": "KAFKA_SECURITY_PROTOCOL",
+                        "sasl.mechanism": "KAFKA_SASL_MECHANISM",
+                        "sasl.jaas.config": "KAFKA_SASL_JAAS_CONFIG"
+                    }
+                }
+            },
+            "inputFormat": {
+                "type": "json"
+            },
+            "useEarliestOffset": false
+        },
+        "tuningConfig": {
+            "type": "kafka"
+        },
+        "dataSchema": {
+            "dataSource": "svc-ts-exadigit-scheduler-sim-system",
+            "timestampSpec": {
+                "column": "timestamp",
+                "format": "iso"
+            },
+            "transformSpec": {
+                "transforms": [
+                    {
+                        "type": "expression",
+                        "name": "down_nodes",
+                        "expression": "array_to_string(down_nodes, ',')"
+                    }
+                ]
+            },
+            "dimensionsSpec": {
+                "dimensions": [
+                    "sim_id",
+                    "down_nodes",
+                    {
+                        "type": "long",
+                        "name": "num_samples"
+                    },
+                    {
+                        "type": "long",
+                        "name": "jobs_completed"
+                    },
+                    {
+                        "type": "long",
+                        "name": "jobs_running"
+                    },
+                    {
+                        "type": "long",
+                        "name": "jobs_pending"
+                    },
+                    {
+                        "type": "double",
+                        "name": "throughput"
+                    },
+                    {
+                        "type": "double",
+                        "name": "average_power"
+                    },
+                    {
+                        "type": "double",
+                        "name": "min_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "average_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "max_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "system_power_efficiency"
+                    },
+                    {
+                        "type": "double",
+                        "name": "total_energy_consumed"
+                    },
+                    {
+                        "type": "double",
+                        "name": "carbon_emissions"
+                    },
+                    {
+                        "type": "double",
+                        "name": "total_cost"
+                    },
+                    {
+                        "type": "double",
+                        "name": "p_flops"
+                    },
+                    {
+                        "type": "double",
+                        "name": "g_flops_w"
+                    }, {
+                        "type": "double",
+                        "name": "system_util"
+                    }
+                ]
+            },
+            "granularitySpec": {
+                "queryGranularity": "none",
+                "rollup": false,
+                "segmentGranularity": "week"
+            }
+        }
+    }
+}

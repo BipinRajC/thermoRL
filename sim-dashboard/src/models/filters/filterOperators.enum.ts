@@ -1,0 +1,16 @@
+export enum FilterOperators {
+  Contains = "contains",
+  DoesNotContain = "not_contains",
+  Equals = "eq",
+  DoesNotEqual = "neq",
+  StartsWith = "starts_with",
+  EndsWith = "ends_with",
+  OneOf = "one_of",
+  NotOneOf = "not_one_of",
+  MinimumLength = "min_len",
+  MaxiumumLength = "max_len",
+  GreaterThan = "gt",
+  GreaterThanOrEqual = "gte",
+  LessThan = "lt",
+  LessThanOrEqual = "lte",
+}

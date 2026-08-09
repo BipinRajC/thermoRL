@@ -1,0 +1,130 @@
+{
+    "type": "kafka",
+    "spec": {
+        "ioConfig": {
+            "type": "kafka",
+            "topic": "svc-ts-exadigit-coolingsimcdu",
+            "consumerProperties": {
+                "bootstrap.servers": "placeholder:9092",
+                "druid.dynamic.config.provider": {
+                    "type": "environment",
+                    "variables": {
+                        "bootstrap.servers": "KAFKA_BOOTSTRAP",
+                        "security.protocol": "KAFKA_SECURITY_PROTOCOL",
+                        "sasl.mechanism": "KAFKA_SASL_MECHANISM",
+                        "sasl.jaas.config": "KAFKA_SASL_JAAS_CONFIG"
+                    }
+                }
+            },
+            "inputFormat": {
+                "type": "json"
+            },
+            "useEarliestOffset": false
+        },
+        "tuningConfig": {
+            "type": "kafka"
+        },
+        "dataSchema": {
+            "dataSource": "svc-ts-exadigit-cooling-sim-cdu",
+            "timestampSpec": {
+                "column": "timestamp",
+                "format": "iso"
+            },
+            "dimensionsSpec": {
+                "dimensions": [
+                    "sim_id",
+                    "name",
+                    {
+                        "type": "long",
+                        "name": "row"
+                    },
+                    {
+                        "type": "long",
+                        "name": "col"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_1_power"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_2_power"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_3_power"
+                    },
+                    {
+                        "type": "double",
+                        "name": "total_power"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_1_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_2_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_3_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "total_loss"
+                    },
+                    {
+                        "type": "double",
+                        "name": "work_done_by_cdup"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_return_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_supply_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_supply_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_return_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "rack_flowrate"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_return_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_supply_temp"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_supply_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_return_pressure"
+                    },
+                    {
+                        "type": "double",
+                        "name": "facility_flowrate"
+                    }
+                ]
+            },
+            "granularitySpec": {
+                "queryGranularity": "none",
+                "rollup": false,
+                "segmentGranularity": "week"
+            }
+        }
+    }
+}
