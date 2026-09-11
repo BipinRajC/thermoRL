@@ -1,0 +1,6 @@
+[submodule "submodules/AutoCSM"]
+	path = submodules/AutoCSM
+	url = https://code.ornl.gov/exadigit/AutoCSM.git
+[submodule "submodules/TRANSFORM-Library"]
+	path = submodules/TRANSFORM-Library
+	url = https://github.com/ORNL-Modelica/TRANSFORM-Library.git

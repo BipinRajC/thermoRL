@@ -1,0 +1,51 @@
+{
+	"InstanceName":"simulator",
+	"Structure":{"n":1},
+	"ModelClass":"v0",
+    "Systems": [
+        {
+            "Name": "Datacenter",
+			"InstanceName":"datacenter",
+			"Structure":{"n":1},
+            "Systems":[
+                {
+                    "Name": "CoolingBlock",
+					"InstanceName":"computeBlock",
+					"Structure":{"n":49},
+                    "ModelClass":"v1",
+                    "Systems":[
+                        {
+                            "Name": "CDU",
+							"InstanceName":"cdu",
+							"Structure":{"n":1},
+                            "Systems":[{}]
+                        },
+                        {
+                            "Name": "Cabinet",
+							"Structure":{"n":1},
+							"InstanceName":"cabinet",
+							"ModelClass":"v1",
+                            "Systems":[{}]
+                        }]
+                }]
+        },
+        {
+            "Name": "CentralEnergyPlant",
+			"InstanceName":"centralEnergyPlant",
+			"Structure":{"n":1},
+            "Systems":[
+                {
+                    "Name": "IntermediateLoop",
+					"InstanceName":"intermediateLoop",
+					"Structure":{"n":1},
+                    "Systems":[{}]
+                },
+                {
+                    "Name": "CoolingTowerLoop",
+					"InstanceName":"coolingTowerLoop",
+					"Structure":{"n":1},
+					"ModelClass":"v0",
+                    "Systems":[{}]
+                }]
+        }]
+}

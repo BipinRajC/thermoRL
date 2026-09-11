@@ -1,0 +1,6 @@
+within POWER9Datacenter.Systems.Datacenter.Systems.CoolingBlock.Systems.Cabinet.BaseClasses.BaseClasses_A;
+partial model PartialModel_A
+  extends BaseClasses.PartialModel;
+  extends TemplatesCSM.BaseClasses.Fluids.PartialTwoPort_across    (
+     final port_a, final port_b);
+end PartialModel_A;
