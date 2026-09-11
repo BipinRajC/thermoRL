@@ -1,0 +1,8 @@
+tick_s: 300
+resolution: zone
+pue_mode: constant
+emergency: false
+ambient: fixed
+thi_form: legacy_q_over_qmax
+racks_per_zone: 16
+pue_k_z: [0.35, 0.15, 0.08]

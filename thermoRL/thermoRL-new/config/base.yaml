@@ -1,0 +1,94 @@
+# SINGLE SOURCE: zones, THI, ε, RC, PUE, degradation.
+# Power inside the simulator is kW. Time is seconds.
+
+facility_capacity_kw: 20000.0
+n_zones: 3
+racks_per_zone: 16
+
+zones:
+  - id: 0
+    name: Air
+    cooling_type: air
+    racks: 16
+    capacity_kw: 4000.0
+    q_max_rack_kw: 250.0
+    t_max_c: 27.0
+    tau_s: 60.0
+    pue_base: 1.45
+    pue_emergency: 1.80
+    k_z: 0.35
+    t_amb_base_c: 18.0
+    t_amb_amplitude_c: 4.0
+    density_kw_per_node_min: 0.0
+    density_kw_per_node_max: 8.0
+    degradation_rate: 0.0008
+    degradation_recovery: 0.0015
+    d_max: 1.0
+  - id: 1
+    name: Direct-to-chip
+    cooling_type: d2c
+    racks: 16
+    capacity_kw: 8000.0
+    q_max_rack_kw: 500.0
+    t_max_c: 45.0
+    tau_s: 15.0
+    pue_base: 1.20
+    pue_emergency: 1.50
+    k_z: 0.15
+    t_amb_base_c: 26.0
+    t_amb_amplitude_c: 3.0
+    density_kw_per_node_min: 4.0
+    density_kw_per_node_max: 20.0
+    degradation_rate: 0.0010
+    degradation_recovery: 0.0012
+    d_max: 1.0
+  - id: 2
+    name: Immersion
+    cooling_type: immersion
+    racks: 16
+    capacity_kw: 8000.0
+    q_max_rack_kw: 500.0
+    t_max_c: 50.0
+    tau_s: 300.0
+    pue_base: 1.08
+    pue_emergency: 1.35
+    k_z: 0.08
+    t_amb_base_c: 28.0
+    t_amb_amplitude_c: 2.0
+    density_kw_per_node_min: 8.0
+    density_kw_per_node_max: 40.0
+    degradation_rate: 0.0006
+    degradation_recovery: 0.0008
+    d_max: 1.0
+
+thi:
+  epsilon: 0.10
+  form: t_ss
+  # Known limitation, documented not fixed in Phase 1:
+  # THI normalises against absolute T/T_max, so at ambient the air zone
+  # reads THI ≈ 0.33, not 1.0. Headroom-normalised alternative deferred:
+  # form: 1 - (T - T_amb) / (T_max - T_amb)
+
+pue:
+  theta: 0.70
+  p: 2
+  k_z: [0.35, 0.15, 0.08]
+
+emergency:
+  epsilon_trigger: 0.0
+  epsilon_release: 0.15
+  min_duration_s: 120.0
+
+degradation:
+  stress_threshold: 0.85
+  label: simulated stress-accumulation proxy
+
+ambient:
+  period_s: 86400.0
+  phase_s: 0.0
+
+actions:
+  - ASSIGN_Z1
+  - ASSIGN_Z2
+  - ASSIGN_Z3
+  - DEFER

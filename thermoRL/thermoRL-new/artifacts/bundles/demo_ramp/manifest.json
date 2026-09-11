@@ -1,0 +1,11 @@
+{
+  "bundle_id": "demo_ramp",
+  "scenario_id": "ramp",
+  "policies": [
+    "round_robin",
+    "thi_lookahead"
+  ],
+  "seed": 7,
+  "backend": "python",
+  "target_offered_load_ratio": 0.35
+}

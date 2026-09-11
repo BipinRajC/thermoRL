@@ -1,0 +1,4 @@
+name: Normal Operation
+ratio_offpeak: 0.35
+ratio_peak: 0.85
+target_offered_load_ratio: 0.35

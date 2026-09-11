@@ -1,0 +1,17 @@
+# context files
+*.md
+docs/*
+
+# opencode files
+oepncode.json
+
+#hidden folders
+.dual-graph/*.dual-graph/
+.dual-graph/* 
+
+# local virtual environments
+.venv/
+.venv-*/
+thermoRL-legacy/.venv_midstress/
+.gitattributes
+.dual-graph/

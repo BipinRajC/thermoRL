@@ -1,0 +1,4 @@
+name: Demand Surge
+ratio_offpeak: 0.90
+ratio_peak: 3.0
+target_offered_load_ratio: 0.90

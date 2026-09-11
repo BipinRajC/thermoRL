@@ -1,0 +1,16 @@
+{
+  "thi_p10": 0.33010149002075195,
+  "thi_p90": 0.4396509528160095,
+  "round_robin": {
+    "thi_p10": 0.33010149002075195,
+    "thi_p90": 0.43959277868270874,
+    "policy_mode": "Round-Robin",
+    "n_frames": 24
+  },
+  "thermorl": {
+    "thi_p10": 0.33010149002075195,
+    "thi_p90": 0.4396509528160095,
+    "policy_mode": "THI-Lookahead",
+    "n_frames": 24
+  }
+}

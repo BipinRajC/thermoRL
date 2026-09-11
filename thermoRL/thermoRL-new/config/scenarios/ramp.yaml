@@ -1,0 +1,10 @@
+name: Ramp
+duration_sim_s: 7200
+tick_s: 20
+playback_s: 120
+transition: smooth_ramp
+target_offered_load_ratio: 3.1
+segments:
+  - {name: "Normal Operation",  t0: 0,    t1: 2400, ratio_offpeak: 0.35, ratio_peak: 0.85}
+  - {name: "Demand Surge",      t0: 2400, t1: 4800, ratio_offpeak: 0.90, ratio_peak: 3.00}
+  - {name: "Sustained Overload",t0: 4800, t1: 7200, ratio_offpeak: 3.10, ratio_peak: 7.80}

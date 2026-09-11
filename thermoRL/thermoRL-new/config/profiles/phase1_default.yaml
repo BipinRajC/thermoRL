@@ -1,0 +1,8 @@
+tick_s: 20
+resolution: rack
+pue_mode: state_dependent
+emergency: true
+ambient: diurnal
+thi_form: t_ss
+racks_per_zone: 16
+pue_k_z: [0.35, 0.15, 0.08]

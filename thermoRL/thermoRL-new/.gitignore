@@ -1,0 +1,12 @@
+.venv/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.pyo
+artifacts/*
+!artifacts/bundles/
+!artifacts/bundles/**
+*.egg-info/
+dist/
+build/
