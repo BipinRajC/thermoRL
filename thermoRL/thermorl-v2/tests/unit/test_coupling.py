@@ -1,0 +1,26 @@
+import numpy as np
+
+from thermorl2.core.state import Ambient
+from thermorl2.raps_adapter.coupling import CouplingParams, rack_kw_to_fmu_inputs, power_input_names
+
+P = CouplingParams(num_cdus=3, racks_per_cdu=1, cooling_efficiency=0.945,
+                   temperature_keys=("a_T_Air", "b_T_Air", "simulator_1_centralEnergyPlant_1_coolingTowerLoop_1_sources_T_ext"),
+                   wet_bulb_temp_k=290.0)
+
+
+def test_power_scaling_and_names():
+    out = rack_kw_to_fmu_inputs(np.array([10.0, 0.0, 40.0]), P, Ambient())
+    names = power_input_names(P)
+    assert names[0] == "simulator_1_datacenter_1_computeBlock_1_cabinet_1_sources_Q_flow_total"
+    assert abs(out[names[0]] - 9450.0) < 1e-9 and out[names[1]] == 0.0 and abs(out[names[2]] - 37800.0) < 1e-9
+
+
+def test_temperature_keys_default_290():
+    out = rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient())
+    assert out["a_T_Air"] == 290.0 and out["simulator_1_centralEnergyPlant_1_coolingTowerLoop_1_sources_T_ext"] == 290.0
+    assert len(out) == 6
+
+
+def test_ambient_override_splits_air_and_ext():
+    out = rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient(t_air_k=295.0, t_ext_k=288.0))
+    assert out["a_T_Air"] == 295.0 and out["simulator_1_centralEnergyPlant_1_coolingTowerLoop_1_sources_T_ext"] == 288.0
