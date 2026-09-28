@@ -325,6 +325,8 @@ def test_dispatcher():
 
 - [ ] **Step 4: Implement `thermorl2/core/constraints.py`**
 
+**Task 1.2 correction (2026-09-29, approved by Bipin):** `_safe_div` allocates the broadcast shape so array numerators work with scalar limits. THI formulas and test expectations are unchanged.
+
 ```python
 from __future__ import annotations
 import numpy as np
@@ -333,8 +335,8 @@ THI_MIN, THI_MAX = -0.5, 1.0
 
 
 def _safe_div(a, b):
-    b = np.asarray(b, dtype=np.float64)
-    return np.divide(np.asarray(a, dtype=np.float64), b, out=np.zeros_like(b), where=b != 0)
+    a, b = np.broadcast_arrays(np.asarray(a, dtype=np.float64), np.asarray(b, dtype=np.float64))
+    return np.divide(a, b, out=np.zeros_like(a), where=b != 0)
 
 
 def thi_headroom(t_c, t_idle_c, t_max_c, p_kw, p_max_kw):
