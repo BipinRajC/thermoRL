@@ -1,0 +1,97 @@
+{
+  "common_observation_columns": [
+    "rack_01_coolant_c",
+    "rack_02_coolant_c",
+    "rack_03_coolant_c",
+    "rack_04_coolant_c",
+    "rack_05_coolant_c",
+    "rack_06_coolant_c",
+    "rack_07_coolant_c",
+    "rack_08_coolant_c",
+    "rack_09_coolant_c",
+    "rack_10_coolant_c",
+    "rack_11_coolant_c",
+    "rack_12_coolant_c",
+    "rack_13_coolant_c",
+    "rack_14_coolant_c",
+    "rack_15_coolant_c",
+    "rack_16_coolant_c",
+    "rack_17_coolant_c",
+    "rack_18_coolant_c",
+    "rack_19_coolant_c",
+    "rack_20_coolant_c",
+    "rack_21_coolant_c",
+    "rack_22_coolant_c",
+    "rack_23_coolant_c",
+    "rack_24_coolant_c",
+    "rack_25_coolant_c",
+    "rack_26_coolant_c",
+    "rack_27_coolant_c",
+    "rack_28_coolant_c",
+    "rack_29_coolant_c",
+    "rack_30_coolant_c",
+    "rack_31_coolant_c",
+    "rack_32_coolant_c",
+    "rack_33_coolant_c",
+    "rack_34_coolant_c",
+    "rack_35_coolant_c",
+    "rack_36_coolant_c",
+    "rack_37_coolant_c",
+    "rack_38_coolant_c",
+    "rack_39_coolant_c",
+    "rack_40_coolant_c",
+    "rack_41_coolant_c",
+    "rack_42_coolant_c",
+    "rack_43_coolant_c",
+    "rack_44_coolant_c",
+    "cdu_01_primary_supply_c",
+    "cdu_01_primary_return_c",
+    "datacenter_primary_flow_gpm"
+  ],
+  "comparison": "40/10.86 kW matched step minus 10.86/10.86 kW no-step control",
+  "comparison_script_sha256": "fd7f72cfbda1cfcbccd9a3fb874db981a8c75dcfd2bec4279f29820841455b12",
+  "difference_csv_sha256": "a429832a2dfc29bb75b33ab846acdea537664f72cc6ec295f09d349bde466b36",
+  "difference_plot_sha256": "b28f1c83cdcf1f7cd9dcbd3dd1a23e1adb564367b75be62aeb71ee36bd5c664f",
+  "initial_observations_identical_for_all_common_columns": true,
+  "metrics": {
+    "cdu_01_primary_return_c": {
+      "final_difference": 4.08430506560012,
+      "max_absolute_difference": 5.135856942217629,
+      "max_absolute_difference_elapsed_s": 2640.0,
+      "signed_difference_at_max_absolute": 5.135856942217629
+    },
+    "cdu_01_primary_supply_c": {
+      "final_difference": 0.025295611920284955,
+      "max_absolute_difference": 0.22362294443234987,
+      "max_absolute_difference_elapsed_s": 2920.0,
+      "signed_difference_at_max_absolute": 0.22362294443234987
+    },
+    "rack_01_coolant_c": {
+      "final_difference": 11.388013905449043,
+      "max_absolute_difference": 11.674861556351914,
+      "max_absolute_difference_elapsed_s": 2780.0,
+      "signed_difference_at_max_absolute": 11.674861556351914
+    },
+    "rack_02_coolant_c": {
+      "final_difference": 0.023267992103342294,
+      "max_absolute_difference": 0.023267992103342294,
+      "max_absolute_difference_elapsed_s": 3600.0,
+      "signed_difference_at_max_absolute": 0.023267992103342294
+    },
+    "rack_44_coolant_c": {
+      "final_difference": 0.0232679934079556,
+      "max_absolute_difference": 0.0232679934079556,
+      "max_absolute_difference_elapsed_s": 3600.0,
+      "signed_difference_at_max_absolute": 0.0232679934079556
+    },
+    "racks_02_to_44_final_difference_range_c": [
+      0.02326799113961897,
+      0.023267996128765844
+    ]
+  },
+  "sample_count": 181,
+  "source_csv_sha256": {
+    "control": "a44302aa835556104e593e2e40cbf9ffa23332c8da4c2abf5609162f0171991a",
+    "matched": "2f2b1f3e87f6908a48cf34e9422befe3db32591016c054b621682071f59158df"
+  }
+}

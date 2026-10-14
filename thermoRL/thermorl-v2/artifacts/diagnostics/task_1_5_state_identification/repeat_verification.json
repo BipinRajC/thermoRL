@@ -1,0 +1,17 @@
+{
+  "all_csv_byte_identical": true,
+  "backend_hash_unchanged": true,
+  "csv_identical_by_file": {
+    "branch_ledger": true,
+    "frozen_prediction_ledger": true,
+    "preconditioning": true,
+    "response_ledger": true
+  },
+  "fmu_hash_unchanged": true,
+  "frozen_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "maximum_repeat_thermal_difference_c": 0.0,
+  "paired_rows_checked_per_run": 1086,
+  "selection_sha256": "4ed558100b9d55cd6355119b4ad7a0458c58dd58e6e3023d35f531476aa3eda9",
+  "task_1_5_test_hash_unchanged": true,
+  "verification_script_sha256": "841b261ee4f5434e04738d8f183b3ebf9b324464d2c61bd8a2c130eada52dd45"
+}

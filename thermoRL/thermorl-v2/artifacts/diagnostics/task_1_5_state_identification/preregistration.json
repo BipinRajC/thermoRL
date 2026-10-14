@@ -1,0 +1,71 @@
+{
+  "question": "At matched current rack coolant and power, can current CDU primary return, coolant slope, or primary flow account for variation in the paired response?",
+  "scope": "Final small state-identification sweep; no history, scheduling, or Task 1.5 acceptance experiment",
+  "fixed_before_new_fmu_runs": true,
+  "source_off_trajectory_frozen_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "target_rack_01_coolant_c": 32.0,
+  "match_tolerance_c": 0.1,
+  "communication_interval_s": 20,
+  "max_preconditioning_s": 10800,
+  "baseline_power_kw_each_rack": 10.86,
+  "candidate_profiles": {
+    "constant_hold": {"kind": "constant", "start_s": 0, "pulse_kw_each_rack": 10.86},
+    "high_3600_20": {"kind": "high", "start_s": 3600, "pulse_kw_each_rack": 20.0},
+    "high_5400_20": {"kind": "high", "start_s": 5400, "pulse_kw_each_rack": 20.0},
+    "high_7200_15": {"kind": "high", "start_s": 7200, "pulse_kw_each_rack": 15.0},
+    "high_7200_20": {"kind": "high", "start_s": 7200, "pulse_kw_each_rack": 20.0},
+    "low_0600_05": {"kind": "low", "start_s": 600, "pulse_kw_each_rack": 5.0},
+    "low_0600_08": {"kind": "low", "start_s": 600, "pulse_kw_each_rack": 8.0},
+    "low_1200_05": {"kind": "low", "start_s": 1200, "pulse_kw_each_rack": 5.0},
+    "low_1200_08": {"kind": "low", "start_s": 1200, "pulse_kw_each_rack": 8.0},
+    "low_1800_05": {"kind": "low", "start_s": 1800, "pulse_kw_each_rack": 5.0}
+  },
+  "preconditioning_switch_rules": {
+    "high": "All racks at baseline until start_s, then pulse power until rack 1 coolant first reaches at least 32.1 C; return all racks to 10.86 kW.",
+    "low": "All racks at baseline until start_s, then pulse power until rack 1 coolant first reaches at most 32.1 C; return all racks to 10.86 kW.",
+    "constant": "All racks at 10.86 kW throughout.",
+    "match": "After at least one complete 20 s baseline interval and t>=600 s, identify the first sample within 32.0 +/-0.1 C. Among that sample and eligible samples in the next 200 s, choose the closest to 32.0 C, breaking ties by earliest time. Publish all candidate traces and failures."
+  },
+  "state_selection": "If at least six candidates match, always include the feasible minimum-return and maximum-return states. Of remaining six-state subsets containing both, select the subset with largest log determinant of X'X for intercept plus standardized CDU return, one-tick rack-1 coolant slope, and primary flow; break ties by profile-name order. If exactly five candidates match, use all five. If fewer than five match, stop without step branches. Report predictor correlations, rank, and condition number; if near-collinear, do not claim attribution.",
+  "selected_profile_count": 6,
+  "branch_protocol": {
+    "current_power_kw_each_rack": 10.86,
+    "rack_01_step_kw": 40.0,
+    "other_racks_kw_each": 10.86,
+    "ambient_air_k": 290.0,
+    "ambient_external_k": 290.0,
+    "duration_s": 3600,
+    "dt_s": 20,
+    "branch_order": ["control", "step"],
+    "effect": "step branch minus a no-step branch restored from the same saved FMU state"
+  },
+  "primary_response_metrics": {
+    "final_paired_increment_c": "rack 1 step minus control at 3600 s",
+    "peak_paired_increment_c": "maximum rack 1 step minus control over 0-3600 s",
+    "peak_to_peak_scalar_residual_c": "observed paired peak increment minus the frozen coolant-only scalar prediction of peak increment",
+    "curve_residual_at_observed_peak_time_c": "observed paired response at its own peak time minus the frozen coolant-only predicted curve at that same time",
+    "curve_errors": "time-integrated mean absolute and maximum absolute observed-minus-frozen-curve residual"
+  },
+  "secondary_metrics": [
+    "absolute step-branch rack 1 peak and time",
+    "time of paired window maximum, marked horizon-censored at 3600 s",
+    "all 44 coolant and CDU primary supply/return raw and paired trajectories",
+    "neighbor rack paired response and CDU primary supply/return extrema",
+    "initial all-rack power, FMU heat inputs, CDU supply/return, coolant slope, primary flow",
+    "fresh-process repeat variation"
+  ],
+  "regression": {
+    "predictors": ["cdu_01_primary_return_c", "rack_01_coolant_slope_k_per_min", "datacenter_primary_flow_gpm"],
+    "fixed_models": {
+      "return_only": ["cdu_01_primary_return_c"],
+      "slope_only": ["rack_01_coolant_slope_k_per_min"],
+      "flow_only": ["datacenter_primary_flow_gpm"],
+      "return_plus_slope": ["cdu_01_primary_return_c", "rack_01_coolant_slope_k_per_min"],
+      "return_plus_slope_plus_flow": ["cdu_01_primary_return_c", "rack_01_coolant_slope_k_per_min", "datacenter_primary_flow_gpm"]
+    },
+    "method": "Leave-one-profile-out ridge regression with alpha 1.0, training-fold standardization, unpenalized intercept, no feature or hyperparameter selection; report signed residual for every profile and model for final and peak paired increments.",
+    "comparison": "Also publish untouched frozen eight-state coolant-only predictions and residuals. No fitted model is deployed or called sufficient from this sample alone.",
+    "inference_limit": "Five or six deterministic profiles are not independent plant replicates. Even with reduced collinearity, regression associations are not causal attribution, coefficient significance, or proof of observation sufficiency. No p-values or outcome-selected threshold."
+  },
+  "stop_gate": "Stop after reporting full evidence and limitations; no history matching, Task 1.5 revision, Task 1.6, scheduler, or RL work."
+}

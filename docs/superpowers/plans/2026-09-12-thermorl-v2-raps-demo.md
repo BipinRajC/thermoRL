@@ -619,6 +619,8 @@ def test_second_instance_in_process_is_refused(backend, fmu_path):
 
 - [ ] **Step 5: Commit** `feat(thermal): FMU backend with single-instance guard, warm-up snapshot reset, RAPS-identical stepping`
 
+**Approved Task 1.5 backend closeout clarification (2026-09-29):** Use the separate direct-FMU-versus-backend asymmetric replay gate defined in [`2026-09-29-task-1-5-backend-closeout.md`](../proposals/2026-09-29-task-1-5-backend-closeout.md), including fixed 7200 s capped preconditioning, exact time-axis and communication-point assertions, and snapshot restoration. Keep the original physical-response test and its bounds unchanged as a recorded failure; a passing backend gate closes Task 1.5 as *backend-correctness verified; historical physical-response test unresolved*, without claiming the full FMU suite is green. The `artifacts/diagnostics/task_1_5_*` characterization artifacts are research evidence only and may never be cited as acceptance-gate satisfaction by any future task. Then follow Task 1.6 and the existing Task 1.7 five-level uniform-load characterization, including its stop-and-report gate. The approved clarification is a narrow exception to the Task 1.5 Step 4 stop condition, not approval to alter later response-time gates.
+
 ---
 
 ### Task 1.6: Engine factory, per-rack power probe, timing-semantics test, cost benchmark

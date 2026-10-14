@@ -1,0 +1,16 @@
+{
+  "status": "high-profile feasibility adjustment before any off-trajectory step response",
+  "inherits_preregistration_v2_sha256": "604629ab79192917632e9955b2238eb43e169c5f1823a779576543f0f7890da7",
+  "prior_v2_feasibility_sha256": "046e8196a09c3a5448c2030c69429a001e205ae7ec18b46c661321d99027773b",
+  "reason": "At a 31.9 C high-power switch, the first baseline tick dropped rack 1 coolant from 31.906 to 31.822 C, missing the fixed 32.0 +/-0.1 C match. This changes only the preconditioning switch point using preconditioning-only evidence.",
+  "late_high_switch_threshold_c": 32.1,
+  "unchanged": [
+    "target rack 1 coolant 32.0 C",
+    "matching tolerance +/-0.1 C",
+    "three profile identities and all other power levels and start times",
+    "frozen eight-state coolant-only model",
+    "paired branch powers, ambient inputs, duration, cadence, measured variables",
+    "predeclared scalar and trajectory prediction-error metrics",
+    "no Task 1.5 or history/scheduler/RL work"
+  ]
+}

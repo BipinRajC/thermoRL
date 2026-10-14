@@ -1,0 +1,60 @@
+{
+  "feasibility_trace_sha256": "2eb2974499a2acc7bb27b74702d7d0f584b7d5531408b13a65e3ad10c5faa221",
+  "fmu_sha256": "2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b",
+  "frozen_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "preregistration_v2_sha256": "604629ab79192917632e9955b2238eb43e169c5f1823a779576543f0f7890da7",
+  "preregistration_v3_sha256": "e7c4d10b0a90d4c767d43ca2803bfd10c9d5ff1905c74cb1ccc6aaaa484f2840",
+  "selected": {
+    "constant_hold": {
+      "first_match_time_s": 3540,
+      "profile_switch_back_time_s": null,
+      "rows_recorded": 188,
+      "selected": {
+        "cdu_01_primary_return_c": 26.115100783540925,
+        "cdu_01_primary_supply_c": 19.321600027826264,
+        "datacenter_primary_flow_gpm": 387.4011054359014,
+        "elapsed_s": 3640.0,
+        "fmu_time_s": 3640.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "constant_hold",
+        "rack_01_coolant_c": 31.995628924182654,
+        "rack_01_slope_k_per_min": -0.06138963976013656
+      }
+    },
+    "late_high_then_base": {
+      "first_match_time_s": 9220,
+      "profile_switch_back_time_s": 9200,
+      "rows_recorded": 472,
+      "selected": {
+        "cdu_01_primary_return_c": 25.45157674946762,
+        "cdu_01_primary_supply_c": 18.983009347610732,
+        "datacenter_primary_flow_gpm": 387.74522706246245,
+        "elapsed_s": 9240.0,
+        "fmu_time_s": 9240.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "late_high_then_base",
+        "rack_01_coolant_c": 31.986906237935784,
+        "rack_01_slope_k_per_min": -0.09459232264521233
+      }
+    },
+    "low_then_raised_base": {
+      "first_match_time_s": 2260,
+      "profile_switch_back_time_s": 2200,
+      "rows_recorded": 124,
+      "selected": {
+        "cdu_01_primary_return_c": 26.430592596345605,
+        "cdu_01_primary_supply_c": 19.501658248722265,
+        "datacenter_primary_flow_gpm": 387.2317603484555,
+        "elapsed_s": 2380.0,
+        "fmu_time_s": 2380.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_then_raised_base",
+        "rack_01_coolant_c": 32.00463834565005,
+        "rack_01_slope_k_per_min": -0.045309310544496384
+      }
+    }
+  },
+  "source_script_sha256": "7281f0a4c9cc3f270c0501d1236b726fc5f7d06de9367b21227276102480ebdd",
+  "status": "matched",
+  "total_rows": 784
+}

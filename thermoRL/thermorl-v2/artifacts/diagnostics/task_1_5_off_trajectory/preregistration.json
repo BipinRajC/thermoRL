@@ -1,0 +1,53 @@
+{
+  "question": "Does a coolant-only response model trained on the original constant-load trajectory generalize to matched-current-temperature states reached by different preconditioning paths?",
+  "status": "fixed before any new FMU preconditioning or step branch",
+  "temperature_target_candidates_c_in_priority_order": [32.0, 31.0, 30.0],
+  "rack_01_match_tolerance_c": 0.1,
+  "max_preconditioning_s": 10800,
+  "minimum_eligible_time_s": 600,
+  "minimum_time_after_last_power_switch_s": 20,
+  "match_rule": "Using only preconditioning trajectories, choose the first candidate target for which every profile has an eligible sample within plus/minus 0.1 C. Within each profile choose the eligible sample with smallest absolute target error, breaking ties by earliest time. If none of the candidate targets matches all profiles, report feasibility failure and do not run step branches.",
+  "preconditioning_profiles": {
+    "constant_hold": [[0, 10.86]],
+    "high_then_base": [[0, 20.0], [300, 10.86]],
+    "low_then_base": [[0, 5.0], [300, 10.86]],
+    "delayed_high_then_base": [[0, 10.86], [1200, 20.0], [1500, 10.86]]
+  },
+  "profile_power_rule": "Each scheduled power applies uniformly to all 44 racks during intervals beginning at or after the listed time. Every selected branch state must have current all-rack power 10.86 kW.",
+  "early_initialization_caveat": "Preconditioning includes the FMU cold-start transient; retain all traces and report if matching relies on that transient. Do not alter profiles after seeing branch responses.",
+  "branch_protocol": {
+    "background_rack_kw_each": 10.86,
+    "rack_01_step_kw": 40.0,
+    "other_racks_kw_each": 10.86,
+    "communication_interval_s": 20,
+    "horizon_s": 3600,
+    "ambient_air_k": 290.0,
+    "ambient_external_k": 290.0,
+    "branch_order": ["control", "step"],
+    "effect_definition": "step branch minus matched no-step branch, restored from the same saved FMU state"
+  },
+  "frozen_model": {
+    "training_source": "../task_1_5_state_sufficiency/state_observables_and_responses.csv and ../task_1_5_state_sufficiency/run_01/response_ledger.csv",
+    "predictor": "initial rack 1 coolant temperature C only",
+    "method": "ridge with alpha 1.0, predictor standardized over all eight original states, unpenalized intercept; no refitting on off-trajectory data",
+    "scalar_targets": ["paired_final_increment_c", "paired_peak_increment_c"],
+    "curve_target": "rack 1 step-minus-control temperature at each 20 s elapsed sample over 0-3600 s",
+    "training_reference": "Original eight-state leave-one-out coolant-only final/peak MAE 0.229964/0.197591 C; use as descriptive reference, not pass threshold"
+  },
+  "predeclared_primary_metrics": [
+    "signed and absolute frozen-model error for 3600 s paired rack 1 increment",
+    "signed and absolute frozen-model error for paired rack 1 window peak",
+    "full predicted and observed paired rack 1 curves and their time-averaged absolute and maximum absolute errors"
+  ],
+  "predeclared_secondary_metrics": [
+    "absolute rack 1 step-branch peak and its time",
+    "paired rack 1 time of window maximum, marked censored if at 3600 s",
+    "current rack 1 one-tick slope and all CDU primary supply/return and primary-flow state",
+    "all 44 rack coolant, power, FMU heat input, and all 44 CDU primary supply/return trajectories",
+    "CDU 1 primary supply/return paired peaks and extrema",
+    "neighboring-rack paired coolant response range",
+    "repeat-run byte identity and maximum numeric variation"
+  ],
+  "interpretation": "Matching rack 1 coolant and current power isolates a transfer test for that predictor, not a causal attribution to slope, CDU state, or history. Publish every residual. Do not infer history dependence or scheduler benefit. No result-dependent pass threshold.",
+  "stop_gate": "Stop after reporting this off-trajectory generalization test; do not change Task 1.5, begin Task 1.6, run history matching, or start scheduling/RL work."
+}

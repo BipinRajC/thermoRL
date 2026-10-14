@@ -1,0 +1,49 @@
+{
+  "feasibility_trace_sha256": "00e77ad925db213ea4715e727ce70a849fb9b03a3bc27836580cf833fe9d55e7",
+  "fmu_sha256": "2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b",
+  "frozen_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "preregistration_v2_sha256": "604629ab79192917632e9955b2238eb43e169c5f1823a779576543f0f7890da7",
+  "selected": {
+    "constant_hold": {
+      "first_match_time_s": 3540,
+      "profile_switch_back_time_s": null,
+      "rows_recorded": 188,
+      "selected": {
+        "cdu_01_primary_return_c": 26.115100783540925,
+        "cdu_01_primary_supply_c": 19.321600027826264,
+        "datacenter_primary_flow_gpm": 387.4011054359014,
+        "elapsed_s": 3640.0,
+        "fmu_time_s": 3640.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "constant_hold",
+        "rack_01_coolant_c": 31.995628924182654,
+        "rack_01_slope_k_per_min": -0.06138963976013656
+      }
+    },
+    "late_high_then_base": {
+      "first_match_time_s": null,
+      "profile_switch_back_time_s": 8960,
+      "rows_recorded": 541,
+      "selected": null
+    },
+    "low_then_raised_base": {
+      "first_match_time_s": 2260,
+      "profile_switch_back_time_s": 2200,
+      "rows_recorded": 124,
+      "selected": {
+        "cdu_01_primary_return_c": 26.430592596345605,
+        "cdu_01_primary_supply_c": 19.501658248722265,
+        "datacenter_primary_flow_gpm": 387.2317603484555,
+        "elapsed_s": 2380.0,
+        "fmu_time_s": 2380.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_then_raised_base",
+        "rack_01_coolant_c": 32.00463834565005,
+        "rack_01_slope_k_per_min": -0.045309310544496384
+      }
+    }
+  },
+  "source_script_sha256": "376263d204e6eaf8e59ef16ddbfae7a5680440b2ee9a2ffad53e4d264bba33ee",
+  "status": "feasibility_failed_no_step_branches",
+  "total_rows": 853
+}

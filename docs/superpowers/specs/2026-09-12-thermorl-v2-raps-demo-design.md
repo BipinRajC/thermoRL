@@ -201,6 +201,8 @@ Metrics are not selected after seeing outcomes.
 
 Tiers: **unit** (no raps/FMU): kernels vs golden vectors, `placement.place`, `rack_geometry`, THI both forms, metrics on synthetic ledgers, generator determinism (same seed → identical hash) and realised-vs-target load within 5 % over 24 h; **integration** (raps): engine build, job injection, scheduler drop-in allocates exact nodes, Σ per-rack kW reconciles with `total_power_kw` (1e-6), two identical seeds → bit-identical ledgers, TIMEOUT kills still active (policy ≠ REPLAY); **fmu** (skip if `models/POWER9CSM/fmus/lassen.fmu` absent): instance lifecycle, snapshot restore reproduces trajectory, single-rack step reproduces §3.2 probe within 5 %, adapter input vector equals RAPS's `generate_runtime_values`.
 
+**2026-09-29 backend acceptance clarification:** The original physical-response specification and the later Phase 2 response-time gate remain recorded below. Task 1.5 backend correctness is separately verified by independent direct-FMU-versus-backend replay under the [approved closeout clarification](../proposals/2026-09-29-task-1-5-backend-closeout.md); its historical physical-response failure is not treated as a backend mismatch. This does not resolve or silently amend the later physical-response gates.
+
 | Phase | Gate (all must pass) |
 |---|---|
 | 0 Environment | `uv sync` in `thermorl-v2`; `raps run --system lassen -t 10m --noui -w random -n 50 --seed 1` exits 0; `python -c "import fmpy, raps"` from the project interpreter; FMU at expected path |

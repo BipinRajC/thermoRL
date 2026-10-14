@@ -1,0 +1,19 @@
+{
+  "status": "profile-only revision before any off-trajectory step response",
+  "reason_for_revision": "The fixed 300 s high/low pulses in preregistration.json converged back to nearly identical coolant slope, CDU state, and flow by their 32 C match. Their feasibility trace and selection are retained. The frozen model, matching tolerance, branch protocol, and metrics are unchanged.",
+  "prior_feasibility_selection_sha256": "41ca6af5c258880682bff08e7aa838a639aaf52a1a0765a8f2759598d1a4574f",
+  "frozen_coolant_only_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "target_rack_01_coolant_c": 32.0,
+  "target_match_tolerance_c": 0.1,
+  "sample_interval_s": 20,
+  "maximum_preconditioning_s": 10800,
+  "selection_rule": "For each profile, after return to 10.86 kW and at least one full 20 s baseline interval, find the first sample within plus/minus 0.1 C of 32 C; among that sample and eligible samples in the next 200 s choose the closest to 32 C, breaking ties by earliest time. If any profile lacks a match, record feasibility failure and do not run its step branch.",
+  "profiles": {
+    "constant_hold": "10.86 kW to all racks from cold initialization until temperature match, no power switch",
+    "late_high_then_base": "10.86 kW to all racks until 7200 s; then 20.0 kW to all racks until rack 1 coolant first reaches at least 31.9 C; return all racks to 10.86 kW and apply selection rule",
+    "low_then_raised_base": "10.86 kW to all racks until 600 s; then 5.0 kW to all racks until rack 1 coolant first reaches at most 32.1 C; return all racks to 10.86 kW and apply selection rule"
+  },
+  "branch_protocol_and_model": "Identical to preregistration.json and frozen_coolant_only_model.json: same saved state to 3600 s control and rack-1 40 kW step, 20 s ticks, 290 K ambient, 10.86 kW current power; no refitting or metric selection after outcomes.",
+  "report": "Publish every preconditioning attempt, selected temperatures, slopes, CDU supply/return, flow, branch outputs, frozen-model predictions, signed residuals, and repeat variation. If matched states remain nearly identical in current plant observables, report limited discrimination rather than claiming temperature sufficiency.",
+  "stop_gate": "No Task 1.5 acceptance change, Task 1.6, history matching, scheduler, or RL work."
+}

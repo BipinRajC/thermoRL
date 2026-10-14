@@ -1,0 +1,245 @@
+{
+  "all_candidates": {
+    "constant_hold": {
+      "first_match_time_s": 3540,
+      "rows_recorded": 188,
+      "selected": {
+        "cdu_01_primary_return_c": 26.115100783540925,
+        "cdu_01_primary_supply_c": 19.321600027826264,
+        "datacenter_primary_flow_gpm": 387.4011054359014,
+        "elapsed_s": 3640.0,
+        "fmu_time_s": 3640.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "constant_hold",
+        "rack_01_coolant_c": 31.995628924182654,
+        "rack_01_slope_k_per_min": -0.06138963976013656
+      },
+      "spec": {
+        "kind": "constant",
+        "pulse_kw_each_rack": 10.86,
+        "start_s": 0
+      },
+      "switch_back_time_s": null
+    },
+    "high_3600_20": {
+      "first_match_time_s": 3640,
+      "rows_recorded": 193,
+      "selected": {
+        "cdu_01_primary_return_c": 26.090265934875447,
+        "cdu_01_primary_supply_c": 19.31334980812653,
+        "datacenter_primary_flow_gpm": 387.4122742349646,
+        "elapsed_s": 3680.0,
+        "fmu_time_s": 3680.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "high_3600_20",
+        "rack_01_coolant_c": 32.00119450135304,
+        "rack_01_slope_k_per_min": -0.06298522888187108
+      },
+      "spec": {
+        "kind": "high",
+        "pulse_kw_each_rack": 20.0,
+        "start_s": 3600
+      },
+      "switch_back_time_s": 3620
+    },
+    "high_5400_20": {
+      "first_match_time_s": 6700,
+      "rows_recorded": 346,
+      "selected": {
+        "cdu_01_primary_return_c": 25.489154431397708,
+        "cdu_01_primary_supply_c": 19.00771504594377,
+        "datacenter_primary_flow_gpm": 387.72653916444324,
+        "elapsed_s": 6720.0,
+        "fmu_time_s": 6720.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "high_5400_20",
+        "rack_01_coolant_c": 31.993181724264048,
+        "rack_01_slope_k_per_min": -0.0929569340792682
+      },
+      "spec": {
+        "kind": "high",
+        "pulse_kw_each_rack": 20.0,
+        "start_s": 5400
+      },
+      "switch_back_time_s": 6680
+    },
+    "high_7200_15": {
+      "first_match_time_s": null,
+      "rows_recorded": 541,
+      "selected": null,
+      "spec": {
+        "kind": "high",
+        "pulse_kw_each_rack": 15.0,
+        "start_s": 7200
+      },
+      "switch_back_time_s": null
+    },
+    "high_7200_20": {
+      "first_match_time_s": 9220,
+      "rows_recorded": 472,
+      "selected": {
+        "cdu_01_primary_return_c": 25.45157674946762,
+        "cdu_01_primary_supply_c": 18.983009347610732,
+        "datacenter_primary_flow_gpm": 387.74522706246245,
+        "elapsed_s": 9240.0,
+        "fmu_time_s": 9240.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "high_7200_20",
+        "rack_01_coolant_c": 31.986906237935784,
+        "rack_01_slope_k_per_min": -0.09459232264521233
+      },
+      "spec": {
+        "kind": "high",
+        "pulse_kw_each_rack": 20.0,
+        "start_s": 7200
+      },
+      "switch_back_time_s": 9200
+    },
+    "low_0600_05": {
+      "first_match_time_s": 2260,
+      "rows_recorded": 124,
+      "selected": {
+        "cdu_01_primary_return_c": 26.430592596345605,
+        "cdu_01_primary_supply_c": 19.501658248722265,
+        "datacenter_primary_flow_gpm": 387.2317603484555,
+        "elapsed_s": 2380.0,
+        "fmu_time_s": 2380.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_0600_05",
+        "rack_01_coolant_c": 32.00463834565005,
+        "rack_01_slope_k_per_min": -0.045309310544496384
+      },
+      "spec": {
+        "kind": "low",
+        "pulse_kw_each_rack": 5.0,
+        "start_s": 600
+      },
+      "switch_back_time_s": 2200
+    },
+    "low_0600_08": {
+      "first_match_time_s": 2720,
+      "rows_recorded": 147,
+      "selected": {
+        "cdu_01_primary_return_c": 26.29833975356621,
+        "cdu_01_primary_supply_c": 19.420602224390507,
+        "datacenter_primary_flow_gpm": 387.30422574786377,
+        "elapsed_s": 2820.0,
+        "fmu_time_s": 2820.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_0600_08",
+        "rack_01_coolant_c": 32.00774662205566,
+        "rack_01_slope_k_per_min": -0.05240884710548244
+      },
+      "spec": {
+        "kind": "low",
+        "pulse_kw_each_rack": 8.0,
+        "start_s": 600
+      },
+      "switch_back_time_s": 2700
+    },
+    "low_1200_05": {
+      "first_match_time_s": 2460,
+      "rows_recorded": 134,
+      "selected": {
+        "cdu_01_primary_return_c": 26.423453094740353,
+        "cdu_01_primary_supply_c": 19.49392397804911,
+        "datacenter_primary_flow_gpm": 387.2350220893747,
+        "elapsed_s": 2580.0,
+        "fmu_time_s": 2580.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_1200_05",
+        "rack_01_coolant_c": 31.998109137397478,
+        "rack_01_slope_k_per_min": -0.045334267695636754
+      },
+      "spec": {
+        "kind": "low",
+        "pulse_kw_each_rack": 5.0,
+        "start_s": 1200
+      },
+      "switch_back_time_s": 2420
+    },
+    "low_1200_08": {
+      "first_match_time_s": 2860,
+      "rows_recorded": 154,
+      "selected": {
+        "cdu_01_primary_return_c": 26.296091563363177,
+        "cdu_01_primary_supply_c": 19.418632576696893,
+        "datacenter_primary_flow_gpm": 387.30518757294476,
+        "elapsed_s": 2940.0,
+        "fmu_time_s": 2940.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_1200_08",
+        "rack_01_coolant_c": 31.999076217679033,
+        "rack_01_slope_k_per_min": -0.05206684739812317
+      },
+      "spec": {
+        "kind": "low",
+        "pulse_kw_each_rack": 8.0,
+        "start_s": 1200
+      },
+      "switch_back_time_s": 2840
+    },
+    "low_1800_05": {
+      "first_match_time_s": 2680,
+      "rows_recorded": 145,
+      "selected": {
+        "cdu_01_primary_return_c": 26.410192770534593,
+        "cdu_01_primary_supply_c": 19.478144061668615,
+        "datacenter_primary_flow_gpm": 387.2422620177222,
+        "elapsed_s": 2800.0,
+        "fmu_time_s": 2800.0,
+        "power_applied_during_preceding_interval_kw_each_rack": 10.86,
+        "profile": "low_1800_05",
+        "rack_01_coolant_c": 32.00303220327913,
+        "rack_01_slope_k_per_min": -0.04628190711400748
+      },
+      "spec": {
+        "kind": "low",
+        "pulse_kw_each_rack": 5.0,
+        "start_s": 1800
+      },
+      "switch_back_time_s": 2660
+    }
+  },
+  "candidate_trace_rows": 2444,
+  "candidate_trace_sha256": "302ba641e7804ae25147bac30fc844566cd79ef1aec5625cc4a84764b70890e6",
+  "design_info": {
+    "candidate_count": 9,
+    "feasible_subset_count": 35,
+    "maximum_return_profile": "low_0600_05",
+    "minimum_return_profile": "high_7200_20",
+    "selected_design_condition_number": 284.50464182409485,
+    "selected_design_rank": 4,
+    "selected_log_determinant": -11.446286486851998,
+    "selected_predictor_correlation_matrix": [
+      [
+        1.0,
+        0.9998831647553136,
+        -0.9999558601362777
+      ],
+      [
+        0.9998831647553136,
+        1.0,
+        -0.9999228043283602
+      ],
+      [
+        -0.9999558601362777,
+        -0.9999228043283601,
+        0.9999999999999999
+      ]
+    ]
+  },
+  "fmu_sha256": "2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b",
+  "preregistration_sha256": "22623862dd9a01d70382239725dbdfd605fc0e54586ff97f540e2b4f365b94f9",
+  "selected_count": 6,
+  "selected_profiles": [
+    "constant_hold",
+    "high_3600_20",
+    "high_7200_20",
+    "low_0600_05",
+    "low_1200_05",
+    "low_1200_08"
+  ],
+  "selection_script_sha256": "394cee3ec40ee4f2a4247ab8f4fbc9ea5b1195c5495f4179a58a002479a487d0",
+  "status": "selected"
+}

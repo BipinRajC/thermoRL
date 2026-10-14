@@ -1,0 +1,129 @@
+{
+  "aggregate_held_out_errors": {
+    "final_paired_increment_c": {
+      "flow_only": {
+        "held_out_mae_c": 0.05241922441625668,
+        "held_out_max_abs_error_c": 0.10538818687858864,
+        "predictors": [
+          "datacenter_primary_flow_gpm"
+        ]
+      },
+      "return_only": {
+        "held_out_mae_c": 0.18678257563883913,
+        "held_out_max_abs_error_c": 0.3281475251441712,
+        "predictors": [
+          "cdu_01_primary_return_c"
+        ]
+      },
+      "return_plus_slope": {
+        "held_out_mae_c": 0.1928029985365883,
+        "held_out_max_abs_error_c": 0.3708293299414276,
+        "predictors": [
+          "cdu_01_primary_return_c",
+          "rack_01_coolant_slope_k_per_min"
+        ]
+      },
+      "return_plus_slope_plus_flow": {
+        "held_out_mae_c": 0.055752586303719966,
+        "held_out_max_abs_error_c": 0.13551506702990324,
+        "predictors": [
+          "cdu_01_primary_return_c",
+          "rack_01_coolant_slope_k_per_min",
+          "datacenter_primary_flow_gpm"
+        ]
+      },
+      "slope_only": {
+        "held_out_mae_c": 0.1837333542255566,
+        "held_out_max_abs_error_c": 0.3333757120090777,
+        "predictors": [
+          "rack_01_coolant_slope_k_per_min"
+        ]
+      }
+    },
+    "peak_paired_increment_c": {
+      "flow_only": {
+        "held_out_mae_c": 0.02701360732974815,
+        "held_out_max_abs_error_c": 0.04319988403740993,
+        "predictors": [
+          "datacenter_primary_flow_gpm"
+        ]
+      },
+      "return_only": {
+        "held_out_mae_c": 0.13516624420257659,
+        "held_out_max_abs_error_c": 0.2336790493595462,
+        "predictors": [
+          "cdu_01_primary_return_c"
+        ]
+      },
+      "return_plus_slope": {
+        "held_out_mae_c": 0.13933224238748476,
+        "held_out_max_abs_error_c": 0.2647941397208182,
+        "predictors": [
+          "cdu_01_primary_return_c",
+          "rack_01_coolant_slope_k_per_min"
+        ]
+      },
+      "return_plus_slope_plus_flow": {
+        "held_out_mae_c": 0.04138037597823926,
+        "held_out_max_abs_error_c": 0.08400879448055498,
+        "predictors": [
+          "cdu_01_primary_return_c",
+          "rack_01_coolant_slope_k_per_min",
+          "datacenter_primary_flow_gpm"
+        ]
+      },
+      "slope_only": {
+        "held_out_mae_c": 0.13328093066884636,
+        "held_out_max_abs_error_c": 0.23542266964235736,
+        "predictors": [
+          "rack_01_coolant_slope_k_per_min"
+        ]
+      }
+    }
+  },
+  "analysis_script_sha256": "dd3ed7268251aa8029f7b29dcf7f101c95f5d2463d101a0ed0102e0342fee340",
+  "final_paired_response_range_c": [
+    10.107068357503408,
+    10.72841937363404
+  ],
+  "held_out_residuals_sha256": "8e28dc95996030e869d0c1c931517bddd960d0aa52fc8a0a318aed130df7f342",
+  "inference_limit": "Five or six deterministic profiles are not independent plant replicates. Even with reduced collinearity, regression associations are not causal attribution, coefficient significance, or proof of observation sufficiency. No p-values or outcome-selected threshold.",
+  "metric_conventions": {
+    "curve_residual_at_observed_peak_time_c": "observed paired increment at its own peak time minus frozen predicted curve at that same time",
+    "peak_to_peak_scalar_residual_c": "observed maximum paired increment minus frozen scalar model prediction of maximum paired increment"
+  },
+  "n_profiles": 6,
+  "predictor_correlation_matrix": [
+    [
+      1.0,
+      0.99968516740514,
+      -0.6803395453549443
+    ],
+    [
+      0.9996851674051401,
+      0.9999999999999998,
+      -0.6700427500184162
+    ],
+    [
+      -0.6803395453549445,
+      -0.6700427500184161,
+      0.9999999999999999
+    ]
+  ],
+  "predictor_names": [
+    "cdu_01_primary_return_c",
+    "rack_01_coolant_slope_k_per_min",
+    "datacenter_primary_flow_gpm"
+  ],
+  "preregistration_sha256": "22623862dd9a01d70382239725dbdfd605fc0e54586ff97f540e2b4f365b94f9",
+  "repeat_verification_sha256": "4ecc183c01162f1b722cb11aeec29b42ce6d3752652fe388305096b88c730f69",
+  "return_range_c": [
+    25.45157674946762,
+    26.44672081294874
+  ],
+  "run_01_metadata_sha256": "6ac2a611120c1de3bfd28cbf6e459bad44a2922db512314b1f38be0fdf882e37",
+  "selection_sha256": "4ed558100b9d55cd6355119b4ad7a0458c58dd58e6e3023d35f531476aa3eda9",
+  "standardized_design_condition_number": 108.90202001891377,
+  "standardized_design_rank": 4,
+  "state_table_sha256": "36413451d60092fd37b156f6be47290540e7ec81e83d56eef065d08b39919f35"
+}

@@ -1,0 +1,22 @@
+{
+  "absolute_trajectory_plot_identical": true,
+  "all_csv_byte_identical": true,
+  "backend_hash_unchanged_from_prior_diagnostic": true,
+  "csv_identical_by_file": {
+    "A_evolving_control": true,
+    "A_evolving_step": true,
+    "A_evolving_step_minus_control": true,
+    "B_minus_A_response": true,
+    "B_warmed_control": true,
+    "B_warmed_step": true,
+    "B_warmed_step_minus_control": true,
+    "preconditioning": true
+  },
+  "fmu_hash_unchanged_from_prior_diagnostic": true,
+  "max_absolute_thermal_repeat_difference_c": 0.0,
+  "paired_response_plot_identical": true,
+  "run_01_paired_time_rows_checked": 362,
+  "run_02_paired_time_rows_checked": 362,
+  "task_1_5_test_hash_unchanged_from_prior_diagnostic": true,
+  "verification_script_sha256": "edf99ddf585dae0514535aeea8877b6e3f798cbecab589a27cca0de8326f36b7"
+}
