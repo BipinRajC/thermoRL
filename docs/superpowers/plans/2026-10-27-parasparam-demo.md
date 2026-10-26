@@ -925,3 +925,9 @@ These require a new steering decision after C5:
   - `rack_power_bounds`, `job_increment_kw`, `is_power_tick(tick, time_delta)`
   - the decision-row keys
 - **Pre-registration:** every threshold comes from spec §4. None is derived from closed-loop results.
+
+## Approved Task 3 reproducibility clarification (2026-10-27)
+
+Approved by Bipin in conversation on 2026-10-27: compare canonical deterministic scientific-summary bytes and thermal-series content across the Lassen rerun, excluding exactly `fmu_s_per_sim_h` and `projected_closed_loop_min_6h` from the scientific summary. Preserve each full summary and timing measurement separately. X01 uses only the original runs' costs. Do not claim full-summary byte identity. No physical threshold, input, horizon or selection rule changes. Rerun artifacts: `provenance/rerun_1_data/`; comparison: `provenance/rerun_1.json`.
+
+This supersedes only Task 3 Step 5's full-summary byte-identity requirement. The scientific projection excludes exactly the two timing keys above; both full summaries and all thermal data remain preserved. No physical metric or selection rule changes.

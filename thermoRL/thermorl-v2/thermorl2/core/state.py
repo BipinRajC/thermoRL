@@ -9,6 +9,7 @@ import numpy as np
 class Ambient:
     t_air_k: float = 290.0
     t_ext_k: float = 290.0
+    t_air_k_by_unit: tuple[float, ...] | None = None
 
 
 @dataclass

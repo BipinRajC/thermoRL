@@ -1,0 +1,34 @@
+{
+  "backend": "fmu",
+  "config": "fixed asymmetric replay sequence in tests/fmu/test_direct_backend_replay.py",
+  "direct_backend_atol": 1e-06,
+  "dirty": true,
+  "fmu_sha256": "2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b",
+  "gate": "Task 1.5 option B: direct/backend replay and restore-delta equality",
+  "max_abs_restore_deviation_by_variable": {
+    "cdu_primary_return_c": 7.743625474176952e-08,
+    "cdu_primary_supply_c": 8.122640338115161e-09,
+    "datacenter_primary_flow_gpm": 2.5030146844073897e-08,
+    "rack_coolant_c": 0.00014343444621545132
+  },
+  "max_abs_restore_jitter_c": 0.00014343444621545132,
+  "policy": null,
+  "restore_delta_atol": 1e-06,
+  "seed": null,
+  "sequence_sha256": "1530d07e99abe51cf321ad513cc7d4b3a5338fab37e854b20087d00243f78bde",
+  "snapshot_time_s": 7200.0,
+  "source_git_sha": "439cae9ef559b2d05e8ba1b317419aaffb04194e",
+  "system": "lassen",
+  "timings": {
+    "backend_runtime_s": 5.966692358993896
+  },
+  "verification": {
+    "baseline": "19 passed",
+    "fmu": "4 passed, 1 xfailed",
+    "historical_body_unchanged": true
+  },
+  "warmup_status": "capped_preconditioned_not_settled",
+  "warmup_used_s": 7200.0,
+  "workload_kind": "fixed engineering input sequence; no scheduled jobs",
+  "workload_sha256": "1530d07e99abe51cf321ad513cc7d4b3a5338fab37e854b20087d00243f78bde"
+}

@@ -1,0 +1,23 @@
+{
+  "packed": {
+    "all_temperature_and_pump_finite": true,
+    "power_sum_max_abs_error_kw": 7.275957614183426e-12,
+    "rows": 277817,
+    "summary_recomputation_abs_errors_c": {
+      "max_c": 0.0,
+      "mean_c": 7.105427357601002e-15,
+      "spread_c": 0.0
+    }
+  },
+  "source_hashes_match_current_committed_implementation": true,
+  "spread": {
+    "all_temperature_and_pump_finite": true,
+    "power_sum_max_abs_error_kw": 1.8189894035458565e-12,
+    "rows": 277817,
+    "summary_recomputation_abs_errors_c": {
+      "max_c": 0.0,
+      "mean_c": 7.105427357601002e-15,
+      "spread_c": 0.0
+    }
+  }
+}

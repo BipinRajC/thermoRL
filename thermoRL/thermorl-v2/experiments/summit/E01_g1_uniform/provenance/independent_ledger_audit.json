@@ -1,0 +1,71 @@
+{
+  "all_temperature_and_pump_finite": true,
+  "f1_power_minus_peak_kw": 7.105427357601002e-15,
+  "idle_branch_initial_to_final_mean_change_c": 1.013306769687098,
+  "independent_lstsq_fit": {
+    "a_c": 27.97538572712286,
+    "b_c_per_kw": 0.8052450824355954,
+    "r2": 0.9891676476892759
+  },
+  "levels": [
+    {
+      "f": 0,
+      "final_mean_c": 40.04153522330251,
+      "rack_kw": 13.201714285714285,
+      "summary_abs_errors_c": {
+        "max_c": 1.4210854715202004e-14,
+        "mean_c": 7.105427357601002e-15,
+        "min_c": 1.4210854715202004e-14
+      },
+      "t63_s": 4930.0
+    },
+    {
+      "f": 0.25,
+      "final_mean_c": 44.05884811367884,
+      "rack_kw": 21.721867346938776,
+      "summary_abs_errors_c": {
+        "max_c": 1.4210854715202004e-14,
+        "mean_c": 0.0,
+        "min_c": 7.105427357601002e-15
+      },
+      "t63_s": 3550.0
+    },
+    {
+      "f": 0.5,
+      "final_mean_c": 51.579892032867285,
+      "rack_kw": 30.242020408163267,
+      "summary_abs_errors_c": {
+        "max_c": 1.4210854715202004e-14,
+        "mean_c": 7.105427357601002e-15,
+        "min_c": 0.0
+      },
+      "t63_s": 4050.0
+    },
+    {
+      "f": 0.75,
+      "final_mean_c": 59.16565659565539,
+      "rack_kw": 38.76217346938776,
+      "summary_abs_errors_c": {
+        "max_c": 0.0,
+        "mean_c": 7.105427357601002e-15,
+        "min_c": 1.4210854715202004e-14
+      },
+      "t63_s": 4130.0
+    },
+    {
+      "f": 1,
+      "final_mean_c": 66.79218775306222,
+      "rack_kw": 47.28232653061225,
+      "summary_abs_errors_c": {
+        "max_c": 1.4210854715202004e-14,
+        "mean_c": 0.0,
+        "min_c": 1.4210854715202004e-14
+      },
+      "t63_s": 4170.0
+    }
+  ],
+  "source_hashes_match_committed_implementation": true,
+  "t_hot_c": 63.30492211035262,
+  "tau_s": 4050.0,
+  "warmup_byte_identical_to_g2_and_g3": true
+}

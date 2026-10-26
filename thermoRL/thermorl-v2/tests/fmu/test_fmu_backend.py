@@ -38,6 +38,7 @@ def test_reset_reproduces_trajectory(backend):
     np.testing.assert_allclose(np.array(a), np.array(b), atol=1e-9)
 
 
+@pytest.mark.xfail(strict=True, reason="Historical cold-start probe bound (500–1000 s); warmed-state t63 measured 1240 s. Retained unchanged as a record; spec 2026-10-27 P1.")
 def test_single_rack_step_is_local_and_matches_probe(backend):
     backend.reset()
     idle = backend.observe().t_c.copy()

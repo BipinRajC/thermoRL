@@ -34,10 +34,17 @@ def power_input_names(p: CouplingParams) -> list[str]:
 
 
 def rack_kw_to_fmu_inputs(rack_kw: np.ndarray, p: CouplingParams, ambient: Ambient) -> dict[str, float]:
+    if ambient.t_air_k_by_unit is not None and len(ambient.t_air_k_by_unit) != p.num_cdus:
+        raise ValueError("per-unit air temperatures must match the number of CDUs")
     out = {
         name: float((rack_kw[i] * 1000.0) * p.cooling_efficiency / p.racks_per_cdu)
         for i, name in enumerate(power_input_names(p))
     }
     for key in p.temperature_keys:
         out[key] = ambient.t_ext_k if key.endswith("_T_ext") else ambient.t_air_k
+    if ambient.t_air_k_by_unit is not None:
+        for i, temperature in enumerate(ambient.t_air_k_by_unit, start=1):
+            key = f"simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air"
+            if key in out:
+                out[key] = float(temperature)
     return out

@@ -1,0 +1,11 @@
+{
+  "candidate_parameter_count": 62,
+  "candidate_parameter_filter_verified": true,
+  "control_equal_original_g2_spread_exactly": true,
+  "paired_delta_affected_c": 0.5389860281315535,
+  "paired_delta_unaffected_c": 0.1018374038804732,
+  "power_sum_max_abs_difference_between_branches_kw": 0.0,
+  "rows_per_branch": 277817,
+  "rule_recomputed": "NOT_USABLE",
+  "warmup_equal_original_g2_byte_identical": true
+}
