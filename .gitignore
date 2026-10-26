@@ -34,3 +34,8 @@ logs/
 
 # claude files
 .claude/
+# Local reference clone only (ExaDigiT hpc-cooling-surrogate); not part of the ParasParam implementation path
+hpc-cooling-surrogate/
+
+# RAPS default output dirs (RAPS writes ./runs/ when output is unset)
+runs/

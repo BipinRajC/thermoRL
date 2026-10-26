@@ -1,276 +1,398 @@
-# ParasParam Closed-Loop Demo — Implementation Plan
+# ParasParam Closed-Loop Demo — Implementation Plan (FINAL)
 
-> **For agentic workers (Sol 6.1):** Execute task by task, in order. Steps use checkbox (`- [ ]`) syntax. Sections marked **CHECKPOINT** are mandatory stops: write the checkpoint report, commit it, and wait for steering. Between checkpoints, keep going unless a stop condition from Global Constraints applies.
+> **For agentic workers (Sol 6.1):** Execute task by task, in order. Steps use checkbox (`- [ ]`) syntax. A **CHECKPOINT** is a mandatory stop: write the checkpoint report, commit, push, and wait for steering. Between checkpoints, keep going unless a stop condition below applies.
 
-**Goal:** Produce the first FMU-backed closed-loop thermal result within 2 days, then grow it into a reproducible demo with visuals in about 1 week. The demo compares packing, node-balance, power-balance and thermal-aware placement on the Lassen twin.
+**Goal:** Produce the first FMU-backed closed-loop thermal result within 2 days, on the primary FMU that the three-FMU gate selects. Then grow it into a reproducible demo with visuals in about 1 week.
 
-**Architecture:** Extend `thermoRL/thermorl-v2/thermorl2`.
-- RAPS runs Lassen with its own cooling turned off.
-- `EpisodeRunner` steps the existing `FmuBackend` at every 20 s power tick.
-- A `PlacementScheduler` drop-in sets exact nodes through RAPS's REPLAY allocation path.
-- All policies share one FCFS queue, so timing and total power are identical by construction and only the spatial placement differs.
+**Architecture:** Extend `thermoRL/thermorl-v2/thermorl2` and make it system-generic: Lassen, Summit or Marconi100.
+- RAPS runs with its own cooling off.
+- `EpisodeRunner` steps the existing `FmuBackend` at every power tick, defined as `t % Δ == 0`.
+- A `PlacementScheduler` drop-in sets exact nodes through RAPS's REPLAY path.
+- All policies share one FCFS queue, so timing and total power are identical across policies. Only placement differs.
 - Metrics and plots are computed only from per-run ledgers.
+- Artifacts follow `docs/superpowers/specs/2026-10-27-experiment-conventions.md`.
 
-**Tech stack:** Python 3.12 (uv), editable `raps` (`../../sim-raps`), fmpy 0.3.x, numpy, pandas, pyarrow, pyyaml, matplotlib (+ pillow for GIF), pytest. Viz uses Vite + TypeScript + three.js (copied from `thermoRL/thermoRL-new/viz`).
+**Tech stack:**
+- Python 3.12 (uv), with editable `raps` from `../../sim-raps`.
+- fmpy 0.3.x, numpy, pandas, pyarrow, pyyaml, matplotlib, pillow, pytest.
+- Viz: Vite + TypeScript + three.js.
 
-**Spec:** `docs/superpowers/specs/2026-10-27-parasparam-demo-design.md`. Read it first; this plan argues from it. Background reading:
-- `docs/2026-10-26-thermorl-investigation-findings.md`
+**Spec:** `docs/superpowers/specs/2026-10-27-parasparam-demo-design.md`. Read it first; this plan argues from it. Also read:
+- `docs/superpowers/specs/2026-10-27-experiment-conventions.md`
+- `docs/repository-notes.md`
+
+Background:
+- `docs/2026-10-27-surrogate-and-fmu-selection-assessment.md`
 - `docs/2026-10-27-thermorl-demo-strategy.md`
+- `docs/2026-10-26-thermorl-investigation-findings.md`
 
 ## Global Constraints
 
-- **Runtime.** FMU work runs only on the **Arch Linux x86-64** machine. The FMUs have no macOS binary.
-- **Location.** All paths are relative to the repo root. Python commands run from `thermoRL/thermorl-v2` with `uv run …`.
-- **Import boundaries.** `core/` must not import `raps`, `fmpy` or `torch`. Only `raps_adapter/` imports `raps`. Only `thermal/fmu_backend.py` imports `fmpy`.
-- **No edits to `sim-raps/`.** If one seems necessary, stop and report.
-- **FMU.**
-  - Path: `models/POWER9CSM/fmus/lassen.fmu`.
-  - SHA-256: `2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b`.
-  - One FMU instance per OS process. Never re-instantiate within a process. Run many simulations as separate processes.
-- **RAPS settings.** Lassen with `time_delta` 20 s, `time_unit` 1 s, `cooling` false, and `timestep_start` 0.
-- **Seeds.** Use seeds ≥ 1; RAPS ignores 0. Reset `raps.job.Job._id_counter = 0` before building each run's jobs.
-- **Coupling constants.** 0.945 heat factor, 1 rack per CDU, 290 K default ambient. Always read them from the RAPS legacy config through `CouplingParams.from_legacy_config`.
-- **Pre-registration.** Thresholds, metrics, policies and scenarios are fixed in spec §3–§4. Changing any of them after results exist is a **stop condition**.
-- **Run manifest.** Every run writes `manifest.json` containing: git SHA and dirty flag, FMU SHA-256, workload SHA-256, the full config, policy, seed, and timings (`raps_s`, `fmu_s`, `total_s`).
-- **Artifacts.** Commit code, configs, probe and run summaries, figures, and run ledgers that are smaller than 25 MB per run directory. Gitignore anything larger and record its path and hash in the checkpoint report. The Mac reads results through git.
-- **Stop conditions (demo mode):**
-  - a test failure you cannot explain;
-  - a result contradicting the spec's mechanics (for example, total IT kW differs across policies);
+- **Machine.** All FMU and RAPS execution happens on the **Arch Linux x86-64** machine.
+- **Paths.** Paths are relative to the repo root. Run Python from `thermoRL/thermorl-v2` with `uv run …`.
+- **Import boundaries.**
+  - `core/` never imports `raps`, `fmpy` or `torch`.
+  - Only `raps_adapter/` imports `raps`.
+  - Only `thermal/fmu_backend.py` imports `fmpy`.
+- **Off-limits.**
+  - **No edits to `sim-raps/`.** If one seems needed, stop and report.
+  - Do not touch `docs/prompt.md`.
+  - Do not use `hpc-cooling-surrogate` or `--cooling-model surrogate`.
+- **FMU backend.** It is the only thermal backend. One FMU instance per OS process: run every FMU probe or run in its own process, and never instantiate two FMUs (of any system) in one process.
+- **FMU paths and SHA-256.** Must match spec §3.1. Verify the SHA before use.
+- **RAPS settings.**
+  - `time_unit` 1 s; `time_delta = POWER_UPDATE_FREQ` of the system.
+  - `cooling: false`, `output: "none"`, `noui: true`, `timestep_start` 0.
+  - **Power tick = `tick.current_timestep % time_delta == 0`.** Never use `power_df is not None`, because RAPS reuses the previous `power_df` on every second.
+  - RAPS **raises** when a job exceeds `time_limit`. Every job must have `time_limit ≥ expected_run_time`.
+- **Seeds.** Seeds ≥ 1. Reset `raps.job.Job._id_counter = 0` before building each run's jobs.
+- **Coupling constants.** Always taken from `CouplingParams.from_legacy_config(legacy_config(system))`.
+- **Pre-registration.**
+  - Spec §4 thresholds, metrics, policy definitions, workload parameters and scenario definitions are frozen.
+  - Changing any of them is a stop condition.
+  - Experiment READMEs carry the rule **before** results (conventions §7.1).
+- **Provenance.** Every run directory has a manifest: git SHA and dirty flag, system, FMU SHA-256, workload SHA-256, config, policy, seed, `backend: fmu`, and timings.
+- **Size.** Commit run directories under 25 MB each. Gitignore larger ones and list their path and SHA in the experiment README.
+- **Stop conditions:**
+  - an unexplained test failure;
+  - mechanics that contradict the spec (for example, IT kW differs across policies);
   - a needed change to a pre-registered item;
   - a needed RAPS patch;
-  - a probe decision rule outcome of **STOP**.
-  - Otherwise, fix forward and continue.
-- **Do not touch** `docs/prompt.md`.
-- **Branch.** Work on `feat/parasparam-demo`, created from `feat/thermorl2-phase0-env`. Commit after every task with the message given.
+  - the X01 selection result is STOP;
+  - any CHECKPOINT.
+  
+  Otherwise, fix forward.
+- **Branch.** `feat/parasparam-demo`, created from `feat/thermorl2-phase0-env`. Commit after every task with the given message.
 
 ## Review Focus
 
-1. **Many arrivals within one 20 s window.** The thermal view and power ticks are stale between power ticks.
+1. **Many arrivals within one power-tick window.**
    - `power_balance` must spread back-to-back jobs, because it updates committed kW on every placement.
-   - `coolest_rack` is expected to herd. Pin that behaviour so it is visible rather than accidental.
-   - Owner: Task 6.
-2. **Jobs larger than one rack (> 18 nodes), and fragmented free nodes.** The placement must return exactly `n` distinct, currently free nodes, and must span racks in score order. Owner: Task 5.
-3. **`prepare_system_state` flips `scheduler.policy` to REPLAY and back.** The drop-in must have settable attributes and must behave as FCFS afterwards. Owner: Task 6.
-4. **Determinism.** The same config, policy and seed must produce byte-identical `decisions.jsonl`. Watch the `Job._id_counter` reset, single-RNG workload generation, and dict ordering in JSON output. Owner: Task 8.
-5. **Cross-policy invariants.** For one workload, total IT kW per tick and job start times must be identical across policies. If not, the queue discipline leaked into placement. Owner: Task 9.
+   - `coolest_rack` is expected to herd. The test pins this behaviour.
+   - Owner: Task 7.
+2. **Jobs larger than one rack, and fragmented free nodes.** A placement returns exactly `n` distinct free nodes and spans racks in score order. Owner: Task 6.
+3. **Power-tick misdetection.** If the FMU is stepped every second, thermal time runs Δ× too fast. A step-count invariant catches this. Owners: Tasks 5 and 9.
+4. **Determinism.** The same config, policy and seed give a byte-identical `decisions.jsonl`. Watch the `Job._id_counter` reset, the single RNG, and sorted JSON keys. Owner: Task 9.
+5. **Cross-policy invariants.** For one workload, IT kW per tick and job start times are identical across policies. Owners: Tasks 10 and 12.
 
 ## Schedule (target)
 
 | Day | Tasks | Gate |
 |---|---|---|
-| 1 | 1 (env + Task 1.5 close), 2, 3 (physics probes) | **CHECKPOINT C1**: physics reality check |
-| 2 | 4, 5, 6, 7, 8 (vertical slice) | **CHECKPOINT C2**: first closed-loop result |
-| 3 | 9, 10, 11 (metrics, plots, G4 synthetic) | **CHECKPOINT C3**: Conservative demo complete |
-| 4 | 12, 13 (Alibaba-derived, G4) | **CHECKPOINT C4** |
-| 5 | 14 (viz) | — |
-| 6 | 15 (what-if, only if G3 passed) | **CHECKPOINT C5** |
-| 7 | 16 (packaging, results note, runbook) | Final review |
+| 1 | 1, 2, 3 (three-FMU G2 + selection), 4 (G1 + G3 on primary) | **CHECKPOINT C1**: FMU selection and physics |
+| 2 | 5, 6, 7, 8, 9 (vertical slice) | **CHECKPOINT C2**: first closed-loop result |
+| 3 | 10, 11, 12 (metrics, plots, G4 synthetic) | **CHECKPOINT C3**: Conservative demo complete |
+| 4 | 13, 14 (Alibaba-derived, G4) | **CHECKPOINT C4** |
+| 5 | 15 (viz) | — |
+| 6 | 16 (what-if, only if G3 USABLE) | **CHECKPOINT C5** |
+| 7 | 17 (packaging) | Final review |
 
-## Checkpoint report format (all checkpoints)
-
-Write `docs/checkpoints/C<n>-<slug>.md` containing:
-- what ran (exact commands);
+**Checkpoint report:** `docs/checkpoints/C<n>-<slug>.md`. It contains:
+- the exact commands run;
 - git SHA;
-- key numbers in a table;
-- figure paths;
-- each decision rule and its outcome (GO / WEAK / STOP or equivalent);
+- key numbers;
+- links to the experiment READMEs;
+- each rule outcome;
 - anomalies;
-- what you will do next if approved.
+- the proposed next step.
 
-Commit it, push the branch, and stop.
+Commit it, `git push -u origin feat/parasparam-demo`, and stop.
 
 ---
 
-## Phase 0 — Physics reality check (Day 1)
+## Phase 0 — Environment, FMU selection, physics (Day 1)
 
-### Task 1: Arch environment and Task 1.5 closure (option B)
+### Task 1: Environment, Task 1.5 closure (option B), experiment scaffold
 
 **Files:**
-- Modify: `thermoRL/thermorl-v2/tests/fmu/test_fmu_backend.py` (historical physical-response test only)
-- Modify: `thermoRL/thermorl-v2/tests/fmu/test_direct_backend_replay.py` (intra-process assertion only)
+- Modify: `thermoRL/thermorl-v2/uv.lock` (from `uv lock`)
+- Modify: `thermoRL/thermorl-v2/tests/fmu/test_fmu_backend.py` (historical physical-response test: xfail only)
+- Modify: `thermoRL/thermorl-v2/tests/fmu/test_direct_backend_replay.py` (within-process replay assertion only)
 - Modify: `thermoRL/thermorl-v2/README.md` (add a "Task 1.5 closure (option B)" section)
-- Modify: `docs/superpowers/proposals/2026-09-29-task-1-5-backend-closeout.md` (append a dated "Closed under option B, 2026-10-27" note)
+- Modify: `docs/superpowers/proposals/2026-09-29-task-1-5-backend-closeout.md` (append "Closed under option B, 2026-10-27")
+- Create: `thermoRL/thermorl-v2/experiments/INDEX.md`, `experiments/_templates/EXPERIMENT_README.md`, `experiments/_templates/SYSTEM.md`, `experiments/{lassen,summit,marconi100}/SYSTEM.md`, `experiments/lassen/E00_legacy_task15/README.md`
+  - Templates are copied verbatim from conventions §4–§5.
+  - `SYSTEM.md` gets the spec §3.1 values. Measured fields stay `TBD (Task 2/3)` until filled.
 
-- [ ] **Step 1:** On Arch, run `git checkout -b feat/parasparam-demo` (from `feat/thermorl2-phase0-env`, after pulling). Then, from `thermoRL/thermorl-v2`, run `uv sync`.
-  - Expected: success on CPython 3.12.
-- [ ] **Step 2:** Run `uv run pytest tests/unit tests/integration -q`.
+- [ ] **Step 1: Set up the branch and environment.**
+  - Run `git pull`, then `git checkout -b feat/parasparam-demo`.
+  - In `thermoRL/thermorl-v2`, run `uv lock && uv sync`.
+  - Expected: success on CPython 3.12. `uv.lock` changes, because RAPS added `textual` and a newer `requests`.
+- [ ] **Step 2: Baseline tests.** Run `uv run pytest tests/unit tests/integration -q`.
   - Expected: `19 passed`.
-- [ ] **Step 3:** Mark `test_single_rack_step_is_local_and_matches_probe` with `@pytest.mark.xfail(strict=True, reason="Historical cold-start probe bound (500–1000 s); warmed-state t63 measured 1240 s. Retained unchanged as a record; see 2026-10-27 spec P1.")`.
-  - The test body must stay unchanged.
-- [ ] **Step 4:** In `test_backend_matches_independent_direct_fmu_with_snapshot_replay`, replace the within-process `atol=1e-9` replay-1-vs-replay-2 assertion with the option-B assertion:
-  - for each key, `backend_replay_delta = backend_replay2 − backend_replay1` must equal `direct_replay_delta = direct_replay2 − direct_replay1` with `atol=1e-6`;
-  - record `max_abs_restore_jitter_c` in the test's manifest output.
-  - Keep every direct-vs-backend `atol=1e-6` assertion unchanged.
-- [ ] **Step 5:** Run `uv run pytest tests/fmu -v`.
-  - Expected: lifecycle and reset tests pass; the replay test passes; the historical test reports `XFAIL`.
-  - If anything else fails: stop and report.
-- [ ] **Step 6:** Write the README section. It must record the 1.43e-4 °C restore jitter as a documented limitation and name the direct-FMU-equals-backend agreement as the correctness evidence.
-- [ ] **Step 7:** Commit:
+- [ ] **Step 3: Mark the historical test as an expected failure.**
+  - Add `@pytest.mark.xfail(strict=True, reason="Historical cold-start probe bound (500–1000 s); warmed-state t63 measured 1240 s. Retained unchanged as a record; spec 2026-10-27 P1.")` to `test_single_rack_step_is_local_and_matches_probe`.
+  - Do not change the test body.
+- [ ] **Step 4: Change the replay assertion to option B.**
+  - In `test_backend_matches_independent_direct_fmu_with_snapshot_replay`, replace only the within-process `atol=1e-9` replay-1-vs-replay-2 assertion.
+  - New assertion: for each key, `(backend_replay2 − backend_replay1)` equals `(direct_replay2 − direct_replay1)` with `atol=1e-6`.
+  - Record `max_abs_restore_jitter_c` in the test's manifest output.
+  - All direct-vs-backend `atol=1e-6` assertions stay unchanged.
+- [ ] **Step 5: FMU tests.** Run `uv run pytest tests/fmu -v`.
+  - Expected: lifecycle, reset and replay tests pass; the historical test shows XFAIL.
+  - Any other result is a stop condition.
+- [ ] **Step 6: Documentation and scaffold.**
+  - Write the README closure section: 1.43e-4 °C restore jitter is a documented limitation; direct FMU = backend is the correctness evidence.
+  - Write the closeout note.
+  - Create the experiment scaffold.
+  - `E00_legacy_task15/README.md` holds one row per legacy diagnostic A–H: path, question, key finding. Take these from `docs/2026-10-26-thermorl-investigation-findings.md` §7.
+- [ ] **Step 7: Commit.**
   ```
-  feat(thermal): FMU backend with single-instance guard, warm-up snapshot reset, RAPS-identical stepping (Task 1.5 closed under option B)
+  feat(thermal): close Task 1.5 under option B; uv lock refresh; experiment scaffold
   ```
 
-### Task 2: Per-rack room-air input and RAPS power-model helpers
+### Task 2: System registry, per-rack room air, power-model helpers, per-system FMU smoke
 
 **Files:**
-- Modify: `thermorl2/core/state.py` — add the `Ambient` field
-- Modify: `thermorl2/raps_adapter/coupling.py` — per-unit `T_Air` mapping
-- Create: `thermorl2/raps_adapter/power_model.py`
-- Test: `tests/unit/test_coupling.py` (extend), `tests/integration/test_power_model.py`
+- Create: `thermorl2/raps_adapter/systems.py`, `thermorl2/raps_adapter/power_model.py`, `thermorl2/experiments/__init__.py`, `thermorl2/experiments/provenance.py`, `thermorl2/experiments/fmu_smoke.py`
+- Modify: `thermorl2/core/state.py`, `thermorl2/raps_adapter/coupling.py`
+- Test: `tests/unit/test_coupling.py` (extend), `tests/unit/test_systems.py`, `tests/unit/test_provenance.py`, `tests/integration/test_power_model.py`, `tests/fmu/test_fmu_smoke_all_systems.py`
 
 **Interfaces (produces):**
-- `Ambient(t_air_k: float = 290.0, t_ext_k: float = 290.0, t_air_k_by_unit: tuple[float, ...] | None = None)`. When set, `t_air_k_by_unit` has length `num_cdus`.
-- `rack_kw_to_fmu_inputs(rack_kw, p, ambient)`:
-  - Behaviour is unchanged when `t_air_k_by_unit is None`.
-  - Otherwise, key `simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air` gets `t_air_k_by_unit[i-1]`, and `_T_ext` still gets `t_ext_k`.
-- `legacy_config(system: str = "lassen") -> dict` returns `get_system_config(system).get_legacy()`.
-- `node_power_kw(cfg: dict, cpu_util: float, gpu_util: float) -> float` returns `compute_node_power(cpu_util, gpu_util, 0, cfg)[0] / 1000`.
-- `rack_power_bounds(cfg: dict) -> tuple[float, float]` returns `(idle_kw, peak_kw)`:
-  - per rack: `NODES_PER_RACK × node_power_kw(cfg, u, g) + CHASSIS_PER_RACK × SWITCHES_PER_CHASSIS × POWER_SWITCH / 1000`;
-  - idle uses `u = g = 0`; peak uses `u = CPUS_PER_NODE` and `g = GPUS_PER_NODE`.
-- `job_increment_kw(cfg: dict, cpu_util: float, gpu_util: float, n_nodes: int) -> float` returns `n_nodes × (node_power_kw(cfg, cpu_util, gpu_util) − node_power_kw(cfg, 0, 0))`.
-
-- [ ] **Step 1: Failing tests.**
-  - `test_per_unit_air_temperature_maps_by_index`: build 44 values `290 + i`, and assert the `computeBlock_34` `T_Air` input equals `323.0` and `_T_ext` equals `ambient.t_ext_k`.
-  - `test_default_ambient_unchanged`: the existing equality-with-RAPS test still passes.
-  - `test_rack_power_bounds_lassen`: assert `10.0 < idle < 12.0` and `30.0 < peak < 38.0`, and print both.
-  - `test_job_increment_zero_at_idle`: `job_increment_kw(cfg, 0, 0, 5) == 0`.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_coupling.py tests/integration/test_power_model.py -v`.
-  - Expected: FAIL (missing attribute or module).
-- [ ] **Step 3:** Implement the interfaces above.
-- [ ] **Step 4:** Run the same command, then `uv run pytest tests/unit tests/integration -q`.
-  - Expected: all pass.
-  - Record idle and peak to 3 decimals in the commit body. (The investigation computed ≈ 10.86 and ≈ 34.4 kW; the original plan's hand calculation said ≈ 35.9 kW. Report the measured value.)
-- [ ] **Step 5:** Commit:
-  ```
-  feat(adapter): per-rack room-air ambient input and RAPS power-model helpers
-  ```
-
-### Task 3: FMU-only physics probes G1, G2, G3 → CHECKPOINT C1
-
-**Files:**
-- Create: `thermorl2/experiments/__init__.py`, `thermorl2/experiments/provenance.py`, `thermorl2/experiments/probes.py`
-- Test: `tests/unit/test_probe_vectors.py`, `tests/unit/test_provenance.py`
-- Output: `thermoRL/thermorl-v2/artifacts/probes/{g1_uniform,g2_packed_vs_spread,g3_room_air}/`
-
-**Interfaces (produces):**
+- `Ambient(t_air_k: float = 290.0, t_ext_k: float = 290.0, t_air_k_by_unit: tuple[float, ...] | None = None)`
+- `rack_kw_to_fmu_inputs(rack_kw, p, ambient)`
+  - Unchanged when `t_air_k_by_unit is None`.
+  - Otherwise, the key `simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air` takes `t_air_k_by_unit[i-1]`. `_T_ext` still takes `t_ext_k`.
+- `SystemSpec` (frozen dataclass). Fields:
+  - `name: str`
+  - `fmu_path: Path` (repo-relative)
+  - `fmu_sha256: str`
+  - `grid: tuple[int, int]`
+  - `whatif_racks: tuple[int, ...]`
+- `SYSTEMS: dict[str, SystemSpec]` holds `lassen`, `summit`, `marconi100` with the values from spec §3.1. Each system's `whatif_racks` is the last ⌈n/4⌉ racks.
+- `get_system(name: str) -> SystemSpec`
+- `repo_root() -> Path`
+- `legacy_config(system: str) -> dict` returns `get_system_config(system).get_legacy()`.
+- `node_power_kw(cfg, cpu_util, gpu_util) -> float` returns `compute_node_power(cpu_util, gpu_util, 0, cfg)[0] / 1000`.
+- `rack_power_bounds(cfg) -> tuple[float, float]` returns `(idle_kw, peak_kw)`:
+  - per rack: `NODES_PER_RACK × node_power_kw(u, g) + CHASSIS_PER_RACK × SWITCHES_PER_CHASSIS × POWER_SWITCH / 1000`;
+  - idle uses `u = g = 0`;
+  - peak uses `u = CPUS_PER_NODE`, `g = GPUS_PER_NODE`.
+- `job_increment_kw(cfg, cpu_util, gpu_util, n_nodes) -> float` returns `n_nodes × (node_power_kw(cpu, gpu) − node_power_kw(0, 0))`.
 - `provenance.py`:
-  - `git_state() -> dict` with keys `sha` and `dirty`;
-  - `sha256_file(path: Path) -> str`;
-  - `write_manifest(out_dir: Path, **fields) -> Path`.
-  - Later tasks reuse these.
-- `probes.py`:
-  - `uniform_vector(n: int, idle_kw: float, peak_kw: float, f: float) -> np.ndarray`
-  - `packed_vector(n: int, idle_kw: float, peak_kw: float, total_kw: float) -> np.ndarray`
-    - Racks `0..k-1` at `peak_kw`, rack `k` at the remainder, the rest at `idle_kw`.
-    - `sum == total_kw` within 1e-9.
-    - `idle_kw ≤ each element ≤ peak_kw`.
-  - CLI: `uv run python -m thermorl2.experiments.probes {g1,g2,g3} --out <dir>`.
-  - Each probe:
-    1. instantiates one `FmuBackend`;
-    2. runs `warm_up(idle vector, Ambient(), dt_s=20, max_s=7200)`;
-    3. for each branch: `reset()`, then 540 steps of 20 s (3 h), recording all 44 `t_c` and `extras["W_flow_CDUP_kW"]` at every step.
-- Outputs per probe:
-  - `series.csv` with columns `branch,t_s,rack,t_c,pump_kw`;
-  - `summary.json` (keys below);
-  - one PNG;
-  - `manifest.json`, including the FMU SHA, the git state, and `warmup_used_s`.
-- `summary.json` keys:
-  - **G1:** `levels: [{f, rack_kw, mean_c, min_c, max_c, t63_s}]`, `fit: {a_c, b_c_per_kw, r2}`, `tau_s` (median `t63_s` over f ∈ {0.25, 0.5, 0.75}, measured from the idle snapshot), `t_hot_c` (fit evaluated at the f = 0.9 rack kW), `reaches_40c: bool`, `reaches_45c: bool`, `rack_spread_at_f1_c`.
-  - **G2:** `total_kw`, `k_full_racks`, `packed: {max_c, mean_c, spread_c}`, `spread: {…}`, `delta_max_c`, `decision: "GO"|"WEAK"|"STOP"`.
-  - **G3:** `affected_racks: [33..43]`, `delta_affected_c`, `delta_unaffected_c`, `decision: "USABLE"|"NOT_USABLE"`.
-- All last-window statistics use the final 30 min, except G1's `mean_c/min_c/max_c`, which use the final 15 min.
+  - `git_state() -> {"sha", "dirty"}`
+  - `sha256_file(path) -> str`
+  - `environment() -> dict` (python, uv, fmpy, numpy versions, platform)
+  - `write_manifest(out_dir: Path, **fields) -> Path`
+- `fmu_smoke.py` CLI: `uv run python -m thermorl2.experiments.fmu_smoke --system S`.
+  1. Verify the FMU SHA.
+  2. Build `FmuBackend(fmu_path, CouplingParams.from_legacy_config(cfg))`.
+  3. `warm_up(idle_vector, Ambient(), dt_s=Δ, max_s=600)`.
+  4. Print JSON: `{system, n_units, t_c_min, t_c_max, finite, wall_s}`.
 
-**Protocols (from spec §4, verbatim; do not alter):**
+- [ ] **Step 1: Write failing tests.**
+  - `test_per_unit_air_temperature_maps_by_index`: with 44 values `290 + i`, the `computeBlock_34` `T_Air` input is `323.0`.
+  - `test_default_ambient_unchanged`: the existing RAPS-equality test still passes.
+  - `test_systems_registry`, for each system:
+    - `len(whatif_racks) == ceil(n_racks/4)` and `whatif_racks[-1] == n_racks − 1`;
+    - `grid[0] × grid[1] ≥ n_racks`;
+    - `sha256_file(fmu_path) == fmu_sha256`.
+  - `test_rack_power_bounds_all_systems` (parametrised; integration): `idle < peak`. Print both values. Expected approximately:
 
-| Probe | Branches | Rule |
-|---|---|---|
-| G1 | 5 levels, all racks at `uniform_vector(44, idle, peak, f)` for f ∈ {0, 0.25, 0.5, 0.75, 1.0} | `t63` = first time the mean-rack rise reaches 63.2 % of its final-15-min rise |
-| G2 | `packed`: `packed_vector(44, idle, peak, 44 × uniform(f = 0.6))`; `spread`: `uniform_vector(…, 0.6)` | `delta_max_c` = packed max − spread max. **GO ≥ 2.0**, **WEAK 1.0–2.0**, **STOP < 1.0** |
-| G3 | `control`: f = 0.6, 290 K; `hot_row`: f = 0.6, `t_air_k_by_unit` = 308.15 for racks 33–43 (0-based), 290 for the rest | **USABLE** if the mean Δ over affected racks is ≥ 1.0 °C |
+    | system | idle (kW) | peak (kW) |
+    |---|---|---|
+    | lassen | 10.86 | 34.43 |
+    | summit | 13.2 | 45–47 |
+    | marconi100 | 12.4 | 37–39 |
 
-- [ ] **Step 1: Failing unit tests.**
-  - `packed_vector` sum equals the total; bounds hold; `k_full_racks` is correct for `total = 3.5·peak + 40.5·idle` (expect 3 full racks plus a partial).
-  - `uniform_vector` at f = 0 equals idle, and at f = 1 equals peak.
-  - `write_manifest` writes valid JSON containing the given fields.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_probe_vectors.py tests/unit/test_provenance.py -v`.
+  - `test_job_increment_zero_at_idle`.
+  - `test_write_manifest_roundtrip`.
+  - `test_fmu_smoke_all_systems` (marked `fmu`): runs `fmu_smoke` **as a subprocess per system**. Each must report `finite` and `n_units` equal to that system's rack count.
+- [ ] **Step 2: Confirm they fail.** Run `uv run pytest tests/unit tests/integration/test_power_model.py tests/fmu/test_fmu_smoke_all_systems.py -v`.
   - Expected: FAIL.
-- [ ] **Step 3:** Implement `provenance.py` and `probes.py`.
-  - The idle and peak values come from `rack_power_bounds(legacy_config())`.
-  - G3 secondary lever: also write `g3_room_air/candidate_cdu_parameters.txt`. List the FMU variables whose causality is `parameter`, whose variability is `tunable`, and whose name contains `computeBlock[1].cdu[1]`. List them only; do not use them.
-- [ ] **Step 4:** Run the unit tests, then the three probes, each as its own process:
+- [ ] **Step 3: Implement.**
+- [ ] **Step 4: Confirm they pass.** Run the command again.
+  - Expected: PASS.
+  - Fill the measured idle/peak and smoke `wall_s` into each `SYSTEM.md`.
+  - If Summit or Marconi100 fails to instantiate, step, or produce finite outputs, record it in `SYSTEM.md`. That system becomes **ineligible** for X01; this is not a stop condition unless all three fail.
+- [ ] **Step 5: Commit.**
   ```
-  uv run python -m thermorl2.experiments.probes g1 --out artifacts/probes/g1_uniform
-  uv run python -m thermorl2.experiments.probes g2 --out artifacts/probes/g2_packed_vs_spread
-  uv run python -m thermorl2.experiments.probes g3 --out artifacts/probes/g3_room_air
-  ```
-  - Expected: each finishes in under 2 min wall time and writes all four outputs.
-  - Re-run G2 once and confirm `summary.json` is byte-identical.
-- [ ] **Step 5:** Commit:
-  ```
-  feat(experiments): FMU physics probes G1 uniform sweep, G2 packed-vs-spread, G3 room-air lever
+  feat(adapter): system registry (lassen/summit/marconi100), per-rack room air, power-model helpers, per-system FMU smoke
   ```
 
-**CHECKPOINT C1 — physics reality check.** Write `docs/checkpoints/C1-physics.md` with:
-- the G1 table and fit, `tau_s`, `t_hot_c`, and whether 40 °C or 45 °C is reached;
-- G2 `delta_max_c` and its decision;
-- G3 deltas and its decision;
-- the paths of the three PNGs.
+### Task 3: Three-FMU G2 screen and mechanical FMU selection (X01)
 
-Then stop. A G2 decision of **STOP** is the first point at which the demo story can be falsified. Steering decides the replan.
+**Files:**
+- Create: `thermorl2/experiments/probes.py`, `thermorl2/experiments/select_fmu.py`
+- Test: `tests/unit/test_probe_vectors.py`, `tests/unit/test_select_fmu.py`
+- Output:
+  - `experiments/{lassen,summit,marconi100}/E02_g2_packed_vs_spread/`
+  - `experiments/cross_system/X01_fmu_selection/`
+
+**Interfaces (produces):**
+- `uniform_vector(n, idle_kw, peak_kw, f) -> np.ndarray`
+- `packed_vector(n, idle_kw, peak_kw, total_kw) -> np.ndarray`
+  - Racks `0..k−1` at peak, rack `k` at the remainder, the rest at idle.
+  - The sum equals the total within 1e-9, and every element lies within [idle, peak].
+- Probe CLI: `uv run python -m thermorl2.experiments.probes {g1,g2,g3} --system S --out <experiment dir>`.
+  1. One process, one `FmuBackend`.
+  2. Warm up: `warm_up(idle_vector, Ambient(), dt_s=Δ, max_s=7200)`.
+  3. For each branch: `reset()`, then 3 h of `step(·, Δ, ambient)`.
+  4. At every step, record all `t_c` and `extras["W_flow_CDUP_kW"]`.
+  5. Write:
+     - `results/series.parquet` (`branch, t_s, rack, t_c, pump_kw`);
+     - `results/summary.json`;
+     - `plots/*.png`;
+     - `provenance/manifest.json` (including `warmup_used_s`, `fmu_s_per_sim_h`, and `environment()`).
+- G2 `summary.json` keys:
+  - `system`, `n_racks`, `dt_s`, `idle_kw`, `peak_kw`, `total_kw`, `k_full_racks`
+  - `packed: {max_c, mean_c, spread_c}`, `spread: {max_c, mean_c, spread_c}`
+  - `delta_max_c`, `class` (`"GO"|"WEAK"|"STOP"`)
+  - `fmu_s_per_sim_h`, `projected_closed_loop_min_6h` (`= fmu_s_per_sim_h × 6 × 1.5 / 60`)
+  - `sane` (bool), `sanity_detail`
+  - Statistics use the final 30 min.
+- `select_primary(summaries: list[dict]) -> dict` returns `{eligible: [...], ranking: [...], primary: str, runner_up: str | None, class: str, tie_break_applied: bool, rule_version: "spec-2026-10-27-§4.1"}`, implementing spec §4.1 steps 1–5 exactly.
+  - CLI: `uv run python -m thermorl2.experiments.select_fmu --out experiments/cross_system/X01_fmu_selection experiments/*/E02_g2_packed_vs_spread/results/summary.json`
+  - It writes `results/summary.json`, `results/g2_comparison.csv`, and `plots/g2_cross_system.png` (Δ bar per system, coloured by class, annotated with C_s).
+
+- [ ] **Step 1: Pre-register.** Create the four experiment READMEs (three E02 plus X01) from the template. Fill Question, Pre-registered decision rule (spec §4.1, verbatim), Configuration and Method. Commit:
+  ```
+  docs(experiments): pre-register E02 G2 on three FMUs and X01 FMU selection rule
+  ```
+- [ ] **Step 2: Write failing tests.**
+  - `packed_vector`: sum and bounds hold; for `total = 3.5·peak + 40.5·idle` (n = 44), there are 3 full racks plus a partial.
+  - `uniform_vector`: endpoints are correct.
+  - `select_primary` fixtures:
+    - (a) the highest Δ wins;
+    - (b) a system with `C_s > 30` is ineligible;
+    - (c) tie-break: Δ values 2.5 and 2.2, both GO → the lower-C_s system wins;
+    - (d) all STOP → `class == "STOP"`;
+    - (e) an insane system is excluded.
+- [ ] **Step 3: Confirm they fail.** Run `uv run pytest tests/unit/test_probe_vectors.py tests/unit/test_select_fmu.py -v`.
+  - Expected: FAIL.
+- [ ] **Step 4: Implement**, then run the tests.
+  - Expected: PASS.
+- [ ] **Step 5: Run G2 on all three systems in parallel**, as three separate processes:
+  ```
+  uv run python -m thermorl2.experiments.probes g2 --system lassen     --out experiments/lassen/E02_g2_packed_vs_spread &
+  uv run python -m thermorl2.experiments.probes g2 --system marconi100 --out experiments/marconi100/E02_g2_packed_vs_spread &
+  uv run python -m thermorl2.experiments.probes g2 --system summit     --out experiments/summit/E02_g2_packed_vs_spread &
+  wait
+  ```
+  - Expected wall time: Lassen and Marconi100 a few minutes each; Summit roughly 30–60 min.
+  - Re-run the Lassen G2 once and save `provenance/rerun_1.json`. It must confirm a byte-identical `summary.json`.
+- [ ] **Step 6: Apply the selection rule.** Run `select_fmu`.
+  - Fill the Results, Observations, Conclusion and Provenance sections in all four READMEs.
+  - Update the `SYSTEM.md` cost fields and `INDEX.md`.
+  - **If `class == "STOP"`: stop now** and write C1 with the G2 results only.
+- [ ] **Step 7: Commit.**
+  ```
+  exp(x01): three-FMU G2 packed-vs-spread screen and mechanical primary-FMU selection
+  ```
+
+### Task 4: G1 and G3 on the primary FMU → CHECKPOINT C1
+
+**Files:**
+- Output:
+  - `experiments/<primary>/E01_g1_uniform/`
+  - `experiments/<primary>/E03_g3_room_air/`
+- `<primary>` comes from `experiments/cross_system/X01_fmu_selection/results/summary.json`.
+
+**Interfaces (produces):**
+- G1 `summary.json` keys:
+  - `levels: [{f, rack_kw, mean_c, min_c, max_c, t63_s}]`
+  - `fit: {a_c, b_c_per_kw, r2}`
+  - `tau_s` (median `t63_s` over f ∈ {.25, .5, .75})
+  - `t_hot_c` (the fit evaluated at the f = 0.9 rack kW)
+  - `reaches_40c`, `reaches_45c`, `rack_spread_at_f1_c`
+  - `t63` = first time the mean-rack rise reaches 63.2 % of its final-15-min rise.
+- G3 `summary.json` keys:
+  - `affected_racks` (= `whatif_racks`), `t_air_k_affected: 308.15`
+  - `delta_affected_c`, `delta_unaffected_c`
+  - `sane`, `decision` (`"USABLE"|"NOT_USABLE"`)
+  - Also write `results/candidate_cdu_parameters.txt`: FMU variables with causality `parameter`, variability `tunable`, and a name containing `computeBlock[1].cdu[1]`. **List only; do not use.**
+
+- [ ] **Step 1: Pre-register.** Create both READMEs (rules verbatim from spec §4.2). Commit:
+  ```
+  docs(experiments): pre-register G1 and G3 on primary FMU
+  ```
+- [ ] **Step 2: Run the probes.**
+  ```
+  probes g1 --system <primary> --out experiments/<primary>/E01_g1_uniform
+  probes g3 --system <primary> --out experiments/<primary>/E03_g3_room_air
+  ```
+  These run as separate processes and may run in parallel.
+- [ ] **Step 3: Write up.** Complete both READMEs, `SYSTEM.md` and `INDEX.md`.
+  - Create `thermorl2/experiments/configs/primary.yaml` containing exactly:
+    ```yaml
+    system: <primary>
+    thermal_predictive:
+      from: experiments/<primary>/E01_g1_uniform/results/summary.json
+      horizon_s: 600
+    ```
+    All later configs read the system from this file.
+- [ ] **Step 4: Commit.**
+  ```
+  exp(<primary>): G1 uniform sweep and G3 room-air lever on primary FMU
+  ```
+
+**CHECKPOINT C1 — FMU selection and physics.** Write `docs/checkpoints/C1-fmu-selection-and-physics.md` with:
+- the X01 table (Δ, class, C_s and sanity per system), the primary, the runner-up, and whether the tie-break applied;
+- G1 table, fit, `tau_s`, `t_hot_c`, and whether 40 °C or 45 °C is reached;
+- G3 decision;
+- links to the experiment READMEs.
+
+Push. **Stop.**
 
 ---
 
 ## Phase 1 — First closed-loop vertical slice (Day 2)
 
-### Task 4: Engine factory, power probe, timing semantics, cost benchmark
+### Task 5: Engine factory, power probe, timing semantics, cost bench
 
 **Files:**
 - Create: `thermorl2/raps_adapter/engine_factory.py`, `thermorl2/experiments/bench.py`
 - Test: `tests/integration/test_engine_factory.py`, `tests/integration/test_timing_semantics.py`
 
 **Interfaces (produces):**
-- `EngineSpec(system: str = "lassen", sim_time: str = "6h", time_delta: str = "20s", seed: int = 1)` — frozen dataclass.
-- `build_engine(spec: EngineSpec, jobs: list | None = None) -> raps.engine.Engine`
-  - Calls `SingleSimConfig.model_validate` with `{"system", "time", "time_delta", "workload": "random", "numjobs": 1, "seed", "noui": True, "output": "none", "cooling": False, "scheduler": "default", "policy": "fcfs"}`.
-  - If `jobs` is not None: sets `engine.jobs = jobs` and `engine.total_initial_jobs = len(jobs)`.
-  - Asserts `engine.timestep_start == 0` and `engine.time_delta == 20`.
+- `EngineSpec(system: str, sim_time: str = "6h", seed: int = 1)` is a frozen dataclass. `time_delta` is always `POWER_UPDATE_FREQ` of the system.
+- `build_engine(spec, jobs=None) -> raps.engine.Engine`:
+  - Builds the config with `SingleSimConfig.model_validate`:
+    ```python
+    {"system", "time", "time_delta": f"{Δ}s", "workload": "random", "numjobs": 1, "seed",
+     "noui": True, "output": "none", "cooling": False, "scheduler": "default", "policy": "fcfs"}
+    ```
+  - If `jobs` is given, sets `engine.jobs = jobs` and `engine.total_initial_jobs = len(jobs)`.
+  - Asserts `timestep_start == 0` and `time_delta == Δ`.
   - Does **not** create the generator.
-- `rack_kw_from_power_df(power_df: pd.DataFrame, racks_per_cdu: int) -> np.ndarray`
-  - Concatenates columns `Rack 1..Rack racks_per_cdu`, row-major, into an array of length `num_cdus × racks_per_cdu`.
-- `is_power_tick(tick) -> bool` returns `tick.power_df is not None`.
+- `rack_kw_from_power_df(power_df, racks_per_cdu) -> np.ndarray` concatenates columns `Rack 1..Rack R`, row-major.
+- `is_power_tick(tick, time_delta: int) -> bool` returns `tick.current_timestep % time_delta == 0`.
+- `bench.py` CLI: `uv run python -m thermorl2.experiments.bench --system S --hours 6`.
+  - Builds an idle engine and a warmed FMU, and steps the FMU on every power tick.
+  - Prints JSON: `{system, raps_s, fmu_s, total_s, power_ticks, fmu_steps}`.
 
-- [ ] **Step 1: Failing tests.**
-  - `test_build_engine_lassen_defaults`:
+- [ ] **Step 1: Failing tests.** All are parametrised over `[primary]` and read `configs/primary.yaml`. Lassen is the fallback if that file is absent.
+  - `test_build_engine_defaults`:
     - `cooling_model is None`;
-    - `config["NUM_CDUS"] == 44` and `config["NODES_PER_RACK"] == 18`.
-  - `test_idle_power_reconciles` (2 min, `jobs=[]`):
-    - 6 power ticks;
-    - per tick, `rack_kw.shape == (44,)`;
-    - `abs(rack_kw.sum() − power_df["Sum"].sum()) < 1e-6`;
-    - `abs(rack_kw.mean() − rack_power_bounds(cfg)[0]) < 0.05`.
-  - `test_arrival_at_t_scheduled_at_t_powered_at_next_delta`:
-    - use a minimal recording drop-in scheduler that places on the lowest free nodes via `assign_nodes_to_job(job, t, PolicyType.REPLAY)` after setting `scheduled_nodes`;
-    - one 18-node job with `cpu_trace=2.0`, `gpu_trace=4.0`, `submit_time=25`, `expected_run_time=600`, `time_limit=1200`;
-    - assert the scheduler was called at t = 25;
-    - assert the first power tick with `rack_kw[0] > 20` is t = 40.
-    - **If either assertion fails, stop and report the observed values.**
-  - `test_timeout_kill_active_with_dropin`: a job with `time_limit < expected_run_time` is killed (`engine.jobs_killed == 1`).
-- [ ] **Step 2:** Run `uv run pytest tests/integration/test_engine_factory.py tests/integration/test_timing_semantics.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement `engine_factory.py`, then `bench.py`.
-  - `bench.py` CLI: `uv run python -m thermorl2.experiments.bench --hours 6`.
-  - It builds an idle engine, warms the FMU, and steps the FMU at every power tick.
-  - It prints JSON `{raps_s, fmu_s, total_s, power_ticks}`.
-- [ ] **Step 4:** Run the tests (expected: PASS), then run the bench.
-  - **Horizon rule (spec §3.3):** if `total_s × 2 × 2 ≤ 300` (a 12 h run with jobs, assuming 2× overhead), set `horizon_h: 12` in later configs; otherwise use 6.
-  - Record the numbers and the chosen horizon in the commit body.
-- [ ] **Step 5:** Commit:
+    - `config["NUM_CDUS"]` equals the registry rack count.
+  - `test_idle_power_reconciles` (`sim_time = "2m"`, `jobs=[]`):
+    - exactly `120/Δ` power ticks;
+    - on every power tick, `rack_kw.shape == (n_racks,)`;
+    - `|Σrack_kw − Σpower_df["Sum"]| < 1e-6`;
+    - `|mean − idle_kw| < 0.05`.
+  - `test_power_df_is_stale_between_ticks` (documents the pitfall):
+    - `tick.power_df` is non-None on every yielded second;
+    - there are exactly `120/Δ` distinct `power_df` objects (`id()`).
+  - `test_arrival_scheduled_at_t_powered_at_next_tick`:
+    - Use a minimal recording drop-in that places jobs on the lowest free nodes: set `scheduled_nodes`, then `assign_nodes_to_job(job, t, PolicyType.REPLAY)`.
+    - One full-rack job: `nodes = NODES_PER_RACK`, `cpu_trace = CPUS_PER_NODE`, `gpu_trace = GPUS_PER_NODE`, `submit_time = 25`, `expected_run_time = 600`, `time_limit = 1200`.
+    - Assert the scheduler is called at t = 25.
+    - Assert the first power tick where `rack_kw[0] > idle + 0.5·(peak − idle)` is `ceil(25/Δ)·Δ`.
+    - **On failure: stop and report.**
+  - `test_time_limit_overrun_raises`: a job with `time_limit < expected_run_time` makes the generator raise an `Exception` whose message contains `"time limit"` (case-insensitive). This documents a RAPS limitation.
+- [ ] **Step 2: Run.** `uv run pytest tests/integration/test_engine_factory.py tests/integration/test_timing_semantics.py -v` → FAIL.
+- [ ] **Step 3: Implement.**
+- [ ] **Step 4: Run again → PASS, then bench the primary.**
+  - Run `bench --system <primary> --hours 6`.
+  - **Post-selection guard (spec §4.1 step 6):** if `total_s × 2 > 45 × 60`, switch to the X01 runner-up. Re-run Task 4 for that system, update `primary.yaml`, and record the switch in X01's README. Then continue.
+  - **Horizon rule:** use `horizon_h: 12` if `total_s × 2 × 2 ≤ 300`; otherwise use 6.
+  - Record the bench JSON and the horizon in `SYSTEM.md`.
+- [ ] **Step 5: Commit.**
   ```
-  feat(adapter): engine factory, per-rack power probe, timing-semantics tests, cost benchmark
+  feat(adapter): system-generic engine factory, power-tick detection, timing tests, cost bench
   ```
 
-### Task 5: Placement rule and scorers (pure core)
+### Task 6: Placement rule and scorers (pure core)
 
 **Files:**
 - Create: `thermorl2/core/placement.py`, `thermorl2/core/scorers.py`
@@ -278,97 +400,86 @@ Then stop. A G2 decision of **STOP** is the first point at which the demo story 
 
 **Interfaces (produces):**
 - `place(scores: np.ndarray, free_nodes_by_rack: list[list[int]], n: int) -> Placement`
-  - `rule="single"`: choose the best-scoring rack with `len(free) ≥ n`, and take its lowest `n` ids.
-  - Otherwise `rule="span"`: walk racks in descending score order (ties broken by lower index), taking the lowest free ids until `n` are taken.
-  - Raises `ValueError` if the total free count is less than `n`.
-  - `Placement.racks` lists racks in the order used, with no duplicates.
-- `RackContext` (frozen dataclass):
-  - `free_count: np.ndarray[int]`
-  - `committed_kw: np.ndarray`
-  - `t_c: np.ndarray`
-  - `job_kw: float` — the job's total increment
-  - `job_nodes: int`
-- `Scorer` Protocol: `name: str`; `params: dict`; `score(ctx: RackContext) -> np.ndarray` (length n_racks; higher is better).
-- Scorer classes:
-  - `Packing()` → `-arange(n)`
-  - `NodeBalance()` → `free_count`
-  - `PowerBalance()` → `-committed_kw`
-  - `CoolestRack()` → `-t_c`
-  - `ThermalPredictive(a_c: float, b_c_per_kw: float, tau_s: float, horizon_s: float = 600.0)` → `-(t_c + (a_c + b_c_per_kw·(committed_kw + job_kw) − t_c)·(1 − exp(−horizon_s/tau_s)))`
-- `make_scorer(name: str, params: dict) -> Scorer` — `name` is one of `packing`, `node_balance`, `power_balance`, `coolest_rack`, `thermal_predictive`.
-- Tie-breaking is done in `place`, not in the scorers.
+  - `rule="single"`: the best-scoring rack with `len(free) ≥ n`; take its lowest `n` node ids.
+  - Otherwise `rule="span"`: walk racks in descending score order (ties go to the lower index) and take the lowest free ids until `n` are taken.
+  - Raises `ValueError` if fewer than `n` nodes are free in total.
+  - `racks` lists the racks in the order used, without duplicates.
+- `RackContext` (frozen): `free_count: np.ndarray`, `committed_kw: np.ndarray`, `t_c: np.ndarray`, `job_kw: float`, `job_nodes: int`.
+- `Scorer` Protocol: `name: str`, `params: dict`, `score(ctx) -> np.ndarray` (higher is better).
+- Scorer implementations:
+  - `Packing` → `−arange(n)`
+  - `NodeBalance` → `free_count`
+  - `PowerBalance` → `−committed_kw`
+  - `CoolestRack` → `−t_c`
+  - `ThermalPredictive(a_c, b_c_per_kw, tau_s, horizon_s=600.0)` →
+    `−(t_c + (a_c + b_c_per_kw·(committed_kw + job_kw) − t_c)·(1 − exp(−horizon_s/tau_s)))`
+- `make_scorer(name, params) -> Scorer`, for names `packing | node_balance | power_balance | coolest_rack | thermal_predictive`.
 
 - [ ] **Step 1: Failing tests.**
-  - `test_single_rack_preferred`: scores favour rack 2, and rack 2 has 5 free → `racks == (2,)` and the lowest 5 ids of rack 2.
-  - `test_span_in_score_order`: n = 30, with free counts 18/10/18 and scores favouring rack 1 > rack 0 > rack 2 → takes 10 from rack 1, then 18 from rack 0, then 2 from rack 2. `rule == "span"`, and all 30 nodes are distinct.
-  - `test_ties_break_to_lower_index`.
-  - `test_insufficient_raises`.
-  - `test_thermal_predictive_formula`:
-    - inputs: `a = 20`, `b = 0.5`, `tau = 900`, `t_c = [30, 30]`, `committed = [10, 20]`, `job_kw = 5`;
-    - expected score[0] = `-(30 + (20 + 0.5·15 − 30)·(1 − e^(−600/900)))`;
-    - expected rack 0 preferred.
-  - `test_power_balance_prefers_lowest_committed`.
-  - `test_make_scorer_names`.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_placement.py tests/unit/test_scorers.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run the tests.
-  - Expected: PASS.
-- [ ] **Step 5:** Commit:
+  - `test_single_rack_preferred`
+  - `test_span_in_score_order`: n = 30, free counts 18/10/18, scores ranking rack 1 > rack 0 > rack 2. Expected: 10 nodes from rack 1, 18 from rack 0, 2 from rack 2; all 30 distinct; `rule == "span"`.
+  - `test_ties_break_to_lower_index`
+  - `test_insufficient_raises`
+  - `test_thermal_predictive_formula`: `a = 20`, `b = 0.5`, `τ = 900`, `t_c = [30, 30]`, `committed = [10, 20]`, `job = 5`. Score[0] must equal `−(30 + (20 + 0.5·15 − 30)·(1 − e^(−600/900)))`, and rack 0 is preferred.
+  - `test_power_balance_prefers_lowest_committed`
+  - `test_make_scorer_names`
+- [ ] **Step 2: Run.** `uv run pytest tests/unit/test_placement.py tests/unit/test_scorers.py -v` → FAIL.
+- [ ] **Step 3: Implement.** Then run the tests again → PASS.
+- [ ] **Step 4: Commit.**
   ```
   feat(core): placement rule and five rack scorers
   ```
 
-### Task 6: PlacementScheduler (RAPS drop-in)
+### Task 7: PlacementScheduler (RAPS drop-in)
 
 **Files:**
 - Create: `thermorl2/raps_adapter/scheduler.py`
 - Test: `tests/integration/test_scheduler.py`
 
 **Interfaces:**
-- **Consumes:** `place`, `RackContext`, `make_scorer` (Task 5); `RackGeometry`; `job_increment_kw` (Task 2); `build_engine` (Task 4).
+- **Consumes:**
+  - `place`, `RackContext`, `make_scorer` (Task 6)
+  - `RackGeometry`, `job_increment_kw` (Task 2)
+  - `build_engine` (Task 5)
 - **Produces:**
-  - `ThermalView` (dataclass): `t_obs_s: float`, `t_c: np.ndarray`, `pump_kw: np.ndarray`.
-  - `PlacementScheduler(resource_manager, geometry: RackGeometry, scorer: Scorer, cfg: dict, sink: Callable[[dict], None])`
-    - Attributes: `policy = PolicyType.FCFS` and `bfpolicy = None`, both plain settable attributes.
-    - `schedule(queue, running, current_time, accounts=None, sorted=False) -> None`
-      - Sort the queue by `(submit_time, id)`.
-      - Head-of-line FCFS: stop at the first job with `nodes_required > len(resource_manager.available_nodes)`.
-      - For each placed job:
-        1. build a `RackContext` from current free nodes, `committed_kw`, and the latest `ThermalView.t_c`;
-        2. score, then call `place`;
-        3. set `job.scheduled_nodes = list(placement.nodes)`;
-        4. call `resource_manager.assign_nodes_to_job(job, current_time, PolicyType.REPLAY)`;
-        5. `running.append(job)`, `queue.remove(job)`;
-        6. add the per-rack increment to `committed_kw` (nodes on rack × per-node increment);
-        7. emit one decision row to `sink`.
-      - Never calls `check_available_nodes`.
-    - `on_power_tick(rack_kw: np.ndarray) -> None` sets `committed_kw = rack_kw.copy()`.
-    - `on_thermal(view: ThermalView) -> None`.
+  - `ThermalView(t_obs_s: float, t_c: np.ndarray, pump_kw: np.ndarray)`.
+  - `PlacementScheduler(resource_manager, geometry, scorer, cfg: dict, sink: Callable[[dict], None])`, with plain attributes `policy = PolicyType.FCFS` and `bfpolicy = None`.
+  - `schedule(queue, running, current_time, accounts=None, sorted=False)` does the following:
+    1. Sort the queue by `(submit_time, id)`.
+    2. Head-of-line FCFS: stop at the first job whose `nodes_required > len(available_nodes)`.
+    3. For each placed job:
+       - build a `RackContext` from the current free nodes, `committed_kw` and the latest `ThermalView.t_c`;
+       - score the racks and call `place`;
+       - set `job.scheduled_nodes`;
+       - call `assign_nodes_to_job(job, current_time, PolicyType.REPLAY)`;
+       - append the job to `running` and remove it from `queue`;
+       - add the per-rack increment to `committed_kw`;
+       - emit one decision row to `sink`.
+    4. Never call `check_available_nodes`.
+  - `on_power_tick(rack_kw)` sets `committed_kw = rack_kw.copy()`.
+  - `on_thermal(view)` stores the view.
   - Decision row keys, exactly:
     `t_s, job_id, nodes_required, policy, rule, racks, nodes, job_kw, scores, t_c, committed_kw, free, t_obs_s, latency_us`
-    - Arrays are lists of floats rounded to 6 decimals.
-    - JSON keys are serialised in sorted order.
-- Per-node utilisation for the increment comes from the job's scalar `cpu_trace` and `gpu_trace`. If either is a list, use its mean.
+    - Arrays are rounded to 6 decimals.
+    - JSON is serialised with `sort_keys=True`.
+    - Trace utilisation is the scalar value, or the mean if the trace is a list.
 
-- [ ] **Step 1: Failing tests** (integration; each builds a 3 min engine with injected jobs, swaps in the scheduler, and drains the generator).
-  - `test_exact_nodes_allocated`: under `packing`, a 4-node job gets nodes 0–3. Under `node_balance`, starting from a state where rack 0 has fewer free nodes, the job goes to another rack. Assert `job.scheduled_nodes` equals the decision row's `nodes`.
-  - `test_policy_attrs_survive_prepare_system_state`: after the generator is primed, `scheduler.policy == PolicyType.FCFS` and `bfpolicy is None`.
-  - `test_power_balance_spreads_same_second_arrivals`: two identical 4-node jobs with the same `submit_time` → different racks.
-  - `test_coolest_rack_herds_same_second_arrivals`: same setup → the same rack (documents the ablation's expected behaviour).
-  - `test_nodes_distinct_and_free`: with 40 random jobs over 3 min under `power_balance`, every decision's nodes are distinct, and no node is double-allocated at any time (track it with a set in the sink).
-  - `test_head_of_line_blocking`: a 800-node job at the head blocks a 1-node job behind it.
-- [ ] **Step 2:** Run `uv run pytest tests/integration/test_scheduler.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run `uv run pytest tests/unit tests/integration -q`.
-  - Expected: all pass.
-- [ ] **Step 5:** Commit:
+- [ ] **Step 1: Failing tests** (3-minute engine on the primary system).
+  - `test_exact_nodes_allocated`
+  - `test_policy_attrs_survive_prepare_system_state`: after priming, `policy == FCFS` and `bfpolicy is None`.
+  - `test_power_balance_spreads_same_second_arrivals`: two identical 4-node jobs arriving in the same second land on different racks.
+  - `test_coolest_rack_herds_same_second_arrivals`: the same setup lands both jobs on the same rack.
+  - `test_nodes_distinct_and_free`: 40 random jobs under `power_balance`; no node is ever double-allocated (tracked through the sink).
+  - `test_head_of_line_blocking`: a job requiring more nodes than the system has, at the head of the queue, blocks a 1-node job behind it.
+- [ ] **Step 2: Run** `uv run pytest tests/integration/test_scheduler.py -v` → FAIL.
+- [ ] **Step 3: Implement.**
+- [ ] **Step 4: Run** `uv run pytest tests/unit tests/integration -q` → all pass.
+- [ ] **Step 5: Commit.**
   ```
-  feat(adapter): PlacementScheduler RAPS drop-in with committed-power tracking and decision rows
+  feat(adapter): PlacementScheduler drop-in with committed-power tracking and decision rows
   ```
 
-### Task 7: Synthetic workload and RAPS job construction
+### Task 8: Synthetic workload and RAPS job construction
 
 **Files:**
 - Create: `thermorl2/raps_adapter/workload/__init__.py`, `thermorl2/raps_adapter/workload/synthetic.py`, `thermorl2/raps_adapter/jobs.py`
@@ -377,430 +488,440 @@ Then stop. A G2 decision of **STOP** is the first point at which the demo story 
 **Interfaces (produces):**
 - `WORKLOAD_COLUMNS = ["id", "nodes_required", "cpu_util", "gpu_util", "submit_time", "expected_run_time", "time_limit"]`
 - `SyntheticSpec` (frozen):
-  - `rho: float = 0.6`
-  - `node_sizes = (1, 2, 4, 8, 16, 32)` with `node_weights = (0.35, 0.2, 0.2, 0.12, 0.09, 0.04)`
+  - `rho = 0.6`
+  - `node_sizes = (1, 2, 4, 8, 16, 32)`, `node_weights = (0.35, 0.2, 0.2, 0.12, 0.09, 0.04)`
   - `runtime_median_s = 1800`, `runtime_sigma = 0.8`, `runtime_clip_s = (300, 14400)`
-  - `gpu_choices = (0, 1, 2, 3, 4)`, `cpu_choices = (0.5, 1.0, 1.5, 2.0)`
+  - `cpu_choices = (0.5, 1.0, 1.5, 2.0)`
   - `limit_factor = 1.5`
-  - `from_dict(d) -> SyntheticSpec`
-- `generate(spec, seed: int, horizon_s: int, n_nodes: int = 792) -> pd.DataFrame`
+  - `from_dict(d)`
+- `generate(spec, seed, horizon_s, n_nodes, gpus_per_node) -> pd.DataFrame`:
+  - GPU utilisation is uniform over `0..gpus_per_node`.
   - Poisson arrivals at rate `rho·n_nodes / E[nodes·runtime]`.
-  - `E[nodes·runtime]` is estimated by Monte Carlo (1e6 draws) from the **same** `default_rng(seed)`, before arrivals are drawn.
-  - Submit times are integers in `[0, horizon_s)`.
-- `offered_utilisation(df, horizon_s, n_nodes, window=(3600, None)) -> float` — node-seconds offered inside the window divided by `n_nodes × window length`.
-- `write_workload(df, path: Path, meta: dict) -> str` — writes parquet plus `<path>.meta.json` containing the SHA-256, and returns the SHA.
-- `jobs_from_frame(df) -> list[raps.job.Job]`
+  - `E[nodes·runtime]` is estimated by Monte Carlo (1e6 samples) from the **same** `default_rng(seed)`, drawn before the arrivals.
+  - `time_limit = ceil(runtime × 1.5)`.
+- `offered_utilisation(df, horizon_s, n_nodes, window_start_s=3600) -> float`
+- `write_workload(df, path, meta) -> str`: writes parquet plus `<path>.meta.json` and returns the SHA-256.
+- `jobs_from_frame(df) -> list[Job]`:
   - Sets `Job._id_counter = 0`.
-  - Builds jobs with `job_dict(nodes_required, name=f"j{id}", account="demo", id, cpu_trace=cpu_util, gpu_trace=gpu_util, ntx_trace=0, nrx_trace=0, submit_time, time_limit, start_time=None, end_time=None, expected_run_time)`.
+  - Builds each job with `job_dict(nodes_required, name=f"j{id}", account="demo", id, cpu_trace=cpu_util, gpu_trace=gpu_util, ntx_trace=0, nrx_trace=0, submit_time, time_limit, start_time=None, end_time=None, expected_run_time)`.
+  - **Asserts `time_limit ≥ expected_run_time` for every row.**
 
 - [ ] **Step 1: Failing tests.**
-  - The same seed produces identical frames and SHA; a different seed differs.
-  - `offered_utilisation` is within ±10 % of 0.6 for a 6 h horizon at seed 1.
-  - Columns equal `WORKLOAD_COLUMNS`; `time_limit ≥ expected_run_time`; `1 ≤ nodes ≤ 32`; `0 ≤ gpu_util ≤ 4`.
-  - `jobs_from_frame` round-trips `nodes_required`, `submit_time`, and `expected_run_time`, and the first job id is consistent across two calls.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_synthetic.py tests/integration/test_jobs.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run the tests.
-  - Expected: PASS.
-- [ ] **Step 5:** Commit:
+  - Same seed → identical frame and SHA.
+  - `offered_utilisation` within ±10 % of 0.6 (6 h, seed 1, primary system sizes).
+  - Columns, bounds, and `time_limit ≥ expected_run_time` hold for all rows.
+  - `jobs_from_frame` round-trips fields and raises `AssertionError` on a row with `time_limit < expected_run_time`.
+- [ ] **Step 2: Run** `uv run pytest tests/unit/test_synthetic.py tests/integration/test_jobs.py -v` → FAIL.
+- [ ] **Step 3: Implement.** Run the tests again → PASS.
+- [ ] **Step 4: Commit.**
   ```
   feat(workload): deterministic synthetic workload targeting node utilisation; RAPS job builder
   ```
 
-### Task 8: EpisodeRunner, run CLI, and the vertical slice → CHECKPOINT C2
+### Task 9: EpisodeRunner, run CLI, vertical slice → CHECKPOINT C2
 
 **Files:**
-- Create: `thermorl2/raps_adapter/runner.py`, `thermorl2/experiments/run.py`, `thermorl2/experiments/configs/smoke_2h.yaml`, `thermorl2/experiments/configs/g4_synthetic.yaml`
+- Create:
+  - `thermorl2/raps_adapter/runner.py`
+  - `thermorl2/experiments/run.py`
+  - `thermorl2/experiments/configs/smoke_2h.yaml`
+  - `thermorl2/experiments/configs/g4_synthetic.yaml`
 - Test: `tests/fmu/test_vertical_slice.py` (marks: `fmu`, `slow`)
+- Output: `experiments/<primary>/E10_c2_vertical_slice/`
 
 **Interfaces:**
-- **Consumes:** Tasks 2, 4, 6, 7; `FmuBackend`; `provenance.write_manifest`.
+- **Consumes:** Tasks 2, 5, 7, 8; `FmuBackend`; `provenance`.
 - **Produces:**
-  - Config YAML schema:
+  - Config schema. The system comes from `primary.yaml` via `include: primary.yaml`:
     ```yaml
     name: g4_synthetic
-    system: lassen
-    horizon_h: 6            # or 12 per Task 4 rule
+    include: primary.yaml
+    experiment_dir: experiments/{system}/E11_g4_synthetic
+    horizon_h: 6                       # per Task 5 horizon rule
     warmup_s: 7200
-    fmu: {path: ../../models/POWER9CSM/fmus/lassen.fmu, sha256: 2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b}
-    workload: {kind: synthetic, rho: 0.6}          # or {kind: alibaba, variant: <chosen>, rho: 0.6}
-    scenario: {name: nominal, ambient_schedule: []} # list of {start_s, t_air_k_by_unit: {racks: [33..43], k: 308.15}}
-    thermal_predictive: {from: artifacts/probes/g1_uniform/summary.json, horizon_s: 600}
+    workload: {kind: synthetic, rho: 0.6}
+    scenario: {name: nominal, label: "", ambient_schedule: []}
     policies: [packing, node_balance, power_balance, coolest_rack, thermal_predictive]
     seeds: [1, 2, 3]
     ```
-  - `EpisodeRunner(cfg: dict, policy: str, seed: int, out_dir: Path)` with `.run() -> Path`:
-    1. Generate or load the workload. It is cached under `artifacts/workloads/<name>_seed<seed>.parquet` and reused by SHA.
-    2. Build the engine and inject `jobs_from_frame`.
-    3. Swap in `PlacementScheduler` with the decision sink set to `decisions.jsonl`.
-    4. Create the backend and `warm_up(idle_vector, Ambient(), 20, warmup_s)`; publish the initial `ThermalView`.
-    5. Iterate the generator. On each power tick:
+    Each `ambient_schedule` entry has the form `{start_s, racks: whatif|[...], t_air_k}`.
+  - `EpisodeRunner(cfg, policy, seed, run_dir).run() -> Path`:
+    1. Generate or load the workload. It is cached at `experiments/{system}/_workloads/<workload-key>_seed<s>.parquet` and reused by SHA.
+    2. Build the engine and inject the jobs.
+    3. Swap in `PlacementScheduler`, with its sink writing to `decisions.jsonl`.
+    4. Construct the `FmuBackend` (SHA verified) and call `warm_up(idle, Ambient(), Δ, warmup_s)`. Publish the initial `ThermalView`.
+    5. Iterate the generator. On each `is_power_tick`:
        - `rack_kw` → `scheduler.on_power_tick`;
-       - `backend.step(rack_kw, 20, ambient_at(t))`;
+       - `backend.step(rack_kw, Δ, ambient_at(t))`;
        - `observe()` → `scheduler.on_thermal`;
        - append the interval rows.
-    6. After the loop, write `intervals.parquet`, `manifest.json`, and `stdout_summary.json`.
-  - `intervals.parquet` columns:
-    `t_s, rack, kw, t_c, pump_kw, free, it_kw_total, n_running, n_queued, scenario_active`
-  - `manifest.json` additionally contains:
-    - `idle_kw`, `peak_kw`;
-    - `warmup_used_s`;
-    - `thermal_predictive_params` (when that policy is used);
-    - `workload_sha256` and `workload_path` (relative to the repo root);
-    - `t_idle_c`: 44 floats, the per-rack coolant °C at the warm-up snapshot;
-    - timings `raps_s`, `fmu_s` (= `backend.runtime_s()`), `total_s`.
-  - Run dir: `artifacts/runs/<cfg.name>/<policy>_seed<seed>/`.
-  - CLI: `uv run python -m thermorl2.experiments.run --config <yaml> --policy <p> --seed <s> [--horizon-h H] [--out artifacts/runs]`.
+    6. At the end, assert `fmu_steps == horizon_s / Δ`. Then write `intervals.parquet` and `manifest.json`.
+  - `intervals.parquet` columns: `t_s, rack, kw, t_c, pump_kw, free, it_kw_total, n_running, n_queued, scenario_active`.
+  - Manifest adds:
+    - `system`, `idle_kw`, `peak_kw`, `warmup_used_s`
+    - `t_idle_c` (per-rack, at the snapshot)
+    - `thermal_predictive_params`
+    - `workload_path`, `workload_sha256`
+    - `fmu_steps`, `raps_s`, `fmu_s`, `total_s`
+    - `backend: "fmu"`
+  - Run directory: `<experiment_dir>/runs/<policy>_seed<seed>/`.
+  - CLI: `uv run python -m thermorl2.experiments.run --config <yaml> --policy <p> --seed <s> [--horizon-h H] [--experiment-dir D]`.
 
-- [ ] **Step 1: Failing test** `test_vertical_slice`. Run `smoke_2h.yaml` (horizon 2 h, ρ 0.6) for `packing` and `power_balance` into `tmp_path`, then assert:
-  - both run dirs have the three files;
+- [ ] **Step 1: Pre-register E10.** Create its README.
+  - Question: does the closed loop work and preserve the invariants?
+  - Rule: invariants 1–5 hold.
+  - Commit it.
+- [ ] **Step 2: Failing test `test_vertical_slice`.** Run `smoke_2h.yaml` (2 h, ρ 0.6) with `packing` and `power_balance` into `tmp_path`, then assert:
+  - all files exist;
   - `it_kw_total` per `t_s` is identical across the two runs (`atol=1e-6`);
-  - every decision's `nodes` length equals `nodes_required`;
-  - Σ `kw` per tick equals `it_kw_total`;
-  - rerunning `packing` produces a byte-identical `decisions.jsonl`.
-- [ ] **Step 2:** Run `uv run pytest tests/fmu/test_vertical_slice.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run the test.
-  - Expected: PASS.
-- [ ] **Step 5:** Produce the vertical-slice figure. Write a small throwaway function inside `run.py --plot-pair`, or use Task 10's plotting early.
-  - Output: side-by-side rack × time `t_c` heatmaps for the two smoke runs on a shared colour scale, saved to `artifacts/figures/c2_vertical_slice.png`.
-  - Also record the time-averaged max-rack °C over [1 h, 2 h] for both runs.
-- [ ] **Step 6:** Commit:
+  - every decision has `len(nodes) == nodes_required`;
+  - Σ`kw` per tick equals `it_kw_total`;
+  - `fmu_steps == 7200/Δ`;
+  - re-running `packing` yields a byte-identical `decisions.jsonl`.
+- [ ] **Step 3: Run** `uv run pytest tests/fmu/test_vertical_slice.py -v` → FAIL.
+- [ ] **Step 4: Implement.** Run the test again → PASS.
+- [ ] **Step 5: Produce the E10 artifact.**
+  - Run the 2 h smoke into `experiments/<primary>/E10_c2_vertical_slice/runs/`.
+  - Write `plots/heatmaps.png`: side-by-side rack × time `t_c` heatmaps on a shared colour scale. A minimal function is fine here; Task 11 generalises it.
+  - Record time-averaged max-rack °C over [1 h, 2 h] for both runs, plus wall times.
+  - Complete the README and INDEX.
+- [ ] **Step 6: Commit.**
   ```
-  feat(adapter): EpisodeRunner closed loop (RAPS ticks -> FMU steps -> placement), run CLI, vertical-slice test
+  feat(adapter): EpisodeRunner closed loop, run CLI, vertical slice (E10)
   ```
 
-**CHECKPOINT C2 — first closed-loop result.** Write `docs/checkpoints/C2-vertical-slice.md` containing:
-- the figure;
+**CHECKPOINT C2 — first closed-loop result.** Write `docs/checkpoints/C2-vertical-slice.md` with:
+- the heatmap figure;
 - both max-rack numbers;
-- the wall times (`raps_s`, `fmu_s`, `total_s`);
-- confirmation of all four invariants;
+- `raps_s`, `fmu_s`, `total_s`;
+- the invariant results;
 - the chosen horizon.
 
-Then stop.
+Push. **Stop.**
 
 ---
 
 ## Phase 2 — Conservative demo complete (Day 3)
 
-### Task 9: Metrics from ledgers and cross-policy invariants
+### Task 10: Metrics from ledgers and cross-policy invariants
 
 **Files:**
 - Create: `thermorl2/core/metrics.py`
 - Test: `tests/unit/test_metrics.py`
 
 **Interfaces (produces):**
-- `Run` (dataclass): `name: str`, `intervals: pd.DataFrame`, `decisions: pd.DataFrame`, `manifest: dict`.
-- `load_run(run_dir: Path) -> Run`.
-  - This is the only file I/O in `core`. Pandas and parquet are allowed.
-- `run_metrics(run: Run, eval_start_s: float, t_hot_c: float, t_idle_c: np.ndarray, t_max_c: float = 45.0) -> dict`. Keys:
-  - `maxrack_mean_c`, `maxrack_p99_c`, `spread_mean_c`, `mean_rack_c`;
-  - `hot_rack_seconds`;
-  - `thi_t_below_0p1_frac`;
-  - `pump_energy_kwh`, `it_energy_kwh`;
-  - `jobs_started`, `wait_mean_s`, `wait_p95_s`.
-  - All thermal keys are computed over `t_s ≥ eval_start_s`.
-  - Wait is `t_s(decision) − submit_time`, taken from the workload parquet referenced in the manifest.
-- `invariants(runs: list[Run]) -> dict` returns:
-  - `it_kw_identical: bool` (`atol=1e-6`);
-  - `start_times_identical: bool` (decision `t_s` per `job_id`);
-  - `max_abs_it_kw_diff`.
-- `disagreement_rate(decisions: pd.DataFrame, scorer: Scorer) -> float`.
-  - Re-score each logged context (`free`, `committed_kw`, `t_c`, `job_kw`, `nodes_required`) with `scorer`, apply `place`, and compare the first rack with the logged `racks[0]`.
-- `affected_metrics(run, racks: list[int], eval_start_s) -> dict` returns `maxrack_mean_c` restricted to the given racks (used by G5).
+- `Run(name, intervals, decisions, manifest)` and `load_run(run_dir) -> Run`. This is the only file I/O in `core`.
+- `run_metrics(run, eval_start_s, t_hot_c, t_max_c=45.0) -> dict`. Thermal keys use `t_s ≥ eval_start_s`; `t_idle_c` comes from the manifest. Keys:
+  - `maxrack_mean_c`, `maxrack_p99_c`, `spread_mean_c`, `mean_rack_c`
+  - `hot_rack_seconds`, `thi_t_below_0p1_frac`
+  - `pump_energy_kwh`, `it_energy_kwh`
+  - `jobs_started`, `wait_mean_s`, `wait_p95_s` (wait is computed from the workload parquet in the manifest)
+- `invariants(runs) -> {it_kw_identical, start_times_identical, max_abs_it_kw_diff, fmu_steps_ok}`
+- `disagreement_rate(decisions, scorer) -> float`: re-score each logged context, apply `place`, and compare the first rack against the logged `racks[0]`.
+- `affected_metrics(run, racks, eval_start_s) -> {maxrack_mean_c}`
 
 - [ ] **Step 1: Failing tests** on a hand-built 3-rack, 4-tick ledger:
-  - `maxrack_mean_c` and `spread_mean_c` match hand-computed values;
-  - `hot_rack_seconds` = 2 rack-ticks × 20 s = 40;
-  - `invariants` returns False when one tick's `it_kw_total` differs by 1 kW;
-  - `disagreement_rate` = 0.5 on a 2-decision fixture.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_metrics.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run the tests.
-  - Expected: PASS.
-- [ ] **Step 5:** Commit:
+  - `maxrack_mean_c` and `spread_mean_c` equal hand-computed values;
+  - `hot_rack_seconds = 2 × Δ`;
+  - `invariants` is False when one tick differs by 1 kW;
+  - `disagreement_rate = 0.5` on a 2-decision fixture.
+- [ ] **Step 2: Run** `uv run pytest tests/unit/test_metrics.py -v` → FAIL.
+- [ ] **Step 3: Implement.** Run the tests again → PASS.
+- [ ] **Step 4: Commit.**
   ```
   feat(core): ledger metrics, cross-policy invariants, decision-disagreement diagnostic
   ```
 
-### Task 10: Plots, animation, and the report builder
+### Task 11: Plots, animation, report builder
 
 **Files:**
 - Create: `thermorl2/experiments/plots.py`, `thermorl2/experiments/report.py`
-- Test: `tests/unit/test_plots_smoke.py` (uses a synthetic ledger and writes to `tmp_path`)
+- Test: `tests/unit/test_plots_smoke.py`
 
 **Interfaces (produces):**
-- `heatmaps(runs: list[Run], out_png: Path, vmin: float, vmax: float)`
-  - One rack × time panel per run, sharing a colour scale.
-  - Title is the policy name.
-  - A vertical line marks `scenario_active` onset if present.
-- `timeseries(runs, out_png)` — max-rack °C and spread over time, one line per policy.
-- `metrics_table(rows: list[dict], out_md: Path)` — mean ± min/max across seeds, per policy.
-- `animate_grid(runs: list[Run], out_path: Path, stride_ticks: int = 3)`
-  - Side-by-side 4 × 11 schematic rack grids coloured by `t_c` on a shared scale.
-  - Annotate each rack with kW; placement pulses come from the decisions.
-  - GIF via pillow; MP4 if ffmpeg is present.
-- `g2_figure(probe_dir: Path, out_png: Path)`.
-- `report.py` CLI: `uv run python -m thermorl2.experiments.report artifacts/runs/<cfg.name> --probe artifacts/probes/g1_uniform`. It writes into `artifacts/reports/<cfg.name>/`:
-  - `metrics.csv`, `metrics.md`;
-  - `heatmaps_seed1.png`, `timeseries_seed1.png`, `anim_packing_vs_thermal_predictive_seed1.gif`;
-  - `invariants.json`;
-  - `decision.json`, which applies the G4/G5 rule from spec §4.
-  - **The rule must be coded exactly.** Value is shown if, for every seed, `power_balance.maxrack_mean_c − thermal_predictive.maxrack_mean_c ≥ 0.5`. Also record the per-seed `packing − thermal_predictive` gap.
+- `heatmaps(runs, out_png, vmin, vmax)` — shared colour scale, titled by policy, with a marker at scenario onset.
+- `timeseries(runs, out_png)` — max-rack and spread over time.
+- `metrics_table(rows, out_md)` — mean with min/max across seeds.
+- `animate_grid(runs, out_path, grid, stride_ticks=3)`:
+  - side-by-side schematic grids using the system's `grid`;
+  - colour = `t_c` on a shared scale;
+  - per-rack kW annotation when there are 60 racks or fewer;
+  - placement pulses;
+  - GIF output (MP4 if ffmpeg is present).
+- `g2_figure(experiment_dir, out_png)`.
+- `report.py` CLI: `uv run python -m thermorl2.experiments.report <experiment_dir>`. It writes into `<experiment_dir>/results` and `plots`:
+  - `metrics.csv`, `metrics.md`, `invariants.json`;
+  - `heatmaps_seed1.png`, `timeseries_seed1.png`;
+  - `anim_packing_vs_thermal_predictive_seed1.gif`, `anim_power_balance_vs_thermal_predictive_seed1.gif`;
+  - `summary.json`, whose `decision` field codes the spec §4.2 rule exactly. Value beyond power holds iff, for every seed, `power_balance.maxrack_mean_c − thermal_predictive.maxrack_mean_c ≥ 0.5`. It also records per-seed packing-vs-thermal gaps and the disagreement rate.
+- `t_hot_c` comes from the G1 summary referenced in `primary.yaml`.
 
-- [ ] **Step 1: Failing smoke tests.** Each function writes a non-empty file. `decision.json` on a fixture gives `value_beyond_power: false` when the gap is 0.3 in one seed.
-- [ ] **Step 2:** Run → FAIL.
-- [ ] **Step 3:** Implement.
-- [ ] **Step 4:** Run → PASS. Also write `artifacts/figures/g2_packed_vs_spread.png` from the probe.
-- [ ] **Step 5:** Commit:
+- [ ] **Step 1: Failing smoke tests.**
+  - Every function writes a non-empty file.
+  - `summary.json` on a fixture gives `value_beyond_power: false` when one seed's gap is 0.3.
+- [ ] **Step 2: Run → FAIL. Step 3: Implement. Step 4: Run → PASS.**
+  - Also write `experiments/cross_system/X01_fmu_selection/plots/g2_packed_vs_spread_<primary>.png`.
+- [ ] **Step 5: Commit.**
   ```
   feat(experiments): heatmaps, time series, animated rack grid, report with pre-registered decision rule
   ```
 
-### Task 11: Run matrix and G4 on the synthetic workload → CHECKPOINT C3
+### Task 12: Run matrix and G4 on the synthetic workload → CHECKPOINT C3
 
 **Files:**
 - Create: `thermorl2/experiments/run_matrix.py`
-- Modify: `thermorl2/experiments/configs/g4_synthetic.yaml` (set `horizon_h` per the Task 4 rule)
+- Output: `experiments/<primary>/E11_g4_synthetic/`
 
 **Interfaces (produces):**
-- CLI: `uv run python -m thermorl2.experiments.run_matrix --config <yaml> [--policies …] [--seeds …] --workers 6`.
-- It launches one `python -m thermorl2.experiments.run` subprocess per (policy, seed). There is one FMU per process.
-- It skips run dirs whose manifest already exists with the same config hash.
-- It exits non-zero if any run fails.
+- CLI: `uv run python -m thermorl2.experiments.run_matrix --config <yaml> [--policies …] [--seeds …] --workers N`.
+  - Launches one `run` subprocess per (policy, seed); each subprocess owns one FMU.
+  - Skips a run whose manifest has the same config hash.
+  - Exits non-zero if any run fails.
+  - `--workers` defaults to `min(6, cpu_count − 2)`.
 
-- [ ] **Step 1:** Implement `run_matrix.py`. Smoke it with `--config configs/smoke_2h.yaml --policies packing,power_balance --seeds 1`.
-  - Expected: 2 run dirs.
-- [ ] **Step 2:** Run the full G4 synthetic matrix: 5 policies × 3 seeds.
-- [ ] **Step 3:** Run `report.py` on it.
-  - Expected: `invariants.json` shows both booleans as true. If not, **stop**.
-- [ ] **Step 4:** Commit the code, the report directory, and the run ledgers (respecting the 25 MB rule):
+- [ ] **Step 1: Pre-register E11.** Write the README with the spec §4.2 G4 rule verbatim, and commit it.
+- [ ] **Step 2: Implement.** Smoke-test with `smoke_2h.yaml --policies packing,power_balance --seeds 1`; expect 2 runs.
+- [ ] **Step 3: Run the full matrix.** `run_matrix --config configs/g4_synthetic.yaml` (5 policies × 3 seeds), then `report experiments/<primary>/E11_g4_synthetic`.
+  - If `invariants.json` contains any false value, **stop**.
+- [ ] **Step 4: Finish and commit.** Complete the README and INDEX. Commit code, results, plots and runs (subject to the 25 MB rule):
   ```
-  exp(g4): synthetic workload, 5 policies x 3 seeds, report
+  exp(<primary>): E11 G4 synthetic, 5 policies x 3 seeds
   ```
 
-**CHECKPOINT C3 — Conservative demo complete.** Write `docs/checkpoints/C3-g4-synthetic.md` containing:
-- the metrics table;
-- the decision JSON;
-- the per-seed gaps;
-- the invariants;
-- the figure and GIF paths;
+**CHECKPOINT C3 — Conservative demo complete.** Write `docs/checkpoints/C3-g4-synthetic.md` with:
+- the metrics table and decision;
+- per-seed gaps and the disagreement rate;
+- invariant results;
+- figure and GIF links;
 - runtime per run.
 
-From this point the Conservative target is demo-able.
+Push. **Stop.**
 
 ---
 
 ## Phase 3 — Alibaba-derived workload (Day 4)
 
-### Task 12: Alibaba-derived workload builder
+**Prerequisite:** Bipin copies `datasets/alibaba_gpu_2023/` to the same path on Arch. Verify it with `cd datasets/alibaba_gpu_2023 && shasum -a 256 -c checksums.txt`. If the data is missing, stop and ask for it.
+
+### Task 13: Alibaba-derived workload builder
 
 **Files:**
 - Create: `thermorl2/raps_adapter/workload/alibaba.py`, `thermorl2/experiments/configs/g4_alibaba.yaml`
-- Test: `tests/unit/test_alibaba.py` (uses a tiny inline CSV fixture, not the gitignored dataset)
+- Modify: `runner.py`, to dispatch on `workload.kind`
+- Test: `tests/unit/test_alibaba.py` (uses an inline fixture CSV, not the dataset)
 
 **Interfaces (produces):**
-- `load_pods(csv_path: Path) -> pd.DataFrame`
-  - Drops `pod_phase == "Pending"` and `num_gpu == 0`.
+- `load_pods(csv_path) -> pd.DataFrame`
+  - Drops rows with `pod_phase == "Pending"` and rows with `num_gpu == 0`.
   - Adds `runtime_s = deletion_time − creation_time`.
-- `map_pods(pods: pd.DataFrame, cpus_per_socket: int = 20) -> pd.DataFrame`, with columns `nodes_required, gpu_util, cpu_util, runtime_s, creation_time`:
-  - `nodes = max(1, ceil(num_gpu/4))`
-  - `gpu_util = min(4, num_gpu·gpu_milli/1000/nodes)`
-  - `cpu_util = min(2, cpu_milli/1000/cpus_per_socket/nodes)`
-- `pod_power_stats(mapped, cfg) -> dict` with keys `mean_node_increment_kw` and `share_nodes_ge2_gpu`.
-- `derive_workload(mapped, rho: float, horizon_s: int, seed: int, n_nodes: int = 792) -> pd.DataFrame` (columns `WORKLOAD_COLUMNS`):
-  1. Clip runtimes to `[300, horizon_s]`.
-  2. `default_rng(seed)` picks a start offset into the creation-ordered pods. Iterate cyclically.
-  3. Compute the time-scale factor analytically, so that offered node-utilisation equals `rho`: `scale = (mean original inter-arrival) / (target inter-arrival)`, where the target inter-arrival is `E[nodes·runtime_clipped] / (rho·n_nodes)`.
-  4. Submit times = cumulative scaled inter-arrivals, truncated at `horizon_s`.
+- `map_pods(pods, gpus_per_node, cpus_per_socket=20) -> pd.DataFrame` with columns `nodes_required, gpu_util, cpu_util, runtime_s, creation_time`, using the spec §3.4 formulas.
+- `pod_power_stats(mapped, cfg) -> {mean_node_increment_kw, share_nodes_ge2_gpu}`
+- `derive_workload(mapped, rho, horizon_s, seed, n_nodes) -> pd.DataFrame` (columns: `WORKLOAD_COLUMNS`). Steps:
+  1. Clip runtimes to [300, horizon_s].
+  2. `default_rng(seed)` picks a start offset into the creation-ordered pods. Iterate cyclically from there.
+  3. `scale = mean_original_interarrival / target_interarrival`, where `target = E[nodes·runtime] / (rho·n_nodes)`.
+  4. Submit times are the cumulative scaled inter-arrivals, cut off at `horizon_s`.
   5. `time_limit = ceil(1.5·runtime)`.
-- `choose_variant(raw_dir: Path, cfg) -> dict`
-  - Computes `pod_power_stats` for `default` and `multigpu50`.
-  - Selects the variant with the higher `mean_node_increment_kw`.
-  - Writes `artifacts/workloads/alibaba_variant_choice.json` **before** any Alibaba policy run.
+- `choose_variant(raw_dir, cfg) -> dict` computes stats for `default` and `multigpu50`, picks the variant with the higher `mean_node_increment_kw`, and writes `experiments/<primary>/E12_g4_alibaba/results/variant_choice.json` **before any policy run**.
 
 - [ ] **Step 1: Failing tests.**
-  - Mapping examples: `num_gpu=8, gpu_milli=1000` → `nodes=2, gpu_util=4.0`. `num_gpu=1, gpu_milli=500` → `nodes=1, gpu_util=0.5`.
+  - `num_gpu=8, gpu_milli=1000` → `nodes=2, gpu_util=4.0` (G = 4).
+  - `num_gpu=1, gpu_milli=500` → `nodes=1, gpu_util=0.5`.
+  - With G = 6: `num_gpu=8` → `nodes=2, gpu_util=4.0`.
   - Pending rows are dropped.
-  - The same seed gives an identical frame.
-  - `offered_utilisation` is within ±15 % of 0.6 on a fixture with enough rows.
-  - Submit times are sorted and lie within `[0, horizon_s)`.
-- [ ] **Step 2:** Run `uv run pytest tests/unit/test_alibaba.py -v`.
-  - Expected: FAIL.
-- [ ] **Step 3:** Implement. Extend the `EpisodeRunner` workload dispatch to accept `kind: alibaba`; it reads `datasets/alibaba_gpu_2023/raw/`.
-- [ ] **Step 4:** Run the tests (expected: PASS). Then run `choose_variant` and commit its JSON.
-- [ ] **Step 5:** Commit:
+  - Same seed → identical frame.
+  - Offered utilisation within ±15 % of 0.6 on the fixture.
+  - Submit times are sorted and lie in `[0, horizon)`.
+  - `time_limit ≥ runtime` for every row.
+- [ ] **Step 2: Run** `uv run pytest tests/unit/test_alibaba.py -v` → FAIL.
+- [ ] **Step 3: Implement.** Run the tests again → PASS.
+- [ ] **Step 4: Pre-register E12.** Write its README, run `choose_variant`, and commit the README together with the variant choice.
+- [ ] **Step 5: Commit.**
   ```
-  feat(workload): Alibaba GPU 2023-derived workload (documented pod->node mapping, rate-scaled arrivals)
-  ```
-
-### Task 13: G4 on the Alibaba-derived workload → CHECKPOINT C4
-
-- [ ] **Step 1:** Run `run_matrix --config configs/g4_alibaba.yaml --workers 6` (5 policies × 3 seeds), then `report.py`.
-- [ ] **Step 2:** If the invariants are false, **stop**.
-- [ ] **Step 3:** Commit:
-  ```
-  exp(g4): Alibaba-derived workload, 5 policies x 3 seeds, report
+  feat(workload): Alibaba GPU 2023-derived workload (documented mapping, rate-scaled arrivals)
   ```
 
-**CHECKPOINT C4.** Write `docs/checkpoints/C4-g4-alibaba.md` with the same contents as C3, plus the variant choice and its statistics, and the realised utilisation.
+### Task 14: G4 on the Alibaba-derived workload → CHECKPOINT C4
+
+- [ ] **Step 1: Run.** `run_matrix --config configs/g4_alibaba.yaml`, then `report experiments/<primary>/E12_g4_alibaba`.
+  - Any false invariant → **stop**.
+- [ ] **Step 2: Finish and commit.** Complete the README and INDEX:
+  ```
+  exp(<primary>): E12 G4 Alibaba-derived, 5 policies x 3 seeds
+  ```
+
+**CHECKPOINT C4.** Write `docs/checkpoints/C4-g4-alibaba.md`. Same content as C3, plus the variant choice and realised utilisation. Push. **Stop.**
 
 ---
 
 ## Phase 4 — Visualisation (Day 5)
 
-### Task 14: Three.js side-by-side replay adapted to Lassen (fallback: Task 10 GIFs)
+### Task 15: Three.js side-by-side replay (fallback: Task 11 GIFs)
 
 **Files:**
-- Create: `thermoRL/thermorl-v2/viz/` — copy `thermoRL/thermoRL-new/viz/`, excluding `node_modules`
+- Create: `thermoRL/thermorl-v2/viz/` — copy of `thermoRL/thermoRL-new/viz/`, without `node_modules`
 - Create: `thermorl2/experiments/export_viz.py`
 - Test: `tests/unit/test_export_viz.py`
-- Output: `artifacts/demo/replay_<cfg.name>_<policyA>_vs_<policyB>_seed<s>/` (self-contained `index.html`, `assets/`, `bundle-data.js`)
+- Output: `experiments/<primary>/<EID>/plots/replay_<policyA>_vs_<policyB>_seed<s>/` containing `index.html`, `assets/` and `bundle-data.js`
 
 **Interfaces (produces):**
-- `export_bundle(run_a: Path, run_b: Path, out_dir: Path, label: str, stride_ticks: int = 3) -> Path` writes `bundle-data.js` defining `window.THERMORL_DATA = {meta, frames_a, frames_b, decisions_a, decisions_b}`:
-  - **`meta`:** `policy_a`, `policy_b`, `scenario` (name and label text), `n_racks: 44`, `grid: {rows: 4, cols: 11, schematic: true}`, `color: {vmin_c, vmax_c}` (shared, from both runs' `t_c` 1st/99th percentiles), `affected_racks` (empty for nominal), `metrics_a`, `metrics_b`.
-  - **Frame:** `{t_s, racks: [{t_c, kw, free}], events: [{job_id, racks, rule, decision_index}], maxrack_c, spread_c, it_kw}`. Frames align on identical `t_s` across A and B.
-  - **Decision:** `{t_s, job_id, nodes_required, racks, scores, t_c, committed_kw, free}`.
-- **Viz changes** (`viz/src`):
-  - Data-driven rack count and 4 × 11 layout, which fixes the old `rowZ` overlap bug.
-  - Colour from `t_c` using the shared `meta.color`.
-  - Remove zones, PUE, and λ drawers.
+- `export_bundle(run_a, run_b, out_dir, label, grid, stride_ticks=3) -> Path` writes `bundle-data.js`, which defines `window.THERMORL_DATA = {meta, frames_a, frames_b, decisions_a, decisions_b}`.
+  - **`meta`:**
+    - `system`, `policy_a`, `policy_b`
+    - `scenario: {name, label}`
+    - `n_racks`
+    - `grid: {rows, cols, schematic: true}`
+    - `color: {vmin_c, vmax_c}` (shared; 1st/99th percentiles of `t_c` over both runs)
+    - `affected_racks`, `metrics_a`, `metrics_b`
+  - **frame:** `{t_s, racks: [{t_c, kw, free}], events: [{job_id, racks, rule, decision_index}], maxrack_c, spread_c, it_kw}`. Frames are aligned on identical `t_s` values.
+  - **decision:** `{t_s, job_id, nodes_required, racks, scores, t_c, committed_kw, free}`.
+- Changes to `viz/src`:
+  - Rack count and grid layout are data-driven. This also fixes the old `rowZ` overlap.
+  - Colour comes from `t_c`.
+  - Remove the zone, PUE and λ drawers.
   - Metric strip shows: max-rack °C, spread, IT kW, jobs started.
-  - The "WHY?" drawer shows the selected event's per-rack scores as a 44-bar chart, highlighting the chosen racks.
-  - A what-if banner and outlines on the affected racks when the scenario is active.
-  - Subtitle text comes from `meta.scenario.label`.
-  - Scrubber over `t_s`.
-- Time-box: **1 day**. If not done by the end of Day 5, keep Task 10's GIFs as the headline visual and record that in C5.
+  - The "WHY?" drawer shows the selected decision's per-rack score bars, with the chosen racks highlighted.
+  - What-if banner, and outlines on the affected racks.
+  - The subtitle comes from `meta.scenario.label`.
+  - A scrubber over `t_s`.
+- **Time-box:** 1 day. If not done by the end of Day 5, the Task 11 GIFs remain the headline visual. Record this in C5.
 
-- [ ] **Step 1: Failing test.** On two tiny fixture run dirs, `export_bundle` writes `bundle-data.js`. The parsed JSON (after stripping the `window.THERMORL_DATA =` prefix) has equal `frames_a`/`frames_b` lengths and identical `t_s` lists, each frame has 44 racks, and `vmin_c < vmax_c`.
-- [ ] **Step 2:** Run → FAIL. **Step 3:** Implement the exporter and run the test → PASS.
-- [ ] **Step 4:** Adapt the viz. Run `npm ci && npm run build` in `viz/`.
-  - Expected: `tsc` passes and the build succeeds.
-  - Copy `dist/*` into the bundle directory.
-- [ ] **Step 5:** Export the headline bundle: G4 synthetic seed 1, `packing` vs `thermal_predictive`. Also export `power_balance` vs `thermal_predictive`.
-  - Open `index.html` from disk on any machine to check it renders.
-  - Save one screenshot PNG per bundle.
-- [ ] **Step 6:** Commit:
+- [ ] **Step 1: Failing test.** Using fixture runs:
+  - equal frame counts in `frames_a` and `frames_b`;
+  - identical `t_s` lists;
+  - `n_racks` racks in every frame;
+  - `vmin_c < vmax_c`.
+- [ ] **Step 2: Run → FAIL. Step 3: Implement the exporter. Run → PASS.**
+- [ ] **Step 4: Build the viz.** Adapt `viz/`, then `npm ci && npm run build` (expect the build to pass). Copy `dist/*` into each bundle.
+- [ ] **Step 5: Export bundles** from E11 seed 1:
+  - `packing` vs `thermal_predictive`
+  - `power_balance` vs `thermal_predictive`
+
+  Open each `index.html` from disk to verify it works offline, and save a screenshot PNG of each.
+- [ ] **Step 6: Commit.**
   ```
-  feat(viz): Lassen 44-rack side-by-side replay with decision explanations; bundle exporter
+  feat(viz): side-by-side rack replay with decision explanations; bundle exporter
   ```
 
 ---
 
-## Phase 5 — Degraded-cooling what-if (Day 6; only if G3 decision is USABLE)
+## Phase 5 — Degraded-cooling what-if (Day 6; only if G3 is USABLE)
 
-### Task 15: G5 room-air failure what-if → CHECKPOINT C5
+### Task 16: G5 room-air failure what-if → CHECKPOINT C5
 
 **Files:**
-- Create: `thermorl2/experiments/configs/g5_whatif_synthetic.yaml`, a copy of `g4_synthetic.yaml` with:
+- Create: `thermorl2/experiments/configs/g5_whatif_synthetic.yaml` — a copy of `g4_synthetic.yaml` with:
   ```yaml
   name: g5_whatif_synthetic
+  experiment_dir: experiments/{system}/E13_g5_whatif_room_air
   scenario:
-    name: whatif_room_air_failure_row
-    label: "What-if: room-air cooling failure on one row (not observed Lassen behaviour)"
-    ambient_schedule: [{start_s: 7200, t_air_k_by_unit: {racks: [33,34,35,36,37,38,39,40,41,42,43], k: 308.15}}]
+    name: whatif_room_air_failure
+    label: "What-if: room-air cooling failure on one floor section (not observed {system} behaviour)"
+    ambient_schedule: [{start_s: 7200, racks: whatif, t_air_k: 308.15}]
   ```
-- Modify: `runner.py`, only if Task 8 did not already implement `ambient_schedule` and the `scenario_active` column.
+- Test: `tests/fmu/test_vertical_slice.py::test_whatif_schedule_applies`. Runs 2.5 h; asserts `scenario_active` is false before 7200 s and true after; the manifest records the scenario.
 
-- [ ] **Step 1: Failing test** (`tests/fmu/test_vertical_slice.py::test_whatif_schedule_applies`): run 2.5 h of `smoke_2h` with the what-if starting at 7200 s. Assert:
-  - `scenario_active` is false before 7200 s and true after;
-  - the manifest records the scenario.
-- [ ] **Step 2:** Run → FAIL (if not already implemented). **Step 3:** Implement. **Step 4:** Run → PASS.
-- [ ] **Step 5:** Run the matrix and the report.
-  - `report.py` also computes `affected_metrics` for racks 33–43 and applies the same 0.5 °C rule to both the overall and the affected-rack `maxrack_mean_c`.
-  - Export a viz bundle for `power_balance` vs `thermal_predictive`, which shows the what-if banner.
-- [ ] **Step 6:** Commit:
+- [ ] **Step 1: Pre-register E13.** Write the README with the spec §4.2 G5 rule verbatim, and commit.
+- [ ] **Step 2: Run the failing test → implement if needed → PASS.**
+- [ ] **Step 3: Run the matrix and report.**
+  - `report` also computes `affected_metrics` over `whatif_racks` and applies the 0.5 °C rule both overall and to the affected racks.
+  - Export a viz bundle of `power_balance` vs `thermal_predictive`; it must show the what-if banner.
+- [ ] **Step 4: Commit.**
   ```
-  exp(g5): room-air failure what-if (pre-registered), 5 policies x 3 seeds, report and replay
+  exp(<primary>): E13 G5 room-air failure what-if, 5 policies x 3 seeds
   ```
 
-**CHECKPOINT C5.** Write `docs/checkpoints/C5-whatif.md` with the same contents as C3, plus the affected-rack metrics.
+**CHECKPOINT C5.** Write `docs/checkpoints/C5-whatif.md`.
+- If G3 was NOT_USABLE, C5 is a single paragraph: cite the G3 numbers and the candidate-parameter list, and state that the what-if was not run.
 
-If G3 was NOT_USABLE, write C5 instead as a one-paragraph note: "what-if not run; lever not usable", citing the G3 numbers and the candidate CDU parameter list. Then stop for steering.
+Push. **Stop.**
 
 ---
 
 ## Phase 6 — Demo packaging (Day 7)
 
-### Task 16: Results note, runbook, demo folder
+### Task 17: Results note, runbook, demo folder
 
 **Files:**
 - Create: `docs/results/2026-11-parasparam-demo-results.md`
-- Create: `artifacts/demo/README.md`
-- Modify: `thermoRL/thermorl-v2/README.md` (add a "Reproduce the demo" runbook)
+- Create: `thermoRL/thermorl-v2/experiments/DEMO.md`
+- Modify: `thermoRL/thermorl-v2/README.md` (add a "Reproduce the demo" section)
 
-- [ ] **Step 1: Results note** (≤ 2 pages). It must cover:
-  - what ran (configs, SHAs, FMU hash, workload hashes);
-  - the G1–G3 physics table;
+- [ ] **Step 1: Results note** (≤ 2 pages). It must contain:
+  - what ran: systems, configs, SHAs, FMU hashes, workload hashes;
+  - the X01 cross-FMU table;
+  - G1 and G3 results;
   - the G4 tables for both workloads;
   - G5, if it ran;
-  - the pre-registered decisions and their outcomes, stated plainly;
-  - the invariants;
-  - runtime;
-  - spec §6 allowed claims, filled in with the measured numbers;
+  - each pre-registered decision and its outcome, stated plainly;
+  - invariants and runtime;
+  - spec §6 allowed claims, with the measured numbers filled in;
   - spec §8 limitations, verbatim.
-  - No lifetime, PUE, carbon, or heterogeneous-zone claims.
+  
+  No lifetime, PUE, carbon, heterogeneous-zone or surrogate claims.
 - [ ] **Step 2: Runbook.** Exact commands from a clean Arch checkout, in this order:
   1. `uv sync`
-  2. probes
-  3. matrices
-  4. reports
-  5. viz export and build
-  - Include the expected wall times.
-- [ ] **Step 3: Demo folder.** `artifacts/demo/` contains the headline figures, GIFs, replay bundles, and a `README.md` that maps each asset to the claim it supports.
-- [ ] **Step 4: Fresh-clone check.** Run the full test suite: `uv run pytest -q`.
-  - Expected: all pass, with the historical test reported as XFAIL.
-  - Then re-run one demo run and confirm a byte-identical `decisions.jsonl`.
-- [ ] **Step 5:** Commit:
+  2. FMU smoke
+  3. G2 ×3 and selection
+  4. G1 and G3
+  5. the matrices
+  6. the reports
+  7. viz export and build
+  
+  Give expected wall times for each.
+- [ ] **Step 3: `DEMO.md`.** Map each headline asset (figure, GIF, replay bundle) to the claim it supports, and to the experiment README it comes from.
+- [ ] **Step 4: Fresh-clone check.**
+  - Run `uv run pytest -q`. Expect all pass, with the historical test reported as XFAIL.
+  - Re-run one E11 run into a scratch directory and confirm its `decisions.jsonl` is byte-identical.
+- [ ] **Step 5: Commit.**
   ```
-  docs(results): ParasParam demo results note, runbook, demo asset index
+  docs(results): ParasParam demo results note, runbook, demo asset map
   ```
 
 ---
 
 ## Explicitly out of scope
 
-- RL / PPO.
-- The ExaDigiT server, dashboard, or UE5.
-- Carbon.
-- PUE and plant energy.
-- Summit runs.
-- FMU-snapshot lookahead.
-- A 24 h ramp.
-- RAPS patches.
-
-These may be added only by a new steering decision after C5.
+These require a new steering decision after C5:
+- RL / PPO;
+- surrogate models (`hpc-cooling-surrogate`, `--cooling-model surrogate`);
+- the ExaDigiT server, dashboard or UE5;
+- carbon;
+- PUE and plant energy;
+- FMU-snapshot lookahead;
+- a 24 h ramp;
+- RAPS patches;
+- repository restructuring.
 
 ## Plan self-review
 
-- **Spec coverage.**
+- **Spec coverage:**
 
   | Spec section | Covered by |
   |---|---|
-  | §3 architecture | Tasks 2, 4–8 |
-  | §3.1 semantics | Tasks 4, 6, 8 |
-  | §3.2 policies | Tasks 5, 6 |
-  | §3.3 workloads | Tasks 7, 12 |
-  | §3.4 scenarios | Tasks 2, 3, 15 |
-  | §4 G1–G3 | Task 3 |
-  | §4 G4 | Tasks 11, 13 |
-  | §4 G5 | Task 15 |
-  | §4 secondary metrics | Task 9 |
-  | §5 visuals | Tasks 10, 14 |
-  | §6 claims and §8 limitations | Task 16 |
-  | §7 invariants 1–5 | Tasks 8, 9, 11, 16 |
-  | P1 (Task 1.5 closure) | Task 1 |
+  | §2 S1–S3 | Global Constraints and Task 1 |
+  | §3.1 systems | Task 2 |
+  | §3.2 semantics (power tick, overrun, output none) | Tasks 5, 7, 9 |
+  | §3.3 policies | Tasks 6, 7 |
+  | §3.4 workloads | Tasks 8, 13 |
+  | §3.5 scenarios | Tasks 2, 4, 16 |
+  | §4.1 selection gate | Tasks 3, 5 (post-selection guard) |
+  | §4.2 G1, G3 | Task 4 |
+  | §4.2 G4 | Tasks 12, 14 |
+  | §4.2 G5 | Task 16 |
+  | §4.2 secondary metrics | Task 10 |
+  | §5 visuals | Tasks 11, 15 |
+  | §6 claims, §8 limitations | Task 17 |
+  | §7 invariants 1–6 | Tasks 9, 10, 12, 17 |
+  | Experiment conventions | Task 1 scaffold; every experiment task pre-registers its README |
 
-- **Type consistency.** These names are used identically in every task:
+- **Type consistency** — these names are used identically across tasks:
+  - `SystemSpec(name, fmu_path, fmu_sha256, grid, whatif_racks)`
   - `RackContext(free_count, committed_kw, t_c, job_kw, job_nodes)`
   - `ThermalView(t_obs_s, t_c, pump_kw)`
-  - `Placement(racks, nodes, rule)` (existing)
+  - `Placement(racks, nodes, rule)`
   - `Run(name, intervals, decisions, manifest)`
   - `WORKLOAD_COLUMNS`
-  - `rack_power_bounds`, `job_increment_kw`
-  - the decision-row keys, used in Tasks 6, 9 and 14
-- **Pre-registration.** All thresholds (2.0 / 1.0 °C for G2, 1.0 °C for G3, 0.5 °C for G4/G5) and the `t_hot_c` and τ derivations come from spec §4. Thresholds are never computed from closed-loop results.
+  - `rack_power_bounds`, `job_increment_kw`, `is_power_tick(tick, time_delta)`
+  - the decision-row keys
+- **Pre-registration:** every threshold comes from spec §4. None is derived from closed-loop results.
