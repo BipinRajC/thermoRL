@@ -1,6 +1,8 @@
 """RAPS power/configuration access stays inside the adapter."""
 
-from raps.power import compute_node_power
+import numpy as np
+
+from raps.power import PowerManager, compute_node_power
 from raps.system_config import get_system_config
 
 
@@ -21,3 +23,12 @@ def rack_power_bounds(cfg: dict) -> tuple[float, float]:
 
 def job_increment_kw(cfg: dict, cpu_util: float, gpu_util: float, n_nodes: int) -> float:
     return n_nodes * (node_power_kw(cfg, cpu_util, gpu_util) - node_power_kw(cfg, 0, 0))
+
+
+def raps_rack_kw(cfg: dict, cpu_util: float, gpu_util: float) -> float:
+    """Uniform rack reference through RAPS's own rectifier/switch calculation."""
+    manager = PowerManager(**cfg)
+    manager.power_state[:] = manager.power_func(cpu_util, gpu_util, 0, cfg)[0]
+    rack_rows, _ = manager.compute_rack_power()
+    values = np.asarray(rack_rows[:, 1:1 + cfg["RACKS_PER_CDU"]], dtype=float)
+    return float(values[0, 0])
