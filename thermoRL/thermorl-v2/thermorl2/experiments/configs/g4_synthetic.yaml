@@ -1,0 +1,14 @@
+name: g4_synthetic
+include: primary.yaml
+experiment_dir: experiments/{system}/E11_g4_synthetic
+horizon_h: 6
+warmup_s: 7200
+workload:
+  kind: synthetic
+  rho: 0.6
+scenario:
+  name: nominal
+  label: ""
+  ambient_schedule: []
+policies: [packing, node_balance, power_balance, coolest_rack, thermal_predictive]
+seeds: [1, 2, 3]

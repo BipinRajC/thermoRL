@@ -3,6 +3,7 @@
 from types import SimpleNamespace
 
 import numpy as np
+import pytest
 from raps.policy import PolicyType
 
 from thermorl2.core.scorers import make_scorer
@@ -74,3 +75,22 @@ def test_decision_schema_and_pre_action_context():
     assert rows[0]["t_obs_s"] == 0 and rows[0]["t_s"] == 25
     assert manager.calls[0][2] == PolicyType.REPLAY
     assert rows[0]["nodes"] == [0, 1, 2, 3]
+
+
+def test_thermal_view_pump_shape_is_validated():
+    scheduler, _, _ = setup()
+    with pytest.raises(ValueError):
+        scheduler.on_thermal(ThermalView(0, np.ones(3), np.ones(2)))
+
+
+def test_latency_split_keeps_canonical_null_and_unrounded_integer_ns():
+    manager = AllocationPort(range(54))
+    rows, times = [], []
+    scheduler = PlacementScheduler(manager, RackGeometry(3, 1, 18), make_scorer("packing", {}), legacy_config("lassen"), rows.append, timing_sink=times.append)
+    scheduler.on_thermal(ThermalView(0, np.full(3, 30.0), np.ones(3)))
+    scheduler.schedule([job(0)], [], 25)
+    assert rows[0]["latency_us"] is None
+    assert type(rows[0]["t_obs_s"]) is float
+    assert set(times[0]) == {"decision_index", "job_id", "t_s", "latency_ns"}
+    assert times[0]["decision_index"] == 0 and times[0]["job_id"] == 0 and times[0]["t_s"] == 25
+    assert type(times[0]["latency_ns"]) is int and times[0]["latency_ns"] >= 0

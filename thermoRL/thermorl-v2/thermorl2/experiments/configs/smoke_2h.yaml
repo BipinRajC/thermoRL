@@ -1,0 +1,14 @@
+name: c2_vertical_slice
+include: primary.yaml
+experiment_dir: experiments/{system}/E10_c2_vertical_slice
+horizon_h: 2
+warmup_s: 7200
+workload:
+  kind: synthetic
+  rho: 0.6
+scenario:
+  name: nominal
+  label: ""
+  ambient_schedule: []
+policies: [packing, power_balance]
+seeds: [1]
