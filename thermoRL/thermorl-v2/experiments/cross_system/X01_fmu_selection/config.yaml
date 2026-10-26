@@ -1,0 +1,18 @@
+{
+  "experiment": "x01",
+  "systems": [
+    "lassen",
+    "summit",
+    "marconi100"
+  ],
+  "backend": "fmu",
+  "rule_version": "spec-2026-10-27-\u00a74.1",
+  "cost_cap_min_6h": 30,
+  "tie_fraction": 0.8,
+  "inputs": [
+    "experiments/lassen/E02_g2_packed_vs_spread/results/summary.json",
+    "experiments/summit/E02_g2_packed_vs_spread/results/summary.json",
+    "experiments/marconi100/E02_g2_packed_vs_spread/results/summary.json"
+  ],
+  "cost_source": "original G2 runs only"
+}
