@@ -1,0 +1,38 @@
+{
+  "experiment_dir": "experiments/{system}/E10_c2_vertical_slice",
+  "g1_sha256": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+  "horizon_h": 2,
+  "include": "primary.yaml",
+  "name": "c2_vertical_slice",
+  "policies": [
+    "packing",
+    "power_balance"
+  ],
+  "primary_yaml_sha256": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec",
+  "scenario": {
+    "ambient_schedule": [],
+    "label": "",
+    "name": "nominal"
+  },
+  "seeds": [
+    1
+  ],
+  "system": "summit",
+  "thermal_predictive": {
+    "from": "experiments/summit/E01_g1_uniform/results/summary.json",
+    "horizon_s": 600
+  },
+  "thermal_predictive_params": {
+    "a_c": 27.9753857271229,
+    "b_c_per_kw": 0.8052450824355937,
+    "horizon_s": 600,
+    "tau_s": 4050.0
+  },
+  "warmup_s": 7200,
+  "workload": {
+    "kind": "synthetic",
+    "path": "experiments/summit/_workloads/65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a.parquet",
+    "rho": 0.6,
+    "sha256": "65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a"
+  }
+}

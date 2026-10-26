@@ -6,6 +6,8 @@ warmup_s: 7200
 workload:
   kind: synthetic
   rho: 0.6
+  path: experiments/summit/_workloads/65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a.parquet
+  sha256: 65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a
 scenario:
   name: nominal
   label: ""
