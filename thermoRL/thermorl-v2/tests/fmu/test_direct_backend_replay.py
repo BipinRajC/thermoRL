@@ -83,13 +83,17 @@ def test_backend_matches_independent_direct_fmu_with_snapshot_replay(fmu_path, t
             assert replay["external_input_k"] == [tick["t_ext_k"] for tick in sequence]
             for key in ("rack_coolant_c", "cdu_primary_supply_c", "cdu_primary_return_c", "datacenter_primary_flow_gpm"):
                 assert np.isfinite(_observations(samples, key)).all()
-        for key in ("rack_coolant_c", "cdu_primary_supply_c", "cdu_primary_return_c", "datacenter_primary_flow_gpm"):
-            np.testing.assert_allclose(
-                _observations(side["replays"][0]["samples"], key),
-                _observations(side["replays"][1]["samples"], key),
-                rtol=0,
-                atol=1e-9,
-            )
+
+    # Option B: FMU restoration can jitter. Its deviation must be reproduced
+    # by the independent direct reference, rather than assumed to be zero.
+    restore_deviations = {}
+    for key in ("rack_coolant_c", "cdu_primary_supply_c", "cdu_primary_return_c", "datacenter_primary_flow_gpm"):
+        direct_delta = (_observations(direct["replays"][1]["samples"], key)
+                        - _observations(direct["replays"][0]["samples"], key))
+        backend_delta = (_observations(backend["replays"][1]["samples"], key)
+                         - _observations(backend["replays"][0]["samples"], key))
+        np.testing.assert_allclose(backend_delta, direct_delta, rtol=0, atol=1e-6)
+        restore_deviations[key] = float(np.max(np.abs(backend_delta)))
 
     assert [sample["elapsed_s"] for sample in direct["replays"][0]["samples"]] == [sample["elapsed_s"] for sample in backend["replays"][0]["samples"]]
     for direct_replay, backend_replay in zip(direct["replays"], backend["replays"]):
@@ -101,3 +105,18 @@ def test_backend_matches_independent_direct_fmu_with_snapshot_replay(fmu_path, t
                 rtol=0,
                 atol=1e-6,
             )
+
+    manifest = {
+        "backend": "fmu",
+        "gate": "Task 1.5 option B: direct/backend replay and restore-delta equality",
+        "fmu_sha256": backend["fmu_sha256"],
+        "sequence_sha256": backend["sequence_sha256"],
+        "warmup_used_s": backend["warmup_used_s"],
+        "warmup_status": backend["warmup_status"],
+        "snapshot_time_s": backend["snapshot_time_s"],
+        "direct_backend_atol": 1e-6,
+        "restore_delta_atol": 1e-6,
+        "max_abs_restore_jitter_c": max(value for key, value in restore_deviations.items() if key != "datacenter_primary_flow_gpm"),
+        "max_abs_restore_deviation_by_variable": restore_deviations,
+    }
+    (tmp_path / "comparison_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
