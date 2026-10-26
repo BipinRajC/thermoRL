@@ -65,3 +65,15 @@ def test_time_limit_overrun_raises(system):
     engine.scheduler = RecordingScheduler(engine.resource_manager)
     with pytest.raises(Exception, match="(?i)time limit"):
         list(engine.run_simulation())
+
+
+@pytest.mark.parametrize("system", [PRIMARY])
+def test_fractional_runtime_crossing_power_tick_raises(system):
+    """Pin the RAPS representation issue behind the pre-E10 clarification."""
+    cfg = legacy_config(system)
+    engine = build_engine(EngineSpec(system, "2m"), jobs=[job_for(cfg, 25, runtime=4.5, limit=1200)])
+    engine.scheduler = RecordingScheduler(engine.resource_manager)
+    with pytest.raises(Exception, match="should have ended"):
+        list(engine.run_simulation())
+    assert engine.current_timestep == 30
+    assert engine.jobs[0].start_time == 25

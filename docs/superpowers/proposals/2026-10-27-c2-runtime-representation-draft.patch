@@ -1,0 +1,178 @@
+diff --git a/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/__init__.py b/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/__init__.py
+new file mode 100644
+--- /dev/null
++++ b/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/__init__.py
+@@ -0,0 +1 @@
++"""Deterministic workload construction, separate from RAPS engine execution."""
+diff --git a/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/synthetic.py b/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/synthetic.py
+new file mode 100644
+--- /dev/null
++++ b/thermoRL/thermorl-v2/thermorl2/raps_adapter/workload/synthetic.py
+@@ -0,0 +1,82 @@
++"""The fixed synthetic distribution from design spec §3.4."""
++
++from dataclasses import dataclass
++import hashlib
++import json
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++
++WORKLOAD_COLUMNS = ["id", "nodes_required", "cpu_util", "gpu_util", "submit_time", "expected_run_time", "time_limit"]
++
++
++@dataclass(frozen=True)
++class SyntheticSpec:
++    rho: float = 0.6
++    node_sizes: tuple = (1, 2, 4, 8, 16, 32)
++    node_weights: tuple = (0.35, 0.2, 0.2, 0.12, 0.09, 0.04)
++    runtime_median_s: float = 1800
++    runtime_sigma: float = 0.8
++    runtime_clip_s: tuple = (300, 14400)
++    cpu_choices: tuple = (0.5, 1.0, 1.5, 2.0)
++    limit_factor: float = 1.5
++
++    @classmethod
++    def from_dict(cls, data):
++        return cls(**data)
++
++
++def generate(spec: SyntheticSpec, seed, horizon_s, n_nodes, gpus_per_node) -> pd.DataFrame:
++    if seed < 1 or horizon_s <= 0 or n_nodes < 1:
++        raise ValueError("positive seed, horizon and node count required")
++    rng = np.random.default_rng(seed)
++    mc_nodes = rng.choice(spec.node_sizes, size=1_000_000, p=spec.node_weights)
++    mc_runtime = np.ceil(np.clip(rng.lognormal(np.log(spec.runtime_median_s), spec.runtime_sigma, size=1_000_000), *spec.runtime_clip_s))
++    expected_node_seconds = float(np.mean(mc_nodes * mc_runtime))
++    rate = spec.rho * n_nodes / expected_node_seconds
++    rows = []
++    submit = 0.0
++    while True:
++        submit += float(rng.exponential(1 / rate))
++        if submit >= horizon_s:
++            break
++        nodes = int(rng.choice(spec.node_sizes, p=spec.node_weights))
++        # RAPS advances on integer seconds. Represent the clipped duration at
++        # the next second, identically in the MC expectation and actual jobs.
++        runtime = int(np.ceil(np.clip(rng.lognormal(np.log(spec.runtime_median_s), spec.runtime_sigma), *spec.runtime_clip_s)))
++        cpu = float(rng.choice(spec.cpu_choices))
++        gpu = int(rng.integers(0, gpus_per_node + 1))
++        limit = int(np.ceil(runtime * spec.limit_factor))
++        assert limit >= runtime
++        rows.append((len(rows), nodes, cpu, gpu, submit, runtime, limit))
++    frame = pd.DataFrame(rows, columns=WORKLOAD_COLUMNS)
++    frame.attrs = {"seed": int(seed), "mc_samples": 1_000_000, "mc_expected_node_seconds": expected_node_seconds,
++                   "arrival_rate_per_s": rate, "runtime_representation": "clipped lognormal rounded upward to one-second RAPS resolution", "rng_draw_order": "MC node sizes; MC durations; then per job: interarrival, nodes, duration, cpu, gpu"}
++    assert (frame.time_limit >= frame.expected_run_time).all()
++    return frame
++
++
++def offered_utilisation(frame, horizon_s, n_nodes, window_start_s=3600) -> float:
++    overlaps = np.maximum(0, np.minimum(frame.submit_time + frame.expected_run_time, horizon_s) - np.maximum(frame.submit_time, window_start_s))
++    return float(np.sum(frame.nodes_required * overlaps) / ((horizon_s - window_start_s) * n_nodes))
++
++
++def write_workload(frame, path, meta) -> str:
++    path = Path(path)
++    contents = frame.to_parquet(index=False)
++    digest = hashlib.sha256(contents).hexdigest()
++    path.parent.mkdir(parents=True, exist_ok=True)
++    if path.exists():
++        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
++            raise FileExistsError(f"refusing to replace workload content: {path}")
++    else:
++        with path.open("xb") as output:
++            output.write(contents)
++    sidecar = Path(str(path) + ".meta.json")
++    if not sidecar.exists():
++        sidecar.write_text(json.dumps({**meta, "generation": frame.attrs, "sha256": digest}, indent=2, sort_keys=True) + "\n")
++    else:
++        assert json.loads(sidecar.read_text())["sha256"] == digest
++    return digest
+diff --git a/thermoRL/thermorl-v2/thermorl2/raps_adapter/jobs.py b/thermoRL/thermorl-v2/thermorl2/raps_adapter/jobs.py
+new file mode 100644
+--- /dev/null
++++ b/thermoRL/thermorl-v2/thermorl2/raps_adapter/jobs.py
+@@ -0,0 +1,19 @@
++"""Construct fresh RAPS jobs from the immutable workload ledger."""
++
++from raps.job import Job, job_dict
++
++from thermorl2.raps_adapter.workload.synthetic import WORKLOAD_COLUMNS
++
++
++def jobs_from_frame(frame):
++    Job._id_counter = 0
++    result = []
++    for row in frame[WORKLOAD_COLUMNS].itertuples(index=False):
++        assert row.time_limit >= row.expected_run_time
++        result.append(Job(job_dict(
++            nodes_required=int(row.nodes_required), name=f"j{row.id}", account="demo", id=int(row.id),
++            cpu_trace=float(row.cpu_util), gpu_trace=float(row.gpu_util), ntx_trace=0, nrx_trace=0,
++            submit_time=float(row.submit_time), time_limit=int(row.time_limit), start_time=None, end_time=None,
++            expected_run_time=int(row.expected_run_time),
++        )))
++    return result
+diff --git a/thermoRL/thermorl-v2/tests/unit/test_synthetic.py b/thermoRL/thermorl-v2/tests/unit/test_synthetic.py
+new file mode 100644
+--- /dev/null
++++ b/thermoRL/thermorl-v2/tests/unit/test_synthetic.py
+@@ -0,0 +1,26 @@
++import numpy as np
++import pandas as pd
++
++from thermorl2.raps_adapter.workload.synthetic import SyntheticSpec, generate, offered_utilisation, write_workload
++
++
++def test_synthetic_determinism_and_sha(tmp_path):
++    spec = SyntheticSpec()
++    first = generate(spec, 1, 21600, 4626, 6)
++    second = generate(spec, 1, 21600, 4626, 6)
++    pd.testing.assert_frame_equal(first, second, check_exact=True)
++    assert write_workload(first, tmp_path / "a.parquet", {"seed": 1}) == write_workload(second, tmp_path / "b.parquet", {"seed": 1})
++
++
++def test_offered_utilisation_and_frozen_bounds():
++    frame = generate(SyntheticSpec(), 1, 21600, 4626, 6)
++    assert 0.54 <= offered_utilisation(frame, 21600, 4626) <= 0.66
++    assert list(frame.columns) == ["id", "nodes_required", "cpu_util", "gpu_util", "submit_time", "expected_run_time", "time_limit"]
++    assert set(frame.nodes_required) <= {1, 2, 4, 8, 16, 32}
++    assert set(frame.cpu_util) <= {0.5, 1.0, 1.5, 2.0}
++    assert set(frame.gpu_util) <= set(range(7))
++    assert frame.expected_run_time.between(300, 14400).all()
++    assert (frame.time_limit >= frame.expected_run_time).all()
++    assert frame.submit_time.is_monotonic_increasing
++    assert frame.submit_time.between(0, 21600, inclusive="left").all()
++    np.testing.assert_array_equal(frame.time_limit.to_numpy(), np.ceil(1.5 * frame.expected_run_time).astype(int))
+diff --git a/thermoRL/thermorl-v2/tests/integration/test_jobs.py b/thermoRL/thermorl-v2/tests/integration/test_jobs.py
+new file mode 100644
+--- /dev/null
++++ b/thermoRL/thermorl-v2/tests/integration/test_jobs.py
+@@ -0,0 +1,25 @@
++import pandas as pd
++import pytest
++
++from thermorl2.raps_adapter.jobs import jobs_from_frame
++
++pytestmark = pytest.mark.integration
++
++
++def frame(limit=900):
++    return pd.DataFrame([{"id": 7, "nodes_required": 2, "cpu_util": 1.5, "gpu_util": 5.0, "submit_time": 25,
++                          "expected_run_time": 600, "time_limit": limit}])
++
++
++def test_jobs_roundtrip_and_id_counter_reset():
++    a = jobs_from_frame(frame())[0]
++    b = jobs_from_frame(frame())[0]
++    assert a.id == b.id == 7
++    assert a.nodes_required == 2 and a.cpu_trace == 1.5 and a.gpu_trace == 5.0
++    assert a.submit_time == 25 and a.expected_run_time == 600 and a.time_limit == 900
++    assert a.start_time is None and a.end_time is None
++
++
++def test_jobs_reject_time_limit_below_runtime():
++    with pytest.raises(AssertionError):
++        jobs_from_frame(frame(limit=599))
