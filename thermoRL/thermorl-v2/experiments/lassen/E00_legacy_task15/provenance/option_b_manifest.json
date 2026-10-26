@@ -28,5 +28,7 @@
     "historical_body_unchanged": true
   },
   "warmup_status": "capped_preconditioned_not_settled",
-  "warmup_used_s": 7200.0
+  "warmup_used_s": 7200.0,
+  "workload_kind": "fixed engineering input sequence; no scheduled jobs",
+  "workload_sha256": "1530d07e99abe51cf321ad513cc7d4b3a5338fab37e854b20087d00243f78bde"
 }
