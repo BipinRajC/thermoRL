@@ -24,3 +24,17 @@ def test_temperature_keys_default_290():
 def test_ambient_override_splits_air_and_ext():
     out = rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient(t_air_k=295.0, t_ext_k=288.0))
     assert out["a_T_Air"] == 295.0 and out["simulator_1_centralEnergyPlant_1_coolingTowerLoop_1_sources_T_ext"] == 288.0
+
+
+def test_per_unit_air_temperature_maps_by_index():
+    keys = tuple(f"simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air" for i in range(1, 45))
+    ext = "simulator_1_centralEnergyPlant_1_coolingTowerLoop_1_sources_T_ext"
+    p = CouplingParams(44, 1, 0.945, keys + (ext,), 290.0)
+    out = rack_kw_to_fmu_inputs(np.full(44, 10.86), p, Ambient(t_ext_k=288.0, t_air_k_by_unit=tuple(290.0 + i for i in range(44))))
+    assert out[keys[33]] == 323.0
+    assert out[keys[0]] == 290.0 and out[keys[-1]] == 333.0
+    assert out[ext] == 288.0
+
+
+def test_default_ambient_unchanged():
+    assert rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient()) == rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient(t_air_k_by_unit=None))
