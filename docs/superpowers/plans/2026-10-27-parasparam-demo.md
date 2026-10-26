@@ -950,3 +950,50 @@ This supersedes only Task 3 Step 5's full-summary byte-identity requirement. The
 - Also report `2 × total_s` and `2 × (total_s − warm-up/instantiation time)` as information only. They do not decide anything.
 - The plan's `total_s × 2 > 45 × 60` wording is superseded.
 - Horizon rule: unchanged. A 12 h horizon would need `total_s × 2 × 2 ≤ 300`, so Summit uses 6 h.
+
+## Approved C2 preflight representation decisions (2026-10-27)
+
+Decided by the independent reviewer at Bipin's request (review: `docs/checkpoints/C2-preflight-review-opus.md`, reviewed SHA `037b1dd`). These clarify representation only. All earlier frozen sections, D1/D2 and spec §3–§4 values are unchanged.
+
+**R3 — decision latency versus byte-identical decision ledgers: APPROVED WITH CONDITIONS.**
+1. Every run's canonical `decisions.jsonl` keeps all 14 plan keys. Its `latency_us` value is always JSON `null`. The scheduler's measured value is never written there.
+2. The measured value is written per run to `runs/<policy>_seed<s>/provenance/decision_latency.jsonl`, one JSON line per decision in the same order, `sort_keys=True`. Each line holds exactly: `decision_index` (0-based line number in `decisions.jsonl`), `job_id`, `t_s`, and `latency_ns` (the integer `perf_counter_ns` difference, unrounded).
+3. The measured span is the existing scheduler span: context construction → scoring → `place` → RAPS `assign_nodes_to_job` → committed-power update. It excludes the queue sort and ledger I/O. The manifest records this span text plus the SHA-256 and row count of both ledgers.
+4. At the end of each run, the runner asserts equal row counts and an exact `(decision_index, job_id, t_s)` join. A unit test covers both the split and the join.
+5. Invariant 3 (spec §7) keeps its meaning without weakening: full-file byte identity of `decisions.jsonl`, plus identical `intervals.parquet` values. The timing ledger is a measurement and is excluded from byte comparison.
+6. Latency metrics (Task 10, computational) are computed only from the timing ledger. `null` is never read as zero. A missing timing ledger means a missing metric.
+
+**R4 — runtime representation on the 1 s engine: APPROVED WITH CONDITIONS.**
+- Root cause (verified in `sim-raps/raps/engine.py:483,584-587,640-657`). RAPS detects completion using the previous second's integer `current_run_time`, and `tick()` raises if `current_run_time > expected_run_time`. A non-integer runtime therefore raises whenever a power tick lands at `start + ceil(R)`. An integer runtime R never raises, and the job completes at `start + R + 1`.
+- **Executed representation.**
+  - Draw from the frozen lognormal (median 1800 s, σ 0.8), clip to [300, 14400] s, then apply `ceil` to integer seconds. Represented runtimes are integers in [300, 14400].
+  - The 1e6-sample Monte Carlo estimate of E[nodes × runtime] uses the identical representation, with draws from the same single `default_rng(seed)`.
+  - RNG draw order: Monte Carlo node sizes; Monte Carlo durations; then per job, in order: inter-arrival, nodes, duration, CPU, GPU.
+  - `time_limit = ceil(1.5 × represented_runtime)`.
+  - All other frozen parameters are unchanged (node sizes and weights, CPU/GPU choices, ρ, Poisson construction).
+- **Bounded effect** (do not describe this as "no change").
+  - The continuous distribution is the specified one. The executed durations are its discretisation. Each duration increases by less than 1 s (mean ≈ 0.5 s): at most 0.33 % for a 300 s job, about 0.02 % of the mean.
+  - Because the Monte Carlo uses the same representation, the arrival rate targets ρ for the executed durations.
+  - RAPS's completion bookkeeping adds one further second of occupancy per job (start + R + 1). This is identical across policies.
+- **Submit times stay continuous** (exact Poisson floats). RAPS admits a job at the first integer second ≥ `submit_time`; E10 documents this. Waits are measured from the recorded `submit_time`.
+- **Required additions to the reviewed Task 8 draft** (`docs/superpowers/proposals/2026-10-27-c2-runtime-representation-draft.patch`):
+  - (a) One helper produces represented runtimes for both the Monte Carlo and the per-job draws.
+  - (b) A test asserts that `expected_run_time` and `time_limit` are integer dtype and lie within bounds.
+  - (c) The workload `meta.json` records:
+    - the spec parameters (`asdict`);
+    - the representation text;
+    - the RNG draw order;
+    - `mc_samples`, `mc_expected_node_seconds`, the arrival rate;
+    - the generator source SHA-256;
+    - numpy, pandas and pyarrow versions.
+  - (d) An integration fixture with several integer runtimes (for example 301–310 s, Summit Δ = 10 s) runs to completion across power ticks without exception.
+  - (e) `jobs_from_frame` passes Python `float`/`int` traces, not numpy scalars.
+  - (f) Overwrite protection is kept, and workload caching is keyed by SHA-256.
+
+**Task 9 interface conditions (from the same review).**
+- (i) `run.py` builds the `thermal_predictive` parameters from `primary.yaml` as exactly `{a_c, b_c_per_kw}` (from the G1 `fit`), `tau_s` (top level) and `horizon_s` (yaml), and records that dict in the manifest. `r2` is not passed.
+- (ii) Invariant 5 is checked independently. The runner counts its own `backend.step` calls and also asserts `backend.time_s == horizon_s`.
+- (iii) The initial `ThermalView` is published after warm-up with `t_obs_s = 0.0`, episode-relative. All `t_obs_s` values are `float`. `pump_kw` comes from `extras["W_flow_CDUP_kW"]`, and its shape is validated.
+- (iv) Interval `free` values come from `geometry.free_per_rack(resource_manager.available_nodes)`.
+- (v) Committed kW is not reduced between ticks when a job completes. It is corrected at the next power tick. This is spec-literal, identical across policies, and documented in E10.
+- (vi) If a run directory exceeds 25 MB (Summit decision rows are ≈ 8.8 KB each), apply the existing gitignore + SHA-256 rule. The schema is not changed.
