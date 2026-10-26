@@ -138,6 +138,21 @@ class SystemCoolingConfig(RAPSBaseModel):
     w_ctwps_key: str
     w_cts_key: str
     temperature_keys: list[str]
+    surrogate_path: ResolvedPath | None = None
+    """ ML surrogate bundle (model.ts + bundle.json) used when cooling_model is "surrogate" """
+    surrogate_warmup_s: int | None = None
+    """ Model time the surrogate relaxes under the first inputs before reporting (default 1200) """
+    fmu_num_cdus: int | None = None
+    """
+    CDUs in the cooling model, when borrowing a larger system's model (default: num_cdus).
+    The system's CDUs drive the model's first num_cdus; the rest carry the mean active load.
+    """
+    heat_scale: float | None = None
+    """
+    Factor applied to each CDU's heat before it enters a borrowed cooling model, so CDUs run
+    at the same fraction of design capacity (typically model peak / system peak per CDU).
+    Flows and pump/fan powers are divided by it on the way out. Default 1.
+    """
 
 
 class SystemNetworkConfig(RAPSBaseModel):
@@ -163,6 +178,14 @@ class SystemNetworkConfig(RAPSBaseModel):
     node_coords_csv: str | None = None
 
 
+class SystemUiConfig(RAPSBaseModel):
+    """ Display-only hints for the Textual UI; never used by the power/cooling/scheduling models. """
+    node_map_group: int | None = None
+    """ Nodes folded into one pixel of the Node Map (default: chosen to fit the terminal) """
+    cooling_schematic: dict | None = None
+    """ Replacement for the default cooling schematic spec (see raps/ui/widgets/schematic.py) """
+
+
 class SystemConfig(RAPSBaseModel):
     system_name: str
     """ Name of the system, defaults to the yaml file name """
@@ -179,6 +202,7 @@ class SystemConfig(RAPSBaseModel):
     uq: SystemUqConfig | None = None
     cooling: SystemCoolingConfig | None = None
     network: SystemNetworkConfig | None = None
+    ui: SystemUiConfig | None = None
 
     @model_validator(mode="before")
     def _load_base(cls, data, info: ValidationInfo):

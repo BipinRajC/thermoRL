@@ -2,6 +2,8 @@ from typing import Optional, List
 import dataclasses
 import pandas as pd
 import numpy as np
+import atexit
+import math
 import threading
 import sys
 import tty
@@ -86,38 +88,116 @@ class TickData:
 
 
 class SimulationState:
+    NOTICE_SECONDS = 3.0
+
     def __init__(self, time_delta):
         self.paused = False
         self.time_delta = time_delta
+        self.initial_time_delta = time_delta  # speed the run started at, restored by reset_speed()
         self.lock = threading.Lock()
+        self._notice = None
+        self._notice_until = 0.0
+        self.target_rate = None   # wall-clock throttle in simulated s per real s; None = unthrottled
+        self.free_rate = None     # unthrottled speed when the throttle was engaged
+        self.measured_rate = None  # published by the UI
+        self.pause_epoch = 0  # bumped on every pause/resume so the UI can reset its rate baseline
+
+    def _set_notice(self, text, style):
+        self._notice = (text, style)
+        self._notice_until = time.monotonic() + self.NOTICE_SECONDS
 
     def toggle_pause(self):
         with self.lock:
             self.paused = not self.paused
+            self.pause_epoch += 1
+            if not self.paused:
+                self._set_notice("\u25b6  RESUMED", "bold green")
 
     def is_paused(self):
         with self.lock:
             return self.paused
 
+    MIN_TARGET_RATE = 1 / 64
+
     def speed_up(self):
         with self.lock:
+            if self.target_rate is not None:
+                # Climb back up the wall-clock throttle ladder before coarsening ticks
+                new = self.target_rate * 2
+                if self.free_rate is not None and new >= self.free_rate:
+                    self.target_rate = None
+                    self._set_notice("\u23e9  UNTHROTTLED: running at full speed", "bold cyan")
+                else:
+                    self.target_rate = new
+                    self._set_notice(f"\u23e9  THROTTLE: target {self._fmt_rate(new)} real time", "bold cyan")
+                return
             self.time_delta *= 2
-            print(f"\n[INFO] time_delta increased to {self.time_delta}", file=sys.stderr)
+            self._set_notice(f"\u23e9  SPEED UP: \u0394t = {self.time_delta}x", "bold cyan")
 
     def slow_down(self):
         with self.lock:
             if self.time_delta > 1:
                 self.time_delta //= 2
-                print(f"\n[INFO] time_delta decreased to {self.time_delta}", file=sys.stderr)
+                self._set_notice(f"\u23ea  SLOWED DOWN: \u0394t = {self.time_delta}x", "bold yellow")
+                return
+            # At 1x tick resolution: throttle against the wall clock instead
+            if self.target_rate is None:
+                if not self.measured_rate:
+                    self._set_notice("\u23ea  Rate not measured yet, try again in a moment", "bold yellow")
+                    return
+                self.free_rate = self.measured_rate
+                new = 2.0 ** math.floor(math.log2(self.measured_rate / 2))
+            else:
+                new = self.target_rate / 2
+            if new < self.MIN_TARGET_RATE:
+                floor = self._fmt_rate(self.MIN_TARGET_RATE)
+                self._set_notice(f"\u23ea  Already at minimum throttle ({floor} real time)", "bold yellow")
+                return
+            self.target_rate = new
+            self._set_notice(f"\U0001f422  THROTTLE: target {self._fmt_rate(new)} real time", "bold yellow")
+
+    def reset_speed(self):
+        """Back to the speed the run started at: original time step, no wall-clock throttle."""
+        with self.lock:
+            if self.time_delta == self.initial_time_delta and self.target_rate is None:
+                self._set_notice(f"\u21ba  Already at start speed: \u0394t = {self.time_delta}x", "bold cyan")
+                return
+            self.time_delta = self.initial_time_delta
+            self.target_rate = None
+            self.free_rate = None
+            self._set_notice(f"\u21ba  RESET SPEED: \u0394t = {self.time_delta}x", "bold cyan")
+
+    @staticmethod
+    def _fmt_rate(r):
+        return f"{r:g}\u00d7" if r >= 1 else f"1/{round(1 / r)}\u00d7"
 
     def get_time_delta(self):
         with self.lock:
             return self.time_delta
 
+    def get_target_rate(self):
+        with self.lock:
+            return self.target_rate
+
+    def banner(self):
+        """Return (text, style) to display in the UI, or None. Pause persists until resumed."""
+        with self.lock:
+            if self.paused:
+                return ("\u23f8  PAUSED: press space or k to resume", "bold black on yellow")
+            if self._notice and time.monotonic() < self._notice_until:
+                return self._notice
+            return None
+
 
 def keyboard_listener(state):
     fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
+    try:
+        old_settings = termios.tcgetattr(fd)
+    except termios.error:
+        return  # stdin is not a usable terminal
+    # The daemon thread's finally may never run at interpreter exit or Ctrl-C,
+    # so also restore the terminal via atexit.
+    atexit.register(termios.tcsetattr, fd, termios.TCSADRAIN, old_settings)
     try:
         tty.setcbreak(fd)  # or tty.setraw(fd)
         while True:
@@ -127,10 +207,6 @@ def keyboard_listener(state):
                 char = os.read(fd, 1).decode()
                 if char == 'k' or char == ' ':
                     state.toggle_pause()
-                    if state.is_paused():
-                        print("\n[PAUSED] Press space or k to resume.", file=sys.stderr)
-                    else:
-                        print("\n[RESUMED]", file=sys.stderr)
                 elif char == 'l' or char == '+':
                     state.speed_up()
                 elif char == 'j' or char == '_':
@@ -218,7 +294,11 @@ class Engine:
             continuous_workload = None
 
         if sim_config.cooling:
-            cooling_model = ThermoFluidsModel(**system_config_dict)
+            if sim_config.cooling_model == "surrogate":
+                from raps.cooling_surrogate import SurrogateCoolingModel
+                cooling_model = SurrogateCoolingModel(**system_config_dict)
+            else:
+                cooling_model = ThermoFluidsModel(**system_config_dict)
             cooling_model.initialize()
             if sim_config.weather:
                 cooling_model.weather = Weather(start, config=system_config_dict)
@@ -277,10 +357,17 @@ class Engine:
         self.total_initial_jobs = len(jobs)
         self.current_timestep = 0
         self.cooling_model = cooling_model
+        self._last_cooling = None   # most recent (cooling_inputs, cooling_outputs)
         self.sys_power = 0
         self.power_manager = power_manager
         self.flops_manager = flops_manager
         self.debug = sim_config.debug
+        self.noui = sim_config.noui
+        self.sim_state = None
+        # Whether run_simulation starts the termios keyboard listener. The Textual UI
+        # owns stdin itself and sets this to False.
+        self.keyboard_owner = True
+        self.last_link_stats = None  # latest inter-job link utilization stats (max/mean/min/std_dev/top_links)
         self.continuous_workload = continuous_workload
         self.replay = sim_config.replay
         self.downscale = sim_config.downscale  # Factor to downscale the 1s timesteps (power of 10)
@@ -560,7 +647,7 @@ class Engine:
             else:  # if job.state == JobState.RUNNING:
                 # Error checks
                 if not replay and job.current_run_time > job.time_limit and job.end_time is not None:
-                    raise Exception(f"Job exceded time limit! "
+                    raise Exception(f"Job exceeded time limit! "
                                     f"{job.current_run_time} > {job.time_limit}"
                                     f"\n{job}"
                                     f"\nCurrent timestep:{self.current_timestep - self.timestep_start} (rel)"
@@ -628,6 +715,7 @@ class Engine:
             )
             if isinstance(congestion_stats, dict):
                 total_congestion = congestion_stats['mean']
+                self.last_link_stats = congestion_stats
             else:
                 total_congestion = congestion_stats
             self.net_congestion_history.append((self.current_timestep, total_congestion))
@@ -651,9 +739,18 @@ class Engine:
             power_df = None
 
         # System Cooling
+        # Each simulate_cooling() call advances the FMU by POWER_UPDATE_FREQ seconds,
+        # so at a 1 s tick only call it every POWER_UPDATE_FREQ seconds (as
+        # record_power_stats does), otherwise FMU time runs POWER_UPDATE_FREQ times
+        # faster than simulation time. Ticks in between reuse the latest result.
         if self.cooling_model:
-            cooling_inputs, cooling_outputs = self.cooling_model.simulate_cooling(rack_power=rack_power,
-                                                                                  engine=self)
+            due = (time_delta != 1
+                   or self.current_timestep % self.config['POWER_UPDATE_FREQ'] == 0
+                   or self._last_cooling is None)
+            if due:
+                self._last_cooling = self.cooling_model.simulate_cooling(rack_power=rack_power,
+                                                                         engine=self)
+            cooling_inputs, cooling_outputs = self._last_cooling
         else:
             cooling_inputs, cooling_outputs = None, None
 
@@ -767,16 +864,35 @@ class Engine:
         batch_window = max(60 * 60 * 6, 2 * self.time_delta)  # at least 6h
 
         sim_state = SimulationState(self.time_delta)
-        # listener_thread = threading.Thread(target=keyboard_listener, args=(sim_state,), daemon=True)
-        # listener_thread.start()
+        pace_deadline, pace_target = None, None
+        self.sim_state = sim_state  # read by the UI for pause/speed banners
+        # Keyboard controls (space/k: pause, l/+: faster, j/_: slower); needs an
+        # interactive terminal and a UI to be useful.
+        if self.keyboard_owner and sys.stdin.isatty() and not self.debug and not self.noui:
+            listener_thread = threading.Thread(target=keyboard_listener, args=(sim_state,), daemon=True)
+            listener_thread.start()
 
         while self.current_timestep < self.timestep_end:  # Runs every second
 
             if sim_state.is_paused():
+                pace_deadline = None
                 time.sleep(0.1)
                 continue
 
             current_time_delta = sim_state.get_time_delta()
+
+            # Optional wall-clock throttle (one loop iteration == one simulated second)
+            target_rate = sim_state.get_target_rate()
+            if target_rate:
+                now = time.monotonic()
+                if pace_deadline is None or target_rate != pace_target or now - pace_deadline > 1.0:
+                    pace_deadline = now  # (re)start pacing after a rate change, pause or long stall
+                pace_target = target_rate
+                pace_deadline += 1.0 / target_rate
+                if pace_deadline > now:
+                    time.sleep(pace_deadline - now)
+            else:
+                pace_deadline = None
 
             if (self.current_timestep % batch_window == 0) or (self.current_timestep == self.timestep_start):
                 # Add jobs that are within the batching window and remove them from all jobs
@@ -832,7 +948,7 @@ class Engine:
                 avg_net_util=tick_return.avg_net_util,
                 slowdown_per_job=tick_return.slowdown_per_job,
                 node_occupancy=tick_return.node_occupancy,
-                time_delta=self.time_delta
+                time_delta=current_time_delta
             )
 
             # 5. Complete the timestep
