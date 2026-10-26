@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from thermorl2.core.state import Ambient
 from thermorl2.raps_adapter.coupling import CouplingParams, rack_kw_to_fmu_inputs, power_input_names
@@ -38,3 +39,15 @@ def test_per_unit_air_temperature_maps_by_index():
 
 def test_default_ambient_unchanged():
     assert rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient()) == rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient(t_air_k_by_unit=None))
+
+
+def test_per_unit_air_temperature_length_mismatch():
+    with pytest.raises(ValueError):
+        rack_kw_to_fmu_inputs(np.zeros(3), P, Ambient(t_air_k_by_unit=(290.0, 291.0)))
+
+
+def test_per_unit_air_temperature_missing_input_key_raises():
+    keys = tuple(f"simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air" for i in (1, 2))
+    params = CouplingParams(3, 1, 0.945, keys, 290.0)
+    with pytest.raises(KeyError):
+        rack_kw_to_fmu_inputs(np.zeros(3), params, Ambient(t_air_k_by_unit=(290.0, 291.0, 292.0)))

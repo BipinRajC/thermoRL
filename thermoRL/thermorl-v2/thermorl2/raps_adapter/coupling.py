@@ -45,6 +45,7 @@ def rack_kw_to_fmu_inputs(rack_kw: np.ndarray, p: CouplingParams, ambient: Ambie
     if ambient.t_air_k_by_unit is not None:
         for i, temperature in enumerate(ambient.t_air_k_by_unit, start=1):
             key = f"simulator_1_datacenter_1_computeBlock_{i}_cabinet_1_sources_T_Air"
-            if key in out:
-                out[key] = float(temperature)
+            if key not in out:
+                raise KeyError(f"missing per-unit T_Air input: {key}")
+            out[key] = float(temperature)
     return out

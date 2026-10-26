@@ -5,9 +5,11 @@ from thermorl2.experiments.probes import branch_statistics, g1_metrics, g3_metri
 
 def test_branch_statistics_uses_final_window_right_endpoints():
     times = np.array([0, 9000, 9020, 10800])
-    temperatures = np.array([[99, 99], [80, 80], [30, 32], [34, 36]])
+    temperatures = np.array([[99, 99], [80, 80], [20, 40], [40, 20]])
     result = branch_statistics(times, temperatures, 10800, 1800)
-    assert result == {"max_c": 34.0, "mean_c": 33.0, "spread_c": 2.0}
+    # The hottest rack changes: mean(max across racks)=40, while
+    # max(mean per rack)=30. This pins the preregistered metric definition.
+    assert result == {"max_c": 40.0, "mean_c": 30.0, "spread_c": 20.0}
 
 
 def test_g1_signed_crossing_fit_and_median():
