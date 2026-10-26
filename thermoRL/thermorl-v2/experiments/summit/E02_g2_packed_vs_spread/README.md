@@ -1,5 +1,5 @@
 # E02 — G2 packed versus spread (summit)
-**System:** summit  **Status:** planned
+**System:** summit  **Status:** complete
 **Pre-registered:** 2026-10-27; commit `c6e127a9e453fe7eaba55cd9f011d9cdbeb88e01` (before execution).
 
 ## Question
@@ -56,18 +56,35 @@ Launch all three systems as separate parallel OS processes. Verify SHA before in
 At each right endpoint, compute max rack coolant, mean rack coolant, and max-minus-min spread. Average each over the final 1800 s (`9000 < t_s <= 10800`). Δ is packed mean maximum minus spread mean maximum, °C. FMU-only cost includes initialization, warm-up, branch resets, observation calls, steps and close, divided by the total 8 simulated hours. Python aggregation and plotting are excluded from FMU runtime and recorded separately in wall timings. C_s uses the frozen 1.5 overhead assumption.
 
 ## Results
-Pending execution.
+| Quantity | Value |
+|---|---:|
+| Total rack power, both branches (kW) | 8648.070979591836 |
+| Spread max / mean / spread (°C) | 54.349788120565 / 54.349788119955 / 1.33066369775e-09 |
+| Packed max / mean / spread (°C) | 60.584677104907 / 54.387868715183 / 15.491877555469 |
+| Δ (°C), class | 6.234888984342, **GO** |
+| FMU-only s / simulated h | 146.082248317006 |
+| Projected C_s (min / 6 h) | 21.912337247551 |
+| Original run wall time (s) | 1172.611832356 |
+| Sanity | True |
+
+[Full summary](results/summary.json), [scientific summary](results/scientific_summary.json), [rack ledger](results/series.parquet), [warm-up](results/warmup.parquet), [CDU-1/global ledger](results/globals.parquet).
+
 ## Plots
-Pending execution.
+![G2 trajectories and final rack profile](plots/g2_trajectories.png)
+
 ## Observations (FACT)
-Pending execution.
+Exactly 7200 s capped warm-up; branch initial coolant, extras and globals matched exactly. All sampled outputs were finite; coolant range 30.000000000000–61.087590677686 °C. Packed vector had 154 full racks. The [independent audit](provenance/independent_ledger_audit.json) verifies time grids, power sums, metrics and source hashes.
+
 ## Interpretation (INFERENCE)
-Pending execution.
+This twin provides a larger packed-versus-spread maximum-temperature contrast than the other tested twins under the frozen method. This comparison does not establish thermal-aware benefit beyond power balancing or validate a coolant safety threshold for real Summit hardware.
+
 ## Conclusion and decision
-Pending execution.
+**GO**, sane, and eligible at C_s <= 30 min. X01 mechanically selected Summit; its post-selection RAPS+FMU cost guard remains for Task 5.
+
 ## Limitations
 One homogeneous twin; capped initialization; restore jitter. G2 measures placement contrast, not advantage beyond power balancing. Wall cost is machine-specific; 1.5 overhead is an assumption.
 ## Provenance
-Git state, source/config/workload-vector/FMUs hashes, environment, policy/seed (not applicable), backend=fmu and timings will be recorded.
+[Manifest](provenance/manifest.json), [environment](provenance/environment.txt), [inputs](provenance/input_sequence.json), [initial observations](provenance/branch_initial_observations.json). Git `41c658563eb4a51b7a30f0d2b1650e95130e66f2`, dirty=true from concurrent outputs; committed implementation hashes are verified. FMU `0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233`; workload-vector SHA `22a9ddb395e7b43e985433a910bb05eb04c4bccf6a4e2cdafb8237299bd4f515`. Backend=fmu; policy/seed not applicable. Original cost used for X01; no replacement by later measurements.
+
 ## Demo relevance
 Earliest falsification gate for the hotspot demonstration; feeds mechanical primary selection.

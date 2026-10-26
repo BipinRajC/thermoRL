@@ -11,8 +11,8 @@
 | Smoke wall_s | 73.791710919000 (600 s capped preconditioning) |
 | Schematic grid | 13 × 20 |
 | What-if racks (zero-based) | 192–256 |
-| FMU-only wall s / simulated h | TBD (Task 2/3) |
-| Projected closed-loop min / 6 h | TBD (Task 2/3) |
+| FMU-only wall s / simulated h | 146.082248317006 (original G2) |
+| Projected closed-loop min / 6 h | 21.912337247551 (1.5 overhead assumption) |
 
 ## Known caveats
 
@@ -29,3 +29,7 @@ TBD (Task 2/3).
 The RAPS power config has `power_switch: 0`. A new test initially assumed strictly positive switch overhead; that unsupported test assumption was corrected to permit zero. The power formula and system inputs were unchanged.
 
 Complete corrected Task 2 verification: **33 passed in 81.14 s**. Repeated smoke wall time: 69.812412241000 s; reported coolant min/max and power bounds were identical to the initial smoke. Unit/integration including the existing RAPS-coupling regression: **31 passed in 1.43 s**. These smoke wall times do not replace the G2 cost measurement or establish G2 eligibility.
+
+## E02 G2 and X01
+
+[README](E02_g2_packed_vs_spread/README.md): Δ=6.234888984342 °C, GO, sane. [X01](../cross_system/X01_fmu_selection/README.md) selects Summit as primary, Lassen runner-up, without tie-break. Higher observed coolant temperatures (up to 61.087591 °C) are retained; no threshold or power change. Task 5 cost guard remains pending.

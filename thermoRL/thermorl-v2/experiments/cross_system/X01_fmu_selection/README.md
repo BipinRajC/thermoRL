@@ -1,5 +1,5 @@
 # X01 — Mechanical primary-FMU selection
-**System:** cross_system  **Status:** planned
+**System:** cross_system  **Status:** complete
 **Pre-registered:** 2026-10-27; commit `c6e127a9e453fe7eaba55cd9f011d9cdbeb88e01` (before execution).
 
 ## Question
@@ -55,18 +55,30 @@ Expected wall time: seconds. Among eligible systems, rank by descending Δ; amon
 ## Metrics
 Original-run Δ, class, C_s, sanity, eligibility, primary, runner-up and tie-break. No aggregate effect claim across unlike twins.
 ## Results
-Pending execution.
+| System | Δ °C | Class | C_s min / 6 h | Sane | Eligible |
+|---|---:|---|---:|---|---|
+| lassen | 2.036319592756 | GO | 0.304157671949 | True | True |
+| summit | 6.234888984342 | GO | 21.912337247551 | True | True |
+| marconi100 | 0.054796806701 | STOP | 0.394916788800 | True | True |
+
+Primary: **summit**; runner-up: **lassen**; tie-break applied: **False**. [Machine-readable decision](results/summary.json); [CSV](results/g2_comparison.csv).
+
 ## Plots
-Pending execution.
+![Cross-system G2 comparison](plots/g2_cross_system.png)
+
 ## Observations (FACT)
-Pending execution.
+All three completed warm-up and passed sampled-output sanity, and all three original C_s values are <=30 min. Summit has the largest Δ. The 80% tie threshold is 4.987911187473 °C; Lassen (2.036319592756 °C) is below it. The selection pool therefore contains Summit alone. The Lassen independent rerun has byte-identical scientific and thermal results, with separate timings retained.
+
 ## Interpretation (INFERENCE)
-Pending execution.
+The frozen rule selects the stronger hotspot contrast despite its substantially higher runtime. This establishes the demo operating twin, not scheduler superiority. Its 21.91 min projection is an overhead assumption; Task 5 still measures the actual engine cost.
+
 ## Conclusion and decision
-Pending execution.
+**GO; primary Summit, runner-up Lassen, no tie-break.** Continue to G1/G3 on Summit. No STOP condition is triggered by Marconi100's individual STOP classification because the chosen system is GO.
+
 ## Limitations
 Projected RAPS overhead is an assumption; Task 5 retains its post-selection guard. Rerun costs do not replace original selection costs.
 ## Provenance
-Source-summary/config hashes, git state, environment and backend=fmu will be recorded.
+[Manifest](provenance/manifest.json) records source-summary hashes, git state, config, backend=fmu and timing. Selection consumed original G2 summaries only, with their hashes embedded in [summary.json](results/summary.json).
+
 ## Demo relevance
 Freezes the primary before calibration and closed-loop implementation.
