@@ -82,3 +82,14 @@ Projected RAPS overhead is an assumption; Task 5 retains its post-selection guar
 
 ## Demo relevance
 Freezes the primary before calibration and closed-loop implementation.
+
+## Approved post-result Task 5 cost-guard clarification (2026-10-27)
+
+**D2 — Post-selection cost guard (spec §4.1 step 6, spec-literal reading).**
+- Measure the Task 5 bench as **one isolated process**: FMU instantiation, the full 7200 s warm-up, and a 6 h idle RAPS+FMU run at the system's power tick.
+- Run it with **no other FMU or RAPS simulation on the machine**. Editing and non-FMU unit tests are allowed meanwhile.
+- `total_s` is the end-to-end wall time of that process.
+- **Switch condition:** `total_s > 2700` (45 min).
+- Also report `2 × total_s` and `2 × (total_s − warm-up/instantiation time)` as information only. They do not decide anything.
+- The plan's `total_s × 2 > 45 × 60` wording is superseded.
+- Horizon rule: unchanged. A 12 h horizon would need `total_s × 2 × 2 ≤ 300`, so Summit uses 6 h.

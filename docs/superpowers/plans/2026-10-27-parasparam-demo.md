@@ -931,3 +931,22 @@ These require a new steering decision after C5:
 Approved by Bipin in conversation on 2026-10-27: compare canonical deterministic scientific-summary bytes and thermal-series content across the Lassen rerun, excluding exactly `fmu_s_per_sim_h` and `projected_closed_loop_min_6h` from the scientific summary. Preserve each full summary and timing measurement separately. X01 uses only the original runs' costs. Do not claim full-summary byte identity. No physical threshold, input, horizon or selection rule changes. Rerun artifacts: `provenance/rerun_1_data/`; comparison: `provenance/rerun_1.json`.
 
 This supersedes only Task 3 Step 5's full-summary byte-identity requirement. The scientific projection excludes exactly the two timing keys above; both full summaries and all thermal data remain preserved. No physical metric or selection rule changes.
+
+## Approved pre-Task-5 decisions (2026-10-27)
+
+**D1 — Summit rack-power reconciliation.** RAPS applies rectifier losses on Summit (`rectifier_efficiency` 0.96, `rectifier_loss_constant` 17 W). `rack_power_bounds` (spec §3.1) omits them, so RAPS `power_df` idle is ≈ 13.8226 kW per rack against the probe value of 13.2017 kW. Peak is ≈ 49.3233 kW against 47.2823 kW. Lassen and Marconi100 are lossless. Therefore:
+- (a) Task 5's idle test compares the idle `power_df` rack mean against RAPS's own loss-inclusive rack power. Compute that with a new adapter helper, `raps_rack_kw(cfg, cpu_util, gpu_util) -> float`, which evaluates RAPS's own power code (`PowerManager` / `compute_rack_power`) on a uniform node state. Do not re-implement the loss formula by hand. The tolerance stays at 0.05 kW.
+- (b) The exact reconciliation Σ per-rack kW = Σ `power_df["Sum"]` is still required.
+- (c) `summit/SYSTEM.md` records both values. It also notes that the C1 probes used loss-exclusive kW, so closed-loop FMU inputs run about 4–5 % higher for the same node utilisation.
+- (d) The G1 fit stays valid and frozen. It maps FMU-input kW to coolant temperature, and `power_df` is the FMU input.
+- (e) `job_increment_kw` stays frozen. Its roughly 4 % understatement of between-tick committed power on Summit is documented, not corrected.
+- (f) No C1 experiment is re-run.
+
+**D2 — Post-selection cost guard (spec §4.1 step 6, spec-literal reading).**
+- Measure the Task 5 bench as **one isolated process**: FMU instantiation, the full 7200 s warm-up, and a 6 h idle RAPS+FMU run at the system's power tick.
+- Run it with **no other FMU or RAPS simulation on the machine**. Editing and non-FMU unit tests are allowed meanwhile.
+- `total_s` is the end-to-end wall time of that process.
+- **Switch condition:** `total_s > 2700` (45 min).
+- Also report `2 × total_s` and `2 × (total_s − warm-up/instantiation time)` as information only. They do not decide anything.
+- The plan's `total_s × 2 > 45 × 60` wording is superseded.
+- Horizon rule: unchanged. A 12 h horizon would need `total_s × 2 × 2 ≤ 300`, so Summit uses 6 h.
