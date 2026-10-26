@@ -1,0 +1,84 @@
+{
+  "dt_s": 10,
+  "fit": {
+    "a_c": 27.9753857271229,
+    "b_c_per_kw": 0.8052450824355937,
+    "r2": 0.9891676476892759
+  },
+  "fmu_sha256": "0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233",
+  "idle_kw": 13.201714285714285,
+  "levels": [
+    {
+      "f": 0,
+      "initial_mean_c": 39.028228453615405,
+      "max_c": 40.041535230602,
+      "mean_c": 40.0415352233025,
+      "min_c": 40.041535216423,
+      "rack_kw": 13.201714285714285,
+      "signed_final_rise_c": 1.013306769687098,
+      "t63_s": 4930.0,
+      "trajectory_peak_c": 40.06260783226816
+    },
+    {
+      "f": 0.25,
+      "initial_mean_c": 39.028228453615405,
+      "max_c": 44.05884811473739,
+      "mean_c": 44.05884811367884,
+      "min_c": 44.05884811225436,
+      "rack_kw": 21.721867346938776,
+      "signed_final_rise_c": 5.0306196600634365,
+      "t63_s": 3550.0,
+      "trajectory_peak_c": 44.1245909819562
+    },
+    {
+      "f": 0.5,
+      "initial_mean_c": 39.028228453615405,
+      "max_c": 51.57989203380387,
+      "mean_c": 51.57989203286728,
+      "min_c": 51.57989203169149,
+      "rack_kw": 30.242020408163267,
+      "signed_final_rise_c": 12.551663579251873,
+      "t63_s": 4050.0,
+      "trajectory_peak_c": 51.765304275223855
+    },
+    {
+      "f": 0.75,
+      "initial_mean_c": 39.028228453615405,
+      "max_c": 59.16565659573788,
+      "mean_c": 59.165656595655385,
+      "min_c": 59.1656565955246,
+      "rack_kw": 38.76217346938776,
+      "signed_final_rise_c": 20.13742814203998,
+      "t63_s": 4130.0,
+      "trajectory_peak_c": 59.46882544116704
+    },
+    {
+      "f": 1,
+      "initial_mean_c": 39.028228453615405,
+      "max_c": 66.7921877535211,
+      "mean_c": 66.79218775306222,
+      "min_c": 66.7921877526231,
+      "rack_kw": 47.28232653061225,
+      "signed_final_rise_c": 27.763959299446817,
+      "t63_s": 4170.0,
+      "trajectory_peak_c": 67.21288747212816
+    }
+  ],
+  "n_racks": 257,
+  "peak_kw": 47.282326530612245,
+  "rack_spread_at_f1_c": 8.98012331163045e-10,
+  "reaches_40c": true,
+  "reaches_45c": true,
+  "sane": true,
+  "sanity_detail": {
+    "all_outputs_finite": true,
+    "coolant_max_c": 67.21288747212816,
+    "coolant_min_c": 30.0,
+    "warmup_completed": true
+  },
+  "system": "summit",
+  "t_hot_c": 63.30492211035258,
+  "tau_s": 4050.0,
+  "warmup_status": "capped_preconditioned_not_settled",
+  "warmup_used_s": 7200.0
+}

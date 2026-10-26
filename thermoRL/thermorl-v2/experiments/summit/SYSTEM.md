@@ -33,3 +33,11 @@ Complete corrected Task 2 verification: **33 passed in 81.14 s**. Repeated smoke
 ## E02 G2 and X01
 
 [README](E02_g2_packed_vs_spread/README.md): Δ=6.234888984342 °C, GO, sane. [X01](../cross_system/X01_fmu_selection/README.md) selects Summit as primary, Lassen runner-up, without tie-break. Higher observed coolant temperatures (up to 61.087591 °C) are retained; no threshold or power change. Task 5 cost guard remains pending.
+
+## E03 G3 room-air what-if
+
+[README](E03_g3_room_air/README.md): NOT_USABLE; affected paired difference 0.538986028132 °C, unaffected 0.101837403880 °C. The frozen room-air what-if is dropped. [62 candidate CDU parameters](E03_g3_room_air/results/candidate_cdu_parameters.txt) are listed only; none were applied. (not observed summit behaviour)
+
+## E01 G1 operating range and frozen fit
+
+[README](E01_g1_uniform/README.md): final means 40.041535–66.792188 °C; a=27.975385727123, b=0.805245082436, R²=0.989167647689, empirical τ=4050 s, t_hot=63.304922110353 °C. Both 40 °C and 45 °C were reached. Capped initial mean 39.028228 °C; idle branch subsequently rose 1.013307 °C. Final-window values are not certified equilibria.

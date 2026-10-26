@@ -1,0 +1,80 @@
+[
+  {
+    "config_sha256": "d9aa65913a9ae9711acf4989e5157ea10139250cd2d39a3af82cbbce34f35288",
+    "preregistration_commit": "c6e127a",
+    "readme": "thermoRL/thermorl-v2/experiments/lassen/E02_g2_packed_vs_spread/README.md",
+    "section_sha256": {
+      "Configuration": "7519982788c71f5a22f1d69ad06c14475152c523c5ccbfcded1f15aba845e63b",
+      "Method": "98d9446835d5da15c0a9b8b80223a525090f9c98bb6b2feb4167ebf7a611d511",
+      "Metrics": "e2d6a8d4b2f5cd115e754674d2d6ad7c8b3e5da988d413de4fccab15605cbd5c",
+      "Pre-registered decision rule": "91011f9cfd57bf299cd0c7fe6d21f074cb7ced1561b8c8e29a2006ab11ece3db",
+      "Question": "2e7c33958da8b75244e9f2a2f532b76421c084a0b2e38b70eef254d778fdf9d5"
+    },
+    "sections_unchanged": true
+  },
+  {
+    "config_sha256": "f83e752ae957f6e629aa5a38f44a900eae9c32e58c5c13bb75eca4f533569310",
+    "preregistration_commit": "c6e127a",
+    "readme": "thermoRL/thermorl-v2/experiments/marconi100/E02_g2_packed_vs_spread/README.md",
+    "section_sha256": {
+      "Configuration": "12ca7b7eb37b90557e05570c81d327b9d9f867efe90315c353df62fd0a602711",
+      "Method": "fc6afee7c0107842f31247a6e063f617afdc872c2ef8ad2e7bba66a0b32be0e8",
+      "Metrics": "e2d6a8d4b2f5cd115e754674d2d6ad7c8b3e5da988d413de4fccab15605cbd5c",
+      "Pre-registered decision rule": "91011f9cfd57bf299cd0c7fe6d21f074cb7ced1561b8c8e29a2006ab11ece3db",
+      "Question": "2e7c33958da8b75244e9f2a2f532b76421c084a0b2e38b70eef254d778fdf9d5"
+    },
+    "sections_unchanged": true
+  },
+  {
+    "config_sha256": "c57665cefcadc7fa69ee7df16298278b85c793af9baf55a8922c3270f5ed4dd6",
+    "preregistration_commit": "c6e127a",
+    "readme": "thermoRL/thermorl-v2/experiments/summit/E02_g2_packed_vs_spread/README.md",
+    "section_sha256": {
+      "Configuration": "04d95da63084c26979967dd52afdca14f09a8ca3d1ee5af6e0530f41ddbe1fd7",
+      "Method": "9458592f494e3e55852527cba23086cc6901fff7085f0082e282ccb7f55de22c",
+      "Metrics": "e2d6a8d4b2f5cd115e754674d2d6ad7c8b3e5da988d413de4fccab15605cbd5c",
+      "Pre-registered decision rule": "91011f9cfd57bf299cd0c7fe6d21f074cb7ced1561b8c8e29a2006ab11ece3db",
+      "Question": "2e7c33958da8b75244e9f2a2f532b76421c084a0b2e38b70eef254d778fdf9d5"
+    },
+    "sections_unchanged": true
+  },
+  {
+    "config_sha256": "727efa64367b14accaa89ff81053559f13d354baddc41467eb2e13d769cd7e5f",
+    "preregistration_commit": "c6e127a",
+    "readme": "thermoRL/thermorl-v2/experiments/cross_system/X01_fmu_selection/README.md",
+    "section_sha256": {
+      "Configuration": "cf8836379644f4d4caa4e4458913496b63580542e29a8622501b2052bf95fea9",
+      "Method": "62ef270d69603081473e9445e755d2662f29c2d6c986600f867ef3d02ac9ef55",
+      "Metrics": "094ca9a645fe75a0d69b4949d38d74a510e60832adfce4907b8b7efe7e443a37",
+      "Pre-registered decision rule": "91011f9cfd57bf299cd0c7fe6d21f074cb7ced1561b8c8e29a2006ab11ece3db",
+      "Question": "774e7472ccbc8829b2e0375e23c071e7ece22904ceff70f18c9e4b2fa7400f96"
+    },
+    "sections_unchanged": true
+  },
+  {
+    "config_sha256": "9636a56c91fafdd18fcd91650f404caddc4a1c0958521b5c41ade06f6eea71b7",
+    "preregistration_commit": "6f88579",
+    "readme": "thermoRL/thermorl-v2/experiments/summit/E01_g1_uniform/README.md",
+    "section_sha256": {
+      "Configuration": "30a1580b1762ba4db543168bac2bc1fa4cd745198928815e0a2491e124a83718",
+      "Method": "202070e431e263092d739af8a047dde14183ca7d31045bf6930a1b1e70ccd85b",
+      "Metrics": "e291d08ecd1d65c3805ba6a62501a6933c925a76bc9632af5ccc6ece2d749974",
+      "Pre-registered decision rule": "e4cf98c2b22028884edf9d505eee9f6c5335aec75f50bbc0ada27471dd85cf3e",
+      "Question": "db2d2ebdfc7b5574a7ad43abc62dc77c1e7780ac02c2b652e400183d24ddff92"
+    },
+    "sections_unchanged": true
+  },
+  {
+    "config_sha256": "f491dd5ceb94fe283fe02693fa1596e39ae75b600212f7589ba46fbc7fb8626b",
+    "preregistration_commit": "6f88579",
+    "readme": "thermoRL/thermorl-v2/experiments/summit/E03_g3_room_air/README.md",
+    "section_sha256": {
+      "Configuration": "30a1580b1762ba4db543168bac2bc1fa4cd745198928815e0a2491e124a83718",
+      "Method": "8fafc947885f81426d38bfc9915af80d734417c2937dc56765e970fced1c08f5",
+      "Metrics": "256a2fd353178e0de37b07a8b314ae81479208e3d96e737bfabf33d2e5306706",
+      "Pre-registered decision rule": "f0ccbc6bb36de853405084ec67fe3303fdfe1dfb0343deedbc706028e2611284",
+      "Question": "12be30e590c671e5ce3820c70d7f6628fbdee86e3a8375cba4e4f73798d4fc4e"
+    },
+    "sections_unchanged": true
+  }
+]
