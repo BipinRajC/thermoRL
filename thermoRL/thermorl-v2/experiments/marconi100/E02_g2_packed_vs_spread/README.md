@@ -1,6 +1,6 @@
 # E02 — G2 packed versus spread (marconi100)
 **System:** marconi100  **Status:** planned
-**Pre-registered:** 2026-10-27; introducing commit to be recorded after commit (before execution).
+**Pre-registered:** 2026-10-27; commit `c6e127a9e453fe7eaba55cd9f011d9cdbeb88e01` (before execution).
 
 ## Question
 At identical total rack power, how large is the packed-minus-spread hotspot effect, and is this FMU eligible for primary selection?

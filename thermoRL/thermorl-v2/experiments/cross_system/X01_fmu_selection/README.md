@@ -1,6 +1,6 @@
 # X01 — Mechanical primary-FMU selection
 **System:** cross_system  **Status:** planned
-**Pre-registered:** 2026-10-27; introducing commit to be recorded after commit (before execution).
+**Pre-registered:** 2026-10-27; commit `c6e127a9e453fe7eaba55cd9f011d9cdbeb88e01` (before execution).
 
 ## Question
 Which FMU should be primary according to the frozen G2 effect-size, sanity and cost rule?
