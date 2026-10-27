@@ -1,0 +1,12 @@
+RK-method: sdirk34hw
+Local extrapolation
+FSAL
+Continuous extension
+WARNING: Failed to load dataloader: No module named 'raps.dataloaders.summit'
+Using scheduler: default, with policy PolicyType.FCFS and backfill BackfillType.NONE
+RUN power_balance: fixed warm-up complete; 7200s episode starting
+RUN power_balance: 1800/7200s; step calls=180; jobs started=375
+RUN power_balance: 3600/7200s; step calls=360; jobs started=756
+RUN power_balance: 5400/7200s; step calls=540; jobs started=1133
+RUN power_balance: 7200/7200s; step calls=720; jobs started=1510
+{"fmu_steps": 720, "jobs_started": 1514, "policy": "power_balance", "run_dir": "/home/bipin/thermoRL/thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1", "total_s": 484.2134513500023}

@@ -1,0 +1,12 @@
+RK-method: sdirk34hw
+Local extrapolation
+FSAL
+Continuous extension
+WARNING: Failed to load dataloader: No module named 'raps.dataloaders.summit'
+Using scheduler: default, with policy PolicyType.FCFS and backfill BackfillType.NONE
+RUN packing: fixed warm-up complete; 7200s episode starting
+RUN packing: 1800/7200s; step calls=180; jobs started=375
+RUN packing: 3600/7200s; step calls=360; jobs started=756
+RUN packing: 5400/7200s; step calls=540; jobs started=1133
+RUN packing: 7200/7200s; step calls=720; jobs started=1510
+{"fmu_steps": 720, "jobs_started": 1514, "policy": "packing", "run_dir": "/home/bipin/thermoRL/thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/provenance/rerun_1_packing_seed1", "total_s": 538.3994626040003}

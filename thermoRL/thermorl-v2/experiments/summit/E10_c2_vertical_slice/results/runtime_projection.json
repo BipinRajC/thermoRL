@@ -1,0 +1,26 @@
+{
+  "assumptions": [
+    "same three-way concurrency as E10",
+    "one initialization/warm-up per run",
+    "linear episode cost scaling from two to six hours",
+    "other policies and the six-hour workload have not been timed"
+  ],
+  "formula": "projected six-hour run = (total_s - episode_wall_s) + 3*episode_wall_s; five waves at three workers",
+  "future_horizon_h": 6,
+  "matrix_runs": 15,
+  "matrix_wall_s_max": 5048.079835219996,
+  "matrix_wall_s_min": 4195.572222959981,
+  "observed_episode_h": 2,
+  "per_run_s": {
+    "packing": 1009.6159670439993,
+    "packing_rerun": 1007.7482591660009,
+    "power_balance": 839.1144445919963
+  },
+  "scope": "timing extrapolation only; no G4 run or policy-effect conclusion",
+  "source_manifest_sha256": {
+    "packing": "20fecbff692812530df99cace65aafbb61aee287b1a6dfdb592b928a3ae1b592",
+    "packing_rerun": "2d8417ec7af3e00d8514a000b67b017cc824c3ef6d04015dee972d735224217b",
+    "power_balance": "384684b17f92fecdb40270f8568c68bbff4acc81f552ecabb609e0478248d707"
+  },
+  "workers_proposed": 3
+}

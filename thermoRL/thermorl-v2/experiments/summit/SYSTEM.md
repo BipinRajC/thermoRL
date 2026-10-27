@@ -84,3 +84,11 @@ uv run python -m thermorl2.experiments.bench --system summit --hours 6
 **D1 rack-power reconciliation:** RAPS's own `PowerManager.compute_rack_power` gives 13.822619047619 kW idle and 49.323256802721 kW peak, including rectifier losses. C1 probe references were 13.201714285714 and 47.282326530612 kW. Closed-loop FMU inputs therefore run about 4–5% higher at equal node utilisation. C1 experiments and the G1 fit remain frozen: the fit maps FMU-input kW to coolant temperature. `job_increment_kw` remains frozen and understates between-tick Summit committed increments by roughly 4%; this limitation is documented, not corrected.
 
 **FACT:** the only pre-existing dirty path at bench start was ` D docs/prompt.md`; it was neither staged nor modified by this work. The raw `git_status_porcelain` records it. RAPS emitted its existing missing-Summit-dataloader warning while constructing the discarded random workload; the benchmark injected `jobs=[]`, disabled cooling/UI/file output, and completed all idle ticks successfully.
+
+## E10 / C2 closed-loop mechanics
+
+[README](E10_c2_vertical_slice/README.md): PASS, all six invariants. Packing, power_balance and independent packing rerun use the same SHA-keyed seed-1 rho=.6 two-hour workload, 7200 s capped warm-up and 720 FMU steps. Job starts and IT power match; packing decisions are byte-identical on rerun and interval values match. No coolant above 70 °C or negative episode pump sample occurred.
+
+Observed final-hour mean maximum coolant: packing 53.445128703 °C; power_balance 54.115585107 °C. This unexpected ordering is reported as mechanics evidence, without a G4 conclusion or input tuning. The heatmaps show concentration on lower rack indices under packing and distributed hot stripes under power_balance, not a thermally flat panel. Realised sampled node utilisation is 0.544679229 for both. The experiment has 1514 starts; one of 1515 offered jobs is admitted at the excluded t=7200 boundary.
+
+[R3/R4 and timing provenance](E10_c2_vertical_slice/provenance/manifest.json) and [runtime projection](E10_c2_vertical_slice/results/runtime_projection.json) are retained. Proposed future matrix workers: 3, matching tested E10 concurrency; linear projected 15-run wall time about 70–84 min. No matrix has run. C2 is a mandatory stop for review.

@@ -1,0 +1,85 @@
+{
+  "decisions_byte_identical": true,
+  "interval_values_identical": true,
+  "max_abs_it_kw_difference": 1.8189894035458565e-12,
+  "offered_but_not_started": [
+    {
+      "admission_second": 7200,
+      "id": 1514,
+      "submit_time": 7199.60173086255
+    }
+  ],
+  "packing": {
+    "allocation_replay_verified": true,
+    "completion_count": 1030,
+    "coolant_over_70_samples": 0,
+    "decision_count": 1514,
+    "independent_metrics": {
+      "maxrack_mean_c": 53.44512870303271,
+      "maxrack_p99_c": 55.579580360417175,
+      "mean_rack_c": 43.73831365651681,
+      "raw_max_c": 55.60917458745587,
+      "realised_node_utilisation_mean": 0.5446792285151558
+    },
+    "latency_join_verified": true,
+    "metric_absolute_errors": {
+      "maxrack_mean_c": 0.0,
+      "maxrack_p99_c": 0.0,
+      "mean_rack_c": 0.0,
+      "raw_max_c": 0.0,
+      "realised_node_utilisation_mean": 0.0
+    },
+    "negative_episode_pump_samples": 0,
+    "run_bytes": 16772825,
+    "source_hashes_verified": true
+  },
+  "packing_rerun": {
+    "allocation_replay_verified": true,
+    "completion_count": 1030,
+    "coolant_over_70_samples": 0,
+    "decision_count": 1514,
+    "independent_metrics": {
+      "maxrack_mean_c": 53.44512870303271,
+      "maxrack_p99_c": 55.579580360417175,
+      "mean_rack_c": 43.73831365651681,
+      "raw_max_c": 55.60917458745587,
+      "realised_node_utilisation_mean": 0.5446792285151558
+    },
+    "latency_join_verified": true,
+    "metric_absolute_errors": {
+      "maxrack_mean_c": 0.0,
+      "maxrack_p99_c": 0.0,
+      "mean_rack_c": 0.0,
+      "raw_max_c": 0.0,
+      "realised_node_utilisation_mean": 0.0
+    },
+    "negative_episode_pump_samples": 0,
+    "run_bytes": 16772717,
+    "source_hashes_verified": true
+  },
+  "power_balance": {
+    "allocation_replay_verified": true,
+    "completion_count": 1030,
+    "coolant_over_70_samples": 0,
+    "decision_count": 1514,
+    "independent_metrics": {
+      "maxrack_mean_c": 54.115585106899964,
+      "maxrack_p99_c": 55.849402766564644,
+      "mean_rack_c": 43.66518461304956,
+      "raw_max_c": 55.872785112142594,
+      "realised_node_utilisation_mean": 0.5446792285151558
+    },
+    "latency_join_verified": true,
+    "metric_absolute_errors": {
+      "maxrack_mean_c": 0.0,
+      "maxrack_p99_c": 0.0,
+      "mean_rack_c": 0.0,
+      "raw_max_c": 0.0,
+      "realised_node_utilisation_mean": 0.0
+    },
+    "negative_episode_pump_samples": 0,
+    "run_bytes": 18909997,
+    "source_hashes_verified": true
+  },
+  "start_times_identical": true
+}
