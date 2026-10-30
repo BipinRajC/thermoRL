@@ -8,9 +8,30 @@ workload:
   variant: default
   raw_dir: datasets/alibaba_gpu_2023/raw
   rho: 0.6
+  by_seed:
+    1:
+      path: experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet
+      sha256: 7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c
+      meta_sha256: ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0
+    2:
+      path: experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet
+      sha256: 28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead
+      meta_sha256: 995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7
+    3:
+      path: experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet
+      sha256: 1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904
+      meta_sha256: ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d
 scenario:
   name: nominal
   label: ''
   ambient_schedule: []
-policies: [packing, node_balance, power_balance, coolest_rack, thermal_predictive]
-seeds: [1, 2, 3]
+policies:
+- packing
+- node_balance
+- power_balance
+- coolest_rack
+- thermal_predictive
+seeds:
+- 1
+- 2
+- 3

@@ -1,0 +1,69 @@
+{
+  "arrival_compression_factor": 2063.712860793521,
+  "arrival_rule": "sort (creation_time,source_row); incoming gaps=[mean(diff creation),diff creation]; gap/scale; cumulative submits < horizon; admission ceil(submit)",
+  "cpus_per_socket_assumption": 20,
+  "expected_node_seconds_exact": 2797.852651942608,
+  "generated_phase_mix": {
+    "Failed": 5914,
+    "Running": 13142,
+    "Succeeded": 571
+  },
+  "generator_source_sha256": "39665ab90f2e3cc1f74b2c910b66b94ecaff018dac8f754716937382e18aad7c",
+  "gpus_per_node": 6,
+  "horizon_s": 21600,
+  "lineage_rule": "job id i uses ordered source pod (start_offset+i) % source_pods",
+  "mapping": "nodes=ceil(num_gpu/G); gpu=min(G,num_gpu*gpu_milli/1000/nodes); cpu=min(2,cpu_milli/1000/20/nodes)",
+  "mean_original_interarrival_s": 2080.258142534666,
+  "n_nodes": 4626,
+  "ordered_source_rows_sha256": "4f5163c862eb0c5ca94b67a16f7a21b053d394513e1dc81dbed4ec0af8691bf4",
+  "phase_filter": "pod_phase != Pending and num_gpu > 0; includes Failed and Running",
+  "raw_rows": 8152,
+  "representation": "D3: deletion-creation seconds, clip [300,horizon], assert integer, limit=ceil(1.5R); no runtime compression",
+  "rho": 0.6,
+  "rng_draw_order": "one default_rng(seed).integers(source_pods) start offset only; seeds are rotations",
+  "runtime_assumption": "deletion_time - creation_time in seconds, regardless of kept phase",
+  "runtime_clip": {
+    "above_max_count": 266,
+    "above_max_fraction": 0.0428824762211833,
+    "below_min_count": 2033,
+    "below_min_fraction": 0.32774463969047235,
+    "max_s": 21600,
+    "min_s": 300,
+    "nonpositive_raw_count": 0,
+    "raw_max_s": 12537496.0,
+    "raw_median_s": 723.0,
+    "raw_min_s": 4.0,
+    "source_count": 6203
+  },
+  "seed": 2,
+  "sha256": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+  "source_creation_max_s": 12901761.0,
+  "source_creation_min_s": 0.0,
+  "source_cycle_passes": 3.164114138320168,
+  "source_path": "datasets/alibaba_gpu_2023/raw/openb_pod_list_default.csv",
+  "source_phase_mix_kept": {
+    "Failed": 1869,
+    "Running": 4149,
+    "Succeeded": 185
+  },
+  "source_phase_mix_raw": {
+    "Failed": 1870,
+    "Pending": 897,
+    "Running": 5193,
+    "Succeeded": 192
+  },
+  "source_pods": 6203,
+  "source_sha256": "1ee7ed79c27a3b0861cda8ddba86a004c6aba904caafa329a76ae93ca63834a8",
+  "start_offset": 5195,
+  "system": "summit",
+  "target_interarrival_s": 1.008017240215668,
+  "variant": "default",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1"
+  },
+  "workload_kind": "alibaba",
+  "wrap_events": 4,
+  "wrap_gap_s": 2080.258142534666
+}

@@ -1,0 +1,177 @@
+{
+  "D6": "C-prime: future 15 primary runs plus exactly one fresh-process 6h thermal_predictive seed1 rerun; none executed here",
+  "estimate_limitations": "E11 row formats extrapolated to offered-job counts (upper bound if jobs wait past horizon); event estimate uses two events/job. Python allocator/imports, parsing buffers, counterfactual scratch and GIF frames add memory. These are estimates, not measured E12 run/report RAM.",
+  "estimated_canonical_bytes_matrix15": 2839734414.1531925,
+  "estimated_canonical_bytes_per_run": {
+    "coolest_rack_seed1": 214480954.71344522,
+    "coolest_rack_seed2": 192351733.9803879,
+    "coolest_rack_seed3": 193939392.86380476,
+    "node_balance_seed1": 179417641.33689258,
+    "node_balance_seed2": 160906102.19415995,
+    "node_balance_seed3": 162234210.84833297,
+    "packing_seed1": 190295783.50838962,
+    "packing_seed2": 170661884.5290913,
+    "packing_seed3": 172070516.78535628,
+    "power_balance_seed1": 214823231.53519285,
+    "power_balance_seed2": 192658696.1544999,
+    "power_balance_seed3": 194248888.68402702,
+    "thermal_predictive_seed1": 214792728.92896053,
+    "thermal_predictive_seed2": 192631340.67574632,
+    "thermal_predictive_seed3": 194221307.4149052
+  },
+  "estimated_canonical_bytes_rerun": 214792728.92896053,
+  "estimated_loaded_payload_bytes_all15": 10124796064.606667,
+  "estimated_loaded_payload_bytes_per_seed": {
+    "1": 3600250466.9,
+    "2": 3249697607.713333,
+    "3": 3274847989.9933333
+  },
+  "estimated_peak_parsing_extra_bytes": 214823231.53519285,
+  "extra_parsed_bytes_per_row": {
+    "decision_latency": 473.3066666666667,
+    "job_events": 766.0266666666666
+  },
+  "interval_dataframe_bytes_per_run_reference": 40523892,
+  "ledger_model": {
+    "method": "first 300 E11 seed1 decision rows per policy, recursive sys.getsizeof with shared-object deduplication; estimates only",
+    "samples": [
+      {
+        "canonical_file_bytes_per_decision": 8695.26084114186,
+        "parsed_python_bytes_per_decision": 28966.52666666667,
+        "policy": "packing"
+      },
+      {
+        "canonical_file_bytes_per_decision": 8198.201568969274,
+        "parsed_python_bytes_per_decision": 28987.406666666666,
+        "policy": "node_balance"
+      },
+      {
+        "canonical_file_bytes_per_decision": 9816.003268685989,
+        "parsed_python_bytes_per_decision": 28993.913333333334,
+        "policy": "power_balance"
+      },
+      {
+        "canonical_file_bytes_per_decision": 9800.363477881892,
+        "parsed_python_bytes_per_decision": 28991.513333333332,
+        "policy": "coolest_rack"
+      },
+      {
+        "canonical_file_bytes_per_decision": 9814.609500980605,
+        "parsed_python_bytes_per_decision": 29003.113333333335,
+        "policy": "thermal_predictive"
+      }
+    ]
+  },
+  "memory_snapshot": {
+    "MemAvailable_kib": 6650852,
+    "MemTotal_kib": 16050600,
+    "SwapTotal_kib": 16777212
+  },
+  "rho_definition": "long-run cycle mean from exact E[nodes*clippedR]; not a guarantee of six-hour empty-start offered utilisation",
+  "scope": "input-workload feasibility only; zero E12 policy/FMU runs",
+  "selected_report_loading": "one seed (five policies) at a time; D5 E11 metrics byte identity verified separately",
+  "workloads": {
+    "1": {
+      "actual_pod_count_passes": 3.5281315492503627,
+      "arrival_compression_factor": 2063.712860793521,
+      "frame_memory_bytes": 1225692,
+      "generated_phase_mix": {
+        "Failed": 6341,
+        "Running": 14888,
+        "Succeeded": 656
+      },
+      "jobs_offered": 21885,
+      "mean_original_interarrival_s": 2080.258142534666,
+      "meta_bytes": 2617,
+      "meta_sha256": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0",
+      "nominal_mean_rate_cycles": 3.454490558384059,
+      "offered_node_utilisation_3600_21600": 0.48576559317193224,
+      "parquet_bytes": 425632,
+      "runtime_clip_source_population": {
+        "above_max_count": 266,
+        "above_max_fraction": 0.0428824762211833,
+        "below_min_count": 2033,
+        "below_min_fraction": 0.32774463969047235,
+        "max_s": 21600,
+        "min_s": 300,
+        "nonpositive_raw_count": 0,
+        "raw_max_s": 12537496.0,
+        "raw_median_s": 723.0,
+        "raw_min_s": 4.0,
+        "source_count": 6203
+      },
+      "sha256": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+      "source_offset": 2935,
+      "source_pods": 6203,
+      "target_interarrival_s": 1.008017240215668
+    },
+    "2": {
+      "actual_pod_count_passes": 3.164114138320168,
+      "arrival_compression_factor": 2063.712860793521,
+      "frame_memory_bytes": 1099244,
+      "generated_phase_mix": {
+        "Failed": 5914,
+        "Running": 13142,
+        "Succeeded": 571
+      },
+      "jobs_offered": 19627,
+      "mean_original_interarrival_s": 2080.258142534666,
+      "meta_bytes": 2616,
+      "meta_sha256": "995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7",
+      "nominal_mean_rate_cycles": 3.454490558384059,
+      "offered_node_utilisation_3600_21600": 0.4546186900899609,
+      "parquet_bytes": 373312,
+      "runtime_clip_source_population": {
+        "above_max_count": 266,
+        "above_max_fraction": 0.0428824762211833,
+        "below_min_count": 2033,
+        "below_min_fraction": 0.32774463969047235,
+        "max_s": 21600,
+        "min_s": 300,
+        "nonpositive_raw_count": 0,
+        "raw_max_s": 12537496.0,
+        "raw_median_s": 723.0,
+        "raw_min_s": 4.0,
+        "source_count": 6203
+      },
+      "sha256": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+      "source_offset": 5195,
+      "source_pods": 6203,
+      "target_interarrival_s": 1.008017240215668
+    },
+    "3": {
+      "actual_pod_count_passes": 3.190230533612768,
+      "arrival_compression_factor": 2063.712860793521,
+      "frame_memory_bytes": 1108316,
+      "generated_phase_mix": {
+        "Failed": 5960,
+        "Running": 13248,
+        "Succeeded": 581
+      },
+      "jobs_offered": 19789,
+      "mean_original_interarrival_s": 2080.258142534666,
+      "meta_bytes": 2616,
+      "meta_sha256": "ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d",
+      "nominal_mean_rate_cycles": 3.454490558384059,
+      "offered_node_utilisation_3600_21600": 0.4566251349855959,
+      "parquet_bytes": 375382,
+      "runtime_clip_source_population": {
+        "above_max_count": 266,
+        "above_max_fraction": 0.0428824762211833,
+        "below_min_count": 2033,
+        "below_min_fraction": 0.32774463969047235,
+        "max_s": 21600,
+        "min_s": 300,
+        "nonpositive_raw_count": 0,
+        "raw_max_s": 12537496.0,
+        "raw_median_s": 723.0,
+        "raw_min_s": 4.0,
+        "source_count": 6203
+      },
+      "sha256": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904",
+      "source_offset": 5033,
+      "source_pods": 6203,
+      "target_interarrival_s": 1.008017240215668
+    }
+  }
+}
