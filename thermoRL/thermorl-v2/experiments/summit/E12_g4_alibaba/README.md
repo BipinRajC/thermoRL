@@ -138,3 +138,25 @@ This is an external-validity workload with substantial assumptions and weaker ma
 
 ## Demo relevance
 A preplanned external-validity test, not an attempt to rescue a positive thermal headline. Any eventual result must remain scoped to the frozen rule, mapped Alibaba-derived input and Summit FMU. Task 15–17 and every policy simulation remain outside this assignment.
+
+## Prelaunch review addendum (2026-10-30)
+
+Bipin approved E-A (proceed untuned) and E-B (keep the rotations) after review `5a0828b`; decisions are committed in plan addendum `f5d6dae`. Task14 now authorizes exactly 15 primary runs plus one isolated fresh-process TP seed1 repeat, after the engineering gates. This supersedes the historical prelaunch execution hold; all hashed protocol sections remain unchanged.
+
+**Narrow regime:** small 1–2-node, low-density jobs with periodic bursts: approximately 23 minutes dense and 80 minutes near-silent per 1.74-hour cycle. A negative E12 does not confirm E11 for high-power regimes; a positive applies only here. No workload, policy, model, fit, threshold or timing parameter was changed.
+
+| Seed | Arrivals per hour | Hourly mean offered utilisation | Window min/max | Exact time fraction >1 | Mean modelled kW/rack above idle | CPU cap clipping, pods |
+|---|---|---|---|---:|---:|---:|
+| 1 | 3278, 6195, 11, 6193, 21, 6187 | 0.2528, 0.3267, 0.4128, 0.5673, 0.4099, 0.7121 | 0.094250 / 1.150238 | 2.973093% | 2.872016 | 0.420379% |
+| 2 | 1021, 6193, 12, 6195, 2178, 4028 | 0.0579, 0.3392, 0.2952, 0.5770, 0.3730, 0.6887 | 0.019023 / 1.123433 | 2.292106% | 2.676330 | 0.422887% |
+| 3 | 1183, 6193, 12, 6195, 2086, 4120 | 0.0717, 0.3395, 0.3014, 0.5769, 0.3735, 0.6917 | 0.023346 / 1.124946 | 2.333633% | 2.686167 | 0.419425% |
+
+[Full pre-run regime record](results/workload_regime.json). Offered demand is integrated exactly over positive-duration segments of continuous [submit,submit+R). Review values are rounded: [definition comparison](provenance/workload_regime_review_comparison.json) shows that 10-second sampling with ceil admission and +1 s occupancy gives the rounded review fractions/maxima. These are distinct descriptions; neither is realised RAPS occupancy. No input was modified to match the review.
+
+The largest 20 creation gaps cover 76.900184% of the 149.325938-day source span. Only 3 eligible pods occur in the first 30 days; the first-percentile creation time is day 115.837838. The last-99%-of-pods tail compresses to 23.367041 minutes.
+
+**Seed identity:** seed3 has 162 leading pods, then all 19627 seed2 job requests exactly, delayed 33.036572720579 s (maximum accumulated floating-point deviation 3.624e-13 s). Treat this as about two workload conditions. Seeds2/3 are not determinism or sensitivity evidence.
+
+CPU cap clipping counts use uncapped mapped CPU>2; active-cap fractions including equality are also recorded. Source runnable default clips 26/6203 pods (0.419152%); resource-only multigpu50 clips 339/7973 (4.251850%). Power estimates use the frozen loss-exclusive node increment; actual loss-inclusive rack power comes from the future ledgers.
+
+Nominal rho=0.6, offered finite-window utilisation (0.455–0.486 plus bursts), and realised ledger utilisation/waits/censoring must be reported separately. Queueing coverage, the lightweight parent seed check and C′ adapter are required before launch. D7 remains deferred; D8 is recorded for Task17 without editing the frozen spec.

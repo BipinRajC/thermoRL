@@ -1,0 +1,48 @@
+{
+  "interpretation": "10s point-sampling reproduces review overload fractions after rounding; regime.json uses exact duration integration. Ceil/+1 is a separate RAPS bookkeeping approximation without queueing, not the offered definition.",
+  "per_seed": {
+    "1": {
+      "ceil_admission_R_plus_1": {
+        "fraction_above_1": 0.029444444444444443,
+        "max": 1.1504539559014266,
+        "min": 0.09424989191526156,
+        "sampling": "10 s endpoints 3610..21600"
+      },
+      "continuous": {
+        "fraction_above_1": 0.029444444444444443,
+        "max": 1.149805447470817,
+        "min": 0.09424989191526156,
+        "sampling": "10 s endpoints 3610..21600"
+      }
+    },
+    "2": {
+      "ceil_admission_R_plus_1": {
+        "fraction_above_1": 0.02388888888888889,
+        "max": 1.1223519239083442,
+        "min": 0.019022913964548204,
+        "sampling": "10 s endpoints 3610..21600"
+      },
+      "continuous": {
+        "fraction_above_1": 0.023333333333333334,
+        "max": 1.1219195849546044,
+        "min": 0.019022913964548204,
+        "sampling": "10 s endpoints 3610..21600"
+      }
+    },
+    "3": {
+      "ceil_admission_R_plus_1": {
+        "fraction_above_1": 0.02277777777777778,
+        "max": 1.1251621271076524,
+        "min": 0.023346303501945526,
+        "sampling": "10 s endpoints 3610..21600"
+      },
+      "continuous": {
+        "fraction_above_1": 0.02277777777777778,
+        "max": 1.1245136186770428,
+        "min": 0.023346303501945526,
+        "sampling": "10 s endpoints 3610..21600"
+      }
+    }
+  },
+  "purpose": "explain small differences from rounded Opus review; informational definitions only, no workload changes"
+}
