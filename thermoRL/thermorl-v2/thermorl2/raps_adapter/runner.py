@@ -1,6 +1,7 @@
 """One-process RAPS/FMU episode with separate deterministic and timing ledgers."""
 
 from itertools import zip_longest
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +25,18 @@ from thermorl2.thermal.fmu_backend import FmuBackend
 
 
 DECISION_KEYS = {"t_s", "job_id", "nodes_required", "policy", "rule", "racks", "nodes", "job_kw", "scores", "t_c", "committed_kw", "free", "t_obs_s", "latency_us"}
+
+
+def config_for_seed(cfg, seed):
+    """Resolve an immutable per-seed workload without mutating shared config."""
+    selected = deepcopy(cfg)
+    workload = selected['workload']
+    if 'by_seed' in workload:
+        entry = workload['by_seed'].get(seed, workload['by_seed'].get(str(seed)))
+        if entry is None:
+            raise KeyError(f'no workload registered for seed {seed}')
+        workload.update(entry)
+    return selected
 
 
 def read_jsonl(path):
@@ -68,13 +81,13 @@ class DecisionLedgers:
 
 class EpisodeRunner:
     def __init__(self, cfg, policy, seed, run_dir):
-        self.cfg, self.policy, self.seed, self.run_dir = cfg, policy, seed, Path(run_dir)
+        self.cfg, self.policy, self.seed, self.run_dir = config_for_seed(cfg,seed), policy, seed, Path(run_dir)
 
     def run(self):
         total_start = perf_counter()
         cfg, system = self.cfg, self.cfg["system"]
         assert self.policy in cfg["policies"] and self.seed in cfg["seeds"] and self.seed >= 1
-        assert cfg["scenario"]["name"] == "nominal", "only nominal E10 is authorized"
+        assert cfg["scenario"]["name"] == "nominal", "only nominal episodes are authorized"
         horizon_s = int(cfg["horizon_h"] * 3600)
         legacy = legacy_config(system)
         geometry = RackGeometry.from_legacy_config(legacy)
@@ -84,7 +97,11 @@ class EpisodeRunner:
         fmu_path = repo_root() / spec.fmu_path
         assert sha256_file(fmu_path) == spec.fmu_sha256, "FMU SHA mismatch"
         workload_path = Path(cfg["workload"]["path"])
+        if not workload_path.is_absolute():
+            workload_path = repo_root() / 'thermoRL/thermorl-v2' / workload_path
         assert sha256_file(workload_path) == cfg["workload"]["sha256"], "workload SHA mismatch"
+        sidecar = json.loads(Path(str(workload_path)+'.meta.json').read_text())
+        assert sidecar['horizon_s'] == horizon_s, 'workload horizon does not match episode horizon'
         frame = pd.read_parquet(workload_path)
         assert frame.attrs["seed"] == self.seed
         git = git_state()
@@ -228,7 +245,7 @@ class EpisodeRunner:
         config_sha = hashlib.sha256(json.dumps(cfg, sort_keys=True).encode()).hexdigest()
         manifest = {
             "git": git, "git_status_porcelain": porcelain, "system": system, "fmu_sha256": spec.fmu_sha256,
-            "workload_path": str(workload_path), "workload_sha256": cfg["workload"]["sha256"],
+            "workload_path": cfg['workload']['path'], "workload_sha256": cfg["workload"]["sha256"],
             "workload_meta_sha256": sha256_file(Path(str(workload_path) + ".meta.json")),
             "config": cfg, "config_sha256": config_sha, "policy": self.policy, "seed": self.seed,
             "thermal_predictive_params": cfg["thermal_predictive_params"], "g1_sha256": cfg["g1_sha256"],
@@ -241,8 +258,9 @@ class EpisodeRunner:
             "scheduler_wall_s": scheduler_wall_s, "instantiation_s": instantiation_s, "warmup_wall_s": warmup_wall_s,
             "episode_wall_s": episode_wall_s, "episode_fmu_s": episode_fmu_s,
             "raps_s_scope": "engine construction and generator execution excluding scheduler callbacks",
+            "fmu_s_scope": "FmuBackend runtime_s: timed archive extraction/model-description reading, instantiation, warm-up, episode FMU API operations including observe/state management, and teardown; excludes RAPS and ledger serialization",
             "total_s_scope": "EpisodeRunner.run including setup, warm-up, episode and ledger serialization; interpreter imports excluded",
-            "interval_time_axis": "t_s is FMU episode interval endpoint: 10..7200 for E10; RAPS power tick t applies (t,t+Delta], publishes post-step view before resuming generator; t_obs_s is FMU endpoint; see thermal_publications.jsonl",
+            "interval_time_axis": "t_s is FMU episode interval endpoint: Delta..horizon_s; kw/free/n_running/n_queued/it_kw_total are RAPS-t inputs, t_c/pump_kw are t+Delta endpoints; power tick t applies (t,t+Delta], publishes post-step view before resuming generator; see thermal_publications.jsonl",
             "power_reconciliation_max_abs_kw": max_reconciliation, "source_sha256": source_hashes,
             "intervals_sha256": sha256_file(intervals_path), "raw_max_c": raw_max,
             "coolant_over_70_samples": over_70_samples, "coolant_over_70_racks": sorted(over_70_racks),

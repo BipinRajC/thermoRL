@@ -1,6 +1,7 @@
 """Offline G4 report. Frozen primary rule; secondary metrics are descriptive."""
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -106,7 +107,31 @@ def manifest_valid(run):
     return True
 
 
-def validate_seed(runs,determinism_evidence=None):
+def validate_expected(run,cfg):
+    """Compare execution identity and exact config with preregistered inputs."""
+    from thermorl2.raps_adapter.systems import get_system
+    m=run.manifest
+    seed=m['seed']
+    assert seed in cfg['seeds'] and m['policy'] in cfg['policies']
+    assert run.name == f"{m['policy']}_seed{seed}"
+    expected=deepcopy(cfg)
+    if 'by_seed' in expected['workload']:
+        by_seed=expected['workload']['by_seed']
+        entry=by_seed.get(seed,by_seed.get(str(seed)))
+        assert entry is not None
+        expected['workload'].update(entry)
+    assert m['config_sha256'] == hashlib.sha256(json.dumps(expected,sort_keys=True).encode()).hexdigest()
+    assert m['config'] == json.loads(json.dumps(expected))
+    assert m['system'] == cfg['system']
+    assert m['fmu_sha256'] == get_system(cfg['system']).fmu_sha256
+    assert m['workload_sha256'] == expected['workload']['sha256']
+    assert m['workload_path'] == expected['workload']['path']
+    assert m['warmup_used_s'] == cfg['warmup_s']
+    assert m['backend_elapsed_s'] == cfg['horizon_h']*3600
+    return True
+
+
+def validate_seed(runs,determinism_evidence=None,expected_config=None):
     base = invariants(runs)
     errors = {}
     allocation,manifests,power = True,True,True
@@ -115,6 +140,8 @@ def validate_seed(runs,determinism_evidence=None):
         for key,check in [('allocation',allocation_valid),('manifest',manifest_valid)]:
             try:
                 check(run)
+                if key == 'manifest' and expected_config is not None:
+                    validate_expected(run,expected_config)
             except (AssertionError,KeyError,ValueError,IndexError,FileNotFoundError,TypeError) as exc:
                 errors[f'{run.name}_{key}'] = f'{type(exc).__name__}: {exc}'
                 if key == 'allocation': allocation=False
@@ -137,7 +164,7 @@ def validate_seed(runs,determinism_evidence=None):
             'power_reconciliation_max_abs_kw':reconciliation,'determinism_evidence':determinism_evidence}
 
 
-def build_report(runs,out,eval_start_s,t_hot_c,grid,g4=True,animations=True,determinism_evidence=None):
+def build_report(runs,out,eval_start_s,t_hot_c,grid,g4=True,animations=True,determinism_evidence=None,expected_config=None):
     out = Path(out)
     if (out/'results/summary.json').exists():
         raise FileExistsError('report exists; never overwrite')
@@ -145,9 +172,10 @@ def build_report(runs,out,eval_start_s,t_hot_c,grid,g4=True,animations=True,dete
         (out/sub).mkdir(parents=True,exist_ok=True)
     seeds = sorted({r.manifest['seed'] for r in runs})
     if g4:
+        assert expected_config is not None, 'G4 requires preregistered expected configuration'
         assert seeds == [1,2,3]
         assert all(sorted(r.manifest['policy'] for r in runs if r.manifest['seed']==s) == sorted(POLICIES) for s in seeds)
-    checks = {str(seed):validate_seed([r for r in runs if r.manifest['seed']==seed],determinism_evidence) for seed in seeds}
+    checks = {str(seed):validate_seed([r for r in runs if r.manifest['seed']==seed],determinism_evidence,expected_config) for seed in seeds}
     _write(out/'results/invariants.json',checks)
     if g4 and not all(flag is True for check in checks.values() for flag in check['invariants'].values()):
         _write(out/'results/summary.json',{'decision':'INVALID: invariant failure','invariants':checks})
@@ -189,13 +217,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('experiment_dir',type=Path)
     args = parser.parse_args()
-    cfg = yaml.safe_load((args.experiment_dir/'config.yaml').read_text())
+    from thermorl2.experiments.run import load_config
+    cfg = load_config(args.experiment_dir/'config.yaml')
     evidence_cfg = cfg['determinism_evidence']
     evidence_path = PROJECT/evidence_cfg['path']
     assert _sha(evidence_path) == evidence_cfg['sha256']
     evidence = {**json.loads(evidence_path.read_text()),**evidence_cfg}
     runs = [load_run(args.experiment_dir/'runs'/f'{p}_seed{s}') for s in cfg['seeds'] for p in cfg['policies']]
-    result = build_report(runs,args.experiment_dir,3600,cfg['t_hot_c'],tuple(cfg['grid']),determinism_evidence=evidence)
+    result = build_report(runs,args.experiment_dir,3600,cfg['t_hot_c'],tuple(cfg['grid']),determinism_evidence=evidence,expected_config=cfg)
     print(json.dumps({k:result[k] for k in ('decision','value_beyond_power','per_seed')},indent=2))
 
 

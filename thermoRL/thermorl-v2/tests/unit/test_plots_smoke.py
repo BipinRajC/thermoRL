@@ -54,3 +54,13 @@ def test_g2_plot_writes_existing_fmu_evidence_only(tmp_path):
     source=Path(__file__).resolve().parents[2]/'experiments/summit/E02_g2_packed_vs_spread'
     plots.g2_figure(source,tmp_path/'g2.png')
     assert (tmp_path/'g2.png').stat().st_size > 0
+
+
+def test_expected_preregistration_rejects_self_consistent_wrong_config():
+    from copy import deepcopy
+    root=Path(__file__).resolve().parents[2]/'experiments/summit/E10_c2_vertical_slice/runs/packing_seed1'
+    run=report.load_run(root)
+    expected=deepcopy(run.manifest['config'])
+    assert report.validate_expected(run,expected)
+    expected['workload']['rho']=0.5
+    with pytest.raises(AssertionError): report.validate_expected(run,expected)

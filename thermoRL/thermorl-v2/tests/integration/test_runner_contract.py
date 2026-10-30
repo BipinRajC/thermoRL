@@ -5,9 +5,12 @@ FMU vertical-slice test separately exercises the complete production path.
 """
 
 import json
+import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from thermorl2.core.state import RackThermal
 from thermorl2.experiments.provenance import sha256_file
@@ -52,14 +55,16 @@ def test_runner_wiring_counts_steps_and_records_completion_reuse(tmp_path, monke
     path = tmp_path / "fixture.parquet"
     frame.to_parquet(path, index=False)
     meta = path.with_name(path.name + ".meta.json")
-    meta.write_text("{}")
+    meta.write_text('{"horizon_s":360}')
     cfg = load_config(CONFIGS / "smoke_2h.yaml")
     cfg["horizon_h"] = 0.1
-    cfg["workload"].update(path=str(path), sha256=sha256_file(path))
+    relative_path=os.path.relpath(path,Path(__file__).resolve().parents[2])
+    cfg["workload"].update(path=relative_path, sha256=sha256_file(path))
     out = runner.EpisodeRunner(cfg, "packing", 1, tmp_path / "run").run()
     manifest = json.loads((out / "manifest.json").read_text())
     assert manifest["fmu_steps"] == manifest["power_ticks"] == ThermalDouble.calls == 36
     assert manifest["backend_elapsed_s"] == 360.0
+    assert manifest['workload_path'] == relative_path
     intervals = pd.read_parquet(out / "intervals.parquet")
     assert sorted(intervals.t_s.unique()) == list(range(10, 361, 10))
     assert intervals[intervals.t_s == 360].free.sum() == 4626
@@ -69,3 +74,21 @@ def test_runner_wiring_counts_steps_and_records_completion_reuse(tmp_path, monke
     assert manifest["decision_rows"] == manifest["decision_latency_rows"] == 2
     events = runner.read_jsonl(out / "provenance/job_events.jsonl")
     assert sum(event["event"] == "complete" for event in events) == 2
+
+
+def test_workload_horizon_mismatch_fails_before_backend_instantiation(tmp_path,monkeypatch):
+    def forbidden(*args,**kwargs):
+        pytest.fail('backend must not be instantiated for a mismatched workload')
+    monkeypatch.setattr(runner,'FmuBackend',forbidden)
+    path=tmp_path/'fixture.parquet'
+    frame=pd.DataFrame([dict(id=0,nodes_required=1,cpu_util=1.0,gpu_util=1.0,
+                            submit_time=0.0,expected_run_time=301,time_limit=600)])
+    frame.attrs['seed']=1
+    frame.to_parquet(path)
+    Path = type(path)
+    Path(str(path)+'.meta.json').write_text(json.dumps({'horizon_s':7200}))
+    cfg=load_config(CONFIGS/'smoke_2h.yaml')
+    cfg['horizon_h']=6
+    cfg['workload'].update(path=str(path),sha256=sha256_file(path))
+    with pytest.raises(AssertionError,match='workload horizon'):
+        runner.EpisodeRunner(cfg,'packing',1,tmp_path/'run').run()

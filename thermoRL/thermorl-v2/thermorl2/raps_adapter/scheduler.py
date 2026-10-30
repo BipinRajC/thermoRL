@@ -10,7 +10,7 @@ from thermorl2.core.placement import place
 from thermorl2.core.scorers import RackContext
 from thermorl2.raps_adapter.power_model import job_increment_kw, raps_rack_kw
 
-LATENCY_SPAN = "context construction -> scoring -> place -> RAPS assign_nodes_to_job -> committed-power update; excludes queue sort, row formatting and ledger I/O"
+LATENCY_SPAN = "context construction -> scoring -> place -> placement assertions -> RAPS assign_nodes_to_job -> running.append -> queue.remove -> committed-power update; excludes queue sort, row formatting and ledger I/O"
 
 
 @dataclass(frozen=True)
