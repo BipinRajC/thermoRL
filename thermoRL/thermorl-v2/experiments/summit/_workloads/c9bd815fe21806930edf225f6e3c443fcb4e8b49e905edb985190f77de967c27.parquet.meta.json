@@ -1,0 +1,51 @@
+{
+  "arrival_rate_per_s": 0.2158787058023614,
+  "generator_source_sha256": "0e63550edf31ee1f2bc4e64b0277e68df13b2a8aedbd685ab827872201993335",
+  "gpus_per_node": 6,
+  "horizon_s": 21600,
+  "mc_expected_node_seconds": 12857.219936,
+  "mc_samples": 1000000,
+  "n_nodes": 4626,
+  "representation": "clipped lognormal rounded upward to one-second RAPS resolution; continuous submit times admitted at ceil(submit); completion occupancy adds one second",
+  "rng_draw_order": "MC node sizes; MC durations; then per job: interarrival, nodes, duration, cpu, gpu",
+  "seed": 1,
+  "sha256": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27",
+  "spec": {
+    "cpu_choices": [
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "limit_factor": 1.5,
+    "node_sizes": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "node_weights": [
+      0.35,
+      0.2,
+      0.2,
+      0.12,
+      0.09,
+      0.04
+    ],
+    "rho": 0.6,
+    "runtime_clip_s": [
+      300,
+      14400
+    ],
+    "runtime_median_s": 1800,
+    "runtime_sigma": 0.8
+  },
+  "system": "summit",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1"
+  }
+}
