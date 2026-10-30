@@ -1037,3 +1037,17 @@ Bipin accepted C3 with Opus wording conditions (`docs/checkpoints/C3-review-opus
 **D6 — selected C-prime (C′).** Bipin explicitly selected C′ in the clarification reply: preregister 15 E12 policy runs plus one fresh-process 6h thermal_predictive seed-1 rerun, requiring byte-identical canonical decisions and identical interval values. This is the only directly repeated E12 policy/seed; all other combinations retain explicitly inherited evidence. No E11 synthetic-prefix gate may be presented as an Alibaba prefix test. These are future run definitions only: this assignment authorizes zero E12 simulations.
 
 **Bounded assignment.** Verify the Arch dataset checksums; Task 13 test-first; generate and SHA-key three workloads; commit variant/power statistics before any policy run; preregister E12 with a byte-identical launch-config copy and the frozen G4 rule/metrics/S1/S2/M2/M3/A2-A4/C′ scope; write C4-prelaunch-status, commit, push and stop. No Task 15-17 work, full pytest/FMU tests, E12 policy simulation, E11 rerun, policy/G1/spanning/rho/seed/horizon/warm-up change, RAPS patch, characterization, predictor work or RL.
+
+## Approved C4 prelaunch decisions (2026-10-30)
+
+- **E-A — proceed untuned.** Run the preregistered, SHA-pinned E12 workloads exactly as they are. Accept the characterised regime:
+  - periodic arrival bursts: about 23 min dense, about 80 min near-silent, per ~1.74 h cycle;
+  - hourly offered utilisation 0.06–0.71; window min 0.02–0.09, max 1.12–1.15; above 1.0 for 2.3–2.9 % of the window;
+  - finite-window offered utilisation 0.455–0.486, against a nominal long-run ρ of 0.6;
+  - about 2.8 kW per rack mean modelled load above idle (E11: about 10 kW).
+
+  E12 is a narrow test: small 1–2-node, low-density, bursty jobs. A negative result does not confirm E11 for high-power regimes. A positive result applies to this regime only. Make no change to ρ, scaling, offsets, durations, horizon, warm-up, policies, spanning, G1, `primary.yaml`, FMU or the G4 rule.
+- **E-B — keep the seeds as preregistered.** Document that seed 3 = seed 2 shifted by 33.04 s plus 162 leading pods: about two independent workload conditions. Seeds 2 and 3 are not determinism or sensitivity evidence.
+- **D8 — coupling wording (applies in Task 17; record the decision now).** Quote spec §8 verbatim, then add a dated correction: "On the Summit twin, rack coolant temperature depends on total facility load and on the placement of load elsewhere, not only on a rack's own power (C1 I1; E10/E11 M3); the mechanism is unresolved." Do not edit the frozen spec text in place.
+- **D7 — deferred** to Task 17, after the E12 C′ result. No E11 rerun is authorised.
+- **Additional condition:** before launch, confirm that non-FMU tests cover scheduler behaviour with zero free nodes (head-of-line queueing that persists across power ticks). Add the coverage if it is missing. E11 never queued; E12 will.
