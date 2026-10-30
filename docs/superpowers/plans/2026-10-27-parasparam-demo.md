@@ -997,3 +997,15 @@ Decided by the independent reviewer at Bipin's request (review: `docs/checkpoint
 - (iv) Interval `free` values come from `geometry.free_per_rack(resource_manager.available_nodes)`.
 - (v) Committed kW is not reduced between ticks when a job completes. It is corrected at the next power tick. This is spec-literal, identical across policies, and documented in E10.
 - (vi) If a run directory exceeds 25 MB (Summit decision rows are ≈ 8.8 KB each), apply the existing gitignore + SHA-256 rule. The schema is not changed.
+
+## Approved post-C2 evaluation decisions (2026-10-30)
+
+Bipin approved the bounded Tasks 10–12 assignment after Opus accepted C2 with conditions (`docs/checkpoints/C2-review-opus.md`, reviewed `b6fb88f`). All policy definitions, G1 parameters, thresholds, workload methodology, FMU selection, primary metric and G4 rule remain frozen. Tasks 13–16 and further experiments are not authorized. Stop at C3.
+
+**S1 — descriptive secondary metrics.** Over `3600 < t_s <= 21600`, report the time mean of across-rack population coolant standard deviation (`rack_t_std_mean_c`), the mean of the hottest `ceil(0.1*n_racks)` racks per tick (`top_decile_mean_c`; 26 on Summit), and across-rack population power standard deviation (`rack_kw_std_mean`). Also report each tick's argmax rack, its share of evaluation ticks, and resident job ids from job events. These do not enter the G4 rule. Residency is measured at the driving RAPS power tick, not at the FMU endpoint.
+
+**S2 — time-axis statement (verbatim).** published view = FMU endpoint t+Δ of interval driven by P(t); decisions in (t, t+Δ) observe it (≤9 s hold-power forecast, E10 max 10 s per-rack change 0.31 °C, p99 0.057 °C); no future-decision information; identical for all policies.
+
+**Ledger analysis corrections.** Thermal windows use strict `t_s > eval_start_s`. RAPS-t inputs and FMU endpoint outputs retain their existing mixed interval representation. IT energy sums held kW×Δ; pump energy uses right endpoints, excluding all warm-up. Disagreement compares two scorers applied to the same rounded logged context; self-reproduction against the live choice is separate. Reconstructed free-node lists use globally distinct ids. Latency comes only from the timing ledger; absent means missing. Waits use integer start minus continuous submit; unstarted jobs are censored. Workload paths resolve from the project root.
+
+**Launch conditions.** SHA-key three separate 6 h workloads in the locked Arch environment; select `workload.by_seed`; verify sidecar horizon equals episode horizon. Record every run file's path, bytes and SHA-256, keeping directories above 25 MB ignored. Never overwrite failures: archive under timestamped provenance and record any retry (at most one); scientific stop conditions still take precedence over retries. Extend latency span text and record FMU timing scope. Pre-register E11 before executing the 15-run, three-worker frozen matrix.
