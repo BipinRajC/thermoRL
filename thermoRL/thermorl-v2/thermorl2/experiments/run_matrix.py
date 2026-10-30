@@ -11,8 +11,9 @@ import sys
 from time import perf_counter, sleep
 
 import numpy as np
+import pandas as pd
 
-from thermorl2.experiments.provenance import sha256_file, require_assertions
+from thermorl2.experiments.provenance import sha256_file, require_assertions, process_memory
 from thermorl2.experiments.run import PROJECT, load_config
 from thermorl2.raps_adapter.runner import config_for_seed
 
@@ -111,6 +112,38 @@ def _verify_run(path):
     assert np.isfinite(run.intervals.t_c).all(), 'non-finite coolant in run'
 
 
+def lightweight_invariants(paths):
+    """Same four outputs/semantics as core.metrics.invariants, bounded I/O.
+
+    Only two interval columns and a job-id/start map are held per run. Full
+    decision contexts are decoded one line at a time and immediately released.
+    """
+    paths=list(map(Path,paths))
+    if not paths:raise ValueError('at least one run required')
+    reference=None;reference_starts=None;same_grid=True;maximum=0.;steps=True;same_starts=True
+    for path in paths:
+        m=json.loads((path/'manifest.json').read_text())
+        frame=pd.read_parquet(path/'intervals.parquet',columns=['t_s','it_kw_total'])
+        grouped=frame.groupby('t_s');series=grouped.it_kw_total.first()
+        starts={}
+        with (path/'decisions.jsonl').open() as source:
+            for line in source:
+                if line.strip():
+                    row=json.loads(line);starts[row['job_id']]=row['t_s']
+        if reference is None:
+            reference=series.copy();reference_starts=starts
+        if not reference.index.equals(series.index):same_grid=False
+        else:maximum=max(maximum,float(np.max(np.abs(reference.to_numpy()-series.to_numpy()))))
+        same_starts &= starts==reference_starts
+        horizon=float(m['config']['horizon_h'])*3600
+        expected=np.arange(m['power_tick_s'],horizon+1,m['power_tick_s'])
+        steps &= (m['fmu_steps']==horizon/m['power_tick_s'] and m['backend_elapsed_s']==horizon and
+                  np.array_equal(series.index.to_numpy(),expected) and (grouped.size()==m['n_racks']).all())
+    return {'it_kw_identical':bool(same_grid and maximum<=1e-6),
+            'start_times_identical':bool(same_starts),'max_abs_it_kw_diff':maximum if same_grid else None,
+            'fmu_steps_ok':bool(steps)}
+
+
 def execute_jobs(jobs,out,workers,verify_runs=True,seed_check=None,allow_retry=False):
     """Preflight all jobs, then stop launches on failure; no automatic retries.
 
@@ -183,6 +216,9 @@ def execute_jobs(jobs,out,workers,verify_runs=True,seed_check=None,allow_retry=F
                     continue
                 try:
                     if verify_runs: _verify_run(job['run_dir'])
+                except MemoryError as exc:
+                    failure(actor,'memory_error',str(exc) or 'post-run validation memory exhausted',code)
+                    continue
                 except Exception as exc:
                     failure(actor,'validation_failure',str(exc) or type(exc).__name__,code)
                     continue
@@ -192,6 +228,7 @@ def execute_jobs(jobs,out,workers,verify_runs=True,seed_check=None,allow_retry=F
                 print(f"DONE {job['policy']} seed {job['seed']}: {wall:.2f} s",flush=True)
                 if seed_check is not None:
                     try: seed_check(job['seed'])
+                    except MemoryError as exc: stop=('memory_error',str(exc) or 'seed check memory exhausted')
                     except Exception as exc: stop=('invariant_failure',str(exc) or type(exc).__name__)
             if not first_wave_written and first_wave_ids <= {r['index'] for r in completed}:
                 path=out/'results/first_wave.json'
@@ -256,8 +293,7 @@ def main():
         paths=[out/'runs'/f'{p}_seed{seed}' for p in policies]
         if seed in checked or not all((p/'manifest.json').exists() for p in paths):
             return
-        from thermorl2.core.metrics import load_run,invariants
-        check=invariants([load_run(p) for p in paths])
+        check=lightweight_invariants(paths)
         assert check['it_kw_identical'] and check['start_times_identical'] and check['fmu_steps_ok'], f'cross-policy invariant failure, seed {seed}: {check}'
         checked.add(seed)
         _event(out,event='seed_cross_policy_invariants_passed',seed=seed,checks=check)
@@ -268,6 +304,7 @@ def main():
     for seed in seeds:
         seed_check(seed)
     write_run_inventory(out)
+    result['parent_memory']=process_memory()
     with (out/'results/matrix_runtime.json').open('x') as target:
         target.write(json.dumps(result,indent=2,sort_keys=True)+'\n')
     print(json.dumps(result,sort_keys=True),flush=True)

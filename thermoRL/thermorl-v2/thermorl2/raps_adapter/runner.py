@@ -13,7 +13,7 @@ import pandas as pd
 
 from thermorl2.core.scorers import make_scorer
 from thermorl2.core.state import Ambient
-from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest, require_assertions
+from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest, require_assertions, process_memory
 from thermorl2.raps_adapter.coupling import CouplingParams
 from thermorl2.raps_adapter.engine_factory import EngineSpec, build_engine, is_power_tick, rack_kw_from_power_df
 from thermorl2.raps_adapter.jobs import jobs_from_frame
@@ -297,6 +297,7 @@ class EpisodeRunner:
             "job_events_sha256": sha256_file(self.run_dir / 'provenance/job_events.jsonl'),
             "coolant_over_70_samples": over_70_samples, "coolant_over_70_racks": sorted(over_70_racks),
             "negative_episode_pump_samples": int((intervals.pump_kw < 0).sum()), **ledger_metadata,
+            "process_memory": process_memory(),
         }
         # Per-run manifest is at the exact plan path; write_manifest also adds
         # backend and package/platform environment without importing FMPy here.

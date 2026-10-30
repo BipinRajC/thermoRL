@@ -16,6 +16,16 @@ def require_assertions():
         raise RuntimeError('optimized Python is forbidden: validation assertions must remain enabled')
 
 
+def process_memory():
+    """Own-process high-water RSS; Linux KiB and macOS bytes are explicit."""
+    import resource
+    value=int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+    unit='KiB' if sys.platform.startswith('linux') else 'bytes' if sys.platform=='darwin' else 'platform-native'
+    return {'ru_maxrss':value,'unit':unit,
+            'peak_rss_bytes':value*1024 if unit=='KiB' else value if unit=='bytes' else None,
+            'scope':'own process lifetime high-water resident set, including imports'}
+
+
 def git_state() -> dict:
     sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo_root(), text=True).strip()
     status = subprocess.check_output(["git", "status", "--porcelain"], cwd=repo_root(), text=True)

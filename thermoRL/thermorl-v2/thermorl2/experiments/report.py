@@ -5,6 +5,7 @@ from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
+from time import perf_counter
 
 import numpy as np
 import pandas as pd
@@ -14,9 +15,11 @@ from thermorl2.core.metrics import (PROJECT, load_run, run_metrics, invariants,
     disagreement_rate, self_reproduction_rate, max_rack_attribution)
 from thermorl2.core.scorers import PowerBalance, ThermalPredictive, make_scorer
 from thermorl2.experiments import plots
-from thermorl2.experiments.provenance import require_assertions
+from thermorl2.experiments.provenance import require_assertions,process_memory
 
 POLICIES = ('packing','node_balance','power_balance','coolest_rack','thermal_predictive')
+E12_SCOPE_ID='E12_C_prime_2026_10_30'
+E12_INHERITED_SCOPE='E10 synthetic packing seed1 2h only; weak cross-workload evidence'
 
 
 def _sha(path):
@@ -158,8 +161,7 @@ def validate_seed(runs,determinism_evidence=None,expected_config=None,require_jo
         reconciliation[run.name] = error
         power &= error <= 1e-6 and run.manifest['power_reconciliation_max_abs_kw'] <= 1e-6
     seed=str(runs[0].manifest['seed'])
-    deterministic = (determinism_evidence or {}).get('per_seed',{}).get(seed,
-        {'status':'missing','evidence':[]})
+    deterministic = determinism_for_seed(determinism_evidence or {},seed)
     flags = {
         '1_it_kw_and_start_times_identical':base['it_kw_identical'] and base['start_times_identical'],
         '2_exact_distinct_free_nodes':allocation,
@@ -180,7 +182,39 @@ def approved_determinism(record,seed):
             all(item.get('result') is True and item.get('scope') and item.get('ref') for item in items))
 
 
+def approved_e12_determinism(proof):
+    if proof.get('scope_id')!=E12_SCOPE_ID or proof.get('fallback_to_A_prime') is not False:return False
+    records=proof.get('per_configuration',{})
+    expected={f'{p}_seed{s}' for s in (1,2,3) for p in POLICIES}
+    if set(records)!=expected:return False
+    for name,record in records.items():
+        items=record.get('evidence',[])
+        direct=name=='thermal_predictive_seed1'
+        if record.get('status')!=('verified_E12' if direct else 'inherited_not_remeasured'):return False
+        if len(items)!=1:return False
+        item=items[0]
+        if item.get('kind')!=('E12_full_rerun_6h' if direct else 'inherited_E10'):return False
+        if item.get('result') is not True or not item.get('scope') or not item.get('ref'):return False
+        if not direct and item['scope']!=E12_INHERITED_SCOPE:return False
+    return True
+
+
+def determinism_for_seed(proof,seed):
+    if proof.get('scope_id')==E12_SCOPE_ID:
+        records=proof.get('per_configuration',{})
+        return {'scope_id':E12_SCOPE_ID,'per_configuration':
+            {f'{p}_seed{seed}':records.get(f'{p}_seed{seed}',{'status':'missing','evidence':[]}) for p in POLICIES}}
+    return proof.get('per_seed',{}).get(str(seed),{'status':'missing','evidence':[]})
+
+
 def seed_gate(check,seed):
+    proof=check.get('determinism_evidence') or {}
+    scope=proof.get('scope_id')
+    if scope==E12_SCOPE_ID:
+        return approved_e12_determinism(proof) and all(
+            value==determinism_for_seed(proof,seed) if key.startswith('3_') else value is True
+            for key,value in check['invariants'].items())
+    if scope is not None:return False
     return all(approved_determinism(value,seed) if key.startswith('3_') else value is True
                for key,value in check['invariants'].items())
 
@@ -302,6 +336,7 @@ def build_report_from_paths(paths,out,eval_start_s,t_hot_c,grid,determinism_evid
 
 def main():
     require_assertions()
+    report_start=perf_counter()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('experiment_dir',type=Path)
     parser.add_argument('--output-dir',type=Path,help='fresh offline report destination; input config remains unchanged')
@@ -324,6 +359,10 @@ def main():
     grid=get_system(cfg['system']).grid
     paths = [args.experiment_dir/'runs'/f'{p}_seed{s}' for s in cfg['seeds'] for p in cfg['policies']]
     result = build_report_from_paths(paths,args.output_dir or args.experiment_dir,3600,t_hot_c,grid,determinism_evidence=evidence,expected_config=cfg,metrics_only=args.metrics_only)
+    runtime_path=(args.output_dir or args.experiment_dir)/'provenance/report_runtime.json'
+    runtime_path.parent.mkdir(parents=True,exist_ok=True)
+    _write(runtime_path,{'main_wall_s':perf_counter()-report_start,'process_memory':process_memory(),
+        'scope':'offline report main after imports, including validation, metrics and requested rendering; memory is process lifetime peak'})
     print(json.dumps(result if args.metrics_only else {k:result[k] for k in ('decision','value_beyond_power','per_seed')},indent=2))
 
 

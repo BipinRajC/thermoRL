@@ -110,3 +110,18 @@ def test_all_matching_runs_skipped_without_overwriting_outputs(tmp_path,monkeypa
     monkeypatch.setattr(sys,'argv',['run_matrix','--config','unused.yaml','--workers','3'])
     run_matrix.main()
     assert target.read_text()=='{"preserved":true}'
+
+
+def test_memory_error_is_non_scientific_and_drains_healthy_peer(tmp_path,monkeypatch):
+    import sys
+    jobs=[]
+    for name,delay in [('memory',0),('healthy',.7)]:
+        path=tmp_path/'runs'/name
+        code="from pathlib import Path; import sys,time; time.sleep(float(sys.argv[2])); p=Path(sys.argv[1]); p.mkdir(parents=True); (p/'done').write_text('ok')"
+        jobs.append(dict(policy=name,seed=1,run_dir=path,command=[sys.executable,'-c',code,str(path),str(delay)]))
+    def check(path):
+        if Path(path).name=='memory':raise MemoryError('fixture memory pressure')
+    monkeypatch.setattr(run_matrix,'_verify_run',check)
+    with pytest.raises(RuntimeError):run_matrix.execute_jobs(jobs,tmp_path,2)
+    assert run_matrix.read_events(tmp_path)[-1]['failure_kind']=='memory_error'
+    assert (tmp_path/'runs/healthy/done').read_text()=='ok'
