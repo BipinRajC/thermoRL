@@ -1,6 +1,6 @@
 # E12 — G4 on an Alibaba GPU 2023-derived workload
 **System:** summit  **Status:** preregistered; inputs/protocol prepared for review, execution not authorized.
-**Pre-registered:** 2026-10-30, commit first adding this README/config, after Task 13 `75363ee` and D5 `20ff68f`; before any E12 policy run.
+**Pre-registered:** 2026-10-30, commit `ababba8220c2143c67a588a2fdc2d6e1062d9a4d`, after Task 13 `75363ee` and D5 `20ff68f`; before any E12 policy run.
 
 ## Question
 Does the frozen thermal_predictive heuristic demonstrate material value beyond power_balance on the approved Alibaba-derived workload under the same G4 protocol?
