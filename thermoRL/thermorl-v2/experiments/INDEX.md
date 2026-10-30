@@ -11,4 +11,4 @@
 | E03 | summit | Does the room-air what-if change coolant? | complete | NOT_USABLE | affected Δ=0.538986 °C | [README](summit/E03_g3_room_air/README.md) | 2026-10-27 |
 | Task5 bench | summit | Is the isolated 6 h engine/FMU cost within D2? | complete | PASS; keep summit, horizon 6 h | 912.539314 s; 2160 steps | [SYSTEM](summit/SYSTEM.md#task-5-bench--approved-d1d2-2026-10-27) | 2026-10-27 |
 | E10 | summit | Does the closed loop preserve all six invariants? | complete | PASS (6/6) | 720 steps; 1514 starts; max IT diff 1.82e-12 kW | [README](summit/E10_c2_vertical_slice/README.md) | 2026-10-27 |
-| E11 | summit | Does thermal_predictive add value beyond power_balance? | preregistered | pending | frozen 15 runs, 3 workers; inherited E10 + NEW prefix evidence | [README](summit/E11_g4_synthetic/README.md) | 2026-10-30 |
+| E11 | summit | Does thermal_predictive add value beyond power_balance? | complete | no material value on the homogeneous twin | 15 runs; all measured invariants pass; I3 inherited + NEW seed1 prefix | [README](summit/E11_g4_synthetic/README.md) | 2026-10-30 |

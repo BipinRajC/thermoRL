@@ -1,0 +1,53 @@
+{
+  "checkpoint": "C3",
+  "configs_byte_identical": true,
+  "extra_FMU_runs": 0,
+  "fmu_sha256_verified": true,
+  "frozen_protected_paths_unchanged": true,
+  "frozen_readme_sections_unchanged": true,
+  "images": {
+    "anim_packing_vs_thermal_predictive_seed1.gif": {
+      "bytes": 10045426,
+      "frames": 720,
+      "size": [
+        560,
+        280
+      ]
+    },
+    "anim_power_balance_vs_thermal_predictive_seed1.gif": {
+      "bytes": 10501324,
+      "frames": 720,
+      "size": [
+        560,
+        280
+      ]
+    },
+    "heatmaps_seed1.png": {
+      "bytes": 1114475,
+      "frames": 1,
+      "size": [
+        2800,
+        700
+      ]
+    },
+    "timeseries_seed1.png": {
+      "bytes": 166972,
+      "frames": 1,
+      "size": [
+        1400,
+        840
+      ]
+    }
+  },
+  "manifest_mirrors_byte_identical": 15,
+  "non_fmu_tests": {
+    "integration": 27,
+    "output": "provenance/non_fmu_tests.txt",
+    "total_passed": 139,
+    "unit": 112
+  },
+  "pinned_inputs_unchanged": true,
+  "production_import_boundaries_pass": true,
+  "production_python_files_checked": 35,
+  "raw_runs_over_25MB_ignored": 15
+}

@@ -1,0 +1,100 @@
+{
+  "authorized_runs": 15,
+  "inventory_files_verified": 106,
+  "observed_runs": 15,
+  "retries": 0,
+  "runs": {
+    "coolest_rack_seed1": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.105427357601002e-15,
+      "raw_max_c": 55.70173611992408,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "coolest_rack_seed2": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.105427357601002e-15,
+      "raw_max_c": 56.25360869070096,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "coolest_rack_seed3": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.275957614183426e-12,
+      "raw_max_c": 56.54824036531272,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "node_balance_seed1": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 0.0,
+      "raw_max_c": 56.2321646019177,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "node_balance_seed2": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 0.0,
+      "raw_max_c": 56.652353466684076,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "node_balance_seed3": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.275957614183426e-12,
+      "raw_max_c": 56.059658081581006,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "packing_seed1": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.105427357601002e-15,
+      "raw_max_c": 56.057982892967345,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "packing_seed2": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 0.0,
+      "raw_max_c": 56.81393353857993,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "packing_seed3": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.275957614183426e-12,
+      "raw_max_c": 56.694001643055856,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "power_balance_seed1": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 0.0,
+      "raw_max_c": 56.233641451962114,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "power_balance_seed2": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.105427357601002e-15,
+      "raw_max_c": 56.93195956490433,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "power_balance_seed3": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.275957614183426e-12,
+      "raw_max_c": 56.21481035148673,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "thermal_predictive_seed1": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.105427357601002e-15,
+      "raw_max_c": 56.23279844581646,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "thermal_predictive_seed2": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 0.0,
+      "raw_max_c": 56.315833804690726,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    },
+    "thermal_predictive_seed3": {
+      "coolant_over_70_samples": 0,
+      "max_abs_metric_recomputation_error": 7.275957614183426e-12,
+      "raw_max_c": 56.7046570082407,
+      "source_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d"
+    }
+  },
+  "scope": "offline independent recomputation only; no new simulation",
+  "source_files_verified": 38
+}

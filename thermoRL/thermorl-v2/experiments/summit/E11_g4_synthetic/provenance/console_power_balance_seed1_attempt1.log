@@ -1,0 +1,20 @@
+RK-method: sdirk34hw
+Local extrapolation
+FSAL
+Continuous extension
+WARNING: Failed to load dataloader: No module named 'raps.dataloaders.summit'
+Using scheduler: default, with policy PolicyType.FCFS and backfill BackfillType.NONE
+RUN power_balance: fixed warm-up complete; 21600s episode starting
+RUN power_balance: 1800/21600s; step calls=180; jobs started=375
+RUN power_balance: 3600/21600s; step calls=360; jobs started=756
+RUN power_balance: 5400/21600s; step calls=540; jobs started=1133
+RUN power_balance: 7200/21600s; step calls=720; jobs started=1510
+RUN power_balance: 9000/21600s; step calls=900; jobs started=1892
+RUN power_balance: 10800/21600s; step calls=1080; jobs started=2276
+RUN power_balance: 12600/21600s; step calls=1260; jobs started=2676
+RUN power_balance: 14400/21600s; step calls=1440; jobs started=3035
+RUN power_balance: 16200/21600s; step calls=1620; jobs started=3424
+RUN power_balance: 18000/21600s; step calls=1800; jobs started=3806
+RUN power_balance: 19800/21600s; step calls=1980; jobs started=4197
+RUN power_balance: 21600/21600s; step calls=2160; jobs started=4588
+{"fmu_steps": 2160, "jobs_started": 4589, "policy": "power_balance", "run_dir": "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1", "total_s": 600.0539432680007}

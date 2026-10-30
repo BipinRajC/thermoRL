@@ -1,6 +1,6 @@
 # E11 — Frozen G4 synthetic policy evaluation
-**System:** summit  **Status:** planned
-**Pre-registered:** 2026-10-30; the commit first adding this README and config, after code anchor `ea3a26d` and before any E11 run. Review: [Opus prelaunch](../../../../../docs/checkpoints/C3-prelaunch-review-opus.md), reviewed `552e9b8`, review commit `66f7753`.
+**System:** summit  **Status:** complete
+**Pre-registered:** 2026-10-30, commit `6ee93c4fb6e3fe019f2d57534d066f208b067c6d`; code anchor `ea3a26d`, before any E11 run. Review: [Opus prelaunch](../../../../../docs/checkpoints/C3-prelaunch-review-opus.md), reviewed `552e9b8`, review commit `66f7753`.
 
 ## Question
 Does thermal_predictive demonstrate meaningful value beyond power_balance under the frozen protocol?
@@ -74,19 +74,47 @@ Interval rows mix RAPS-t inputs (kw/free/n_running/n_queued/it_kw_total) and FMU
 Disagreement rescoring applies BOTH power_balance and thermal_predictive to each identical six-decimal logged context, using globally distinct reconstructed free-node IDs. Self-reproduction against the live logged rack is reported separately because rounding ties can change a choice. Latency comes only from decision_latency.jsonl; missing means missing, never zero. RAPS, FMU, scheduler and total timing scopes remain separate in manifests. Committed kW is corrected for completions at the next power tick.
 
 ## Results
-Pending. No E11 result existed when this protocol was committed.
+**Complete.** Frozen outcome: **no material value on the homogeneous twin**, value_beyond_power=false. All directly measured invariants pass; invariant 3 has the approved inherited scope and NEW seed1 prefix result, not full E11 remeasurement.
+
+| Seed | packing | node_balance | power_balance | coolest_rack | thermal_predictive |
+|---|---|---|---|---|---|
+| 1 | 54.070216 | 53.883515 | 54.330429 | 53.534760 | 53.987934 |
+| 2 | 54.177058 | 54.094552 | 54.137678 | 54.123498 | 54.284869 |
+| 3 | 54.122798 | 53.559813 | 53.775784 | 53.780430 | 53.846649 |
+
+| Seed | power_balance − thermal_predictive (°C) | packing − thermal_predictive (°C) | ≥0.5 °C beyond power? |
+|---|---|---|---|
+| 1 | 0.342495 | 0.082282 | False |
+| 2 | -0.147190 | -0.107811 | False |
+| 3 | -0.070865 | 0.276150 | False |
+
+First-wave process wall times:
+
+| Policy (seed1) | Fresh-process wall s |
+|---|---|
+| packing | 655.588 |
+| node_balance | 1148.211 |
+| power_balance | 602.637 |
+
+Full matrix wall 4746.698 s. See [summary](results/summary.json), [metrics](results/metrics.csv), [S1 and attribution](results/max_rack_attribution.json), [diagnostics](results/decision_diagnostics.json), and [invariants](results/invariants.json).
+
+**FACT/DERIVED — precision diagnostic:** rounded-context self-reproduction ranges across seeds are power_balance: 99.142%–99.232%; coolest_rack: 89.974%–90.601%; thermal_predictive: 94.785%–94.817%. These rates differ from fresh-process determinism: six-decimal logging can reverse close rankings, so the counterfactual diagnostic applies at logged precision and does not exactly reconstruct every live full-precision decision. No schema, precision or policy was changed.
 
 ## Plots
-Pending: shared-scale heatmaps and max/spread time series for seed 1; the planned Task 11 schematic GIFs use recorded data only.
+![Shared-scale seed1 heatmaps](plots/heatmaps_seed1.png)
+
+![Seed1 max and spread](plots/timeseries_seed1.png)
+
+[packing vs thermal GIF](plots/anim_packing_vs_thermal_predictive_seed1.gif), [power_balance vs thermal GIF](plots/anim_power_balance_vs_thermal_predictive_seed1.gif).
 
 ## Observations (FACT)
-Pending E11 execution. Existing E10 is mechanics evidence only.
+Exactly 15 original runs, no retry. All runs have 2160 steps and a 21600 s episode clock. Total >70 °C samples: 0; raw max 56.931960 °C; negative episode pump samples 0. Full per-seed/metric numbers are preserved; no primary inference is drawn from S1.
 
 ## Interpretation (INFERENCE)
-No E11 policy inference before the matrix, prefix check and invariant report complete.
+The frozen G4 outcome applies only to this policy, workload and Summit-FMU operating regime. Distributional metrics and max-rack attribution help interpret the result without replacing the primary metric. The plant mechanism behind C2 M3 is unresolved.
 
 ## Conclusion and decision
-Pending. Apply the primary rule without tuning, including any null or negative result.
+**no material value on the homogeneous twin** (`value_beyond_power=false`). This is the frozen every-seed half-degree rule at full precision. No tuning or additional run. Stop at C3.
 
 ## Limitations
 - **M2:** max-rack temperature can be dominated by a rare long-running full-power large job saturating a rack under the frozen spanning rule. In E10 job 184 set the argmax throughout the window. Attribute, do not tune away, this effect.
@@ -109,3 +137,5 @@ Pending. Apply the primary rule without tuning, including any null or negative r
 
 ## Demo relevance
 This is the first frozen G4 policy evaluation. It can support only the measured placement-distribution effects and the prescribed thermal-versus-power comparison under this protocol. No preferred headline, policy ranking or RL direction is assumed.
+
+Raw-run storage: every run exceeds 25 MB and is kept locally under `runs/`, gitignored. [Run sizes](results/run_storage.json) and [every raw file path, bytes and SHA-256](results/run_files.json), including console logs and matrix journal, are committed. [Manifest mirrors](provenance/run_manifests/) preserve the exact per-run manifest bytes for portable review. Obtain ignored raw ledgers separately for independent recomputation.

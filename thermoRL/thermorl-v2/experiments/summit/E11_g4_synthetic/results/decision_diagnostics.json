@@ -1,0 +1,77 @@
+{
+  "coolest_rack_seed1": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.8916975375898889,
+    "self_reproduction_rate": 0.9047722815428197
+  },
+  "coolest_rack_seed2": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.880759385665529,
+    "self_reproduction_rate": 0.8997440273037542
+  },
+  "coolest_rack_seed3": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.8675965665236052,
+    "self_reproduction_rate": 0.9060085836909871
+  },
+  "node_balance_seed1": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.7005883634778819,
+    "self_reproduction_rate": 1.0
+  },
+  "node_balance_seed2": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.6333191126279863,
+    "self_reproduction_rate": 1.0
+  },
+  "node_balance_seed3": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.6821888412017167,
+    "self_reproduction_rate": 1.0
+  },
+  "packing_seed1": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.751797777293528,
+    "self_reproduction_rate": 1.0
+  },
+  "packing_seed2": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.7491467576791809,
+    "self_reproduction_rate": 1.0
+  },
+  "packing_seed3": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.7120171673819743,
+    "self_reproduction_rate": 1.0
+  },
+  "power_balance_seed1": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.8666376116801046,
+    "self_reproduction_rate": 0.9915014164305949
+  },
+  "power_balance_seed2": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.8587883959044369,
+    "self_reproduction_rate": 0.992320819112628
+  },
+  "power_balance_seed3": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.8362660944206008,
+    "self_reproduction_rate": 0.9914163090128756
+  },
+  "thermal_predictive_seed1": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.9609936805404228,
+    "self_reproduction_rate": 0.9481368489867074
+  },
+  "thermal_predictive_seed2": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.941339590443686,
+    "self_reproduction_rate": 0.9481655290102389
+  },
+  "thermal_predictive_seed3": {
+    "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+    "power_vs_thermal_disagreement_rate": 0.9431330472103004,
+    "self_reproduction_rate": 0.9478540772532189
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "completed": 15,
+  "matrix_wall_s": 4746.698387356,
+  "processes": [
+    {
+      "index": 2,
+      "policy": "power_balance",
+      "process_wall_s": 602.6370786410007,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1",
+      "seed": 1
+    },
+    {
+      "index": 0,
+      "policy": "packing",
+      "process_wall_s": 655.5880798360004,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/packing_seed1",
+      "seed": 1
+    },
+    {
+      "index": 1,
+      "policy": "node_balance",
+      "process_wall_s": 1148.2114660309999,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/node_balance_seed1",
+      "seed": 1
+    },
+    {
+      "index": 3,
+      "policy": "coolest_rack",
+      "process_wall_s": 1160.757795761001,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/coolest_rack_seed1",
+      "seed": 1
+    },
+    {
+      "index": 4,
+      "policy": "thermal_predictive",
+      "process_wall_s": 1184.7544856959994,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/thermal_predictive_seed1",
+      "seed": 1
+    },
+    {
+      "index": 5,
+      "policy": "packing",
+      "process_wall_s": 1108.802713219,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/packing_seed2",
+      "seed": 2
+    },
+    {
+      "index": 6,
+      "policy": "node_balance",
+      "process_wall_s": 606.1022844970012,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/node_balance_seed2",
+      "seed": 2
+    },
+    {
+      "index": 8,
+      "policy": "coolest_rack",
+      "process_wall_s": 618.7622695089995,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/coolest_rack_seed2",
+      "seed": 2
+    },
+    {
+      "index": 7,
+      "policy": "power_balance",
+      "process_wall_s": 1127.149156906,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/power_balance_seed2",
+      "seed": 2
+    },
+    {
+      "index": 9,
+      "policy": "thermal_predictive",
+      "process_wall_s": 604.8981076519995,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/thermal_predictive_seed2",
+      "seed": 2
+    },
+    {
+      "index": 11,
+      "policy": "node_balance",
+      "process_wall_s": 636.6049927040003,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/node_balance_seed3",
+      "seed": 3
+    },
+    {
+      "index": 10,
+      "policy": "packing",
+      "process_wall_s": 1198.3952375970002,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/packing_seed3",
+      "seed": 3
+    },
+    {
+      "index": 12,
+      "policy": "power_balance",
+      "process_wall_s": 1139.4389021480001,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/power_balance_seed3",
+      "seed": 3
+    },
+    {
+      "index": 13,
+      "policy": "coolest_rack",
+      "process_wall_s": 666.316566558,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/coolest_rack_seed3",
+      "seed": 3
+    },
+    {
+      "index": 14,
+      "policy": "thermal_predictive",
+      "process_wall_s": 659.1831427430006,
+      "run_dir": "experiments/summit/E11_g4_synthetic/runs/thermal_predictive_seed3",
+      "seed": 3
+    }
+  ],
+  "workers": 3
+}

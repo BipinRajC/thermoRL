@@ -1,0 +1,27 @@
+{
+  "policies": {
+    "packing": {
+      "decisions_byte_identical": true,
+      "interval_error": null,
+      "interval_values_identical": true,
+      "new_decision_rows": 1514,
+      "new_interval_rows": 185040,
+      "old_decision_rows": 1514,
+      "old_interval_rows": 185040,
+      "result": true
+    },
+    "power_balance": {
+      "decisions_byte_identical": true,
+      "interval_error": null,
+      "interval_values_identical": true,
+      "new_decision_rows": 1514,
+      "new_interval_rows": 185040,
+      "old_decision_rows": 1514,
+      "old_interval_rows": 185040,
+      "result": true
+    }
+  },
+  "result": true,
+  "scope": "NEW zero-run analysis; seed1 decisions t_s<7200 bytes, interval t_s<=7200 values",
+  "workload_exact_prefix": true
+}

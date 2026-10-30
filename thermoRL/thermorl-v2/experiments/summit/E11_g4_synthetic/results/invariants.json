@@ -1,0 +1,293 @@
+{
+  "1": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 2.7284841053187847e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "approved_scope": "Bipin 2026-10-30: inherited E10 + seed1 prefix; exactly 15 runs, no reruns",
+      "path": "experiments/summit/E11_g4_synthetic/provenance/determinism_evidence.json",
+      "per_seed": {
+        "1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            },
+            {
+              "kind": "E11_prefix_vs_E10",
+              "ref": "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json",
+              "result": true,
+              "scope": "NEW: seed1 packing+power_balance 2h prefix; not full 6h E11 determinism"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/decisions.jsonl": "56abb6c14d4db49b3caac8aa68fd8531868902e3c2d988eb537c9c622d383bec",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/intervals.parquet": "9cbc19b38c07378c7f6ddbed6d8f3528b62ce0a4cb4bc6f27f144de6ded3bad1",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/decisions.jsonl": "37b8e11c8dd275b9f2a53a1cd9f2466f3c91765f58c487152f25fea27b7b0139",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/intervals.parquet": "ef8a8d38c644927d718b26db601a0772cdb22a5febf2ea6b447f8b9ac4da9ea7",
+        "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json": "0ff51ec063c1eae6b251290e454fb5f3ac47e67293c29c666e96b56aa789c054",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/decisions.jsonl": "ba38d8563a5f1f0117b4c53cbe9921ebe11758e8d9b144ed975926a71c424bf1",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/intervals.parquet": "54007f922d86753d56beca7a11c26bf320d40b0e0baf5753189db1634d2fc110",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/decisions.jsonl": "56823a56e9f634a6ee03e7f36631c696946097e0f45358dd634711b4e5567f45",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/intervals.parquet": "564bec21219795b58bd2847c7c9f171499b2c2ff5591297fa515d48ded7aeabf",
+        "experiments/summit/_workloads/65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a.parquet": "65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a",
+        "experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27"
+      },
+      "sha256": "0020d8c207954e1f3ee1ca3bfceeda56ba83404e46de95e8142d26633856baa1",
+      "six_hour_E11_determinism_remeasured": false
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "evidence": [
+          {
+            "kind": "inherited_E10",
+            "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+            "result": true,
+            "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+          },
+          {
+            "kind": "E11_prefix_vs_E10",
+            "ref": "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json",
+            "result": true,
+            "scope": "NEW: seed1 packing+power_balance 2h prefix; not full 6h E11 determinism"
+          }
+        ],
+        "status": "inherited_not_remeasured"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed1": 1.8189894035458565e-12,
+      "node_balance_seed1": 1.8189894035458565e-12,
+      "packing_seed1": 1.8189894035458565e-12,
+      "power_balance_seed1": 9.094947017729282e-13,
+      "thermal_predictive_seed1": 9.094947017729282e-13
+    }
+  },
+  "2": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 2.7284841053187847e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "approved_scope": "Bipin 2026-10-30: inherited E10 + seed1 prefix; exactly 15 runs, no reruns",
+      "path": "experiments/summit/E11_g4_synthetic/provenance/determinism_evidence.json",
+      "per_seed": {
+        "1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            },
+            {
+              "kind": "E11_prefix_vs_E10",
+              "ref": "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json",
+              "result": true,
+              "scope": "NEW: seed1 packing+power_balance 2h prefix; not full 6h E11 determinism"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/decisions.jsonl": "56abb6c14d4db49b3caac8aa68fd8531868902e3c2d988eb537c9c622d383bec",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/intervals.parquet": "9cbc19b38c07378c7f6ddbed6d8f3528b62ce0a4cb4bc6f27f144de6ded3bad1",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/decisions.jsonl": "37b8e11c8dd275b9f2a53a1cd9f2466f3c91765f58c487152f25fea27b7b0139",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/intervals.parquet": "ef8a8d38c644927d718b26db601a0772cdb22a5febf2ea6b447f8b9ac4da9ea7",
+        "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json": "0ff51ec063c1eae6b251290e454fb5f3ac47e67293c29c666e96b56aa789c054",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/decisions.jsonl": "ba38d8563a5f1f0117b4c53cbe9921ebe11758e8d9b144ed975926a71c424bf1",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/intervals.parquet": "54007f922d86753d56beca7a11c26bf320d40b0e0baf5753189db1634d2fc110",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/decisions.jsonl": "56823a56e9f634a6ee03e7f36631c696946097e0f45358dd634711b4e5567f45",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/intervals.parquet": "564bec21219795b58bd2847c7c9f171499b2c2ff5591297fa515d48ded7aeabf",
+        "experiments/summit/_workloads/65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a.parquet": "65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a",
+        "experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27"
+      },
+      "sha256": "0020d8c207954e1f3ee1ca3bfceeda56ba83404e46de95e8142d26633856baa1",
+      "six_hour_E11_determinism_remeasured": false
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "evidence": [
+          {
+            "kind": "inherited_E10",
+            "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+            "result": true,
+            "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+          }
+        ],
+        "status": "inherited_not_remeasured"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed2": 1.8189894035458565e-12,
+      "node_balance_seed2": 9.094947017729282e-13,
+      "packing_seed2": 1.8189894035458565e-12,
+      "power_balance_seed2": 1.8189894035458565e-12,
+      "thermal_predictive_seed2": 9.094947017729282e-13
+    }
+  },
+  "3": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 2.7284841053187847e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "approved_scope": "Bipin 2026-10-30: inherited E10 + seed1 prefix; exactly 15 runs, no reruns",
+      "path": "experiments/summit/E11_g4_synthetic/provenance/determinism_evidence.json",
+      "per_seed": {
+        "1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            },
+            {
+              "kind": "E11_prefix_vs_E10",
+              "ref": "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json",
+              "result": true,
+              "scope": "NEW: seed1 packing+power_balance 2h prefix; not full 6h E11 determinism"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/decisions.jsonl": "56abb6c14d4db49b3caac8aa68fd8531868902e3c2d988eb537c9c622d383bec",
+        "experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/intervals.parquet": "9cbc19b38c07378c7f6ddbed6d8f3528b62ce0a4cb4bc6f27f144de6ded3bad1",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/decisions.jsonl": "37b8e11c8dd275b9f2a53a1cd9f2466f3c91765f58c487152f25fea27b7b0139",
+        "experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/intervals.parquet": "ef8a8d38c644927d718b26db601a0772cdb22a5febf2ea6b447f8b9ac4da9ea7",
+        "experiments/summit/E11_g4_synthetic/provenance/prefix_vs_E10.json": "0ff51ec063c1eae6b251290e454fb5f3ac47e67293c29c666e96b56aa789c054",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/decisions.jsonl": "ba38d8563a5f1f0117b4c53cbe9921ebe11758e8d9b144ed975926a71c424bf1",
+        "experiments/summit/E11_g4_synthetic/runs/packing_seed1/intervals.parquet": "54007f922d86753d56beca7a11c26bf320d40b0e0baf5753189db1634d2fc110",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/decisions.jsonl": "56823a56e9f634a6ee03e7f36631c696946097e0f45358dd634711b4e5567f45",
+        "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1/intervals.parquet": "564bec21219795b58bd2847c7c9f171499b2c2ff5591297fa515d48ded7aeabf",
+        "experiments/summit/_workloads/65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a.parquet": "65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a",
+        "experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27"
+      },
+      "sha256": "0020d8c207954e1f3ee1ca3bfceeda56ba83404e46de95e8142d26633856baa1",
+      "six_hour_E11_determinism_remeasured": false
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "evidence": [
+          {
+            "kind": "inherited_E10",
+            "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+            "result": true,
+            "scope": "INHERITED: E10 packing seed1 2h same-config fresh-process rerun only"
+          }
+        ],
+        "status": "inherited_not_remeasured"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed3": 1.8189894035458565e-12,
+      "node_balance_seed3": 9.094947017729282e-13,
+      "packing_seed3": 1.8189894035458565e-12,
+      "power_balance_seed3": 9.094947017729282e-13,
+      "thermal_predictive_seed3": 1.8189894035458565e-12
+    }
+  }
+}
