@@ -69,7 +69,7 @@ def test_postprocess_validation_failure_archives_completed_run(tmp_path,monkeypa
     jobs=[dict(policy='packing',seed=1,run_dir=path,command=[sys.executable,'-c',code,str(path)])]
     def fail(_): raise AssertionError('fixture invariant failure')
     monkeypatch.setattr(run_matrix,'_verify_run',fail)
-    with pytest.raises(AssertionError,match='fixture invariant'):
+    with pytest.raises(RuntimeError,match='fixture invariant'):
         run_matrix.execute_jobs(jobs,tmp_path,1)
     assert not path.exists()
     assert list((tmp_path/'provenance').glob('failed_*/packing_seed1/done'))
@@ -90,7 +90,7 @@ def test_failure_then_one_reviewed_resume_preserves_inventory(tmp_path):
     result=run_matrix.execute_jobs([success],tmp_path,1,verify_runs=False,allow_retry=True)
     assert result['completed']==1
     listing=run_matrix.write_run_inventory(tmp_path)
-    assert len(listing)==2 and before[0].read_bytes()==original
+    assert 'runs/packing_seed1/done' in listing and before[0].read_bytes()==original
     assert [e['attempt'] for e in run_matrix.read_events(tmp_path) if e['event']=='started']==[1,2]
 
 

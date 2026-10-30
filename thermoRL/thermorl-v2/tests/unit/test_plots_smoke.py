@@ -31,7 +31,7 @@ def test_plot_functions_write_files_and_use_episode_horizon(tmp_path):
 def test_g4_rule_requires_half_degree_in_every_seed():
     rows = [dict(policy=p,seed=s,maxrack_mean_c=value)
             for s,gap in ((1,0.7),(2,0.3),(3,0.6))
-            for p,value in [('power_balance',50),('thermal_predictive',50-gap),('packing',52)]]
+            for p,value in [('power_balance',50),('thermal_predictive',50-gap),('packing',52),('node_balance',51),('coolest_rack',51)]]
     decision = report.g4_decision(rows)
     assert decision['value_beyond_power'] is False
     assert decision['per_seed']['2']['power_minus_thermal_c'] == pytest.approx(0.3)

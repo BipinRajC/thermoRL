@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from thermorl2.experiments.provenance import environment, sha256_file, write_manifest
+from thermorl2.experiments.provenance import environment, sha256_file, write_manifest, require_assertions
 from thermorl2.raps_adapter.power_model import legacy_config
 from thermorl2.raps_adapter.runner import DECISION_KEYS, EpisodeRunner, read_jsonl
 from thermorl2.raps_adapter.systems import get_system
@@ -211,6 +211,7 @@ def complete_e10(out, cfg, paths):
 
 
 def main():
+    require_assertions()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--policy")

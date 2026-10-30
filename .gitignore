@@ -39,3 +39,5 @@ hpc-cooling-surrogate/
 
 # RAPS default output dirs (RAPS writes ./runs/ when output is unset)
 runs/
+# Preserve large failed simulation directories locally; commit their inventories.
+**/provenance/failed_*/

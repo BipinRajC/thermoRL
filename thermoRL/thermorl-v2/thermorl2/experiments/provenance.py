@@ -5,9 +5,15 @@ import importlib.metadata
 import json
 import platform
 import subprocess
+import sys
 from pathlib import Path
 
 from thermorl2.raps_adapter.systems import repo_root
+
+
+def require_assertions():
+    if sys.flags.optimize:
+        raise RuntimeError('optimized Python is forbidden: validation assertions must remain enabled')
 
 
 def git_state() -> dict:

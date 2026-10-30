@@ -13,7 +13,7 @@ import pandas as pd
 
 from thermorl2.core.scorers import make_scorer
 from thermorl2.core.state import Ambient
-from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest
+from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest, require_assertions
 from thermorl2.raps_adapter.coupling import CouplingParams
 from thermorl2.raps_adapter.engine_factory import EngineSpec, build_engine, is_power_tick, rack_kw_from_power_df
 from thermorl2.raps_adapter.jobs import jobs_from_frame
@@ -84,6 +84,7 @@ class EpisodeRunner:
         self.cfg, self.policy, self.seed, self.run_dir = config_for_seed(cfg,seed), policy, seed, Path(run_dir)
 
     def run(self):
+        require_assertions()
         total_start = perf_counter()
         cfg, system = self.cfg, self.cfg["system"]
         assert self.policy in cfg["policies"] and self.seed in cfg["seeds"] and self.seed >= 1
@@ -152,6 +153,7 @@ class EpisodeRunner:
         over_70_samples = 0
         over_70_racks = set()
         raw_max = -float("inf")
+        phase = 'fmu'
         try:
             start = perf_counter()
             backend = FmuBackend(fmu_path, CouplingParams.from_legacy_config(legacy))
@@ -179,6 +181,7 @@ class EpisodeRunner:
             print(f"RUN {self.policy}: fixed warm-up complete; {horizon_s}s episode starting", flush=True)
             generator = engine.run_simulation()
             while True:
+                phase = 'raps'
                 start = perf_counter()
                 scheduler_before = scheduler_wall_s
                 try:
@@ -197,8 +200,9 @@ class EpisodeRunner:
                 error = abs(float(rack_kw.sum()) - total_it)
                 assert error <= 1e-6, "rack power sum mismatch"
                 max_reconciliation = max(max_reconciliation, error)
-                assert backend.time_s == float(tick.current_timestep)
+                assert backend.time_s == float(tick.current_timestep), 'backend step/clock alignment failure'
                 scheduler.on_power_tick(rack_kw)
+                phase = 'fmu'
                 backend.step(rack_kw, delta, Ambient())
                 thermal = backend.observe()
                 if not np.isfinite(thermal.t_c).all():
@@ -217,14 +221,23 @@ class EpisodeRunner:
                 power_ticks += 1
                 if power_ticks % (1800 // delta) == 0:
                     print(f"RUN {self.policy}: {backend.time_s:.0f}/{horizon_s}s; step calls={step_calls}; jobs started={decision_index}", flush=True)
-            assert power_ticks == horizon_s // delta
-            assert step_calls == horizon_s // delta
-            assert backend.time_s == float(horizon_s)
+            assert power_ticks == horizon_s // delta, 'power tick count failure'
+            assert step_calls == horizon_s // delta, 'backend step count failure'
+            assert backend.time_s == float(horizon_s), 'backend final clock failure'
             episode_wall_s = perf_counter() - episode_start
             episode_fmu_s = backend.runtime_s() - episode_fmu_before
             final_elapsed = backend.time_s
         except Exception as error:
-            (self.run_dir / "provenance/failure.json").write_text(json.dumps({"type": type(error).__name__, "error": str(error), "policy": self.policy, "power_ticks": power_ticks, "step_calls": step_calls}, sort_keys=True) + "\n")
+            message = str(error) or type(error).__name__
+            if 'non-finite' in message:
+                kind = 'non_finite_coolant'
+            elif isinstance(error,AssertionError):
+                kind = 'step_clock_failure' if 'step' in message or 'clock' in message else 'invariant_failure'
+            elif isinstance(error,OSError):
+                kind = 'non_scientific_io'
+            else:
+                kind = 'fmu_error' if phase == 'fmu' else 'unexplained_failure'
+            (self.run_dir / "provenance/failure.json").write_text(json.dumps({"type": type(error).__name__, "error": message, "message": message, "failure_kind": kind, "policy": self.policy, "power_ticks": power_ticks, "step_calls": step_calls}, sort_keys=True) + "\n")
             raise
         finally:
             if backend is not None:
@@ -258,11 +271,12 @@ class EpisodeRunner:
             "scheduler_wall_s": scheduler_wall_s, "instantiation_s": instantiation_s, "warmup_wall_s": warmup_wall_s,
             "episode_wall_s": episode_wall_s, "episode_fmu_s": episode_fmu_s,
             "raps_s_scope": "engine construction and generator execution excluding scheduler callbacks",
-            "fmu_s_scope": "FmuBackend runtime_s: timed archive extraction/model-description reading, instantiation, warm-up, episode FMU API operations including observe/state management, and teardown; excludes RAPS and ledger serialization",
+            "fmu_s_scope": "FmuBackend runtime_s: timed archive extraction/model-description reading, instantiate/initialization, warm-up and episode FMU API calls including observe/state management and terminate/freeInstance; excludes FMU2Slave Python construction, unzip-directory removal, RAPS and ledger serialization",
             "total_s_scope": "EpisodeRunner.run including setup, warm-up, episode and ledger serialization; interpreter imports excluded",
             "interval_time_axis": "t_s is FMU episode interval endpoint: Delta..horizon_s; kw/free/n_running/n_queued/it_kw_total are RAPS-t inputs, t_c/pump_kw are t+Delta endpoints; power tick t applies (t,t+Delta], publishes post-step view before resuming generator; see thermal_publications.jsonl",
             "power_reconciliation_max_abs_kw": max_reconciliation, "source_sha256": source_hashes,
             "intervals_sha256": sha256_file(intervals_path), "raw_max_c": raw_max,
+            "job_events_sha256": sha256_file(self.run_dir / 'provenance/job_events.jsonl'),
             "coolant_over_70_samples": over_70_samples, "coolant_over_70_racks": sorted(over_70_racks),
             "negative_episode_pump_samples": int((intervals.pump_kw < 0).sum()), **ledger_metadata,
         }
