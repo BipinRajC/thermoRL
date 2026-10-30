@@ -14,6 +14,8 @@ from thermorl2.raps_adapter.power_model import legacy_config
 from thermorl2.raps_adapter.runner import DECISION_KEYS, EpisodeRunner, read_jsonl
 from thermorl2.raps_adapter.systems import get_system
 from thermorl2.raps_adapter.workload.synthetic import SyntheticSpec, generate, write_workload
+from thermorl2.raps_adapter.workload import alibaba
+from thermorl2.raps_adapter.systems import repo_root
 
 PROJECT = Path(__file__).resolve().parents[2]
 CONFIGS = Path(__file__).with_name("configs")
@@ -44,14 +46,32 @@ def load_config(path):
 
 def prepare_workload(cfg, seed):
     legacy = legacy_config(cfg["system"])
-    spec = SyntheticSpec.from_dict({"rho": cfg["workload"]["rho"]})
-    frame = generate(spec, seed, int(cfg["horizon_h"] * 3600), legacy["TOTAL_NODES"], legacy["GPUS_PER_NODE"])
+    kind=cfg['workload']['kind']
+    if kind == 'synthetic':
+        spec = SyntheticSpec.from_dict({"rho": cfg["workload"]["rho"]})
+        frame = generate(spec, seed, int(cfg["horizon_h"] * 3600), legacy["TOTAL_NODES"], legacy["GPUS_PER_NODE"])
+    elif kind == 'alibaba':
+        assert cfg['workload']['variant']=='default', 'D2 authorizes default only'
+        raw_dir=Path(cfg['workload']['raw_dir'])
+        if not raw_dir.is_absolute(): raw_dir=repo_root()/raw_dir
+        mapped=alibaba.map_pods(alibaba.load_pods(raw_dir/'openb_pod_list_default.csv'),legacy['GPUS_PER_NODE'])
+        frame=alibaba.derive_workload(mapped,cfg['workload']['rho'],int(cfg['horizon_h']*3600),seed,legacy['TOTAL_NODES'])
+    else:
+        raise ValueError(f'unsupported workload kind: {kind}')
     digest = hashlib.sha256(frame.to_parquet(index=False)).hexdigest()
     path = Path("experiments") / cfg["system"] / "_workloads" / f"{digest}.parquet"
     actual = write_workload(frame, path, {"system": cfg["system"], "seed": seed, "horizon_s": int(cfg["horizon_h"] * 3600),
                                         "n_nodes": legacy["TOTAL_NODES"], "gpus_per_node": legacy["GPUS_PER_NODE"]})
     assert digest == actual
     return {"path": str(path), "sha256": actual, "jobs_offered": len(frame), "meta_path": str(path) + ".meta.json"}
+
+
+def prepare_variant(cfg):
+    assert cfg['workload']['kind']=='alibaba', 'variant record is Alibaba-only'
+    raw_dir=Path(cfg['workload']['raw_dir'])
+    if not raw_dir.is_absolute(): raw_dir=repo_root()/raw_dir
+    out=Path(cfg['experiment_dir'].format(system=cfg['system']))
+    return alibaba.choose_variant(raw_dir,legacy_config(cfg['system']),out/'results')
 
 
 def e10_metrics(frame, manifest, decisions):
@@ -220,10 +240,15 @@ def main():
     parser.add_argument("--experiment-dir", type=Path)
     parser.add_argument("--run-dir", type=Path)
     parser.add_argument("--prepare-workload", action="store_true")
+    parser.add_argument('--prepare-variant',action='store_true')
     args = parser.parse_args()
     cfg = load_config(args.config)
     if args.horizon_h is not None:
         cfg["horizon_h"] = args.horizon_h
+    if args.prepare_variant:
+        if args.prepare_workload: parser.error('choose one preparation action')
+        print(json.dumps(prepare_variant(cfg),indent=2,sort_keys=True))
+        return
     if args.prepare_workload:
         print(json.dumps(prepare_workload(cfg, args.seed), sort_keys=True))
         return

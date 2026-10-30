@@ -1,0 +1,139 @@
+{
+  "checksums_file_sha256": "231e773bfcea29ebb0d68dc26d86e69c6e1976ce1f87fa52ce2443027d9d9d94",
+  "command": "sha256sum -c checksums.txt",
+  "cwd": "datasets/alibaba_gpu_2023",
+  "dataset_version_sha256": "ad7b6a1dde5e7e584a6e4a7861c5c065d21ffcc2ff37044a134392cd66437448",
+  "files": [
+    {
+      "path": "raw/openb_node_list_all_node.csv",
+      "sha256": "5a85c2af79c66a1efff8bbcbda430400aae56d8431370d738480967e1a9c6b15",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_node_list_gpu_node.csv",
+      "sha256": "2beca64b4d3dfa342036a34b56a495c6cef9225db836c81f541282cb1df320b5",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu0.csv",
+      "sha256": "1bc3fd9ee5c1468ccd018f624d9222746e08d59f963f66b925804734271c0eaa",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu037.csv",
+      "sha256": "8ed554026d041b15ff21ddc104d9a21dbd9a93c496262fa23ef7b5be27e220dc",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu050.csv",
+      "sha256": "747f43247bffc2b0bb081d7f61f0705ca8d390dafc0b647e642c92f3baf3ba1e",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu072.csv",
+      "sha256": "f8a2b031461b54d7b9f06d55473c2371eb3357b78a255c646bdca5e0833a8a2f",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu100.csv",
+      "sha256": "bec1c33fbdde61fd463877534ec79b393aec73e1cbb22d55fab9f166ac480982",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu200.csv",
+      "sha256": "b7e9d8a1a601da84d6e0b4110b19ef5001be5e4796d33e7b82f166ba95161f87",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu235.csv",
+      "sha256": "87bebd4d012faa8305ce1fd82737f51cf03361aac28b75d42e34aa656d7f4ee0",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu250.csv",
+      "sha256": "134c21ff96d57533df8a37b67632972884fec9396e77cd0898ddc370cc8e607d",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_cpu300.csv",
+      "sha256": "76528825f40ee662cb098b3b6e683c1efd9f87a0c8af7e628df1f32c639636d1",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_default.csv",
+      "sha256": "1ee7ed79c27a3b0861cda8ddba86a004c6aba904caafa329a76ae93ca63834a8",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpushare100.csv",
+      "sha256": "12dbc07d6a49bf8641e2275a2ff5bf7be74b5df7d148d531e135b140b95f9a3d",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpushare20.csv",
+      "sha256": "9be2d0efb52e242c32e23dd184cc5fcc1983478c6c9c02cbb6b4b62925c0ffcd",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpushare40.csv",
+      "sha256": "d83ce79a4eb6987524bedbb0c65e41aed3a36bf6c1b78b86234c3687a07e1d40",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpushare60.csv",
+      "sha256": "d31809628128a1f24491086eda4af3e23882b9213d3ef57a56ee2d1af69492fe",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpushare80.csv",
+      "sha256": "88b6649369ced40d0fde287d2498ea61ff4b05fccba8bdc95daf6042f2f8431e",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpuspec05.csv",
+      "sha256": "8f1c0ef7e4e511e982bd2818898ba22ee6d273bf5fce124b7ace285b5928cf4e",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpuspec10.csv",
+      "sha256": "2dc7e4cb9480484f08539720b433a9ec9ab5d76b396f3f7557c53a2ff78a7611",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpuspec20.csv",
+      "sha256": "6b9b89ab8913c1c074e994e98f548cf1a872fc5f76f2442ca8cd514a478b00a9",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpuspec25.csv",
+      "sha256": "9d030679a2ccd7e27a7ec9ff15baff34480d22a0012515691fc187e3f35ee68c",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_gpuspec33.csv",
+      "sha256": "eca4f746db1e5b25864ad021b55ece3943e101a3ebd4574d09dcb95c46117652",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_multigpu20.csv",
+      "sha256": "d9ec6f6c74fb980cc0b81239470c6353fceea077ea9abd610003b604c7cc2b01",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_multigpu30.csv",
+      "sha256": "a5e479c6444b1d83eef848159cf00c3cfa13441b2d1e2c113c391b91f1cc5b11",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_multigpu40.csv",
+      "sha256": "32c9e8731ca07ef96108aa65f2a289bb9aacb47f642ed9e3789f99b242df60eb",
+      "verified": true
+    },
+    {
+      "path": "raw/openb_pod_list_multigpu50.csv",
+      "sha256": "206f2f5959db30ecb7c44e7f13197c8ec50b7a35558ad3777cc3662ef0fe5373",
+      "verified": true
+    }
+  ],
+  "files_passed": 26
+}

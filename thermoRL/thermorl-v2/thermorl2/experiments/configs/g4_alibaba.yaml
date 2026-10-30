@@ -1,0 +1,16 @@
+name: g4_alibaba
+include: primary.yaml
+experiment_dir: experiments/{system}/E12_g4_alibaba
+horizon_h: 6
+warmup_s: 7200
+workload:
+  kind: alibaba
+  variant: default
+  raw_dir: datasets/alibaba_gpu_2023/raw
+  rho: 0.6
+scenario:
+  name: nominal
+  label: ''
+  ambient_schedule: []
+policies: [packing, node_balance, power_balance, coolest_rack, thermal_predictive]
+seeds: [1, 2, 3]

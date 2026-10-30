@@ -44,6 +44,31 @@ def read_jsonl(path):
         return [json.loads(line) for line in source if line.strip()]
 
 
+def load_episode_workload(cfg,seed,horizon_s):
+    """Both kinds use immutable parquet; Alibaba additionally pins D2/D3."""
+    workload=cfg['workload']
+    kind=workload['kind']
+    if kind not in ('synthetic','alibaba'):
+        raise ValueError(f'unsupported workload kind: {kind}')
+    path=Path(workload['path'])
+    if not path.is_absolute(): path=repo_root()/'thermoRL/thermorl-v2'/path
+    assert sha256_file(path)==workload['sha256'], 'workload SHA mismatch'
+    meta_path=Path(str(path)+'.meta.json')
+    if 'meta_sha256' in workload:
+        assert sha256_file(meta_path)==workload['meta_sha256'], 'workload sidecar SHA mismatch'
+    meta=json.loads(meta_path.read_text())
+    assert meta['horizon_s']==horizon_s, 'workload horizon does not match episode horizon'
+    frame=pd.read_parquet(path)
+    assert frame.attrs['seed']==seed, 'workload seed mismatch'
+    if kind=='alibaba':
+        assert meta['workload_kind']==frame.attrs['workload_kind']=='alibaba', 'Alibaba metadata kind mismatch'
+        assert meta['variant']==frame.attrs['variant']=='default', 'D2 authorizes default only'
+        assert pd.api.types.is_integer_dtype(frame.expected_run_time), 'Alibaba runtimes must be integer'
+        assert frame.expected_run_time.between(300,21600).all(), 'Alibaba runtime outside D3 bounds'
+        assert np.array_equal(frame.time_limit,np.ceil(1.5*frame.expected_run_time).astype(np.int64)), 'Alibaba time limits differ from D3'
+    return path,frame,meta
+
+
 class DecisionLedgers:
     def __init__(self, run_dir):
         self.run_dir = Path(run_dir)
@@ -97,14 +122,7 @@ class EpisodeRunner:
         spec = get_system(system)
         fmu_path = repo_root() / spec.fmu_path
         assert sha256_file(fmu_path) == spec.fmu_sha256, "FMU SHA mismatch"
-        workload_path = Path(cfg["workload"]["path"])
-        if not workload_path.is_absolute():
-            workload_path = repo_root() / 'thermoRL/thermorl-v2' / workload_path
-        assert sha256_file(workload_path) == cfg["workload"]["sha256"], "workload SHA mismatch"
-        sidecar = json.loads(Path(str(workload_path)+'.meta.json').read_text())
-        assert sidecar['horizon_s'] == horizon_s, 'workload horizon does not match episode horizon'
-        frame = pd.read_parquet(workload_path)
-        assert frame.attrs["seed"] == self.seed
+        workload_path,frame,sidecar=load_episode_workload(cfg,self.seed,horizon_s)
         git = git_state()
         porcelain = subprocess.check_output(["git", "status", "--porcelain"], cwd=repo_root(), text=True)
         source_hashes = {str(path.relative_to(repo_root())): sha256_file(path)

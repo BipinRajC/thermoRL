@@ -1,0 +1,114 @@
+{
+  "generator_source_sha256": "39665ab90f2e3cc1f74b2c910b66b94ecaff018dac8f754716937382e18aad7c",
+  "mapping_assumptions": {
+    "cpu_util_cap": 2,
+    "cpus_per_socket": 20,
+    "gpus_per_node": 6
+  },
+  "selected_variant": "default",
+  "selection_rule": "Bipin D2: default only; not selected by power or policy outcomes",
+  "variants": {
+    "default": {
+      "columns": [
+        "name",
+        "cpu_milli",
+        "memory_mib",
+        "num_gpu",
+        "gpu_milli",
+        "gpu_spec",
+        "qos",
+        "pod_phase",
+        "creation_time",
+        "deletion_time",
+        "scheduled_time"
+      ],
+      "missing_timing_fields": [],
+      "phase_mix_kept": {
+        "Failed": 1869,
+        "Running": 4149,
+        "Succeeded": 185
+      },
+      "phase_mix_raw": {
+        "Failed": 1870,
+        "Pending": 897,
+        "Running": 5193,
+        "Succeeded": 192
+      },
+      "power_stats_resource_only": {
+        "max_nodes_per_pod": 2,
+        "mean_cpu_util_per_node": 0.46309167135621837,
+        "mean_gpu_util_per_node": 0.8563308947664604,
+        "mean_node_increment_kw": 0.3160417053650386,
+        "nodes": 7108,
+        "pods": 7064,
+        "power_basis": "frozen RAPS compute_node_power increment above idle, network=0; loss-exclusive, no rectifier correction",
+        "share_nodes_ge2_gpu": 0.01674169949352842,
+        "unweighted_mean_pod_node_increment_kw": 0.30938046106154804,
+        "weighting": "node-weighted across mapped nodes; unweighted pod mean reported separately"
+      },
+      "power_stats_runnable": {
+        "max_nodes_per_pod": 2,
+        "mean_cpu_util_per_node": 0.45907088202337126,
+        "mean_gpu_util_per_node": 0.8780102449175605,
+        "mean_node_increment_kw": 0.31998211279373284,
+        "nodes": 6247,
+        "pods": 6203,
+        "power_basis": "frozen RAPS compute_node_power increment above idle, network=0; loss-exclusive, no rectifier correction",
+        "share_nodes_ge2_gpu": 0.01888906675204098,
+        "unweighted_mean_pod_node_increment_kw": 0.31242421309471713,
+        "weighting": "node-weighted across mapped nodes; unweighted pod mean reported separately"
+      },
+      "raw_rows": 8152,
+      "resource_only_population": "all rows with num_gpu > 0; no phase filter applied",
+      "runnable_rows": 6203,
+      "runtime_clip": {
+        "above_max_count": 266,
+        "above_max_fraction": 0.0428824762211833,
+        "below_min_count": 2033,
+        "below_min_fraction": 0.32774463969047235,
+        "max_s": 21600,
+        "min_s": 300,
+        "nonpositive_raw_count": 0,
+        "raw_max_s": 12537496.0,
+        "raw_median_s": 723.0,
+        "raw_min_s": 4.0,
+        "source_count": 6203
+      },
+      "simulation_eligible": true,
+      "source_path": "datasets/alibaba_gpu_2023/raw/openb_pod_list_default.csv",
+      "source_sha256": "1ee7ed79c27a3b0861cda8ddba86a004c6aba904caafa329a76ae93ca63834a8"
+    },
+    "multigpu50": {
+      "columns": [
+        "name",
+        "cpu_milli",
+        "memory_mib",
+        "num_gpu",
+        "gpu_milli"
+      ],
+      "missing_timing_fields": [
+        "pod_phase",
+        "creation_time",
+        "deletion_time"
+      ],
+      "power_stats_resource_only": {
+        "max_nodes_per_pod": 2,
+        "mean_cpu_util_per_node": 0.6624089107750029,
+        "mean_gpu_util_per_node": 1.3317856724117718,
+        "mean_node_increment_kw": 0.47660778417452104,
+        "nodes": 8529,
+        "pods": 7973,
+        "power_basis": "frozen RAPS compute_node_power increment above idle, network=0; loss-exclusive, no rectifier correction",
+        "share_nodes_ge2_gpu": 0.18056044084886858,
+        "unweighted_mean_pod_node_increment_kw": 0.41330033974997243,
+        "weighting": "node-weighted across mapped nodes; unweighted pod mean reported separately"
+      },
+      "raw_rows": 9061,
+      "resource_only_population": "all rows with num_gpu > 0; no phase filter applied",
+      "simulation_eligible": false,
+      "source_path": "datasets/alibaba_gpu_2023/raw/openb_pod_list_multigpu50.csv",
+      "source_sha256": "206f2f5959db30ecb7c44e7f13197c8ec50b7a35558ad3777cc3662ef0fe5373",
+      "timing_note": "phase, arrival and duration unavailable; no timing join or imputation; statistics descriptive only"
+    }
+  }
+}
