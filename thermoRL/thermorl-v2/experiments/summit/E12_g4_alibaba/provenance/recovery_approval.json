@@ -1,0 +1,20 @@
+{
+  "approved_by": "Bipin",
+  "authorized_extra_attempts": 3,
+  "created_utc": "2026-10-30T20:36:47.102460+00:00",
+  "cumulative_process_attempts_if_successful": 19,
+  "interrupted_configurations": [
+    "node_balance_seed2",
+    "packing_seed2",
+    "thermal_predictive_seed1"
+  ],
+  "interruption_record_sha256": "3a07af5ac551001c7975721065bd9c36fd99729e30c5bcbbb99b62d67fa12529",
+  "operational_interpretation": "reuse4 validated runs; retry the3 externally interrupted attempts exactlyonce; run8 unstarted configurations; then the1 planned C-prime repeat",
+  "planned_full_repeat": 1,
+  "review_ref": "../../docs/checkpoints/C4-execution-recovery.md",
+  "review_sha256": "149a1c4ac2e31362c0af46874f2c357caceb4e0f55fa865b29f9d051cc30ef75",
+  "scope": "E12_SIGTERM_resume",
+  "source_change_scope": "orchestration accounting/guard only; decision path, thermal stepping and all comparison equalities unchanged",
+  "successful_primary_configurations": 15,
+  "user_instruction": "dont stop, resume wherever it stopped"
+}

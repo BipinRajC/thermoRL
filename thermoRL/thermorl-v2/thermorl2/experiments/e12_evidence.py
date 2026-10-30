@@ -122,12 +122,13 @@ def write_rerun_inventory(base):
 
 
 def _matrix_complete(out,cfg):
-    from thermorl2.experiments.run_matrix import lightweight_invariants
+    from thermorl2.experiments.run_matrix import lightweight_invariants,primary_attempt_summary
     runtime=json.loads((out/'results/matrix_runtime.json').read_text())
     assert runtime['completed']==15 and runtime['workers']==3, 'primary matrix must complete first'
     assert {(r['policy'],r['seed']) for r in runtime['processes']}=={(p,s) for s in (1,2,3) for p in POLICIES}, 'primary matrix identities incomplete'
-    events=[json.loads(line) for line in (out/'provenance/matrix_events.jsonl').read_text().splitlines()]
-    assert sum(e['event']=='started' for e in events)==15 and sum(e['event']=='completed' for e in events)==15, 'exactly15 primary runs required'
+    accounting=primary_attempt_summary(out,POLICIES,(1,2,3))
+    assert accounting['completed']==15, 'exactly15 successful primary configurations required'
+    assert accounting['attempts_started']==runtime.get('attempts_started',15), 'primary attempt accounting mismatch'
     for seed in (1,2,3):
         check=lightweight_invariants([out/'runs'/f'{p}_seed{seed}' for p in POLICIES])
         assert check['it_kw_identical'] and check['start_times_identical'] and check['fmu_steps_ok'], f'primary seed check failed: {seed}'

@@ -1,0 +1,50 @@
+{
+  "changed_source_sha256": {
+    "thermoRL/thermorl-v2/thermorl2/experiments/e12_evidence.py": "dc986179be2c085ffd58384b859eb17f86940c8505e0866b9a069732dbe7d79d",
+    "thermoRL/thermorl-v2/thermorl2/experiments/run_matrix.py": "5c5c24db4179164acbc7197a7352cb6f8aa55a35ed62866886378ff7d43e56d0"
+  },
+  "frozen_readme_sections_verified": true,
+  "historical_inventory_sha256": "e3c33573b326c27bc3f566b8beb6ce143974813c00be3b0a676a4f09f1b0cde3",
+  "numerical_source_unchanged": true,
+  "original_logs_preserved_in_place": true,
+  "pinned_inputs_verified": true,
+  "relocations": [
+    {
+      "archive_path": "provenance/failed_20261030T204726_699646Z/node_balance_seed2/decisions.jsonl",
+      "bytes": 0,
+      "original_path": "runs/node_balance_seed2/decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "provenance/failed_20261030T204726_699646Z/node_balance_seed2/provenance/decision_latency.jsonl",
+      "bytes": 0,
+      "original_path": "runs/node_balance_seed2/provenance/decision_latency.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "provenance/failed_20261030T204726_700443Z/packing_seed2/decisions.jsonl",
+      "bytes": 170046728,
+      "original_path": "runs/packing_seed2/decisions.jsonl",
+      "sha256": "d1cfe27fb574cba04a6c34bcf98a7d1e9fff48d8085ba395469904582eaa4b1d"
+    },
+    {
+      "archive_path": "provenance/failed_20261030T204726_700443Z/packing_seed2/provenance/decision_latency.jsonl",
+      "bytes": 1512819,
+      "original_path": "runs/packing_seed2/provenance/decision_latency.jsonl",
+      "sha256": "3700d2e60979b6e7d22b79854a37f3ee82756356e1d4deb3f8e0b7b004c590c9"
+    },
+    {
+      "archive_path": "provenance/failed_20261030T204726_816159Z/thermal_predictive_seed1/decisions.jsonl",
+      "bytes": 153345665,
+      "original_path": "runs/thermal_predictive_seed1/decisions.jsonl",
+      "sha256": "2a3acbc0aef6beeb8a4c463045a9e17cbd83ac2f7c14b4bbc2a085a681ae1574"
+    },
+    {
+      "archive_path": "provenance/failed_20261030T204726_816159Z/thermal_predictive_seed1/provenance/decision_latency.jsonl",
+      "bytes": 1200570,
+      "original_path": "runs/thermal_predictive_seed1/provenance/decision_latency.jsonl",
+      "sha256": "4f8d5df64ac47e5896a051489b70dd032ba9545bdeacce7d514f97a691c525f4"
+    }
+  ],
+  "utc": "2026-10-30T20:47:26.921045+00:00"
+}

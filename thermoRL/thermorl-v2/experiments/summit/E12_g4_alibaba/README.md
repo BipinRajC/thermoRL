@@ -160,3 +160,9 @@ The largest 20 creation gaps cover 76.900184% of the 149.325938-day source span.
 CPU cap clipping counts use uncapped mapped CPU>2; active-cap fractions including equality are also recorded. Source runnable default clips 26/6203 pods (0.419152%); resource-only multigpu50 clips 339/7973 (4.251850%). Power estimates use the frozen loss-exclusive node increment; actual loss-inclusive rack power comes from the future ledgers.
 
 Nominal rho=0.6, offered finite-window utilisation (0.455–0.486 plus bursts), and realised ledger utilisation/waits/censoring must be reported separately. Queueing coverage, the lightweight parent seed check and C′ adapter are required before launch. D7 remains deferred; D8 is recorded for Task17 without editing the frozen spec.
+
+## Execution interruption (2026-10-31)
+
+The primary controller exited unexpectedly with code143 (SIGTERM), after approximately45minutes. Four primary runs completed and passed run-level validation; three started runs remain partial; eight primary configurations never started. No C′ rerun or evidence comparison was attempted. G4 is pending review, not a negative or positive policy result. No source was changed and no retry launched. [Interruption record](provenance/execution_interruption.json) and [complete/partial file inventory](provenance/interruption_inventory.json) preserve the state. The temporal association with45minutes is consistent with a session lifetime limit, but the cause is unresolved.
+
+HEAD is deliberately kept at the launch SHA to preserve the exact Git precondition; interruption artifacts remain uncommitted pending recovery review. The committed preparation is pushed separately without advancing HEAD. Any retry budget, infrastructure/source change and resume plan need an explicit Bipin-reviewed decision.

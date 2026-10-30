@@ -1,0 +1,39 @@
+{
+  "FMU_failure_files_present": [],
+  "complete_run_names": [
+    "coolest_rack_seed1",
+    "node_balance_seed1",
+    "packing_seed1",
+    "power_balance_seed1"
+  ],
+  "controller_tool_exit_code": 143,
+  "controller_tool_session": 60914,
+  "evidence_generated": false,
+  "failure_kind": "controller_external_interruption_unresolved",
+  "head_preserved_at_launch_sha": true,
+  "inventoried_files": 38,
+  "inventory": "provenance/interruption_inventory.json",
+  "launch_sha": "18dfea14aa42bc21a191cc1f9a39fc421d8723bd",
+  "matrix_stopped_event_present": false,
+  "message": "Matrix controller exited unexpectedly; no retry or further launch performed.",
+  "observed_utc": "2026-10-30T20:24:23.008855+00:00",
+  "partial_run_names": [
+    "node_balance_seed2",
+    "packing_seed2",
+    "thermal_predictive_seed1"
+  ],
+  "primary_completed_and_validated": 4,
+  "primary_started": 7,
+  "recovery_requires_Bipin_review": [
+    "3 partial attempts cannot be overwritten or silently retried under the original15+1 budget.",
+    "Any orchestration/source change conflicts with the launch freeze and requires an explicit recovery decision.",
+    "The C-prime git.sha equality precondition requires a reviewed plan if HEAD changes before the fresh-process repeat."
+  ],
+  "rerun_started": false,
+  "signal_interpretation": "SIGTERM",
+  "source_unchanged": true,
+  "status": "STOPPED_BEFORE_C4; G4_PENDING_REVIEW; C_prime_NOT_RUN",
+  "timing_inference": "The exit occurred approximately45minutes after the first start, consistent with an execution-session lifetime limit; cause is not established.",
+  "unstarted_primary_configurations": 8,
+  "worker_pid_check": "ps returned no listed worker PIDs; run/log file sizes and mtimes remained unchanged over the final 30-second observation"
+}
