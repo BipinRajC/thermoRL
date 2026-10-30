@@ -24,7 +24,7 @@ def test_report_main_uses_pinned_g1_registry_and_separate_evidence(tmp_path,monk
     def build(*args,**kwargs):
         captured.update(args=args,kwargs=kwargs)
         return dict(decision='fixture',value_beyond_power=False,per_seed={})
-    monkeypatch.setattr(report,'build_report',build)
+    monkeypatch.setattr(report,'build_report_from_paths',build)
     monkeypatch.setattr(sys,'argv',['report',str(tmp_path),'--evidence',str(evidence)])
     report.main()
     assert captured['args'][3]==63.3

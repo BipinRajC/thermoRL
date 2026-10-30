@@ -185,6 +185,46 @@ def seed_gate(check,seed):
                for key,value in check['invariants'].items())
 
 
+def _summarize_runs(runs,eval_start_s,t_hot_c,with_diagnostics=True):
+    rows,diagnostics,attribution = [],{},{}
+    for run in runs:
+        row = run_metrics(run,eval_start_s,t_hot_c)
+        rows.append(dict(name=run.name,policy=run.manifest['policy'],seed=run.manifest['seed'],**row))
+        if with_diagnostics:
+            params = run.manifest['thermal_predictive_params']
+            diagnostics[run.name] = {
+                'power_vs_thermal_disagreement_rate':disagreement_rate(run.decisions,PowerBalance(),ThermalPredictive(**params)),
+                'self_reproduction_rate':self_reproduction_rate(run.decisions,make_scorer(run.manifest['policy'],params if run.manifest['policy']=='thermal_predictive' else {})),
+                'context':'both scorers use the same six-decimal logged context; self reproduction is separate'}
+            attribution[run.name] = max_rack_attribution(run,eval_start_s)
+    return rows,diagnostics,attribution
+
+
+def _publish_report(rows,diagnostics,attribution,checks,selected,out,eval_start_s,grid,g4,animations,determinism_evidence):
+    seeds=sorted({r.manifest['seed'] for r in selected})
+    pd.DataFrame(rows).to_csv(out/'results/metrics.csv',index=False)
+    plots.metrics_table(rows,out/'results/metrics.md')
+    _write(out/'results/max_rack_attribution.json',attribution)
+    _write(out/'results/decision_diagnostics.json',diagnostics)
+    decision = g4_decision(rows) if g4 else {'scope':'ledger analysis; no G4 decision'}
+    _write(out/'results/decision.json',decision)
+    result = {**decision,'runs':{row['name']:row for row in rows},'diagnostics':diagnostics,
+              'evaluation_window':f'{eval_start_s} < t_s <= episode horizon; right endpoints',
+              'invariants':checks,'determinism_evidence_sha256':(determinism_evidence or {}).get('sha256')}
+    _write(out/'results/summary.json',result)
+    low = min(float(r.intervals.t_c.min()) for r in selected)
+    high = max(float(r.intervals.t_c.max()) for r in selected)
+    plots.heatmaps(selected,out/f'plots/heatmaps_seed{seeds[0]}.png',low,high)
+    plots.timeseries(selected,out/f'plots/timeseries_seed{seeds[0]}.png')
+    if animations:
+        by_policy = {r.manifest['policy']:r for r in selected}
+        for base in ('packing','power_balance'):
+            plots.animate_grid([by_policy[base],by_policy['thermal_predictive']],
+                out/f'plots/anim_{base}_vs_thermal_predictive_seed{seeds[0]}.gif',grid)
+    return result
+
+
+
 def build_report(runs,out,eval_start_s,t_hot_c,grid,g4=True,animations=True,determinism_evidence=None,expected_config=None):
     require_assertions()
     out = Path(out)
@@ -202,43 +242,70 @@ def build_report(runs,out,eval_start_s,t_hot_c,grid,g4=True,animations=True,dete
     if g4 and not all(seed_gate(check,seed) for seed,check in checks.items()):
         _write(out/'results/summary.json',{'decision':'INVALID: invariant failure','invariants':checks})
         raise AssertionError('G4 invariant failure; stop before interpreting policy outcomes')
-    rows,diagnostics,attribution = [],{},{}
-    for run in runs:
-        row = run_metrics(run,eval_start_s,t_hot_c)
-        rows.append(dict(name=run.name,policy=run.manifest['policy'],seed=run.manifest['seed'],**row))
-        params = run.manifest['thermal_predictive_params']
-        diagnostics[run.name] = {
-            'power_vs_thermal_disagreement_rate':disagreement_rate(run.decisions,PowerBalance(),ThermalPredictive(**params)),
-            'self_reproduction_rate':self_reproduction_rate(run.decisions,make_scorer(run.manifest['policy'],params if run.manifest['policy']=='thermal_predictive' else {})),
-            'context':'both scorers use the same six-decimal logged context; self reproduction is separate'}
-        attribution[run.name] = max_rack_attribution(run,eval_start_s)
-    pd.DataFrame(rows).to_csv(out/'results/metrics.csv',index=False)
-    plots.metrics_table(rows,out/'results/metrics.md')
-    _write(out/'results/max_rack_attribution.json',attribution)
-    _write(out/'results/decision_diagnostics.json',diagnostics)
-    decision = g4_decision(rows) if g4 else {'scope':'ledger analysis; no G4 decision'}
-    _write(out/'results/decision.json',decision)
-    result = {**decision,'runs':{row['name']:row for row in rows},'diagnostics':diagnostics,
-              'evaluation_window':f'{eval_start_s} < t_s <= episode horizon; right endpoints',
-              'invariants':checks,'determinism_evidence_sha256':(determinism_evidence or {}).get('sha256')}
-    _write(out/'results/summary.json',result)
-    selected = [r for r in runs if r.manifest['seed']==seeds[0]]
-    low = min(float(r.intervals.t_c.min()) for r in selected)
-    high = max(float(r.intervals.t_c.max()) for r in selected)
-    plots.heatmaps(selected,out/f'plots/heatmaps_seed{seeds[0]}.png',low,high)
-    plots.timeseries(selected,out/f'plots/timeseries_seed{seeds[0]}.png')
-    if animations:
-        by_policy = {r.manifest['policy']:r for r in selected}
-        for base in ('packing','power_balance'):
-            plots.animate_grid([by_policy[base],by_policy['thermal_predictive']],
-                out/f'plots/anim_{base}_vs_thermal_predictive_seed{seeds[0]}.gif',grid)
-    return result
+    rows,diagnostics,attribution=_summarize_runs(runs,eval_start_s,t_hot_c)
+    selected=[r for r in runs if r.manifest['seed']==seeds[0]]
+    return _publish_report(rows,diagnostics,attribution,checks,selected,out,eval_start_s,grid,g4,animations,determinism_evidence)
+
+
+def _collect_seed(paths,eval_start_s,t_hot_c,proof,cfg,metrics_only):
+    # No Run object escapes this function; each seed is released before the next.
+    runs=[load_run(path) for path in paths]
+    check=validate_seed(runs,proof,cfg,require_job_events=True)
+    if not seed_gate(check,runs[0].manifest['seed']):
+        return check,[],{},{}
+    rows,diagnostics,attribution=_summarize_runs(runs,eval_start_s,t_hot_c,with_diagnostics=not metrics_only)
+    return check,rows,diagnostics,attribution
+
+
+def build_report_from_paths(paths,out,eval_start_s,t_hot_c,grid,determinism_evidence,expected_config,
+                            metrics_only=False,animations=True):
+    """Metric-neutral G4 loading, capped at one five-policy seed in memory.
+
+    metrics_only is for offline D5 regeneration into a fresh scratch directory.
+    It performs the same invariant checks and run_metrics calculations without
+    recalculating counterfactuals or rendering figures. No simulation is run.
+    """
+    require_assertions()
+    paths=list(map(Path,paths));out=Path(out)
+    metadata=[(path,json.loads((path/'manifest.json').read_text())) for path in paths]
+    assert expected_config is not None, 'preregistered configuration required'
+    assert sorted(expected_config['seeds'])==[1,2,3], 'G4 requires all 3 seeds'
+    assert len(paths)==15 and len(set(paths))==15, 'G4 requires 15 distinct run directories'
+    for seed in expected_config['seeds']:
+        names=[m['policy'] for _,m in metadata if m['seed']==seed]
+        assert sorted(names)==sorted(POLICIES), 'G4 requires all 5 policies in every seed'
+    if (out/'results/summary.json').exists() or (out/'results/metrics.csv').exists():
+        raise FileExistsError('report exists; never overwrite')
+    for sub in ('results','plots','provenance'):
+        (out/sub).mkdir(parents=True,exist_ok=True)
+    rows=[];diagnostics={};attribution={};checks={}
+    for seed in expected_config['seeds']:
+        group=[path for path,m in metadata if m['seed']==seed]
+        check,seed_rows,seed_diagnostics,seed_attribution=_collect_seed(group,eval_start_s,t_hot_c,
+            determinism_evidence,expected_config,metrics_only)
+        checks[str(seed)]=check
+        if not seed_gate(check,seed):
+            _write(out/'results/invariants.json',checks)
+            _write(out/'results/summary.json',{'decision':'INVALID: invariant failure','invariants':checks})
+            raise AssertionError('G4 invariant failure; stop before interpreting policy outcomes')
+        rows.extend(seed_rows);diagnostics.update(seed_diagnostics);attribution.update(seed_attribution)
+    _write(out/'results/invariants.json',checks)
+    _write(out/'provenance/report_loading.json',{'mode':'one five-policy seed at a time',
+        'maximum_loaded_runs':5,'metrics_only':metrics_only})
+    if metrics_only:
+        pd.DataFrame(rows).to_csv(out/'results/metrics.csv',index=False)
+        return {'scope':'metrics-only regeneration; no new simulation','rows':len(rows),'metrics_csv':str(out/'results/metrics.csv')}
+    selected=[load_run(path) for path,m in metadata if m['seed']==expected_config['seeds'][0]]
+    return _publish_report(rows,diagnostics,attribution,checks,selected,out,eval_start_s,grid,True,animations,determinism_evidence)
+
 
 
 def main():
     require_assertions()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('experiment_dir',type=Path)
+    parser.add_argument('--output-dir',type=Path,help='fresh offline report destination; input config remains unchanged')
+    parser.add_argument('--metrics-only',action='store_true',help='D5 offline metric regeneration without plots/counterfactual diagnostics')
     parser.add_argument('--evidence',type=Path,required=True,help='separate evidence JSON with .sha256 sidecar')
     args = parser.parse_args()
     from thermorl2.experiments.run import load_config
@@ -255,9 +322,9 @@ def main():
     t_hot_c=json.loads(source.read_text())['t_hot_c']
     from thermorl2.raps_adapter.systems import get_system
     grid=get_system(cfg['system']).grid
-    runs = [load_run(args.experiment_dir/'runs'/f'{p}_seed{s}') for s in cfg['seeds'] for p in cfg['policies']]
-    result = build_report(runs,args.experiment_dir,3600,t_hot_c,grid,determinism_evidence=evidence,expected_config=cfg)
-    print(json.dumps({k:result[k] for k in ('decision','value_beyond_power','per_seed')},indent=2))
+    paths = [args.experiment_dir/'runs'/f'{p}_seed{s}' for s in cfg['seeds'] for p in cfg['policies']]
+    result = build_report_from_paths(paths,args.output_dir or args.experiment_dir,3600,t_hot_c,grid,determinism_evidence=evidence,expected_config=cfg,metrics_only=args.metrics_only)
+    print(json.dumps(result if args.metrics_only else {k:result[k] for k in ('decision','value_beyond_power','per_seed')},indent=2))
 
 
 if __name__ == '__main__':
