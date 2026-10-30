@@ -10,7 +10,6 @@ ledger only; canonical null is never interpreted as zero.
 """
 
 from dataclasses import dataclass, field
-import hashlib
 import json
 from pathlib import Path
 
