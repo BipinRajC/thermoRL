@@ -1,0 +1,10 @@
+{
+  "main_wall_s": 458.67573142400033,
+  "process_memory": {
+    "peak_rss_bytes": 5346271232,
+    "ru_maxrss": 5220968,
+    "scope": "own process lifetime high-water resident set, including imports",
+    "unit": "KiB"
+  },
+  "scope": "offline report main after imports, including validation, metrics and requested rendering; memory is process lifetime peak"
+}

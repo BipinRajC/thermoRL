@@ -1,0 +1,16 @@
+{
+  "ActiveState": "active",
+  "CPUUsageNSec": 1969440961000,
+  "ExecMainExitTimestamp": "2026-10-31 04:16:59 IST",
+  "ExecMainStartTimestamp": "2026-10-31 02:55:06 IST",
+  "ExecMainStatus": 0,
+  "Id": "thermorl-e12-postmatrix-20261030T2123Z.service",
+  "InvocationID": "7ba20ec9c8ff4da19869c58367ba6316",
+  "MemoryPeak": 6414262272,
+  "NRestarts": 0,
+  "Restart": "no",
+  "Result": "success",
+  "RuntimeMaxUSec": "infinity",
+  "SubState": "exited",
+  "memory_scope": "service cgroup high-water over waiting, guarded repeat, comparison and offline report, distinct from process RSS"
+}

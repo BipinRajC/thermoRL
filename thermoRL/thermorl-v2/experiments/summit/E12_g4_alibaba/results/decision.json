@@ -1,0 +1,19 @@
+{
+  "decision": "no material value on the homogeneous twin",
+  "per_seed": {
+    "1": {
+      "packing_minus_thermal_c": 0.35332112789507875,
+      "power_minus_thermal_c": 0.17758993078025043
+    },
+    "2": {
+      "packing_minus_thermal_c": 0.441054417333838,
+      "power_minus_thermal_c": 0.07726484193952388
+    },
+    "3": {
+      "packing_minus_thermal_c": 0.42305513292543395,
+      "power_minus_thermal_c": 0.10879156917675914
+    }
+  },
+  "rule": "power_balance.maxrack_mean_c - thermal_predictive.maxrack_mean_c >= 0.5 C in every seed",
+  "value_beyond_power": false
+}

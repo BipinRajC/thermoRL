@@ -1,0 +1,7 @@
+{"event": "waiting_for_primary_service", "utc": "2026-10-30T21:25:06.347358+00:00"}
+{"command": ["/usr/bin/uv", "run", "python", "-m", "thermorl2.experiments.e12_evidence", "rerun", "--config", "thermorl2/experiments/configs/g4_alibaba.yaml"], "event": "guarded_C_prime_repeat_started", "utc": "2026-10-30T22:14:08.251774+00:00"}
+{"event": "guarded_C_prime_repeat_completed", "utc": "2026-10-30T22:39:09.551910+00:00"}
+{"command": ["/usr/bin/uv", "run", "python", "-m", "thermorl2.experiments.e12_evidence", "generate", "--config", "thermorl2/experiments/configs/g4_alibaba.yaml"], "event": "exact_C_prime_evidence_started", "utc": "2026-10-30T22:39:09.553679+00:00"}
+{"event": "exact_C_prime_evidence_completed", "utc": "2026-10-30T22:39:18.125017+00:00"}
+{"command": ["/usr/bin/uv", "run", "python", "-m", "thermorl2.experiments.report", "experiments/summit/E12_g4_alibaba", "--evidence", "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json"], "event": "offline_report_started", "utc": "2026-10-30T22:39:18.128919+00:00"}
+{"event": "offline_report_completed", "utc": "2026-10-30T22:46:59.028329+00:00"}

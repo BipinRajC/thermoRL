@@ -1,0 +1,23 @@
+{
+  "C_prime_seal_and_reference_hashes_verified": true,
+  "all_three_seed_gates_passed": true,
+  "event_counts": {
+    "completed": 15,
+    "failure_archived": 3,
+    "seed_cross_policy_invariants_passed": 3,
+    "skipped_matching_config": 4,
+    "started": 18
+  },
+  "frozen_sections_and_inputs_verified": true,
+  "historical_interruption_inventory_and_journal_prefix_preserved": true,
+  "interrupted_raw_bytes": 326105782,
+  "primary_and_repeat_inventories_verified": true,
+  "primary_raw_bytes": 3044923184,
+  "raw_files": 102,
+  "repeat_raw_bytes": 229356244,
+  "selected_launch_generations_verified": {
+    "original": 4,
+    "recovery": 11
+  },
+  "source_and_environment_verified": true
+}

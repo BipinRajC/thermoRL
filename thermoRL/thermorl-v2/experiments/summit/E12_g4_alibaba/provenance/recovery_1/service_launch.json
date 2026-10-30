@@ -1,0 +1,22 @@
+{
+  "RemainAfterExit": true,
+  "Restart": "no",
+  "RuntimeMaxSec": "infinity",
+  "command": [
+    "/usr/bin/uv",
+    "run",
+    "python",
+    "-m",
+    "thermorl2.experiments.run_matrix",
+    "--config",
+    "thermorl2/experiments/configs/g4_alibaba.yaml",
+    "--workers",
+    "3",
+    "--retry-failed"
+  ],
+  "invocation_id": "7e69e2829c0b4a87bca34c2c70b48355",
+  "launch_sha": "e0e1522ac52b5780cb3088232051e26dbd492804",
+  "supervisor": "user systemd",
+  "unit": "thermorl-e12-recovery-20261030T2050Z.service",
+  "utc": "2026-10-30T20:49:46.498804+00:00"
+}

@@ -1,0 +1,1362 @@
+{
+  "decision": "no material value on the homogeneous twin",
+  "determinism_evidence_sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604",
+  "diagnostics": {
+    "coolest_rack_seed1": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.5748686314827507,
+      "self_reproduction_rate": 0.8286040667123601
+    },
+    "coolest_rack_seed2": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.7305242777806084,
+      "self_reproduction_rate": 0.8791970245070566
+    },
+    "coolest_rack_seed3": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.6968012532214867,
+      "self_reproduction_rate": 0.9110617009449694
+    },
+    "node_balance_seed1": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.7734064427690199,
+      "self_reproduction_rate": 1.0
+    },
+    "node_balance_seed2": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.8477097875375758,
+      "self_reproduction_rate": 1.0
+    },
+    "node_balance_seed3": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.7959472434180606,
+      "self_reproduction_rate": 1.0
+    },
+    "packing_seed1": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.7572309801233722,
+      "self_reproduction_rate": 1.0
+    },
+    "packing_seed2": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.8613644469353442,
+      "self_reproduction_rate": 1.0
+    },
+    "packing_seed3": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.8513820809540654,
+      "self_reproduction_rate": 1.0
+    },
+    "power_balance_seed1": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9033584647018505,
+      "self_reproduction_rate": 0.9983550376970528
+    },
+    "power_balance_seed2": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9277525857237479,
+      "self_reproduction_rate": 0.9992866968971315
+    },
+    "power_balance_seed3": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9251604426701703,
+      "self_reproduction_rate": 0.9983324068927182
+    },
+    "thermal_predictive_seed1": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9054146675805346,
+      "self_reproduction_rate": 0.9808087731322824
+    },
+    "thermal_predictive_seed2": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9095633566006012,
+      "self_reproduction_rate": 0.9755948438375707
+    },
+    "thermal_predictive_seed3": {
+      "context": "both scorers use the same six-decimal logged context; self reproduction is separate",
+      "power_vs_thermal_disagreement_rate": 0.9047955935115468,
+      "self_reproduction_rate": 0.9754409015109404
+    }
+  },
+  "evaluation_window": "3600 < t_s <= episode horizon; right endpoints",
+  "invariants": {
+    "1": {
+      "cross_policy": {
+        "fmu_steps_ok": true,
+        "it_kw_identical": true,
+        "max_abs_it_kw_diff": 1.8189894035458565e-12,
+        "start_times_identical": true
+      },
+      "determinism_evidence": {
+        "fallback_to_A_prime": false,
+        "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+        "per_configuration": {
+          "coolest_rack_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed1": {
+            "evidence": [
+              {
+                "kind": "E12_full_rerun_6h",
+                "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+                "result": true,
+                "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+              }
+            ],
+            "status": "verified_E12"
+          },
+          "thermal_predictive_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          }
+        },
+        "references_sha256": {
+          "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+          "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+        },
+        "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+        "scope_id": "E12_C_prime_2026_10_30",
+        "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+      },
+      "errors": {},
+      "invariants": {
+        "1_it_kw_and_start_times_identical": true,
+        "2_exact_distinct_free_nodes": true,
+        "3_decisions_byte_identical_and_interval_values_identical": {
+          "per_configuration": {
+            "coolest_rack_seed1": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "node_balance_seed1": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "packing_seed1": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "power_balance_seed1": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "thermal_predictive_seed1": {
+              "evidence": [
+                {
+                  "kind": "E12_full_rerun_6h",
+                  "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+                  "result": true,
+                  "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+                }
+              ],
+              "status": "verified_E12"
+            }
+          },
+          "scope_id": "E12_C_prime_2026_10_30"
+        },
+        "4_rack_power_sums_reconcile": true,
+        "5_independent_step_count_and_clock": true,
+        "6_manifests_and_joinable_ledgers_complete": true
+      },
+      "power_reconciliation_max_abs_kw": {
+        "coolest_rack_seed1": 1.8189894035458565e-12,
+        "node_balance_seed1": 9.094947017729282e-13,
+        "packing_seed1": 9.094947017729282e-13,
+        "power_balance_seed1": 9.094947017729282e-13,
+        "thermal_predictive_seed1": 9.094947017729282e-13
+      }
+    },
+    "2": {
+      "cross_policy": {
+        "fmu_steps_ok": true,
+        "it_kw_identical": true,
+        "max_abs_it_kw_diff": 1.8189894035458565e-12,
+        "start_times_identical": true
+      },
+      "determinism_evidence": {
+        "fallback_to_A_prime": false,
+        "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+        "per_configuration": {
+          "coolest_rack_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed1": {
+            "evidence": [
+              {
+                "kind": "E12_full_rerun_6h",
+                "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+                "result": true,
+                "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+              }
+            ],
+            "status": "verified_E12"
+          },
+          "thermal_predictive_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          }
+        },
+        "references_sha256": {
+          "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+          "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+        },
+        "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+        "scope_id": "E12_C_prime_2026_10_30",
+        "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+      },
+      "errors": {},
+      "invariants": {
+        "1_it_kw_and_start_times_identical": true,
+        "2_exact_distinct_free_nodes": true,
+        "3_decisions_byte_identical_and_interval_values_identical": {
+          "per_configuration": {
+            "coolest_rack_seed2": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "node_balance_seed2": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "packing_seed2": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "power_balance_seed2": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "thermal_predictive_seed2": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            }
+          },
+          "scope_id": "E12_C_prime_2026_10_30"
+        },
+        "4_rack_power_sums_reconcile": true,
+        "5_independent_step_count_and_clock": true,
+        "6_manifests_and_joinable_ledgers_complete": true
+      },
+      "power_reconciliation_max_abs_kw": {
+        "coolest_rack_seed2": 9.094947017729282e-13,
+        "node_balance_seed2": 1.8189894035458565e-12,
+        "packing_seed2": 9.094947017729282e-13,
+        "power_balance_seed2": 9.094947017729282e-13,
+        "thermal_predictive_seed2": 9.094947017729282e-13
+      }
+    },
+    "3": {
+      "cross_policy": {
+        "fmu_steps_ok": true,
+        "it_kw_identical": true,
+        "max_abs_it_kw_diff": 1.8189894035458565e-12,
+        "start_times_identical": true
+      },
+      "determinism_evidence": {
+        "fallback_to_A_prime": false,
+        "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+        "per_configuration": {
+          "coolest_rack_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "coolest_rack_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed1": {
+            "evidence": [
+              {
+                "kind": "E12_full_rerun_6h",
+                "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+                "result": true,
+                "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+              }
+            ],
+            "status": "verified_E12"
+          },
+          "thermal_predictive_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          }
+        },
+        "references_sha256": {
+          "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+          "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+          "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+          "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+        },
+        "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+        "scope_id": "E12_C_prime_2026_10_30",
+        "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+      },
+      "errors": {},
+      "invariants": {
+        "1_it_kw_and_start_times_identical": true,
+        "2_exact_distinct_free_nodes": true,
+        "3_decisions_byte_identical_and_interval_values_identical": {
+          "per_configuration": {
+            "coolest_rack_seed3": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "node_balance_seed3": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "packing_seed3": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "power_balance_seed3": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            },
+            "thermal_predictive_seed3": {
+              "evidence": [
+                {
+                  "kind": "inherited_E10",
+                  "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                  "result": true,
+                  "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+                }
+              ],
+              "status": "inherited_not_remeasured"
+            }
+          },
+          "scope_id": "E12_C_prime_2026_10_30"
+        },
+        "4_rack_power_sums_reconcile": true,
+        "5_independent_step_count_and_clock": true,
+        "6_manifests_and_joinable_ledgers_complete": true
+      },
+      "power_reconciliation_max_abs_kw": {
+        "coolest_rack_seed3": 9.094947017729282e-13,
+        "node_balance_seed3": 9.094947017729282e-13,
+        "packing_seed3": 9.094947017729282e-13,
+        "power_balance_seed3": 9.094947017729282e-13,
+        "thermal_predictive_seed3": 9.094947017729282e-13
+      }
+    }
+  },
+  "per_seed": {
+    "1": {
+      "packing_minus_thermal_c": 0.35332112789507875,
+      "power_minus_thermal_c": 0.17758993078025043
+    },
+    "2": {
+      "packing_minus_thermal_c": 0.441054417333838,
+      "power_minus_thermal_c": 0.07726484193952388
+    },
+    "3": {
+      "packing_minus_thermal_c": 0.42305513292543395,
+      "power_minus_thermal_c": 0.10879156917675914
+    }
+  },
+  "rule": "power_balance.maxrack_mean_c - thermal_predictive.maxrack_mean_c >= 0.5 C in every seed",
+  "runs": {
+    "coolest_rack_seed1": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 498.95103851953394,
+      "decision_latency_p95_us": 994.6453999999998,
+      "fmu_s": 1138.6736092300089,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25559.41423335592,
+      "jobs_censored": 0,
+      "jobs_started": 21885,
+      "maxrack_mean_c": 41.16482021814924,
+      "maxrack_p99_c": 42.12614817570309,
+      "mean_rack_c": 40.244607615622456,
+      "name": "coolest_rack_seed1",
+      "policy": "coolest_rack",
+      "pump_energy_kwh": 6376.365722788364,
+      "rack_kw_std_mean": 1.3415787128798509,
+      "rack_t_std_mean_c": 0.28861386563491553,
+      "raps_s": 180.91553211199243,
+      "raw_max_c": 42.188397539489415,
+      "realised_node_utilisation_mean": 0.4856178844213863,
+      "seed": 1,
+      "spread_mean_c": 1.4354159293721214,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.796145094059156,
+      "total_s": 1346.5727577319994,
+      "wait_mean_s": 8.621865744804627,
+      "wait_p95_s": 38.15091680350971
+    },
+    "coolest_rack_seed2": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 496.60163759107354,
+      "decision_latency_p95_us": 944.3007000000002,
+      "fmu_s": 1061.101861840887,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 24988.38015156804,
+      "jobs_censored": 0,
+      "jobs_started": 19627,
+      "maxrack_mean_c": 41.23975047744761,
+      "maxrack_p99_c": 42.3701885407726,
+      "mean_rack_c": 40.227438392213045,
+      "name": "coolest_rack_seed2",
+      "policy": "coolest_rack",
+      "pump_energy_kwh": 6376.290783858506,
+      "rack_kw_std_mean": 1.364876935149146,
+      "rack_t_std_mean_c": 0.27801327874872894,
+      "raps_s": 163.1278597080891,
+      "raw_max_c": 42.40748466196453,
+      "realised_node_utilisation_mean": 0.4545704232117981,
+      "seed": 2,
+      "spread_mean_c": 1.5204009727451426,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.74677041428247,
+      "total_s": 1247.7648792029995,
+      "wait_mean_s": 6.000436317547025,
+      "wait_p95_s": 0.9964348387658647
+    },
+    "coolest_rack_seed3": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 483.52323164384256,
+      "decision_latency_p95_us": 911.0336,
+      "fmu_s": 1051.3310505120571,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25023.234139836663,
+      "jobs_censored": 0,
+      "jobs_started": 19789,
+      "maxrack_mean_c": 41.0952163019644,
+      "maxrack_p99_c": 42.00255776081485,
+      "mean_rack_c": 40.22725025812726,
+      "name": "coolest_rack_seed3",
+      "policy": "coolest_rack",
+      "pump_energy_kwh": 6376.299921555445,
+      "rack_kw_std_mean": 1.31434719682415,
+      "rack_t_std_mean_c": 0.2672844292465875,
+      "raps_s": 158.07646804595242,
+      "raw_max_c": 42.00379906408608,
+      "realised_node_utilisation_mean": 0.4565686698371524,
+      "seed": 3,
+      "spread_mean_c": 1.3732142825004146,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.73375799058774,
+      "total_s": 1232.6212374630013,
+      "wait_mean_s": 6.129541603024049,
+      "wait_p95_s": 0.9972736080020695
+    },
+    "node_balance_seed1": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 433.6230169979438,
+      "decision_latency_p95_us": 895.3649999999999,
+      "fmu_s": 1090.937309766019,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25559.41423335592,
+      "jobs_censored": 0,
+      "jobs_started": 21885,
+      "maxrack_mean_c": 41.2569185739344,
+      "maxrack_p99_c": 42.29057150238182,
+      "mean_rack_c": 40.2547087846619,
+      "name": "node_balance_seed1",
+      "policy": "node_balance",
+      "pump_energy_kwh": 6376.479721871172,
+      "rack_kw_std_mean": 0.9897932192550241,
+      "rack_t_std_mean_c": 0.29646187619156333,
+      "raps_s": 171.5042508290344,
+      "raw_max_c": 42.33799472331026,
+      "realised_node_utilisation_mean": 0.4856178844213863,
+      "seed": 1,
+      "spread_mean_c": 1.5398966455938636,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.81081015647687,
+      "total_s": 1286.4582493980001,
+      "wait_mean_s": 8.621865744804627,
+      "wait_p95_s": 38.15091680350971
+    },
+    "node_balance_seed2": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 489.5249291282417,
+      "decision_latency_p95_us": 947.8781000000002,
+      "fmu_s": 1057.288973547189,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 24988.38015156803,
+      "jobs_censored": 0,
+      "jobs_started": 19627,
+      "maxrack_mean_c": 40.96972553117251,
+      "maxrack_p99_c": 42.104593276291475,
+      "mean_rack_c": 40.21674132133608,
+      "name": "node_balance_seed2",
+      "policy": "node_balance",
+      "pump_energy_kwh": 6376.2403046201725,
+      "rack_kw_std_mean": 0.9115638606409201,
+      "rack_t_std_mean_c": 0.27384881857306403,
+      "raps_s": 162.8402666990005,
+      "raw_max_c": 42.11764378999908,
+      "realised_node_utilisation_mean": 0.4545704232117981,
+      "seed": 2,
+      "spread_mean_c": 1.273302046638353,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.72416733485541,
+      "total_s": 1243.0851001349984,
+      "wait_mean_s": 6.000436317547025,
+      "wait_p95_s": 0.9964348387658647
+    },
+    "node_balance_seed3": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 485.6814119460306,
+      "decision_latency_p95_us": 961.1933999999999,
+      "fmu_s": 963.9340126039169,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25023.234139836663,
+      "jobs_censored": 0,
+      "jobs_started": 19789,
+      "maxrack_mean_c": 41.128894157054376,
+      "maxrack_p99_c": 42.35477939250064,
+      "mean_rack_c": 40.21889500391841,
+      "name": "node_balance_seed3",
+      "policy": "node_balance",
+      "pump_energy_kwh": 6376.262831161461,
+      "rack_kw_std_mean": 0.9362731902804612,
+      "rack_t_std_mean_c": 0.2794733213328964,
+      "raps_s": 166.78883939217303,
+      "raw_max_c": 42.36352378967621,
+      "realised_node_utilisation_mean": 0.4565686698371524,
+      "seed": 3,
+      "spread_mean_c": 1.4261875534455375,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.7380008682502,
+      "total_s": 1153.6955942679997,
+      "wait_mean_s": 6.129541603024049,
+      "wait_p95_s": 0.9972736080020695
+    },
+    "packing_seed1": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 436.01066666666674,
+      "decision_latency_p95_us": 892.4709999999998,
+      "fmu_s": 1064.7541237910618,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25559.41423335592,
+      "jobs_censored": 0,
+      "jobs_started": 21885,
+      "maxrack_mean_c": 41.41086946629474,
+      "maxrack_p99_c": 42.41044358885879,
+      "mean_rack_c": 40.27028944454451,
+      "name": "packing_seed1",
+      "policy": "packing",
+      "pump_energy_kwh": 6376.507141794471,
+      "rack_kw_std_mean": 1.6135824101121496,
+      "rack_t_std_mean_c": 0.3579745581014792,
+      "raps_s": 172.72745470001746,
+      "raw_max_c": 42.41328616130187,
+      "realised_node_utilisation_mean": 0.4856178844213863,
+      "seed": 1,
+      "spread_mean_c": 1.794206655710764,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.90765070956015,
+      "total_s": 1260.9366410459997,
+      "wait_mean_s": 8.621865744804627,
+      "wait_p95_s": 38.15091680350971
+    },
+    "packing_seed2": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 486.398592652978,
+      "decision_latency_p95_us": 933.5623000000003,
+      "fmu_s": 1135.3253101579958,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 24988.38015156803,
+      "jobs_censored": 0,
+      "jobs_started": 19627,
+      "maxrack_mean_c": 41.34577496685592,
+      "maxrack_p99_c": 42.605196694145015,
+      "mean_rack_c": 40.24475376539124,
+      "name": "packing_seed2",
+      "policy": "packing",
+      "pump_energy_kwh": 6376.392579431382,
+      "rack_kw_std_mean": 1.6124095522554955,
+      "rack_t_std_mean_c": 0.3359115002839166,
+      "raps_s": 162.71942760211095,
+      "raw_max_c": 42.64483422619912,
+      "realised_node_utilisation_mean": 0.4545704232117981,
+      "seed": 2,
+      "spread_mean_c": 1.7417440079748718,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.84697759214387,
+      "total_s": 1321.3752456599996,
+      "wait_mean_s": 6.000436317547025,
+      "wait_p95_s": 0.9964348387658647
+    },
+    "packing_seed3": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 479.5170727171661,
+      "decision_latency_p95_us": 944.7915999999999,
+      "fmu_s": 1033.6041444690563,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25023.234139836663,
+      "jobs_censored": 0,
+      "jobs_started": 19789,
+      "maxrack_mean_c": 41.30892202626612,
+      "maxrack_p99_c": 42.67365719293425,
+      "mean_rack_c": 40.24499665759773,
+      "name": "packing_seed3",
+      "policy": "packing",
+      "pump_energy_kwh": 6376.404878088651,
+      "rack_kw_std_mean": 1.604687362602855,
+      "rack_t_std_mean_c": 0.3316074100015562,
+      "raps_s": 167.72804161216482,
+      "raw_max_c": 42.706885557581984,
+      "realised_node_utilisation_mean": 0.4565686698371524,
+      "seed": 3,
+      "spread_mean_c": 1.6829770451786255,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.84576669766612,
+      "total_s": 1224.4414597469986,
+      "wait_mean_s": 6.129541603024049,
+      "wait_p95_s": 0.9972736080020695
+    },
+    "power_balance_seed1": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 453.37098281928263,
+      "decision_latency_p95_us": 897.5279999999999,
+      "fmu_s": 1122.8043622370587,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25559.414233355925,
+      "jobs_censored": 0,
+      "jobs_started": 21885,
+      "maxrack_mean_c": 41.23513826917991,
+      "maxrack_p99_c": 42.3829489776902,
+      "mean_rack_c": 40.24888696576738,
+      "name": "power_balance_seed1",
+      "policy": "power_balance",
+      "pump_energy_kwh": 6376.463792782022,
+      "rack_kw_std_mean": 0.8327516147127891,
+      "rack_t_std_mean_c": 0.28808050174417127,
+      "raps_s": 167.4075087690403,
+      "raw_max_c": 42.38871146172255,
+      "realised_node_utilisation_mean": 0.4856178844213863,
+      "seed": 1,
+      "spread_mean_c": 1.5185338405719884,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.76348060084986,
+      "total_s": 1315.8745874959995,
+      "wait_mean_s": 8.621865744804627,
+      "wait_p95_s": 38.15091680350971
+    },
+    "power_balance_seed2": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 502.6603684720029,
+      "decision_latency_p95_us": 979.2896000000001,
+      "fmu_s": 1166.27406844299,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 24988.38015156804,
+      "jobs_censored": 0,
+      "jobs_started": 19627,
+      "maxrack_mean_c": 40.981985391461606,
+      "maxrack_p99_c": 41.86610776622678,
+      "mean_rack_c": 40.215744881012476,
+      "name": "power_balance_seed2",
+      "policy": "power_balance",
+      "pump_energy_kwh": 6376.233705801685,
+      "rack_kw_std_mean": 0.7709451589720275,
+      "rack_t_std_mean_c": 0.2602179091237104,
+      "raps_s": 165.92218896326995,
+      "raw_max_c": 41.87348604578932,
+      "realised_node_utilisation_mean": 0.4545704232117981,
+      "seed": 2,
+      "spread_mean_c": 1.2815487395306864,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.686735364322146,
+      "total_s": 1356.2444982369998,
+      "wait_mean_s": 6.000436317547025,
+      "wait_p95_s": 0.9964348387658647
+    },
+    "power_balance_seed3": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 503.5146304512608,
+      "decision_latency_p95_us": 976.7653999999997,
+      "fmu_s": 1102.3993409799696,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25023.234139836663,
+      "jobs_censored": 0,
+      "jobs_started": 19789,
+      "maxrack_mean_c": 40.99465846251744,
+      "maxrack_p99_c": 42.17267798331124,
+      "mean_rack_c": 40.21571106301824,
+      "name": "power_balance_seed3",
+      "policy": "power_balance",
+      "pump_energy_kwh": 6376.244495611136,
+      "rack_kw_std_mean": 0.7808167103726884,
+      "rack_t_std_mean_c": 0.26448285669932337,
+      "raps_s": 172.1666904836493,
+      "raw_max_c": 42.2063884497162,
+      "realised_node_utilisation_mean": 0.4565686698371524,
+      "seed": 3,
+      "spread_mean_c": 1.276820496811788,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.69986601417674,
+      "total_s": 1298.9075200660009,
+      "wait_mean_s": 6.129541603024049,
+      "wait_p95_s": 0.9972736080020695
+    },
+    "thermal_predictive_seed1": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 482.18024281471327,
+      "decision_latency_p95_us": 960.0154,
+      "fmu_s": 1480.8708886219538,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25559.41423335592,
+      "jobs_censored": 0,
+      "jobs_started": 21885,
+      "maxrack_mean_c": 41.05754833839966,
+      "maxrack_p99_c": 42.20077115500795,
+      "mean_rack_c": 40.246723844185354,
+      "name": "thermal_predictive_seed1",
+      "policy": "thermal_predictive",
+      "pump_energy_kwh": 6376.452665315829,
+      "rack_kw_std_mean": 1.0005638348061472,
+      "rack_t_std_mean_c": 0.2511680507105519,
+      "raps_s": 177.5493215751103,
+      "raw_max_c": 42.23145580286092,
+      "realised_node_utilisation_mean": 0.4856178844213863,
+      "seed": 1,
+      "spread_mean_c": 1.2591218903220656,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.71642131262784,
+      "total_s": 1685.6524889860011,
+      "wait_mean_s": 8.621865744804627,
+      "wait_p95_s": 38.15091680350971
+    },
+    "thermal_predictive_seed2": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 507.8814529474703,
+      "decision_latency_p95_us": 963.2811,
+      "fmu_s": 1005.9320981470482,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 24988.38015156804,
+      "jobs_censored": 0,
+      "jobs_started": 19627,
+      "maxrack_mean_c": 40.90472054952208,
+      "maxrack_p99_c": 41.81704878424184,
+      "mean_rack_c": 40.21454220027698,
+      "name": "thermal_predictive_seed2",
+      "policy": "thermal_predictive",
+      "pump_energy_kwh": 6376.226979439863,
+      "rack_kw_std_mean": 0.9195979720585802,
+      "rack_t_std_mean_c": 0.2313915658886075,
+      "raps_s": 159.40077904825375,
+      "raw_max_c": 41.81990290326172,
+      "realised_node_utilisation_mean": 0.4545704232117981,
+      "seed": 2,
+      "spread_mean_c": 1.119070164220581,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.642246179415594,
+      "total_s": 1189.4833687139999,
+      "wait_mean_s": 6.000436317547025,
+      "wait_p95_s": 0.9964348387658647
+    },
+    "thermal_predictive_seed3": {
+      "coolant_over_70_racks": [],
+      "coolant_over_70_samples": 0,
+      "decision_latency_mean_us": 499.79196775986657,
+      "decision_latency_p95_us": 957.9175999999999,
+      "fmu_s": 999.3317159509843,
+      "hot_rack_seconds": 0,
+      "it_energy_kwh": 25023.234139836663,
+      "jobs_censored": 0,
+      "jobs_started": 19789,
+      "maxrack_mean_c": 40.88586689334068,
+      "maxrack_p99_c": 41.71357789010383,
+      "mean_rack_c": 40.2163438364682,
+      "name": "thermal_predictive_seed3",
+      "policy": "thermal_predictive",
+      "pump_energy_kwh": 6376.247651169198,
+      "rack_kw_std_mean": 0.9265144691090434,
+      "rack_t_std_mean_c": 0.23589717051407286,
+      "raps_s": 159.0264824930182,
+      "raw_max_c": 41.72209005732344,
+      "realised_node_utilisation_mean": 0.4565686698371524,
+      "seed": 3,
+      "spread_mean_c": 1.0946922306295555,
+      "thi_t_below_0p1_frac": 0.0,
+      "top_decile_mean_c": 40.65923351298901,
+      "total_s": 1182.1045598659985,
+      "wait_mean_s": 6.129541603024049,
+      "wait_p95_s": 0.9972736080020695
+    }
+  },
+  "value_beyond_power": false
+}

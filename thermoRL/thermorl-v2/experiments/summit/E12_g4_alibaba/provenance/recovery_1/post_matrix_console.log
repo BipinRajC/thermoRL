@@ -1,0 +1,20 @@
+experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1
+{"C_prime_verified_TP_seed1": true, "evidence": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json"}
+{
+  "decision": "no material value on the homogeneous twin",
+  "value_beyond_power": false,
+  "per_seed": {
+    "1": {
+      "power_minus_thermal_c": 0.17758993078025043,
+      "packing_minus_thermal_c": 0.35332112789507875
+    },
+    "2": {
+      "power_minus_thermal_c": 0.07726484193952388,
+      "packing_minus_thermal_c": 0.441054417333838
+    },
+    "3": {
+      "power_minus_thermal_c": 0.10879156917675914,
+      "packing_minus_thermal_c": 0.42305513292543395
+    }
+  }
+}

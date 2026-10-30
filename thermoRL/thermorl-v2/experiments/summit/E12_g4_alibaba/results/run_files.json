@@ -1,0 +1,462 @@
+{
+  "provenance/console_coolest_rack_seed1_attempt1.log": {
+    "bytes": 1268,
+    "sha256": "7024fcd0b5427048a9ed33dee0ca05423764077a9dd1d84798922701d17e6f42"
+  },
+  "provenance/console_coolest_rack_seed2_attempt1.log": {
+    "bytes": 1268,
+    "sha256": "5d816d802298a2cd5629a1f88794cdac0936bbc6d7966b42400a43d30818b37c"
+  },
+  "provenance/console_coolest_rack_seed3_attempt1.log": {
+    "bytes": 1268,
+    "sha256": "8a91d2c76045582fa42a193353049282650767b9e800057f7d6129e74eb5adff"
+  },
+  "provenance/console_node_balance_seed1_attempt1.log": {
+    "bytes": 1268,
+    "sha256": "4189a4240bed9aee3994816bcb84490b48219ec347cea2a68cdd6fdb00304793"
+  },
+  "provenance/console_node_balance_seed2_attempt1.log": {
+    "bytes": 67,
+    "sha256": "840b62e8975fa0b8d44a89ba884c859f7cf0e4a303722984f7bee701ac6af1f5"
+  },
+  "provenance/console_node_balance_seed2_attempt2.log": {
+    "bytes": 1268,
+    "sha256": "c093526a41a2086838faa299bcbab7a0b49c85c90b16d50d59c767c5f2779660"
+  },
+  "provenance/console_node_balance_seed3_attempt1.log": {
+    "bytes": 1268,
+    "sha256": "58caa5be4cd76cbfebff13466ab7e2c6329d94f129e9fdc953c6d1877bfc291e"
+  },
+  "provenance/console_packing_seed1_attempt1.log": {
+    "bytes": 1193,
+    "sha256": "94d5ba48f154c2ca078eb86ff81af0b35eae9126b423b1df8ef1cf31e5682d6b"
+  },
+  "provenance/console_packing_seed2_attempt1.log": {
+    "bytes": 968,
+    "sha256": "3eae4d6a6c8c8a3604f75b09f9416ac67cf7f6e32a9a86dd1ba241d127ff7778"
+  },
+  "provenance/console_packing_seed2_attempt2.log": {
+    "bytes": 1193,
+    "sha256": "89011ada665cd5d9017e43c253ceb29c5d94516167d1803c87c4dad8cf218110"
+  },
+  "provenance/console_packing_seed3_attempt1.log": {
+    "bytes": 1193,
+    "sha256": "a3298b78618a4dbf5fcd77adb29441a7b44108aa9a6d4ce3f9a087b246c367d1"
+  },
+  "provenance/console_power_balance_seed1_attempt1.log": {
+    "bytes": 1283,
+    "sha256": "e0abd36e9a2683fdc9e525985a01b9fd0299437f04ad30cd4936e3d8e6130aca"
+  },
+  "provenance/console_power_balance_seed2_attempt1.log": {
+    "bytes": 1283,
+    "sha256": "14292b959ad137ef9f45ae5a88613b892e8427e0a5caa319782c8f30f75ba48e"
+  },
+  "provenance/console_power_balance_seed3_attempt1.log": {
+    "bytes": 1283,
+    "sha256": "330477dc7c9b1e155cc3d93abe4df07c308487c9bbbef26618a6b9fe7e17372f"
+  },
+  "provenance/console_thermal_predictive_seed1_attempt1.log": {
+    "bytes": 952,
+    "sha256": "6144e6a2d661e56b70d87233c67832fb40c20f5d2ceddfd75cb32706f4e4c8a1"
+  },
+  "provenance/console_thermal_predictive_seed1_attempt2.log": {
+    "bytes": 1358,
+    "sha256": "d84c345812a6ecfe804e8a21b70a950e9711966983eb374b58aeab81d9dd0760"
+  },
+  "provenance/console_thermal_predictive_seed2_attempt1.log": {
+    "bytes": 1358,
+    "sha256": "4da64cee7098b2e1549eb98c20f13a7999636a293f5d021a6180e83dfe00f676"
+  },
+  "provenance/console_thermal_predictive_seed3_attempt1.log": {
+    "bytes": 1358,
+    "sha256": "3678dd395070e5c552040b0b1d6fda7277eaaa6ed0e80b1f328a743e088e85ab"
+  },
+  "provenance/failed_20261030T204726_699646Z/node_balance_seed2/decisions.jsonl": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "provenance/failed_20261030T204726_699646Z/node_balance_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "provenance/failed_20261030T204726_700443Z/packing_seed2/decisions.jsonl": {
+    "bytes": 170046728,
+    "sha256": "d1cfe27fb574cba04a6c34bcf98a7d1e9fff48d8085ba395469904582eaa4b1d"
+  },
+  "provenance/failed_20261030T204726_700443Z/packing_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1512819,
+    "sha256": "3700d2e60979b6e7d22b79854a37f3ee82756356e1d4deb3f8e0b7b004c590c9"
+  },
+  "provenance/failed_20261030T204726_816159Z/thermal_predictive_seed1/decisions.jsonl": {
+    "bytes": 153345665,
+    "sha256": "2a3acbc0aef6beeb8a4c463045a9e17cbd83ac2f7c14b4bbc2a085a681ae1574"
+  },
+  "provenance/failed_20261030T204726_816159Z/thermal_predictive_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1200570,
+    "sha256": "4f8d5df64ac47e5896a051489b70dd032ba9545bdeacce7d514f97a691c525f4"
+  },
+  "provenance/matrix_events.jsonl": {
+    "bytes": 17421,
+    "sha256": "f1ab8e5bdeb015f581d25444be05e0c742dbba3520ec397bb79bf7e91160a397"
+  },
+  "runs/coolest_rack_seed1/decisions.jsonl": {
+    "bytes": 213805871,
+    "sha256": "72d2c5721a83ce55804672d4246f3ba827876f0352722197c75ad31fe29ba2a4"
+  },
+  "runs/coolest_rack_seed1/intervals.parquet": {
+    "bytes": 10118968,
+    "sha256": "7fdd42921886aeab67d12e3bf6c970f8a4ef01d998d28740923acd5d38b8893a"
+  },
+  "runs/coolest_rack_seed1/manifest.json": {
+    "bytes": 18007,
+    "sha256": "41fade1b6177e8bda5bd5117e34f68fd97e0846e0b37e32f7a9c2d72eafd20da"
+  },
+  "runs/coolest_rack_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1694116,
+    "sha256": "080bc9eee443f30c8d4cea304567aa4841259d39798bf9c13569617779787c76"
+  },
+  "runs/coolest_rack_seed1/provenance/job_events.jsonl": {
+    "bytes": 3311173,
+    "sha256": "2a7eab7f4f4a167ccfa26368e9ef9fd77676ae2416c79324738c3f30b22a83f3"
+  },
+  "runs/coolest_rack_seed1/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/coolest_rack_seed2/decisions.jsonl": {
+    "bytes": 191849429,
+    "sha256": "4f177b29636a4ce4dd764162d3836eb8c752fb72679448ea5097207696d45914"
+  },
+  "runs/coolest_rack_seed2/intervals.parquet": {
+    "bytes": 9585660,
+    "sha256": "d95bae4d3f9208bb1b11180a756759295d360cf19fb3c44e5e87005b6c7c6549"
+  },
+  "runs/coolest_rack_seed2/manifest.json": {
+    "bytes": 18098,
+    "sha256": "86e4e42c164c0a06b3843e478472a058c9c0bb145daf01b1fed268bfbb0da883"
+  },
+  "runs/coolest_rack_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1519250,
+    "sha256": "ac624ca1df76354511e3db494416156681ceb3e66638dfb5747d55ea09bf4a08"
+  },
+  "runs/coolest_rack_seed2/provenance/job_events.jsonl": {
+    "bytes": 2976746,
+    "sha256": "355d24de5adede5c1c22fa427242e3bfcb08a45b958c29a76317aa2d88e40b80"
+  },
+  "runs/coolest_rack_seed2/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/coolest_rack_seed3/decisions.jsonl": {
+    "bytes": 193338965,
+    "sha256": "f813768f20f9e3ad36beffff1340461e9b2993d73af92dea60a95f812b6d5b2f"
+  },
+  "runs/coolest_rack_seed3/intervals.parquet": {
+    "bytes": 9639524,
+    "sha256": "45f6cc2a61f1824ba0c2ce3cf6f9246280b9f7a3e82b6dedafd3eae5c6d750db"
+  },
+  "runs/coolest_rack_seed3/manifest.json": {
+    "bytes": 18215,
+    "sha256": "125b1d22b2209fb43716213d0fa3786826c5e758c76e028506425d4feedd3866"
+  },
+  "runs/coolest_rack_seed3/provenance/decision_latency.jsonl": {
+    "bytes": 1531946,
+    "sha256": "e7e8488620690f10a5e3d87c835811a7bbc8ae50c4bf6d32a6b52d46303ba860"
+  },
+  "runs/coolest_rack_seed3/provenance/job_events.jsonl": {
+    "bytes": 3001474,
+    "sha256": "6b5c213595bf5e883d53a0bf6abfc997f43e0ba17e3054302dd1cc4c538e6b03"
+  },
+  "runs/coolest_rack_seed3/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/node_balance_seed1/decisions.jsonl": {
+    "bytes": 176222659,
+    "sha256": "5fe26426e4dbd6fca190b0abd6f0e7e50003d360a9f540fd6ef4ce26c741bbae"
+  },
+  "runs/node_balance_seed1/intervals.parquet": {
+    "bytes": 10434667,
+    "sha256": "80cd90365879b13ea147e602aef24c8d9b988849778e46114a1661e2ddca4e4a"
+  },
+  "runs/node_balance_seed1/manifest.json": {
+    "bytes": 18006,
+    "sha256": "f5f068370ca4592d7611ea57adbdb3309133f45cc9899b95b5fd27cf031be369"
+  },
+  "runs/node_balance_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1693054,
+    "sha256": "406f246501af0071e7eb623cb15431f9f9f304c325916bc42c4c805865519b8d"
+  },
+  "runs/node_balance_seed1/provenance/job_events.jsonl": {
+    "bytes": 3311022,
+    "sha256": "1acfbca0f8a55407140ae1f9713fae57234645f6a6f9f4f79517dca6af36072d"
+  },
+  "runs/node_balance_seed1/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/node_balance_seed2/decisions.jsonl": {
+    "bytes": 158176253,
+    "sha256": "bfbfffec7c8c61e3a90cf2e1f8263a5e0e36066b738078b3657f384e1fa8aac4"
+  },
+  "runs/node_balance_seed2/intervals.parquet": {
+    "bytes": 10280793,
+    "sha256": "334bc432e6bf35f7406b2ebed511de571f4b48f88de2b6543829c4d3fcd7328e"
+  },
+  "runs/node_balance_seed2/manifest.json": {
+    "bytes": 18098,
+    "sha256": "06012508cb35c10795d1cace3af646073c21718e1669fbcc54497e949d7d27ab"
+  },
+  "runs/node_balance_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1519174,
+    "sha256": "f1fd2bdf8927ae987dda6cf168e975ac7d5d0afe8e651f8f378726c5d4f2119e"
+  },
+  "runs/node_balance_seed2/provenance/job_events.jsonl": {
+    "bytes": 2977154,
+    "sha256": "c67df72472861faf4896985868ab89641614672161b6b196b13b2d82a9917aa5"
+  },
+  "runs/node_balance_seed2/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/node_balance_seed3/decisions.jsonl": {
+    "bytes": 159515295,
+    "sha256": "2c9e8abd17229a67826169f6d8a311a3895e99603ba3c354f02ed94270534fd7"
+  },
+  "runs/node_balance_seed3/intervals.parquet": {
+    "bytes": 10288157,
+    "sha256": "8f3487bc1e214705020767128eee0d0beeb52b90e8cbd7a845268a54be61add9"
+  },
+  "runs/node_balance_seed3/manifest.json": {
+    "bytes": 18216,
+    "sha256": "db92bd308ac57ed5501314de3898be99e1638a1c090313f34a529251576b8116"
+  },
+  "runs/node_balance_seed3/provenance/decision_latency.jsonl": {
+    "bytes": 1531896,
+    "sha256": "4befff7a0b3d22550e45a13a901075ed9d5e2cb49abadc0c682af9dfa2d288ea"
+  },
+  "runs/node_balance_seed3/provenance/job_events.jsonl": {
+    "bytes": 3001880,
+    "sha256": "9d40d9295bbb3c5ba32155da716c9fa733a9d8165515d866d949bc66ca748682"
+  },
+  "runs/node_balance_seed3/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/packing_seed1/decisions.jsonl": {
+    "bytes": 189575870,
+    "sha256": "40dfc92d3b8717f28e46b7dff15395301eb365d3d1172c3570c6effb8260d84b"
+  },
+  "runs/packing_seed1/intervals.parquet": {
+    "bytes": 9596790,
+    "sha256": "8505c2499b285cb7ee3051c978eba919a8f94920a2742bafd6c673ec4ba293de"
+  },
+  "runs/packing_seed1/manifest.json": {
+    "bytes": 18003,
+    "sha256": "320189149a524d17f3e1f9aacd28561a069e9bf2f9fca2e7d5cb6dab36b4f886"
+  },
+  "runs/packing_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1693396,
+    "sha256": "95cdd3339f8dbf82265da3c92712d3ad6ed31b688a774af80454675c26304e03"
+  },
+  "runs/packing_seed1/provenance/job_events.jsonl": {
+    "bytes": 3309868,
+    "sha256": "720ef92b62a5224121bd8b55d7c6d66f3c048307dbf2b054dfadd6bbd0f033ae"
+  },
+  "runs/packing_seed1/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/packing_seed2/decisions.jsonl": {
+    "bytes": 170046728,
+    "sha256": "d1cfe27fb574cba04a6c34bcf98a7d1e9fff48d8085ba395469904582eaa4b1d"
+  },
+  "runs/packing_seed2/intervals.parquet": {
+    "bytes": 9347844,
+    "sha256": "ef382c0e439203713c5879373250709ae682a05952c182ac2cf665ae959f3be8"
+  },
+  "runs/packing_seed2/manifest.json": {
+    "bytes": 18094,
+    "sha256": "5b9880305177af7fbdfd34b1fcc5074e8db3813e15413f5d2c4e1e7ee9f3cfc4"
+  },
+  "runs/packing_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1519234,
+    "sha256": "f02894489cd127c699c5e4b0bba24762bedd13cec7cbc5f41793bb1ba4032db2"
+  },
+  "runs/packing_seed2/provenance/job_events.jsonl": {
+    "bytes": 2974789,
+    "sha256": "91c6b568709cd3fa4a7e01ab08bb43bb705a2f2f10ff854e05b5c724bcc8394d"
+  },
+  "runs/packing_seed2/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/packing_seed3/decisions.jsonl": {
+    "bytes": 171473754,
+    "sha256": "c7c039454d57c72ff4d4e57c893aa87c8452ba7dd2b46946daf2a8b8aaeebc12"
+  },
+  "runs/packing_seed3/intervals.parquet": {
+    "bytes": 9390943,
+    "sha256": "5f34f20aebf4da7d45e6bd80f86c2b6824ab424ce56c4ee783f785a98900aba0"
+  },
+  "runs/packing_seed3/manifest.json": {
+    "bytes": 18211,
+    "sha256": "18981d6b550c8c8e1de8ee70ec5b9867b43994a94efe913fbaf3e0a8dba19bc8"
+  },
+  "runs/packing_seed3/provenance/decision_latency.jsonl": {
+    "bytes": 1532099,
+    "sha256": "1c4422dd231ee9811c36b57f42061c8e4652341b7a80e047108c002cc1603280"
+  },
+  "runs/packing_seed3/provenance/job_events.jsonl": {
+    "bytes": 2999730,
+    "sha256": "c2fa7309e3d446d274f539d74112ce5cbc301d5872a321bf89bd1d78c073ee07"
+  },
+  "runs/packing_seed3/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/power_balance_seed1/decisions.jsonl": {
+    "bytes": 213408668,
+    "sha256": "5300cc19b1a37e3f06c5baa41b2e7c043244bd5e54c39dfc6167ec41fb91bcee"
+  },
+  "runs/power_balance_seed1/intervals.parquet": {
+    "bytes": 10503318,
+    "sha256": "5e086bf2a0bda2277479d0b98c1e8cbab7bba77ed7d171802a896a789ddb05fa"
+  },
+  "runs/power_balance_seed1/manifest.json": {
+    "bytes": 18007,
+    "sha256": "814f646782c71480c85bc449ecf2daf584fb237e53d4b61a97318cbe9b95e198"
+  },
+  "runs/power_balance_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1693384,
+    "sha256": "587d9f2e21cf3643b19db339f1e4d4d470206e7c3434612447cf3106e313ba23"
+  },
+  "runs/power_balance_seed1/provenance/job_events.jsonl": {
+    "bytes": 3311480,
+    "sha256": "436d53624360cfdbeb34d525481c2e06d367e058783bf94ca599dff8dfcb93f5"
+  },
+  "runs/power_balance_seed1/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/power_balance_seed2/decisions.jsonl": {
+    "bytes": 191461552,
+    "sha256": "0f4beac00dd17b052a6e3f007d6a5ed4a3cfd7088026d55df52fe5961457b37b"
+  },
+  "runs/power_balance_seed2/intervals.parquet": {
+    "bytes": 10398366,
+    "sha256": "1e0d74b3340569d9a25fef9a6775c9335a7c440b9a032c87d086ac4175e7897c"
+  },
+  "runs/power_balance_seed2/manifest.json": {
+    "bytes": 18099,
+    "sha256": "dd0efafe56eec17e3f3df0732e8f8d62afdc9e987c9a1bde45d62010cbfbf603"
+  },
+  "runs/power_balance_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1519490,
+    "sha256": "f002f7c8123caa20d6643db88664de2a22f48f2112b04e72c8e3ca4d4e705e4a"
+  },
+  "runs/power_balance_seed2/provenance/job_events.jsonl": {
+    "bytes": 2977318,
+    "sha256": "625d9e5155f032e8406b90c9f81ac5f439e148ec01b383df336a1066ae21e13a"
+  },
+  "runs/power_balance_seed2/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/power_balance_seed3/decisions.jsonl": {
+    "bytes": 193042519,
+    "sha256": "19e2c0f0563ac4fbb9282576492e40d5b5f9b8610b0d843d4867fc86bc88b39d"
+  },
+  "runs/power_balance_seed3/intervals.parquet": {
+    "bytes": 10377170,
+    "sha256": "252e6b0d86732cf7bdc896c688858a00a9593f4a471f78297378b99548ed0fa6"
+  },
+  "runs/power_balance_seed3/manifest.json": {
+    "bytes": 18216,
+    "sha256": "0b6cf5b0497007dd876c8494822a7ce44211e3e2fc7c2d176cd2a321f8ac7504"
+  },
+  "runs/power_balance_seed3/provenance/decision_latency.jsonl": {
+    "bytes": 1532268,
+    "sha256": "c60166108b7729785cbd038f359653d45f58bb1521d7396d48c7641d60e436fd"
+  },
+  "runs/power_balance_seed3/provenance/job_events.jsonl": {
+    "bytes": 3002192,
+    "sha256": "2c4c7df35c2600aa9051bbb561553d353d3d7a64bf3bbaada3c3c6edfbbd66c8"
+  },
+  "runs/power_balance_seed3/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/thermal_predictive_seed1/decisions.jsonl": {
+    "bytes": 213658571,
+    "sha256": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9"
+  },
+  "runs/thermal_predictive_seed1/intervals.parquet": {
+    "bytes": 10492215,
+    "sha256": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68"
+  },
+  "runs/thermal_predictive_seed1/manifest.json": {
+    "bytes": 18107,
+    "sha256": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e"
+  },
+  "runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": {
+    "bytes": 1694020,
+    "sha256": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df"
+  },
+  "runs/thermal_predictive_seed1/provenance/job_events.jsonl": {
+    "bytes": 3311204,
+    "sha256": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722"
+  },
+  "runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/thermal_predictive_seed2/decisions.jsonl": {
+    "bytes": 191722272,
+    "sha256": "64e48dac50544e02e2ab9fa34ab878878fc7a3f3d96826c4c3cdc13566fb78d3"
+  },
+  "runs/thermal_predictive_seed2/intervals.parquet": {
+    "bytes": 10334073,
+    "sha256": "72ddff3a82f728233551a2948a12d966f67dd2e3712f31a61d90bfc6b9b75385"
+  },
+  "runs/thermal_predictive_seed2/manifest.json": {
+    "bytes": 18223,
+    "sha256": "deb3dea0f35113d3d9d4cecbdd8a970c6f1cda94b1deafd7cfa1c4b1be060f4b"
+  },
+  "runs/thermal_predictive_seed2/provenance/decision_latency.jsonl": {
+    "bytes": 1519569,
+    "sha256": "93fd0dd3a49cbe80764e0a0790381a7ed8cd5383581382170b8b2c9477595a7b"
+  },
+  "runs/thermal_predictive_seed2/provenance/job_events.jsonl": {
+    "bytes": 2977380,
+    "sha256": "bd3fc609ea371782e471adb045ac7259960c4a21c360b219fba047657e2d5b7d"
+  },
+  "runs/thermal_predictive_seed2/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  },
+  "runs/thermal_predictive_seed3/decisions.jsonl": {
+    "bytes": 193291636,
+    "sha256": "f987a125981a0fef6adfee258e0d8a0be989ab166fc7c59329f121d52c78366d"
+  },
+  "runs/thermal_predictive_seed3/intervals.parquet": {
+    "bytes": 10365619,
+    "sha256": "6ab42399d9d8b6ec03c7236066bba814b69b907e91c48cd5e9f3aec43474a25e"
+  },
+  "runs/thermal_predictive_seed3/manifest.json": {
+    "bytes": 18220,
+    "sha256": "5e5ed3a14c5fd720fc59faa3043a5ae41760520ff82a6826c429dd406f1d97c6"
+  },
+  "runs/thermal_predictive_seed3/provenance/decision_latency.jsonl": {
+    "bytes": 1532262,
+    "sha256": "5859b7fff509bc145a865f3f2c698aa188b9cbb976cded18d3f6dc4d181495e2"
+  },
+  "runs/thermal_predictive_seed3/provenance/job_events.jsonl": {
+    "bytes": 3002122,
+    "sha256": "1d6d3ecbebd02e60a2eb215e18359e8e6926e0b436d7ee3c528f4446ca016c74"
+  },
+  "runs/thermal_predictive_seed3/provenance/thermal_publications.jsonl": {
+    "bytes": 182435,
+    "sha256": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3"
+  }
+}

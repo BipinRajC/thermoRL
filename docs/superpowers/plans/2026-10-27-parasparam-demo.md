@@ -743,9 +743,9 @@ Push. **Stop.**
 
 ### Task 14: G4 on the Alibaba-derived workload → CHECKPOINT C4
 
-- [ ] **Step 1: Run.** `run_matrix --config configs/g4_alibaba.yaml`, then `report experiments/<primary>/E12_g4_alibaba`.
+- [x] **Step 1: Run.** `run_matrix --config configs/g4_alibaba.yaml`, then `report experiments/<primary>/E12_g4_alibaba`.
   - Any false invariant → **stop**.
-- [ ] **Step 2: Finish and commit.** Complete the README and INDEX:
+- [x] **Step 2: Finish and commit.** Complete the README and INDEX:
   ```
   exp(<primary>): E12 G4 Alibaba-derived, 5 policies x 3 seeds
   ```

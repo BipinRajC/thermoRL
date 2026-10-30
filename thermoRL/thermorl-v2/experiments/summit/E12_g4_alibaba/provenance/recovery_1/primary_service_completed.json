@@ -1,0 +1,16 @@
+{
+  "ActiveState": "active",
+  "CPUUsageNSec": 14225460622000,
+  "ExecMainExitTimestamp": "2026-10-31 03:44:00 IST",
+  "ExecMainStartTimestamp": "2026-10-31 02:19:35 IST",
+  "ExecMainStatus": 0,
+  "Id": "thermorl-e12-recovery-20261030T2050Z.service",
+  "InvocationID": "7e69e2829c0b4a87bca34c2c70b48355",
+  "MemoryPeak": 7435931648,
+  "NRestarts": 0,
+  "Restart": "no",
+  "Result": "success",
+  "RuntimeMaxUSec": "infinity",
+  "SubState": "exited",
+  "memory_scope": "systemd service cgroup high-water, controller plus simultaneous workers, distinct from per-process RSS"
+}

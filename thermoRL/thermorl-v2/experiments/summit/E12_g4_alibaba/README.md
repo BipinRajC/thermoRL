@@ -1,5 +1,5 @@
 # E12 — G4 on an Alibaba GPU 2023-derived workload
-**System:** summit  **Status:** preregistered; inputs/protocol prepared for review, execution not authorized.
+**System:** summit  **Status:** complete; C4 results ready for Bipin/Opus review (2026-10-31).
 **Pre-registered:** 2026-10-30, commit `ababba8220c2143c67a588a2fdc2d6e1062d9a4d`, after Task 13 `75363ee` and D5 `20ff68f`; before any E12 policy run.
 
 ## Question
@@ -102,23 +102,89 @@ Also retain p99 maximum, mean rack, spread, raw max, hot rack-seconds at frozen 
 Wait=integer start−continuous submit. Unstarted jobs are censored and counted separately, including admissions outside the horizon; no zero wait imputation. Disagreement reapplies both scorers to the same six-decimal logged context with distinct reconstructed free-node IDs. Self-reproduction is separate and imperfect for near ties; no exact full-precision decision reconstruction is claimed. Latency comes only from the joined timing ledger; missing means missing and canonical null is never zero.
 
 ## Results
-**No E12 policy outcome exists.** Only input preparation is complete. [Variant statistics](results/variant_choice.json), [workload/size/memory feasibility](results/feasibility.json), [checksum verification](provenance/dataset_verification.json) and [D5 byte-identity proof](provenance/report_loading_verification.json) are prelaunch artifacts.
+**DERIVED — frozen G4 outcome: no material value on the homogeneous twin; value_beyond_power=false.** Primary metric is maxrack_mean_c over strict 3600<t_s<=21600. PB−TP must be ≥0.5°C in every seed at full precision.
 
-The primary 15 canonical ledgers are estimated at **2.840 GB**, plus **0.215 GB** for the C′ rerun (decimal units), before interval/event/timing files. Estimated per-run canonical files: **160.9–214.8 MB**. All raw run directories will exceed 25 MB and must remain gitignored, inventoried by relative file path/bytes/SHA, with portable manifest copies. Do not reduce the 14-key canonical schema to fit git.
+| Policy | Seed 1 maxrack_mean_c | Seed 2 | Seed 3 |
+| --- | --- | --- | --- |
+| packing | 41.410869466295 | 41.345774966856 | 41.308922026266 |
+| node_balance | 41.256918573934 | 40.969725531173 | 41.128894157054 |
+| power_balance | 41.235138269180 | 40.981985391462 | 40.994658462517 |
+| coolest_rack | 41.164820218149 | 41.239750477448 | 41.095216301964 |
+| thermal_predictive | 41.057548338400 | 40.904720549522 | 40.885866893341 |
 
-Parsed payload estimate: **9.429 GiB** for all 15 versus **3.027–3.353 GiB** for one five-policy seed, before allocator/import, parsing, diagnostic and GIF overhead. One-seed loading is implemented. E11 scratch metric regeneration was byte-identical to committed metrics.csv (SHA `06cf0b3e9705a74549a0b1f3b97a34a92ec3e841d0292792b16c19019d44c43c`), measured peak RSS **1.534 GiB** for that E11 validation. E12 memory figures are estimates, not measured E12 execution or report RAM.
+| Seed | PB minus TP (°C, full precision) | Packing minus TP (°C, full precision) |
+| --- | --- | --- |
+| 1 | 0.17758993078025043 | 0.35332112789507875 |
+| 2 | 0.07726484193952388 | 0.441054417333838 |
+| 3 | 0.10879156917675914 | 0.42305513292543395 |
+
+[All metrics, all 15 runs](results/metrics.csv) · [full five-policy metric table](results/metrics.md) · [machine-readable decision](results/decision.json).
+
+### Utilisation, waits and bursts
+
+Nominal construction rho is **0.6**. Offered finite-window utilisation is a frozen input property; realised utilisation is derived from the RAPS ledger. These are not interchangeable. Values below are policy-identical within each seed; wait=integer start minus continuous submit, and unstarted jobs would be censored separately.
+
+| Seed | Offered window utilisation | Realised ledger utilisation | Started | Censored | Wait mean s | Wait p95 s | Wait max s | Peak queued jobs (episode) | Queued fraction (evaluation ticks) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 0.48576559317193224 | 0.4856178844213863 | 21885 | 0 | 8.621865745 | 38.150916804 | 290.095277413 | 694 | 0.031666667 |
+| 2 | 0.4546186900899609 | 0.4545704232117981 | 19627 | 0 | 6.000436318 | 0.996434839 | 235.551878482 | 564 | 0.023888889 |
+| 3 | 0.4566251349855959 | 0.4565686698371524 | 19789 | 0 | 6.129541603 | 0.997273608 | 237.425800645 | 577 | 0.022777778 |
+
+
+All offered jobs started. The pre-run continuous overload fractions remain approximately0.0297309/0.0229211/0.0233363. The table's queue fractions use 10 s RAPS input ticks in the evaluation window, so they need not equal continuous offered overload. Peak queues and maximum waits cover the episode; all other window quantities retain their explicit scope. Finite queues occurred during the accepted bursts. [Operational diagnostics](results/operational_diagnostics.json) include full-capacity fractions, IT-power ranges and waits>1s.
+
+### S1, disagreement and latency (descriptive only)
+
+These are arithmetic means across the three correlated rotations, not independent-replication estimates or alternative success criteria. Hottest decile means 26 racks per tick. Disagreement applies both scorers to the same six-decimal logged context; self-reproduction separately compares reconstructed and live choices. Latency uses only the measured joined timing ledger; canonical null is not zero. The last column averages each run's p95, not a pooled p95.
+
+| Policy | T std mean °C | Hottest 26 mean °C | Rack kW std mean | PB/TP disagreement | Self reproduction | Latency mean µs | Latency p95 µs |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| packing | 0.341831156 | 40.866798333 | 1.610226442 | 0.823325836 | 1.000000000 | 467.309 | 923.608 |
+| node_balance | 0.283261339 | 40.757659453 | 0.945876757 | 0.805687825 | 1.000000000 | 469.610 | 934.812 |
+| power_balance | 0.270927089 | 40.716693993 | 0.794837828 | 0.918757164 | 0.998658047 | 486.515 | 951.194 |
+| coolest_rack | 0.277970525 | 40.758891166 | 1.340267615 | 0.667398054 | 0.872954264 | 493.025 | 949.993 |
+| thermal_predictive | 0.239485596 | 40.672633668 | 0.948892092 | 0.906591206 | 0.977281506 | 496.618 | 960.405 |
+
+
+### E12's own endpoint attribution
+
+| Policy | Seed | Most frequent endpoint max rack | Share of evaluation endpoints | Resident jobs min | Resident jobs max |
+| --- | --- | --- | --- | --- | --- |
+| packing | 1 | 39 | 0.381111111 | 2 | 18 |
+| node_balance | 1 | 130 | 0.280000000 | 1 | 18 |
+| power_balance | 1 | 121 | 0.291666667 | 1 | 18 |
+| coolest_rack | 1 | 13 | 0.198333333 | 1 | 18 |
+| thermal_predictive | 1 | 75 | 0.229444444 | 1 | 18 |
+| packing | 2 | 0 | 0.415000000 | 0 | 18 |
+| node_balance | 2 | 53 | 0.135555556 | 1 | 17 |
+| power_balance | 2 | 15 | 0.266111111 | 0 | 18 |
+| coolest_rack | 2 | 53 | 0.320000000 | 0 | 18 |
+| thermal_predictive | 2 | 229 | 0.315000000 | 0 | 17 |
+| packing | 3 | 3 | 0.255555556 | 0 | 18 |
+| node_balance | 3 | 61 | 0.353333333 | 1 | 17 |
+| power_balance | 3 | 162 | 0.215000000 | 0 | 18 |
+| coolest_rack | 3 | 79 | 0.246666667 | 0 | 18 |
+| thermal_predictive | 3 | 189 | 0.172222222 | 0 | 18 |
+
+
+Resident counts refer to the endpoint-max rack at the driving RAPS tick, with completions before starts. Full identities, resident job IDs and per-tick shares are in [max-rack attribution](results/max_rack_attribution.json). These observations do not identify a physical mechanism and do not import E11's large-job explanation.
 
 ## Plots
-No E12 thermal plots yet. Future plots must say Alibaba-derived, use shared scales and retain the frozen primary outcome even if negative.
+All figures are **Alibaba-derived workload, Summit FMU, nominal, seed1**. Heatmaps share one temperature scale; animations share a scale within each comparison. They are descriptive and do not replace the frozen G4 rule.
+
+![Alibaba-derived Summit seed1 coolant heatmaps](plots/heatmaps_seed1.png)
+![Alibaba-derived Summit seed1 maximum and spread](plots/timeseries_seed1.png)
+
+[Alibaba-derived packing vs TP animation](plots/anim_packing_vs_thermal_predictive_seed1.gif) · [Alibaba-derived PB vs TP animation](plots/anim_power_balance_vs_thermal_predictive_seed1.gif).
 
 ## Observations (FACT)
-All 26 source checksums passed. Default only, 6203 eligible pods, fixed phase/runtime/arrival construction, three SHA-keyed workloads. No E12 simulation, E11 rerun or new characterization was performed. The real-trace finite-window utilisation shortfall is reported before execution, without tuning.
+All 15 selected primary runs and the one planned repeat completed; three interrupted primary attempts remain preserved. All per-seed invariants passed, and exact C′ passed for TP seed 1 only. Queueing was observed with zero final censoring. See Results and the dated completion addendum for measured values.
 
 ## Interpretation (INFERENCE)
-This is an external-validity workload with substantial assumptions and weaker mapped power density. No thermal-policy ranking or value is inferred from preflight statistics. Seeds are rotations of one source cycle. The pending low-utilisation operating regime requires review, not silent rescaling.
+The frozen outcome is "no material value on the homogeneous twin" in the accepted small-job, low-density, periodic-burst regime only. No result is generalized to high-power workloads, independent replications, safety or causal thermal mechanisms. S1 and disagreement remain descriptive.
 
 ## Conclusion and decision
-**Inputs/protocol prepared for C4-prelaunch review; execution pending approval and the E12 C′ adapter.** E12 G4 is pending. Stop after the prelaunch checkpoint.
+**C4 reached: no material value on the homogeneous twin; value_beyond_power=false.** Exact C′ verifies TP seed 1 only. Stop for Bipin/Opus review before any Tasks 15–17 work.
 
 ## Limitations
 - A2–A4 above: undocumented time units assumed seconds; Running/Failed lifetimes used as runtime, substantial clipping; arrival-only ≈2064× compression, artificial wrap and repeated correlated rotations; static resource-to-power mapping, low GPU/CPU density and max-two-node jobs; lower finite-window offered utilization than the nominal long-run target.
@@ -137,7 +203,7 @@ This is an external-validity workload with substantial assumptions and weaker ma
 [preregistration.json](provenance/preregistration.json) pins the byte-identical config, source module hashes, raw/derived inputs, sidecars, variant record and C′ scope before any outcome. Source CSVs and dataset version are hashed; no raw data was modified. Workload metadata records raw/filter phase mix, runtime clip counts/fractions, ordered source-row hash, offset/cycles, exact population expectation, representation, RNG draw rule, lineage rule, generator source SHA and numpy/pandas/pyarrow versions.
 
 ## Demo relevance
-A preplanned external-validity test, not an attempt to rescue a positive thermal headline. Any eventual result must remain scoped to the frozen rule, mapped Alibaba-derived input and Summit FMU. Task 15–17 and every policy simulation remain outside this assignment.
+A preplanned external-validity test, not an attempt to rescue a positive thermal headline. The result remains scoped to the frozen rule, mapped Alibaba-derived input and Summit FMU. Tasks 15–17 remain outside this assignment.
 
 ## Prelaunch review addendum (2026-10-30)
 
@@ -166,3 +232,79 @@ Nominal rho=0.6, offered finite-window utilisation (0.455–0.486 plus bursts), 
 The primary controller exited unexpectedly with code143 (SIGTERM), after approximately45minutes. Four primary runs completed and passed run-level validation; three started runs remain partial; eight primary configurations never started. No C′ rerun or evidence comparison was attempted. G4 is pending review, not a negative or positive policy result. No source was changed and no retry launched. [Interruption record](provenance/execution_interruption.json) and [complete/partial file inventory](provenance/interruption_inventory.json) preserve the state. The temporal association with45minutes is consistent with a session lifetime limit, but the cause is unresolved.
 
 HEAD is deliberately kept at the launch SHA to preserve the exact Git precondition; interruption artifacts remain uncommitted pending recovery review. The committed preparation is pushed separately without advancing HEAD. Any retry budget, infrastructure/source change and resume plan need an explicit Bipin-reviewed decision.
+
+## Task 14 completion and operational recovery (2026-10-31)
+
+Earlier preparation/frozen sections retain historical future-tense wording; this dated result supersedes their execution-status statements without changing any preregistered text or hashes.
+
+**FACT — C′ direct verification covers TP seed1 only.** Full 7200 s warm-up, 2160 steps and 21600 s elapsed were verified in both fresh processes. Config, workload, sidecar, FMU, source maps, Git SHA and environment matched exactly. Canonical decisions were byte-identical and complete interval values were equal with check_exact=True. Interval-file, job-event and thermal-publication bytes also matched (information only). Timing values were excluded from deterministic comparison, while row joins and hashes remained valid. The SHA-sealed evidence marks only TP seed 1 verified_E12; the other 14 are inherited_not_remeasured under "E10 synthetic packing seed1 2h only; weak cross-workload evidence". The entire matrix was not independently repeated. No A′ fallback or equality/tolerance change occurred.
+
+All three seed gates passed: identical job starts, total IT power within 1e-6 kW, exact/free/distinct allocation and lifecycle replay, per-rack sum reconciliation, independent 2160-step/21600 s clock, complete provenance/ledger joins, and the accepted scoped C′ evidence. Maximum cross-policy IT-power difference is 1.8189894035458565e-12 kW in each seed. See [invariants](results/invariants.json), [comparison](provenance/full_rerun_comparison.json) and [sealed evidence](provenance/determinism_evidence.json).
+
+**FACT — launches and attempts.** Original launch `18dfea14aa42bc21a191cc1f9a39fc421d8723bd`; recovery launch `e0e1522ac52b5780cb3088232051e26dbd492804`. Four completed seed-1 non-TP runs retain the original SHA and unmodified manifests. The other eleven selected primaries and the one repeat use the recovery SHA. The only production-source delta is `run_matrix.py` and `e12_evidence.py` orchestration/accounting; all numerical decision, workload, power, thermal, metric, input, FMU and RAPS paths are unchanged. Full source-map comparison, including the runner's additional RAPS entries, is recorded in [source identity verification](provenance/recovery_1/source_identity_verification.json).
+
+Cumulative accounting is **19 attempts = 15 selected successful primaries + 3 preserved interrupted primary attempts + 1 successful planned repeat**. The primary journal has 18 starts/15 completions; the repeat has its own journal. Reusing 4 complete runs, restarting 3 interrupted configurations and executing 8 previously unstarted configurations produced the selected 15; no additional retry occurred. The interrupted TP seed 1, packing seed 2 and node_balance seed 2 directories were moved exactly once; their original console logs remain in place. [Historical inventory](provenance/interruption_inventory.json), [relocation inventory](provenance/recovery_relocation_inventory.json), [primary file inventory](results/run_files.json), [repeat inventory](provenance/rerun_1/run_files.json), and [portable manifests](provenance/manifests/) make preservation traceable. Completed raw run directories exceed 25 MB and remain local/ignored; interrupted archives remain ignored and inventoried regardless of size.
+
+**UNRESOLVED — interruption origin.** The original interactive controller exited 143/SIGTERM around 45 minutes after first launch; exact origin is unknown. An interactive lifetime limit is an INFERENCE, not a proven cause. No FMU failure file, traceback or scientific stop was observed. Bipin's actual instruction was "dont stop, resume wherever it stopped". The 19-attempt accounting and restart scope are the agent's bounded operational interpretation recorded in C4-execution-recovery, not a separately supplied count or Opus approval of this source diff.
+
+Durable user units `thermorl-e12-recovery-20261030T2050Z` and `thermorl-e12-postmatrix-20261030T2123Z` use RuntimeMaxSec=infinity, Restart=no and RemainAfterExit=yes. The second waited for successful primary exit, used the guarded repeat CLI, generated evidence, then ran the offline report. No source change or Git commit occurred from recovery launch through successful C′ evidence generation.
+
+Original first-wave process walls (packing, node_balance, power_balance seed1): 1263.783793608, 1289.237131012, 1318.495860319 s. Recovery first-wave process walls (node_balance seed2, packing seed2, TP seed1, in completion order): 1245.809995674, 1323.944600355, 1688.275010045 s. These are individual process durations, not a sum or matrix duration. Recovery controller wall: **5033.356971426 s**, 11 completions. Original-start to final-primary-completion span: **9565.744325 s, including interruption/recovery downtime**. Primary systemd service ran 20:49:35–22:14:00 UTC; its startup/skip validation is outside the execute_jobs controller timer. The planned repeat took **1479.362240931 s** by guarded repeat subprocess-plus-validation timing and 1470.616880302 s by EpisodeRunner.
+
+Selected-primary process peak RSS range: 1.630260–1.990356 GiB; interrupted-process RSS is unknown. Recovery controller own lifetime peak: 1.356224 GiB. Primary service cgroup high-water (controller plus concurrent workers): 6.925251 GiB. Repeat simulation own peak: 1.992161 GiB; its validating guard own peak: 1.304073 GiB. Offline report wall: **458.675731 s** after imports, with own lifetime peak **4.979103 GiB**, at most one five-policy seed loaded. The follow-up service cgroup high-water was 6414262272 bytes (5.973747 GiB), spanning the guarded repeat, comparison and report. Both services exited successfully with zero restarts and remain available for inspection. Service memory and process RSS have different scopes.
+
+Raw storage: selected primaries **3044923184 bytes**, interrupted archives **326105782 bytes**, repeat **229356244 bytes**; all raw files are inventoried. Report artifacts/logs have a separate final inventory. All 15 primary episodes and the repeat recorded zero coolant samples above 70°C and no negative episode pump samples; threshold counts are descriptive, not a new stop rule.
+
+| Policy | Seed | Selected attempt | Launch generation | Process wall s | EpisodeRunner total s | Peak RSS GiB |
+| --- | --- | --- | --- | --- | --- | --- |
+| packing | 1 | 1 | original | 1263.783793608 | 1260.936641046 | 1.990356 |
+| node_balance | 1 | 1 | original | 1289.237131012 | 1286.458249398 | 1.949745 |
+| power_balance | 1 | 1 | original | 1318.495860319 | 1315.874587496 | 1.787857 |
+| coolest_rack | 1 | 1 | original | 1349.646937455 | 1346.572757732 | 1.830402 |
+| thermal_predictive | 1 | 2 | recovery | 1688.275010045 | 1685.652488986 | 1.801899 |
+| packing | 2 | 2 | recovery | 1323.944600355 | 1321.375245660 | 1.716881 |
+| node_balance | 2 | 2 | recovery | 1245.809995674 | 1243.085100135 | 1.826305 |
+| power_balance | 2 | 1 | recovery | 1359.289743542 | 1356.244498237 | 1.630260 |
+| coolest_rack | 2 | 1 | recovery | 1250.291640019 | 1247.764879203 | 1.873169 |
+| thermal_predictive | 2 | 1 | recovery | 1192.205407657 | 1189.483368714 | 1.900215 |
+| packing | 3 | 1 | recovery | 1227.102041492 | 1224.441459747 | 1.912270 |
+| node_balance | 3 | 1 | recovery | 1156.443074793 | 1153.695594268 | 1.913105 |
+| power_balance | 3 | 1 | recovery | 1301.781750504 | 1298.907520066 | 1.913017 |
+| coolest_rack | 3 | 1 | recovery | 1235.269872770 | 1232.621237463 | 1.912750 |
+| thermal_predictive | 3 | 1 | recovery | 1184.902016036 | 1182.104559866 | 1.910912 |
+
+
+### Executed commands and checks
+
+```bash
+# Original interactive primary launch (interrupted):
+uv run python -m thermorl2.experiments.run_matrix --config thermorl2/experiments/configs/g4_alibaba.yaml --workers 3
+# Recovery under the recorded durable systemd unit:
+uv run python -m thermorl2.experiments.run_matrix --config thermorl2/experiments/configs/g4_alibaba.yaml --workers 3 --retry-failed
+# Guarded follow-up, alone after successful primary completion:
+uv run python -m thermorl2.experiments.e12_evidence rerun --config thermorl2/experiments/configs/g4_alibaba.yaml
+uv run python -m thermorl2.experiments.e12_evidence generate --config thermorl2/experiments/configs/g4_alibaba.yaml
+uv run python -m thermorl2.experiments.report experiments/summit/E12_g4_alibaba --evidence experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json
+# Allowed tests, before source freeze:
+uv run pytest tests/unit tests/integration -q
+# Supplemental ledger-only diagnostics and final audit were run from /tmp;
+# byte-identical scripts are archived under provenance/recovery_1/.
+uv run python /tmp/e12_extra.py
+uv run python /tmp/e12_final_audit.py
+```
+
+Exact service invocations/settings and sequencing are in `provenance/recovery_1/service_launch.json`, `post_matrix_service_launch.json`, `post_matrix_driver.py` and their journals. Preservation and freeze scripts are archived there too. Dataset command: `sha256sum -c checksums.txt` from datasets/alibaba_gpu_2023, 26/26 passed. Fresh non-FMU tier: **161 unit + 28 integration = 189 passed in 30.93 s**. No new full FMU pytest tier was run.
+
+### Final scope and limitations
+
+E12 tests only small (1–2-node), low-density, bursty Alibaba-derived jobs on the homogeneous Summit FMU. Nominal construction rho is 0.6; finite-window offered and realised utilisation are separate quantities above. Approximately 23 minutes dense plus 80 minutes near-silent occur per 1.74-hour cycle. Seed 3 is seed 2 shifted by 33.03657272057935 s after 162 leading pods: approximately two independent workload conditions, not three independent replications or a determinism test. A negative result does not confirm E11 for high-power regimes; a positive applies only to this tested regime.
+
+A2: timestamps are assumed seconds; deletion minus creation is interpreted as runtime even for Running/Failed pods. Runtime clips remain 2033 floors and 266 caps among 6203 eligible pods. A3: arrival-only compression 2063.712860793521×, artificial cyclic wrap, empty start and correlated rotations change arrival/runtime relationships. A4: static CPU/GPU mapping assumes 20 cores/socket; about 99.3% of jobs use one node and the maximum is two. Actual loss-inclusive mean above-idle rack inputs are about 2.990621/2.787416/2.797622 kW; the pre-run mapping estimates 2.8720/2.6763/2.6862 kW were loss-exclusive offered statistics with a different definition.
+
+M2: E11's large-job max-rack domination is not assumed here. E12 endpoint identities and resident jobs are derived separately in the E12 README and attribution record; coexistence does not establish causation. No individual E12 job fills a rack. M3: non-local placement dependence was observed in earlier work, but its physical mechanism remains unresolved.
+
+S2, verbatim: published view = FMU endpoint t+Δ of interval driven by P(t); decisions in (t, t+Δ) observe it (≤9 s hold-power forecast, E10 max 10 s per-rack change 0.31 °C, p99 0.057 °C); no future-decision information; identical for all policies.
+
+Warm-up is capped at 7200 s and is evolving, not settled. G1 remains a frozen heuristic, not a validated predictor. Between-tick committed job increments retain the documented roughly 4% loss understatement; actual FMU inputs are loss-inclusive RAPS rack powers. No correction or refit was made. Forty-five °C and G1 t_hot are references, not validated safety limits. Temperatures are modelled coolant, not hardware measurements. No PUE, plant-total energy, carbon, lifetime, heterogeneous-zone, causal-mechanism, RL or surrogate claim follows.
+
+C3 is unchanged: **no material value on the homogeneous twin**, value_beyond_power=false; packing≈TP on the primary metric. E11 PB−TP gaps remain 0.3424946761284602, −0.14719002809689385, −0.07086450347454587 °C. S1 differences remain metric-specific. E11 reproducibility remains Option A: E10 packing seed1 2h fresh-process evidence plus exact E11 seed1 packing/PB two-hour prefix checks; no independent six-hour E11 run and no E11 temperature-reading policy repeat. D7 remains deferred and no E11 rerun was performed.

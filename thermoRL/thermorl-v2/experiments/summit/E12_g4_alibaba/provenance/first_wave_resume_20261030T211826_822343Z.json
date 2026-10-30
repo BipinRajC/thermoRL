@@ -1,0 +1,23 @@
+[
+  {
+    "index": 2,
+    "policy": "node_balance",
+    "process_wall_s": 1245.8099956739989,
+    "run_dir": "experiments/summit/E12_g4_alibaba/runs/node_balance_seed2",
+    "seed": 2
+  },
+  {
+    "index": 1,
+    "policy": "packing",
+    "process_wall_s": 1323.9446003549983,
+    "run_dir": "experiments/summit/E12_g4_alibaba/runs/packing_seed2",
+    "seed": 2
+  },
+  {
+    "index": 0,
+    "policy": "thermal_predictive",
+    "process_wall_s": 1688.2750100449994,
+    "run_dir": "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1",
+    "seed": 1
+  }
+]
