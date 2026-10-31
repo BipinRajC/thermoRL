@@ -1,0 +1,58 @@
+{
+  "assets": {
+    "plots/demo/anim_packing_vs_thermal_predictive_seed1.gif": {
+      "bytes": 17098184,
+      "exceeds_25_MB": false,
+      "sha256": "4a1709173d4e31d08517fcc2be1b71390749d1b965e6078fd3dc5a569b6a20b6"
+    },
+    "plots/demo/anim_power_balance_vs_thermal_predictive_seed1.gif": {
+      "bytes": 17370956,
+      "exceeds_25_MB": false,
+      "sha256": "39192225821a3249be3eb67cbfe34d10e868d9748c09d34db519055c77feaf6c"
+    },
+    "plots/demo/heatmaps_seed1.png": {
+      "bytes": 633915,
+      "exceeds_25_MB": false,
+      "sha256": "76d4b29d36ae840f84c6877db3616a969ba7101b1d161f2a1e031a6149a133d3"
+    },
+    "plots/demo/timeseries_seed1.png": {
+      "bytes": 133573,
+      "exceeds_25_MB": false,
+      "sha256": "44b077969b6a691d110794a42a5d91ac719fbb528ed4009db104fd928e0401c8"
+    }
+  },
+  "checks_sha256": "219685166b47c4350bcdc504fce368661775025fe16a551ca4e67b0d5922f085",
+  "colour_scale_scope": "all five seed-1 policies within this experiment",
+  "experiment": "E11_g4_synthetic",
+  "process_memory": {
+    "peak_rss_bytes": 2226843648,
+    "ru_maxrss": 2174652,
+    "scope": "own process lifetime high-water resident set, including imports",
+    "unit": "KiB"
+  },
+  "scope": "presentation-only copies from unchanged seed-1 ledgers; no metrics or simulation",
+  "source_files_unchanged_after_rendering": true,
+  "source_sha256": {
+    "runs/coolest_rack_seed1/decisions.jsonl": "29470f341fa3d6e96c1947c5d03bad73bca5e469b60dc6ccf346d8f17a9de2a8",
+    "runs/coolest_rack_seed1/intervals.parquet": "2b67b2dfd1416a98a4670118280ba6784d6b50f0b7dd867ed27014438245d7a2",
+    "runs/coolest_rack_seed1/manifest.json": "1679c1023ee24e286469bfabf91f3048e2041b7ba8c3c20afdca62289eec4c62",
+    "runs/node_balance_seed1/decisions.jsonl": "da70172cbc5d48b7fa8882e776181beb3e968f97d6ac9f38af76048a9908e838",
+    "runs/node_balance_seed1/intervals.parquet": "a17264188d43fb7ecd3581680528f9b408f702be6a799f42b091b3b267b2089d",
+    "runs/node_balance_seed1/manifest.json": "d67a913cad1a54613205d6513ef6c8ea64318ed2e3d61f5478a948e6c15394db",
+    "runs/packing_seed1/decisions.jsonl": "ba38d8563a5f1f0117b4c53cbe9921ebe11758e8d9b144ed975926a71c424bf1",
+    "runs/packing_seed1/intervals.parquet": "54007f922d86753d56beca7a11c26bf320d40b0e0baf5753189db1634d2fc110",
+    "runs/packing_seed1/manifest.json": "9bfa0262b5a5f783358b61dc2a3412bbcf4d7d2f83fd592b55c1d8e22dcb3bc8",
+    "runs/power_balance_seed1/decisions.jsonl": "56823a56e9f634a6ee03e7f36631c696946097e0f45358dd634711b4e5567f45",
+    "runs/power_balance_seed1/intervals.parquet": "564bec21219795b58bd2847c7c9f171499b2c2ff5591297fa515d48ded7aeabf",
+    "runs/power_balance_seed1/manifest.json": "f91051dc1957bd75c81e74faffa43f2108901895c5a7353ecba1011a22769d93",
+    "runs/thermal_predictive_seed1/decisions.jsonl": "267f63cf1de858bb373f2b533c9d598df07cc53f2ee1713fa16c7e94d1b96dd5",
+    "runs/thermal_predictive_seed1/intervals.parquet": "2e48f747cb71c01e18a06317e15205bca77f6098287518612dafb8146d04e46c",
+    "runs/thermal_predictive_seed1/manifest.json": "92c98be8fd2fe3273e713441409efcf39ade41ba1b27eac4736803516015f783"
+  },
+  "stride_ticks": 3,
+  "temperature_colour_scale_c": [
+    39.25240157610551,
+    56.233641451962114
+  ],
+  "wall_s": 196.69593681100002
+}

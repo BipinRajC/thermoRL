@@ -1,0 +1,135 @@
+{
+  "experiments": {
+    "E11_g4_synthetic": {
+      "assets": {
+        "plots/demo/anim_packing_vs_thermal_predictive_seed1.gif": {
+          "bytes": 17098184,
+          "inspected_frame_indices": [
+            0,
+            120,
+            719
+          ],
+          "labels_in_metadata": true,
+          "n_frames": 720,
+          "sha256": "4a1709173d4e31d08517fcc2be1b71390749d1b965e6078fd3dc5a569b6a20b6",
+          "size": [
+            840,
+            490
+          ]
+        },
+        "plots/demo/anim_power_balance_vs_thermal_predictive_seed1.gif": {
+          "bytes": 17370956,
+          "inspected_frame_indices": [
+            0,
+            120,
+            719
+          ],
+          "labels_in_metadata": true,
+          "n_frames": 720,
+          "sha256": "39192225821a3249be3eb67cbfe34d10e868d9748c09d34db519055c77feaf6c",
+          "size": [
+            840,
+            490
+          ]
+        },
+        "plots/demo/heatmaps_seed1.png": {
+          "bytes": 633915,
+          "labels_in_metadata": true,
+          "sha256": "76d4b29d36ae840f84c6877db3616a969ba7101b1d161f2a1e031a6149a133d3",
+          "size": [
+            2000,
+            650
+          ]
+        },
+        "plots/demo/timeseries_seed1.png": {
+          "bytes": 133573,
+          "labels_in_metadata": true,
+          "sha256": "44b077969b6a691d110794a42a5d91ac719fbb528ed4009db104fd928e0401c8",
+          "size": [
+            1200,
+            800
+          ]
+        }
+      },
+      "early_frame_caption": "logged initial rack temperatures differ; early TP placements are descriptive only",
+      "initial_tp_distinct_counts": [
+        1,
+        3,
+        3
+      ],
+      "render_peak_rss_bytes": 2226843648,
+      "render_wall_s": 196.69593681100002,
+      "scale_c": [
+        39.25240157610551,
+        56.233641451962114
+      ],
+      "source_files_unchanged_after_rendering": true
+    },
+    "E12_g4_alibaba": {
+      "assets": {
+        "plots/demo/anim_packing_vs_thermal_predictive_seed1.gif": {
+          "bytes": 20589630,
+          "inspected_frame_indices": [
+            0,
+            120,
+            719
+          ],
+          "labels_in_metadata": true,
+          "n_frames": 720,
+          "sha256": "45444f976d78e5665bb0140679ee8a2e416bef352f952ca2a2ce95e539ce338b",
+          "size": [
+            840,
+            490
+          ]
+        },
+        "plots/demo/anim_power_balance_vs_thermal_predictive_seed1.gif": {
+          "bytes": 21470118,
+          "inspected_frame_indices": [
+            0,
+            120,
+            719
+          ],
+          "labels_in_metadata": true,
+          "n_frames": 720,
+          "sha256": "69072486e7c238630c1f11b5c0d9d28cf88b709b4746a3fd81046d1108244aaa",
+          "size": [
+            840,
+            490
+          ]
+        },
+        "plots/demo/heatmaps_seed1.png": {
+          "bytes": 821001,
+          "labels_in_metadata": true,
+          "sha256": "153220a90e356649ece7091eaa49baa9a7977541bbf88d9156d06668dd500b82",
+          "size": [
+            2000,
+            650
+          ]
+        },
+        "plots/demo/timeseries_seed1.png": {
+          "bytes": 199806,
+          "labels_in_metadata": true,
+          "sha256": "342a469fd0ffdeae241d9577ce60b8be58d9153857c57fd890e517329befc067",
+          "size": [
+            1200,
+            800
+          ]
+        }
+      },
+      "early_frame_caption": "tie-breaking among thermally identical idle racks; not a thermal decision",
+      "initial_tp_distinct_counts": [
+        1,
+        1,
+        1
+      ],
+      "render_peak_rss_bytes": 2637361152,
+      "render_wall_s": 218.146840526,
+      "scale_c": [
+        38.70223045300105,
+        42.41328616130187
+      ],
+      "source_files_unchanged_after_rendering": true
+    }
+  },
+  "utc": "2026-10-31T12:53:02.551531+00:00"
+}
