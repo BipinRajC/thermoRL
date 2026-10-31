@@ -15,7 +15,7 @@ import pandas as pd
 import yaml
 
 from thermorl2.core.state import Ambient
-from thermorl2.experiments.provenance import environment, git_state, sha256_file, write_manifest
+from thermorl2.experiments.provenance import application_source_hashes, environment, git_state, sha256_file, write_manifest
 from thermorl2.experiments.select_fmu import classify_delta
 from thermorl2.raps_adapter.coupling import CouplingParams
 from thermorl2.raps_adapter.power_model import legacy_config, rack_power_bounds
@@ -193,8 +193,7 @@ def run_probe(kind: str, system: str, out: Path) -> dict:
                       "t_air_k": ambient.t_air_k, "t_air_k_by_unit": ambient.t_air_k_by_unit,
                       "t_ext_k": ambient.t_ext_k} for label, power, ambient in actions]}
     _json(out / "provenance/input_sequence.json", input_sequence)
-    source_hashes = {str(path.relative_to(repo_root())): sha256_file(path)
-                     for path in (repo_root() / "thermoRL/thermorl-v2/thermorl2").rglob("*.py")}
+    source_hashes = application_source_hashes()
     sanity = {"all_outputs_finite": True, "coolant_min_c": None, "coolant_max_c": None, "warmup_completed": False}
     warm_samples = {}
     warming = True

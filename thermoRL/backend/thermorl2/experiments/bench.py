@@ -28,7 +28,7 @@ def guard_result(total_s: float, warmup_instantiation_s: float) -> dict:
 def _worker(system: str, hours: int) -> dict:
     import numpy as np
     from thermorl2.core.state import Ambient
-    from thermorl2.experiments.provenance import environment, git_state, sha256_file
+    from thermorl2.experiments.provenance import application_source_hashes, environment, git_state, sha256_file
     from thermorl2.raps_adapter.coupling import CouplingParams
     from thermorl2.raps_adapter.engine_factory import EngineSpec, build_engine, is_power_tick, rack_kw_from_power_df
     from thermorl2.raps_adapter.power_model import legacy_config, rack_power_bounds, raps_rack_kw
@@ -43,8 +43,7 @@ def _worker(system: str, hours: int) -> dict:
     fmu_sha = sha256_file(fmu_path)
     if fmu_sha != spec.fmu_sha256:
         raise ValueError("FMU SHA mismatch")
-    source_hashes = {str(path.relative_to(repo_root())): sha256_file(path)
-                     for path in (repo_root() / "thermoRL/thermorl-v2/thermorl2").rglob("*.py")}
+    source_hashes = application_source_hashes()
     idle = raps_rack_kw(cfg, 0, 0)
     peak = raps_rack_kw(cfg, cfg["CPUS_PER_NODE"], cfg["GPUS_PER_NODE"])
     probe_idle, probe_peak = rack_power_bounds(cfg)

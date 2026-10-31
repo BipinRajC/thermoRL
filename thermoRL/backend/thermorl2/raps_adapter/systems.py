@@ -26,3 +26,12 @@ def get_system(name: str) -> SystemSpec:
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[4]
+
+
+def project_root() -> Path:
+    """Current backend package root (holds thermorl2/, experiments/, tests/).
+
+    Relocation-safe: never hardcode the package directory name. Historical
+    records keep their recorded paths; see docs/results/path_mapping.md.
+    """
+    return Path(__file__).resolve().parents[2]

@@ -13,14 +13,14 @@ import pandas as pd
 
 from thermorl2.core.scorers import make_scorer
 from thermorl2.core.state import Ambient
-from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest, require_assertions, process_memory
+from thermorl2.experiments.provenance import git_state, sha256_file, write_manifest, require_assertions, process_memory, application_source_hashes
 from thermorl2.raps_adapter.coupling import CouplingParams
 from thermorl2.raps_adapter.engine_factory import EngineSpec, build_engine, is_power_tick, rack_kw_from_power_df
 from thermorl2.raps_adapter.jobs import jobs_from_frame
 from thermorl2.raps_adapter.power_model import legacy_config, rack_power_bounds, raps_rack_kw
 from thermorl2.raps_adapter.rack_geometry import RackGeometry
 from thermorl2.raps_adapter.scheduler import LATENCY_SPAN, PlacementScheduler, ThermalView
-from thermorl2.raps_adapter.systems import get_system, repo_root
+from thermorl2.raps_adapter.systems import get_system, project_root, repo_root
 from thermorl2.thermal.fmu_backend import FmuBackend
 
 
@@ -51,7 +51,7 @@ def load_episode_workload(cfg,seed,horizon_s):
     if kind not in ('synthetic','alibaba'):
         raise ValueError(f'unsupported workload kind: {kind}')
     path=Path(workload['path'])
-    if not path.is_absolute(): path=repo_root()/'thermoRL/thermorl-v2'/path
+    if not path.is_absolute(): path=project_root()/path
     assert sha256_file(path)==workload['sha256'], 'workload SHA mismatch'
     meta_path=Path(str(path)+'.meta.json')
     if 'meta_sha256' in workload:
@@ -125,8 +125,7 @@ class EpisodeRunner:
         workload_path,frame,sidecar=load_episode_workload(cfg,self.seed,horizon_s)
         git = git_state()
         porcelain = subprocess.check_output(["git", "status", "--porcelain"], cwd=repo_root(), text=True)
-        source_hashes = {str(path.relative_to(repo_root())): sha256_file(path)
-                         for path in (repo_root() / "thermoRL/thermorl-v2/thermorl2").rglob("*.py")}
+        source_hashes = application_source_hashes()
         for path in (repo_root() / "sim-raps/raps/engine.py", repo_root() / "sim-raps/raps/power.py", repo_root() / "sim-raps/config" / f"{system}.yaml"):
             source_hashes[str(path.relative_to(repo_root()))] = sha256_file(path)
         self.run_dir.mkdir(parents=True, exist_ok=False)

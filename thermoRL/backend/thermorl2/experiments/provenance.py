@@ -8,7 +8,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-from thermorl2.raps_adapter.systems import repo_root
+from thermorl2.raps_adapter.systems import project_root, repo_root
+
+
+def application_source_hashes() -> dict:
+    """SHA-256 of every thermorl2 module, keyed relative to the repository root."""
+    return {str(path.relative_to(repo_root())): sha256_file(path)
+            for path in sorted((project_root() / 'thermorl2').rglob('*.py'))}
 
 
 def require_assertions():

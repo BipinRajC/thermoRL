@@ -104,6 +104,6 @@ def test_later_scientific_failure_escalates_a_draining_stop(tmp_path):
 
 
 def test_nested_failed_archives_are_gitignored():
-    path='thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/failed_fixture/packing_seed1/decisions.jsonl'
+    path='thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/failed_fixture/packing_seed1/decisions.jsonl'
     process=subprocess.run(['git','check-ignore','-q',path],cwd=Path(__file__).resolve().parents[4])
     assert process.returncode==0
