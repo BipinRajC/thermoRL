@@ -1,0 +1,67 @@
+{
+  "clone_command": [
+    "git",
+    "clone",
+    "--quiet",
+    "--branch",
+    "feat/parasparam-demo",
+    "https://github.com/BipinRajC/HPC-exadigit.git",
+    "/tmp/thermorl-freshclone-20261031-06032b4"
+  ],
+  "clone_command_returncode": null,
+  "clone_command_wall_s": null,
+  "clone_directory": "/tmp/thermorl-freshclone-20261031-06032b4",
+  "clone_sha": "06032b45ee650e235d5b2b69a5eb5d012a2732e8",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/tmp/thermorl-freshclone-20261031-06032b4",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "",
+      "wall_s": 0.011152582000022448
+    },
+    {
+      "command": [
+        "git",
+        "fsck",
+        "--connectivity-only",
+        "--no-dangling"
+      ],
+      "cwd": "/tmp/thermorl-freshclone-20261031-06032b4",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "",
+      "wall_s": 0.011351328000046124
+    },
+    {
+      "command": [
+        "/usr/bin/uv",
+        "sync",
+        "--frozen"
+      ],
+      "cwd": "/tmp/thermorl-freshclone-20261031-06032b4/thermoRL/thermorl-v2",
+      "returncode": 2,
+      "stderr": "Using CPython 3.12.14\nCreating virtual environment at: .venv\n   Building raps @ file:///tmp/thermorl-freshclone-20261031-06032b4/sim-raps\n   Building thermorl2 @ file:///tmp/thermorl-freshclone-20261031-06032b4/thermoRL/thermorl-v2\n   Building gym==0.26.2\nDownloading pygments (1.2MiB)\nDownloading sympy (6.0MiB)\nDownloading lxml (5.0MiB)\nDownloading aiohttp (1.7MiB)\nDownloading pillow (6.6MiB)\nDownloading scipy (33.7MiB)\nDownloading fmpy (6.1MiB)\nDownloading nvidia-curand (56.8MiB)\nDownloading networkx (2.0MiB)\nDownloading nvidia-cublas (403.5MiB)\nDownloading triton (236.5MiB)\nDownloading fonttools (5.1MiB)\nDownloading pydantic-core (2.0MiB)\nDownloading grpcio (6.8MiB)\nDownloading nvidia-cuda-runtime (2.1MiB)\nDownloading pandas (10.3MiB)\nDownloading kiwisolver (1.4MiB)\nDownloading nvidia-cuda-nvrtc (86.0MiB)\nDownloading nvidia-nvshmem-cu13 (57.6MiB)\nDownloading nvidia-cusparselt-cu13 (162.3MiB)\nDownloading nvidia-cusolver (191.6MiB)\nDownloading virtualenv (5.2MiB)\nDownloading nvidia-cusparse (139.2MiB)\nDownloading matplotlib (9.4MiB)\nDownloading nvidia-cufft (204.2MiB)\nDownloading cryptography (4.5MiB)\nDownloading numpy (15.9MiB)\nDownloading pyarrow (47.8MiB)\nDownloading nvidia-cuda-cupti (10.2MiB)\nDownloading botocore (15.2MiB)\nDownloading nvidia-cufile (1.2MiB)\nDownloading nvidia-cudnn-cu13 (527.5MiB)\nDownloading nvidia-nccl-cu13 (206.0MiB)\nDownloading nvidia-nvjitlink (40.5MiB)\nDownloading cmake (28.8MiB)\nDownloading torch (528.9MiB)\nDownloading cuda-bindings (6.8MiB)\n Downloaded pygments\n Downloaded nvidia-cufile\n      Built gym==0.26.2\n Downloaded kiwisolver\n      Built raps @ file:///tmp/thermorl-freshclone-20261031-06032b4/sim-raps\n      Built thermorl2 @ file:///tmp/thermorl-freshclone-20261031-06032b4/thermoRL/thermorl-v2\n Downloaded aiohttp\n Downloaded pydantic-core\n Downloaded networkx\n Downloaded nvidia-cuda-runtime\n Downloaded cryptography\n Downloaded lxml\n Downloaded fonttools\n Downloaded virtualenv\n Downloaded fmpy\n Downloaded sympy\n Downloaded pillow\n Downloaded grpcio\n Downloaded cuda-bindings\n Downloaded matplotlib\n Downloaded pandas\n Downloaded nvidia-cuda-cupti\n Downloaded botocore\n Downloaded numpy\n Downloaded cmake\n Downloaded scipy\n Downloaded nvidia-nvjitlink\n Downloaded pyarrow\n Downloaded nvidia-curand\n Downloaded nvidia-nvshmem-cu13\n Downloaded nvidia-cuda-nvrtc\n Downloaded nvidia-cusparse\n Downloaded nvidia-cusparselt-cu13\n Downloaded nvidia-cusolver\n Downloaded nvidia-cufft\n Downloaded nvidia-nccl-cu13\n Downloaded triton\n Downloaded nvidia-cublas\n Downloaded nvidia-cudnn-cu13\n Downloaded torch\nPrepared 134 packages in 13m 53s\nwarning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.\nerror: Failed to install: torch-2.14.0-cp312-cp312-manylinux_2_28_x86_64.whl (torch==2.14.0)\n  cause: Failed to copy to `/tmp/thermorl-freshclone-20261031-06032b4/thermoRL/thermorl-v2/.venv/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so`\n  cause: failed to copy file from /home/bipin/.cache/uv/archive-v0/0442I37NnbYFZVnh/torch/lib/libtorch_cpu.so to /tmp/thermorl-freshclone-20261031-06032b4/thermoRL/thermorl-v2/.venv/lib/python3.12/site-packages/torch/lib/.tmpGOfrRK: Disk quota exceeded (os error 122)\n",
+      "stdout": "",
+      "wall_s": 837.9776738149999
+    }
+  ],
+  "error": "AssertionError('uv sync failed')",
+  "fmu_executions_in_this_phase": 0,
+  "forbidden_commands_executed": false,
+  "same_machine_only": true,
+  "setup_interruption": {
+    "cause": "unresolved",
+    "clone_clean_and_connectivity_verified_before_continuation": true,
+    "clone_completed_but_controller_output_not_collected": true,
+    "first_controller_exit_code": 143,
+    "no_sync_tests_or_FMU_executed_before_continuation": true
+  },
+  "started_utc": "2026-10-31T12:48:26.745550+00:00",
+  "status": "failed"
+}

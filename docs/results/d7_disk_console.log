@@ -1,0 +1,7 @@
+['git', 'clone', '--quiet', '--branch', 'feat/parasparam-demo', 'https://github.com/BipinRajC/HPC-exadigit.git', '/home/bipin/thermorl-freshclone-20261031-disk'] 0
+['/usr/bin/uv', 'sync', '--frozen'] 0
+['/usr/bin/uv', 'run', 'pytest', 'tests/unit', 'tests/integration', '-q'] 0
+['/usr/bin/uv', 'run', 'python', '-c', 'import json; from thermorl2.experiments.provenance import environment; import raps; print(json.dumps({"environment":environment(),"raps_module":raps.__file__},sort_keys=True))'] 0
+196 non-FMU tests passed; 22 pinned hashes passed; the one Summit smoke is pending.
+['/usr/bin/uv', 'run', 'python', '-m', 'thermorl2.experiments.fmu_smoke', '--system', 'summit'] 0
+196 non-FMU tests passed; 22 pinned hashes passed; exactly one Summit smoke passed with finite output.

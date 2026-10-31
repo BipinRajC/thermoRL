@@ -87,11 +87,13 @@ Mixed-SHA numerical-source equivalence was independently reviewed for E12; the g
 On Arch x86-64, clone the approved branch to a new directory outside the working repository, record its SHA, then use the locked environment:
 
 ```bash
-git clone --branch feat/parasparam-demo https://github.com/BipinRajC/thermoRL.git /tmp/thermorl-reproduction-UNIQUE
-cd /tmp/thermorl-reproduction-UNIQUE/thermoRL/thermorl-v2
+git clone --branch feat/parasparam-demo https://github.com/BipinRajC/thermoRL.git "$HOME/thermorl-reproduction-UNIQUE"
+cd "$HOME/thermorl-reproduction-UNIQUE/thermoRL/thermorl-v2"
 uv sync --frozen
 uv run pytest tests/unit tests/integration -q
 ```
+
+Use an on-disk scratch directory with adequate space. In D7, `/tmp` was tmpfs and frozen setup failed with “Disk quota exceeded” while copying Torch; the failed record is preserved. RAPS brings substantial locked dependencies, even though this demo does not run RL. Keeping the clone and uv cache on the same filesystem permits hardlinking and avoids the observed cross-filesystem full-copy fallback. Do not change the lock or omit dependencies to make setup pass.
 
 The editable `sim-raps` dependency resolves within this clone. Do not run unqualified pytest: it includes FMU tests. A same-machine clone/test/smoke establishes only that narrow portability check, not portability across machines or platforms.
 
@@ -148,3 +150,9 @@ uv run python -m thermorl2.experiments.demo_assets experiments/summit/E12_g4_ali
 They are offline rendering commands, not the frozen report or a simulation. They refuse an existing destination/check/inventory. The originals remain immutable. E11 and E12 temperature scales differ; keep the printed labels, evaluation marker and negative-G4 caption visible.
 
 Ignored raw data is not supplied by git. The [backup record](raw_backup_record.json) must identify a Bipin-provided destination and verify every copied file against the E11/E12 primary, repeat and interruption/relocation inventories before backup success is claimed. Copy with `rsync -a` or an equivalent read-only source operation, never delete into the source. An unresolved destination leaves backup and final audit-readiness pending, even when figures and D7 are ready.
+
+## D7 measured outcome in this phase
+
+The successful on-disk clone at `/home/bipin/thermorl-freshclone-20261031-disk` contains code candidate `06032b45ee650e235d5b2b69a5eb5d012a2732e8`. Frozen setup passed; 196 tests passed in 39.99 s; all 22 pinned hashes passed; exactly one Summit smoke was finite (257 units, 600 s capped warm-up; 67.984 s inside the smoke). Its complete command wall times are in the JSON record. The clone remains outside the working repository; later packaging commits change only documents/assets/records.
+
+The initial interactive setup controller exited143 before output collection. Its clean clone was verified with Git status/connectivity checks; subsequent frozen setup in `/tmp` then failed on quota copying Torch. That failed setup record is preserved as [d7_setup_attempt1.json](d7_setup_attempt1.json); no tests or smoke had run. Only the failed scratch clone was removed to reclaim tmpfs, as recorded in [cleanup](d7_failed_clone_cleanup.json). A new on-disk clone used the unchanged lock and completed the check. These are environment/setup attempts, not extra FMU runs or policy experiments.

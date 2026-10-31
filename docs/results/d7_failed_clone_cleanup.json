@@ -1,0 +1,9 @@
+{
+  "authorization": "Bipin post-C4 \u00a77 permits deleting scratch clone afterwards",
+  "preserved_attempt_record": "docs/results/d7_setup_attempt1.json",
+  "reason": "reclaim tmpfs space after preserved frozen-setup quota failure",
+  "removed": true,
+  "removed_path": "/tmp/thermorl-freshclone-20261031-06032b4",
+  "utc": "2026-10-31T13:08:35.744280+00:00",
+  "working_repository_or_ignored_raw_data_removed": false
+}
