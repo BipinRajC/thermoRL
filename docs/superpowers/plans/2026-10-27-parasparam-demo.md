@@ -1051,3 +1051,18 @@ Bipin accepted C3 with Opus wording conditions (`docs/checkpoints/C3-review-opus
 - **D8 — coupling wording (applies in Task 17; record the decision now).** Quote spec §8 verbatim, then add a dated correction: "On the Summit twin, rack coolant temperature depends on total facility load and on the placement of load elsewhere, not only on a rack's own power (C1 I1; E10/E11 M3); the mechanism is unresolved." Do not edit the frozen spec text in place.
 - **D7 — deferred** to Task 17, after the E12 C′ result. No E11 rerun is authorised.
 - **Additional condition:** before launch, confirm that non-FMU tests cover scheduler behaviour with zero free nodes (head-of-line queueing that persists across power ticks). Add the coverage if it is missing. E11 never queued; E12 will.
+
+## Approved post-C4 decisions (2026-10-31)
+
+- **C4 accepted with conditions C1–C3** (Opus review `docs/checkpoints/C4-review-opus.md`). The frozen E12 outcome stands: "no material value on the homogeneous twin"; `value_beyond_power = false`.
+- **C1 — recovery ratified.**
+  - Bipin's instruction "dont stop, resume wherever it stopped" is ratified as implemented: reuse 4 validated runs, archive and restart the 3 interrupted attempts once each, run 8 unstarted configurations, then the 1 planned C′ repeat. That is 19 cumulative attempts, with orchestration-only source changes at `e0e1522`.
+  - The `approved_by` field in `recovery_approval.json` reflects that instruction, not a prior review of the accounting or the code diff. This addendum is the ratification.
+  - The interruption cause is **reported by Bipin as memory pressure on Arch**. The controller received SIGTERM (exit 143).
+  - The interruption is operational, not scientific. The earlier "session lifetime limit" inference is superseded by Bipin's report.
+  - If system logs from around 2026-10-30 20:19 UTC (for example earlyoom or systemd-oomd entries in `journalctl`) corroborate it, cite them read-only. Otherwise label it "Bipin-reported".
+- **C2:** the results note describes E12's ordering exactly as in §3 below, with the seed-correlation caveat. "packing ≈ TP on the primary metric" applies to E11 only.
+- **C3:** labelled demo copies of the figures and GIFs, per review §5 (V1–V3, V5). Originals are never overwritten.
+- **D7 = option (b):** fresh clone, `uv sync --frozen`, non-FMU tier, input/FMU hash verification, and one Summit FMU smoke. No E11 or E12 rerun. Plan Task 17 Step 4's "re-run one E11 run" and full `uv run pytest -q` are superseded by this decision.
+- **Task 15:** deferred. The labelled GIFs are the headline fallback. Revisit only if packaging finishes early, and only with a new Bipin decision.
+- **Frozen, and not to be revisited:** all policies, scheduler and spanning rules, G1, thresholds, workloads, seeds, ρ, horizon, warm-up, FMU selection, metrics and both G4 conclusions.
