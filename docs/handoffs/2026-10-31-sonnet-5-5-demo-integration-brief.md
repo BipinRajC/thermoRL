@@ -4,6 +4,12 @@
 
 **Author:** Opus (independent reviewer and integration architect), 2026-10-31. **Base:** `feat/parasparam-demo` at `beafb51` or later.
 
+> **Progress update (2026-10-31, done on the Mac by Opus at Bipin's request):**
+> - **A1 is DONE** in commit `a5d3824`. `project_root()` lives in `systems.py` and `application_source_hashes()` in `provenance.py`; the runner, bench and probes use them. `tests/unit/test_relocation.py` was added and the stale path in `test_e11_review_fixes.py:107` was fixed. Non-FMU tier on the Mac: 196 passed, 4 failed. All 4 failures are the E10-ledger tests, which pass only after A2 re-tracks those files.
+> - **A3 is PARTLY DONE:** `docs/results/path_mapping.md` was added, and the runbook and results-note links and backup wording were updated. **Still to do on Arch, after A2:** the `DEMO.md`, `INDEX.md` and backend README link/backup updates (those files are absent from git until A2), and `uv sync --frozen`.
+> - **A2 tool ready:** `docs/handoffs/scripts/retrack_dropped_files.py`. Run it as a dry run first, then `--apply`. It hash-verifies every file, refuses E11/E12 raw `runs/`, stages paths one at a time and writes `docs/results/post_rename_retrack_check.json`. It never commits.
+> - **Next on Arch:** A2 → the rest of A3 → A4 (fresh on-disk clone; expect all ≈ 200 tests to pass) → **CK-A STOP**.
+
 **You have no prior conversation context.** Everything you need is in this brief and the files it names.
 
 ---

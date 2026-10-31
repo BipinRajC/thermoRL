@@ -1,8 +1,10 @@
 # Reproduce the ParasParam demo
 
-This runbook separates **historically executed commands** from **future reproduction commands**. The scientific commands below were **not re-executed in the post-C4 packaging phase**. The only newly authorized FMU execution is the D7(b) Summit smoke. Offline labelled rendering reads existing ledgers and executes no policy or FMU. Current results and limitations are in the [results note](2026-11-parasparam-demo-results.md); presentation assets and claims are mapped in [DEMO.md](../../thermoRL/thermorl-v2/experiments/DEMO.md).
+> **Post-rename update (2026-10-31).** Paths in this living runbook now use `thermoRL/backend` (formerly `thermoRL/thermorl-v2`) and `thermoRL/frontend` (formerly `thermoRL/thermoRL-new`). Checkpoints, manifests, inventories and other historical records keep the paths they recorded; see [path mapping](path_mapping.md). The raw-data backup was waived by Bipin; see the packaging section.
 
-Use Arch Linux x86-64 for FMU execution. The FMUs ship Linux/Windows binaries, not macOS binaries. On the Mac, present pre-rendered figures/GIFs; a live simulation requires Arch. All commands below, unless explicitly marked otherwise, use the v2 directory `thermoRL/thermorl-v2` and the locked Python 3.12 environment.
+This runbook separates **historically executed commands** from **future reproduction commands**. The scientific commands below were **not re-executed in the post-C4 packaging phase**. The only newly authorized FMU execution is the D7(b) Summit smoke. Offline labelled rendering reads existing ledgers and executes no policy or FMU. Current results and limitations are in the [results note](2026-11-parasparam-demo-results.md); presentation assets and claims are mapped in [DEMO.md](../../thermoRL/backend/experiments/DEMO.md).
+
+Use Arch Linux x86-64 for FMU execution. The FMUs ship Linux/Windows binaries, not macOS binaries. On the Mac, present pre-rendered figures/GIFs; a live simulation requires Arch. All commands below, unless explicitly marked otherwise, run from the backend directory `thermoRL/backend` (named `thermoRL/thermorl-v2` before rename `c09f735`; historical records keep that name, see [path mapping](path_mapping.md)) with the locked Python 3.12 environment.
 
 ## Executed — historical scientific record
 
@@ -10,18 +12,18 @@ All these scientific runs happened on the Arch machine with Python 3.12.14, FMPy
 
 | Stage | Executed source / anchor | Measured wall scope | Wall seconds | Source |
 |---|---|---|---:|---|
-| Lassen G2 original | `41c6585` | manifest `timings.total_s`, complete probe | 18.217528 | [manifest](../../thermoRL/thermorl-v2/experiments/lassen/E02_g2_packed_vs_spread/provenance/manifest.json) |
-| Summit G2 original | `41c6585` | same; G2 probes co-scheduled as separate processes | 1172.611832 | [manifest](../../thermoRL/thermorl-v2/experiments/summit/E02_g2_packed_vs_spread/provenance/manifest.json) |
-| Marconi100 G2 original | `41c6585` | same | 22.922057 | [manifest](../../thermoRL/thermorl-v2/experiments/marconi100/E02_g2_packed_vs_spread/provenance/manifest.json) |
-| X01 selection | G2 result commit `2d14161` | offline mechanical selection; separate wall not recorded | not recorded | [selection](../../thermoRL/thermorl-v2/experiments/cross_system/X01_fmu_selection/results/summary.json) |
+| Lassen G2 original | `41c6585` | manifest `timings.total_s`, complete probe | 18.217528 | [manifest](../../thermoRL/backend/experiments/lassen/E02_g2_packed_vs_spread/provenance/manifest.json) |
+| Summit G2 original | `41c6585` | same; G2 probes co-scheduled as separate processes | 1172.611832 | [manifest](../../thermoRL/backend/experiments/summit/E02_g2_packed_vs_spread/provenance/manifest.json) |
+| Marconi100 G2 original | `41c6585` | same | 22.922057 | [manifest](../../thermoRL/backend/experiments/marconi100/E02_g2_packed_vs_spread/provenance/manifest.json) |
+| X01 selection | G2 result commit `2d14161` | offline mechanical selection; separate wall not recorded | not recorded | [selection](../../thermoRL/backend/experiments/cross_system/X01_fmu_selection/results/summary.json) |
 | Summit G1 / G3 | `6f88579` | manifest complete probes, run as separate parallel processes | 1792.660297 / 1201.512795 | [C1 timings](../checkpoints/C1-fmu-selection-and-physics.md#wall-times-measured-seconds) |
 | Six-hour idle bench | implementation `7695c34`; result `2a2616f` | isolated process launch through exit, imports/warm-up included | 912.539314 | [C2 bench](../checkpoints/C2-vertical-slice.md#task-5-bench-d1-and-d2) |
 | E10 packing / PB / packing repeat | `0c32cf5` | EpisodeRunner totals, excluding interpreter imports | 540.665581 / 484.213451 / 538.399463 | [C2](../checkpoints/C2-vertical-slice.md) |
-| E11 15-run matrix | `6ee93c4` | three-worker controller `matrix_wall_s`, no retries | 4746.698387 | [runtime](../../thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/results/matrix_runtime.json) |
-| E12 recovery controller | `e0e1522` | controller execution after skip validation, 11 completions | 5033.356971 | [runtime](../../thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/results/matrix_runtime.json) |
+| E11 15-run matrix | `6ee93c4` | three-worker controller `matrix_wall_s`, no retries | 4746.698387 | [runtime](../../thermoRL/backend/experiments/summit/E11_g4_synthetic/results/matrix_runtime.json) |
+| E12 recovery controller | `e0e1522` | controller execution after skip validation, 11 completions | 5033.356971 | [runtime](../../thermoRL/backend/experiments/summit/E12_g4_alibaba/results/matrix_runtime.json) |
 | E12 complete primary span | original `18dfea1`, recovery `e0e1522` | first original primary start to last primary completion, **including interruption/recovery downtime** | 9565.744325 | same |
-| E12 TP seed1 repeat | `e0e1522` | guarded subprocess plus validation | 1479.362241 | [repeat journal](../../thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/rerun_1/journal.jsonl) |
-| E12 final offline report | frozen recovery code | main after imports, validation/metrics/rendering included | 458.675731 | [report runtime](../../thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/report_runtime.json) |
+| E12 TP seed1 repeat | `e0e1522` | guarded subprocess plus validation | 1479.362241 | [repeat journal](../../thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/rerun_1/journal.jsonl) |
+| E12 final offline report | frozen recovery code | main after imports, validation/metrics/rendering included | 458.675731 | [report runtime](../../thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/report_runtime.json) |
 
 Earlier per-process memory was not uniformly recorded. Do not infer G2/G1/G3/E10/E11 memory from later E12 measurements. E12 selected simulation own-process peak RSS was **1.63–1.99 GiB**; recovery parent own peak **1.356 GiB**; primary service cgroup high-water **6.925 GiB** includes controller and simultaneous workers. Report own-process high-water was **4.979 GiB**. Follow-up cgroup peak **5.974 GiB** spans the repeat, comparison and report. RSS, cgroup memory and total host memory are different scopes; these figures do not guarantee adequate headroom on a busy machine.
 
@@ -74,7 +76,7 @@ uv run python -m thermorl2.experiments.e12_evidence generate --config thermorl2/
 uv run python -m thermorl2.experiments.report experiments/summit/E12_g4_alibaba --evidence experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json
 ```
 
-The recovery matrix ran under `thermorl-e12-recovery-20261030T2050Z.service`; the guarded repeat → evidence → report sequence under `thermorl-e12-postmatrix-20261030T2123Z.service`. Both user units used `RuntimeMaxSec=infinity`, `Restart=no`, `MemoryAccounting=yes`, `RemainAfterExit=yes`, an explicit working directory, and uniquely created console logs. Both exited successfully with zero restarts. Exact argv, settings, service timestamps and sequential commands are preserved under [recovery_1](../../thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/recovery_1/).
+The recovery matrix ran under `thermorl-e12-recovery-20261030T2050Z.service`; the guarded repeat → evidence → report sequence under `thermorl-e12-postmatrix-20261030T2123Z.service`. Both user units used `RuntimeMaxSec=infinity`, `Restart=no`, `MemoryAccounting=yes`, `RemainAfterExit=yes`, an explicit working directory, and uniquely created console logs. Both exited successfully with zero restarts. Exact argv, settings, service timestamps and sequential commands are preserved under [recovery_1](../../thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/recovery_1/).
 
 Bipin ratified reuse4 + restart3 once + first-attempt8 + planned repeat1: **19 cumulative attempts**, including three preserved interruptions. Archive journal records were appended by recovery preservation, not observed by the dead controller; child final exit statuses were unknown (`returncode:null`). **Memory pressure is Bipin-reported**; the controller exited SIGTERM143. The read-only journal query had no corroborating entries. The earlier session-lifetime inference is superseded. Approximately **1850 s downtime** is derived as 9565.7 − (approximately 2680 original-active + 5033.4 recovery), using an approximate original termination time. It is not an exact measured field. E11's `matrix_wall_s` is controller wall; E12's same key is explicitly the downtime-inclusive span. Do not compare them as equivalent execution costs.
 
@@ -88,7 +90,7 @@ On Arch x86-64, clone the approved branch to a new directory outside the working
 
 ```bash
 git clone --branch feat/parasparam-demo https://github.com/BipinRajC/thermoRL.git "$HOME/thermorl-reproduction-UNIQUE"
-cd "$HOME/thermorl-reproduction-UNIQUE/thermoRL/thermorl-v2"
+cd "$HOME/thermorl-reproduction-UNIQUE/thermoRL/backend"
 uv sync --frozen
 uv run pytest tests/unit tests/integration -q
 ```
@@ -118,7 +120,7 @@ For any separately authorized matrix, prefer a durable user service with a uniqu
 ```bash
 # Future template only; replace UNIQUE and /ABS/NEW-CONSOLE.log before use.
 systemd-run --user --unit=thermorl-matrix-UNIQUE --service-type=exec \
-  --property=WorkingDirectory=/ABS/CLONE/thermoRL/thermorl-v2 \
+  --property=WorkingDirectory=/ABS/CLONE/thermoRL/backend \
   --property=RuntimeMaxSec=infinity --property=Restart=no \
   --property=MemoryAccounting=yes --property=RemainAfterExit=yes \
   --property=StandardOutput=append:/ABS/NEW-CONSOLE.log --property=StandardError=inherit \
@@ -149,10 +151,10 @@ uv run python -m thermorl2.experiments.demo_assets experiments/summit/E12_g4_ali
 
 They are offline rendering commands, not the frozen report or a simulation. They refuse an existing destination/check/inventory. The originals remain immutable. E11 and E12 temperature scales differ; keep the printed labels, evaluation marker and negative-G4 caption visible.
 
-Ignored raw data is not supplied by git. The [backup record](raw_backup_record.json) must identify a Bipin-provided destination and verify every copied file against the E11/E12 primary, repeat and interruption/relocation inventories before backup success is claimed. Copy with `rsync -a` or an equivalent read-only source operation, never delete into the source. An unresolved destination leaves backup and final audit-readiness pending, even when figures and D7 are ready.
+Ignored raw data is not supplied by git. **Backup waived by Bipin on 2026-10-31** ("yes lets skip the backup thing"; plan addendum and [backup record](raw_backup_record.json), `status: skipped_by_user`). No off-machine copy exists: the raw ledgers remain local on the Arch disk, and no disaster-recovery guarantee is claimed. If a backup is ever made, copy with `rsync -a` or an equivalent read-only source operation, never delete into the source, and verify every copied file against the E11/E12 primary, repeat and interruption/relocation inventories.
 
 ## D7 measured outcome in this phase
 
-The successful on-disk clone at `/home/bipin/thermorl-freshclone-20261031-disk` contains code candidate `06032b45ee650e235d5b2b69a5eb5d012a2732e8`. Frozen setup passed; 196 tests passed in 39.99 s; all 22 pinned hashes passed; exactly one Summit smoke was finite (257 units, 600 s capped warm-up; 67.984 s inside the smoke). Its complete command wall times are in the JSON record. The clone remains outside the working repository; later packaging commits change only documents/assets/records.
+The successful on-disk clone at `/home/bipin/thermorl-freshclone-20261031-disk` contains code candidate `06032b45ee650e235d5b2b69a5eb5d012a2732e8`. Frozen setup passed; 196 tests passed in 39.99 s; all 22 pinned hashes passed; exactly one Summit smoke was finite (257 units, 600 s capped warm-up; 67.984 s inside the smoke). Its complete command wall times are in the JSON record. The clone remains outside the working repository; packaging commits up to `b3bd5ac` changed only documents/assets/records. **D7 does not cover current HEAD:** the rename `c09f735` and the later relocation-only path fixes (workload root and application source map; see [path mapping](path_mapping.md)) post-date it and need their own post-rename acceptance (fresh on-disk clone, `uv sync --frozen`, non-FMU tier).
 
 The initial interactive setup controller exited143 before output collection. Its clean clone was verified with Git status/connectivity checks; subsequent frozen setup in `/tmp` then failed on quota copying Torch. That failed setup record is preserved as [d7_setup_attempt1.json](d7_setup_attempt1.json); no tests or smoke had run. Only the failed scratch clone was removed to reclaim tmpfs, as recorded in [cleanup](d7_failed_clone_cleanup.json). A new on-disk clone used the unchanged lock and completed the check. These are environment/setup attempts, not extra FMU runs or policy experiments.
