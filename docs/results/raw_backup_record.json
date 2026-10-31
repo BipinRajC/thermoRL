@@ -1,8 +1,14 @@
 {
   "copied_bytes": 0,
   "copied_files": 0,
+  "decision": {
+    "by": "Bipin",
+    "quote": "yes lets skip the backup thing",
+    "recorded_at_source_sha": "c09f735ddde82d0acaf54f2f0900a2563c3915ee",
+    "recorded_utc": "2026-10-31T13:37:29.743099+00:00"
+  },
   "destination": null,
-  "destination_description": "Pending Bipin-provided external disk mount or rsync target; scratch clone is not a backup.",
+  "destination_description": "No off-machine destination selected; backup explicitly waived.",
   "expected_inventory_entries": 230,
   "historical_and_relocation_inventory_sha256": {
     "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/interruption_inventory.json": "e3c33573b326c27bc3f566b8beb6ce143974813c00be3b0a676a4f09f1b0cde3",
@@ -34,7 +40,8 @@
   "optional_dataset_included": false,
   "prepared_at_sha": "1678d0a3ed6ff35abebf1b44081e6c9860cab6db",
   "prepared_utc": "2026-10-31T12:53:41.109240+00:00",
-  "reason": "Bipin must provide an external disk directory or rsync target; none supplied yet. No raw copy has been made.",
+  "reason": "Bipin explicitly chose to skip the raw backup; this is no longer a required destination/input for demo preparation.",
+  "retention_note": "Raw ledgers remain on the Arch local disk. No off-machine copy or disaster-recovery guarantee is claimed.",
   "scope": [
     "E12 runs/",
     "E12 provenance/rerun_1/runs/",
@@ -45,6 +52,6 @@
   "source_after_copy_sample": {
     "status": "not performed: no copy"
   },
-  "status": "pending_destination",
-  "verification_result": "not performed: no destination"
+  "status": "skipped_by_user",
+  "verification_result": "not performed: backup skipped by user"
 }

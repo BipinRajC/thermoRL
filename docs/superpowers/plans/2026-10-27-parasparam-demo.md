@@ -1073,3 +1073,8 @@ Bipin accepted C3 with Opus wording conditions (`docs/checkpoints/C3-review-opus
 - **D7 = option (b):** fresh clone, `uv sync --frozen`, non-FMU tier, input/FMU hash verification, and one Summit FMU smoke. No E11 or E12 rerun. Plan Task 17 Step 4's "re-run one E11 run" and full `uv run pytest -q` are superseded by this decision.
 - **Task 15:** deferred. The labelled GIFs are the headline fallback. Revisit only if packaging finishes early, and only with a new Bipin decision.
 - **Frozen, and not to be revisited:** all policies, scheduler and spanning rules, G1, thresholds, workloads, seeds, ρ, horizon, warm-up, FMU selection, metrics and both G4 conclusions.
+
+## Approved backup waiver and review handoff (2026-10-31)
+
+- Bipin explicitly instructed: "yes lets skip the backup thing". The raw-data backup requirement is waived, not completed. No copy or destination verification was performed; local Arch data remains in place. Earlier C6/pending-destination wording is historical and superseded by this decision and `docs/results/raw_backup_record.json`.
+- Requested next workflow: a full report and independent Opus 5.5 review of completed work and current backend/frontend integration gaps, followed by a separately scoped frontend implementation handoff to Sonnet 5.5. This assignment is reporting/review preparation; it does not authorize new simulations or silently change the accepted scientific conclusions.
