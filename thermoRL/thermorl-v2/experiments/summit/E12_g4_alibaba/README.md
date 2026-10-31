@@ -1,5 +1,8 @@
 # E12 — G4 on an Alibaba GPU 2023-derived workload
-**System:** summit  **Status:** complete; C4 results ready for Bipin/Opus review (2026-10-31).
+**System:** summit  **Status:** complete; C4 accepted with conditions C1–C3 (2026-10-31).
+
+> **Read first — current status (2026-10-31).** E12 is complete and C4 is accepted with conditions C1–C3. C′ passed for **thermal_predictive seed 1 only**; the other 14 configurations remain inherited and unrepeated. Prelaunch, future-tense and “Execution interruption” passages below are historical. They are superseded by the dated completion addendum and the [Approved post-C4 decisions (2026-10-31)](../../../../../docs/superpowers/plans/2026-10-27-parasparam-demo.md#approved-post-c4-decisions-2026-10-31). The original interruption cause is now **Bipin-reported memory pressure on Arch**, with controller SIGTERM/exit 143; this supersedes the earlier session-lifetime inference. No corroborating entries were available in the read-only system-journal query.
+
 **Pre-registered:** 2026-10-30, commit `ababba8220c2143c67a588a2fdc2d6e1062d9a4d`, after Task 13 `75363ee` and D5 `20ff68f`; before any E12 policy run.
 
 ## Question
