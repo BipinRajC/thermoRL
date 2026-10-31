@@ -1,6 +1,6 @@
 # ThermoRL v2
 
-This Python 3.12 project implements the Lassen closed-loop demonstration described in the [design spec](../../docs/superpowers/specs/2026-09-12-thermorl-v2-raps-demo-design.md). Run tests with `uv run pytest`.
+This Python 3.12 project implements the Summit FMU-backed ParasParam evaluation described in the [current design spec](../../docs/superpowers/specs/2026-10-27-parasparam-demo-design.md). The preregistered synthetic and Alibaba-derived evaluations found no material value beyond power balancing on the homogeneous twin. Run the bounded non-FMU tier with `uv run pytest tests/unit tests/integration -q`; FMU execution requires its separately approved scope.
 
 ## Phase 0 record
 
@@ -12,8 +12,12 @@ This Python 3.12 project implements the Lassen closed-loop demonstration describ
 
 ## Task 1.5 closure (option B)
 
-Closed under option B, 2026-10-27, as approved by the [ParasParam design spec](../../../docs/superpowers/specs/2026-10-27-parasparam-demo-design.md) P1. Independent direct-FMU execution is the backend correctness reference. Both replay passes agree within the unchanged `atol=1e-6` direct/backend gate, and the backend's restore deviations match the direct reference at `atol=1e-6`. The observed maximum restore jitter is **0.000143434 °C** (approximately 1.43e-4 °C), a documented FMU limitation.
+Closed under option B, 2026-10-27, as approved by the [ParasParam design spec](../../docs/superpowers/specs/2026-10-27-parasparam-demo-design.md) P1. Independent direct-FMU execution is the backend correctness reference. Both replay passes agree within the unchanged `atol=1e-6` direct/backend gate, and the backend's restore deviations match the direct reference at `atol=1e-6`. The observed maximum restore jitter is **0.000143434 °C** (approximately 1.43e-4 °C), a documented FMU limitation.
 
 The historical physical-response test retains its complete body and 500–1000 s bound. It is marked `xfail(strict=True)`; its physical premise is unresolved, and an unexpected pass will fail the suite. The 7200 s snapshot is **capped/preconditioned, not settled**.
 
 Verification on Arch Linux / Python 3.12.14: unit/integration **19 passed**; FMU **4 passed, 1 xfailed**. See the [closure manifest](experiments/lassen/E00_legacy_task15/provenance/option_b_manifest.json) and [legacy evidence index](experiments/lassen/E00_legacy_task15/README.md). No FMU or backend stepping semantics were changed.
+
+## Reproduce the demo
+
+See the [ParasParam runbook](../../docs/results/runbook.md) for separately labelled historical execution and future reproduction commands, source SHAs, frozen inputs, measured resource scopes and the narrow D7(b) fresh-clone check. The [demo asset-to-claim map](experiments/DEMO.md) is the presentation entry point. On macOS use the pre-rendered assets; the FMUs ship Linux/Windows binaries only. No matrix or policy rerun is part of this packaging phase.

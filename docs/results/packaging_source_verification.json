@@ -1,0 +1,19 @@
+{
+  "C4_execution_documents_unchanged": true,
+  "E11_E12_frozen_sections_unchanged": true,
+  "authorized_nonfrozen_document_updates": [
+    {
+      "current_sha256": "b99c90ef8a9dd9df528b606eeaffea9bc797a14522f68b1c7ca7cd6cbca0723d",
+      "historical_sha256": "923b54445da63aa31d01cf5d843140ef621262c50995f60bcec870d4e0b2313f",
+      "path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/README.md",
+      "reason": "explicitly authorized non-frozen header/current-status block; frozen sections still match"
+    }
+  ],
+  "current_sha": "06032b45ee650e235d5b2b69a5eb5d012a2732e8",
+  "historical_nonraw_E12_artifacts_verified_except_authorized_nonfrozen_readme": 95,
+  "original_results_plots_configs_workloads_models_core_thermal_raps_unchanged": true,
+  "preflight_sha": "ce9d91220f12bf24509d20ec940427636b529f25",
+  "protected_original_files_verified": 1204,
+  "raw_inventory_entries_verified": 230,
+  "verified_utc": "2026-10-31T12:57:35.516262+00:00"
+}

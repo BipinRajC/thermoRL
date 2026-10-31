@@ -1,0 +1,50 @@
+{
+  "copied_bytes": 0,
+  "copied_files": 0,
+  "destination": null,
+  "destination_description": "Pending Bipin-provided external disk mount or rsync target; scratch clone is not a backup.",
+  "expected_inventory_entries": 230,
+  "historical_and_relocation_inventory_sha256": {
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/interruption_inventory.json": "e3c33573b326c27bc3f566b8beb6ce143974813c00be3b0a676a4f09f1b0cde3",
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/recovery_relocation_inventory.json": "6ba0b378e81520bf25a7fc11ccca6cf29ebcb70031e38b35610bb0f25c7293df"
+  },
+  "inventories": [
+    {
+      "base": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic",
+      "bytes": 809803630,
+      "files": 106,
+      "inventory": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/results/run_files.json",
+      "sha256": "f2c78da2f68eb23e9c64577453be2c372a980e644dc786a341af1fdbb8d108d8"
+    },
+    {
+      "base": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba",
+      "bytes": 3371067484,
+      "files": 115,
+      "inventory": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/results/run_files.json",
+      "sha256": "0a5f5cc961a8319a61c56d68d2cda53dfbe0b1300db8846de31a2725790b83ad"
+    },
+    {
+      "base": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/rerun_1",
+      "bytes": 229376849,
+      "files": 9,
+      "inventory": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/rerun_1/run_files.json",
+      "sha256": "6b3d55429ef861862bb36bf6c50b19e7a63adc1ab67c9d363b7bfbc3027f3fd3"
+    }
+  ],
+  "optional_dataset_included": false,
+  "prepared_at_sha": "1678d0a3ed6ff35abebf1b44081e6c9860cab6db",
+  "prepared_utc": "2026-10-31T12:53:41.109240+00:00",
+  "reason": "Bipin must provide an external disk directory or rsync target; none supplied yet. No raw copy has been made.",
+  "scope": [
+    "E12 runs/",
+    "E12 provenance/rerun_1/runs/",
+    "E12 provenance/failed_*/",
+    "E11 runs/",
+    "other ignored run directories referenced by committed inventories (none additionally identified)"
+  ],
+  "source_after_copy_sample": {
+    "status": "not performed: no copy"
+  },
+  "status": "pending_destination",
+  "verification_result": "not performed: no destination"
+}
