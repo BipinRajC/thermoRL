@@ -1,0 +1,29 @@
+{
+  "D7_non_FMU_passed": 196,
+  "D7_pinned_hash_checks_passed": 22,
+  "FMU_smokes_executed": 1,
+  "all_materialized_document_link_paths_resolve": true,
+  "backup_status": "pending_destination",
+  "committed_diff_within_authorized_scope": true,
+  "documents_sha256": {
+    "docs/checkpoints/C5-whatif.md": "82ca7e9988587ee875ad10876f3ae2e91fadd20e2bfe375ad5f1ff1c636ec5fb",
+    "docs/checkpoints/C6-final-packaging.md": "d91cce82629d6e873e15079ad926b90faf490765717ca656028ce9b07bdf8080",
+    "docs/results/2026-11-parasparam-demo-results.md": "7bd99a208166ba6f68d7863f2c477f8743d717ff453cf49ca967e8bf730351a1",
+    "docs/results/runbook.md": "f984bf7c53d26f19044285abd23f1b380dfd43d0d03ec8789dafb14abe281752",
+    "thermoRL/thermorl-v2/experiments/DEMO.md": "4238bb601085644e190092b75b5b83b8a04b3eaaf8aaacf07ef5caef2595b3be"
+  },
+  "eight_assets_hashes_sizes_source_hashes_pass": true,
+  "exact_E12_ordering_D8_S2_spec8_claims_table_verified": true,
+  "final_code_and_tests_equal_D7_clone": true,
+  "frozen_E11_E12_sections_unchanged": true,
+  "open_items": [
+    "Bipin-provided raw backup destination; copy/exhaustive verification/source sample afterwards",
+    "final review"
+  ],
+  "policy_matrix_or_full_FMU_pytest_tier_executed": false,
+  "protected_files_unchanged": true,
+  "protected_original_files": 1204,
+  "recovery_approval_guard_passes": true,
+  "verified_head_before_checkpoint_commit": "9abeb118ddfc6b2f55efc305fb6878bff8af789c",
+  "verified_utc": "2026-10-31T13:16:16.122044+00:00"
+}

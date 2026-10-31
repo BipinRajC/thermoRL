@@ -758,6 +758,8 @@ Push. **Stop.**
 
 ### Task 15: Three.js side-by-side replay (fallback: Task 11 GIFs)
 
+**Deferred by the approved post-C4 decisions (2026-10-31).** Labelled GIFs are the headline fallback; a new Bipin decision is required to revisit replay work. No steps below were executed in packaging.
+
 **Files:**
 - Create: `thermoRL/thermorl-v2/viz/` — copy of `thermoRL/thermoRL-new/viz/`, without `node_modules`
 - Create: `thermorl2/experiments/export_viz.py`
@@ -809,6 +811,8 @@ Push. **Stop.**
 
 ### Task 16: G5 room-air failure what-if → CHECKPOINT C5
 
+**Closed without execution:** G3 was NOT_USABLE. `docs/checkpoints/C5-whatif.md` records the non-execution; no E13 preregistration, lever substitution or simulation steps below were performed.
+
 **Files:**
 - Create: `thermorl2/experiments/configs/g5_whatif_synthetic.yaml` — a copy of `g4_synthetic.yaml` with:
   ```yaml
@@ -847,7 +851,7 @@ Push. **Stop.**
 - Create: `thermoRL/thermorl-v2/experiments/DEMO.md`
 - Modify: `thermoRL/thermorl-v2/README.md` (add a "Reproduce the demo" section)
 
-- [ ] **Step 1: Results note** (≤ 2 pages). It must contain:
+- [x] **Step 1: Results note** (about 3 pages plus appendix tables, approved 2026-10-31). It must contain:
   - what ran: systems, configs, SHAs, FMU hashes, workload hashes;
   - the X01 cross-FMU table;
   - G1 and G3 results;
@@ -859,24 +863,27 @@ Push. **Stop.**
   - spec §8 limitations, verbatim.
   
   No lifetime, PUE, carbon, heterogeneous-zone or surrogate claims.
-- [ ] **Step 2: Runbook.** Exact commands from a clean Arch checkout, in this order:
-  1. `uv sync`
+- [x] **Step 2: Runbook.** Exact commands from a clean Arch checkout, in this order:
+  1. `uv sync --frozen`
   2. FMU smoke
   3. G2 ×3 and selection
   4. G1 and G3
   5. the matrices
   6. the reports
-  7. viz export and build
+  7. labelled figure/GIF fallback; Task 15 replay/export/build deferred
   
   Give expected wall times for each.
-- [ ] **Step 3: `DEMO.md`.** Map each headline asset (figure, GIF, replay bundle) to the claim it supports, and to the experiment README it comes from.
-- [ ] **Step 4: Fresh-clone check.**
-  - Run `uv run pytest -q`. Expect all pass, with the historical test reported as XFAIL.
-  - Re-run one E11 run into a scratch directory and confirm its `decisions.jsonl` is byte-identical.
-- [ ] **Step 5: Commit.**
+- [x] **Step 3: `DEMO.md`.** Map each headline asset (figure, GIF, replay bundle) to the claim it supports, and to the experiment README it comes from.
+- [x] **Step 4: Fresh-clone check — approved D7(b), 2026-10-31.**
+  - Fresh on-disk clone `06032b45ee650e235d5b2b69a5eb5d012a2732e8`; `uv sync --frozen`; bounded unit/integration tier: 196 passed.
+  - All 22 pinned input/model hashes passed; exactly one finite Summit smoke (600 s capped warm-up). See `docs/results/d7_fresh_clone_check.json`.
+  - This explicitly supersedes the original full pytest/FMU-tier and E11-rerun instructions. Neither was executed in packaging; the historical physical-response test remains strict XFAIL, not a new pass.
+- [x] **Step 5: Commit.**
   ```
   docs(results): ParasParam demo results note, runbook, demo asset map
   ```
+
+- [ ] **Post-C4 raw-backup condition:** pending Bipin-provided external disk/rsync destination. No copy or backup verification claimed; see `docs/results/raw_backup_record.json`.
 
 ---
 
