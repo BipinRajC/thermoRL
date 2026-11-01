@@ -42,7 +42,7 @@ export const COPY = {
     footer: "The preregistered rule decides; this viewer is descriptive.",
     gapCaption: "Per-seed gaps from the recorded decision (°C, time-mean max-rack modelled coolant)",
     gapSeed: "Seed",
-    gapPower: "power_balance − thermal_predictive (°C)",
+    gapPower: "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
     gapPacking: "packing − thermal_predictive (°C)",
     metricsCaption: "Time-mean max-rack modelled coolant °C, evaluation window, per recorded run",
     metricsPolicy: "Policy",

@@ -1,30 +1,46 @@
 const ALLOWED_IDENTIFIER = /unavailable_fields/g;
 
-const WORD = "[\\p{L}\\p{N}_]";
-const bounded = (body: string) => `(?<!${WORD})(?:${body})(?!${WORD})`;
+const SEP = "[\\s_-]*";
+const LETTER_OR_DIGIT = "\\p{L}\\p{N}";
+
+const ci = (fragment: string) =>
+  Array.from(fragment)
+    .map((c) => (c.toLowerCase() !== c.toUpperCase() ? `[${c.toLowerCase()}${c.toUpperCase()}]` : c))
+    .join("");
+
+type Kind = "word" | "long";
+
+function term(atoms: string[], kind: Kind): RegExp {
+  const body = atoms.map(ci).join(SEP);
+  const [first, ...rest] = atoms;
+  const camel = [first[0].toUpperCase() + ci(first.slice(1)), ...rest.map(ci)].join(SEP);
+  const left = `(?:(?<![${LETTER_OR_DIGIT}])${body}|(?<=[\\p{Ll}\\p{N}])${camel})`;
+  const right = kind === "word" ? `(?![${LETTER_OR_DIGIT}])` : `(?![\\p{Ll}\\p{N}])`;
+  return new RegExp(`${left}${right}`, "u");
+}
 
 export const FORBIDDEN: { term: string; pattern: RegExp }[] = [
-  { term: "PUE", pattern: new RegExp(bounded("PUE"), "iu") },
-  { term: "carbon", pattern: new RegExp(bounded("carbon"), "iu") },
+  { term: "PUE", pattern: term(["PUEs?"], "word") },
+  { term: "carbon", pattern: term(["carbons?"], "long") },
   { term: "CO₂", pattern: /CO₂/iu },
-  { term: "CO2", pattern: new RegExp(bounded("CO2"), "iu") },
-  { term: "SLO", pattern: new RegExp(bounded("SLO"), "iu") },
-  { term: "emergency", pattern: new RegExp(bounded("emergency"), "iu") },
+  { term: "CO2", pattern: term(["CO2"], "word") },
+  { term: "SLO", pattern: term(["SLO"], "word") },
+  { term: "emergency", pattern: term(["emergenc(?:y|ies)"], "long") },
   { term: "λ", pattern: /λ/iu },
-  { term: "dual price(s)", pattern: new RegExp(bounded("dual[\\s_-]+prices?"), "iu") },
-  { term: "THI", pattern: new RegExp(bounded("THI"), "iu") },
-  { term: "regret", pattern: new RegExp(bounded("regret"), "iu") },
-  { term: "counterfactual outcome", pattern: new RegExp(bounded("counterfactual\\s+outcome"), "iu") },
-  { term: "energy saving(s)", pattern: new RegExp(bounded("energy\\s+savings?"), "iu") },
-  { term: "cooling savings", pattern: new RegExp(bounded("cooling\\s+savings"), "iu") },
-  { term: "removes hotspots", pattern: new RegExp(bounded("removes\\s+hotspots"), "iu") },
-  { term: "hotspot removal", pattern: new RegExp(bounded("hotspot\\s+removal"), "iu") },
-  { term: "winner", pattern: new RegExp(bounded("winner"), "iu") },
-  { term: "best policy", pattern: new RegExp(bounded("best\\s+policy"), "iu") },
-  { term: "significant(ly)", pattern: new RegExp(bounded("significant(?:ly)?"), "iu") },
-  { term: "real Summit temperature", pattern: new RegExp(bounded("real\\s+Summit\\s+temperature"), "iu") },
-  { term: "hardware temperature", pattern: new RegExp(bounded("hardware\\s+temperature"), "iu") },
-  { term: "safety limit", pattern: new RegExp(bounded("safety\\s+limit"), "iu") },
+  { term: "dual price(s)", pattern: term(["dual", "prices?"], "long") },
+  { term: "THI", pattern: term(["THI"], "word") },
+  { term: "regret", pattern: term(["regrets?"], "long") },
+  { term: "counterfactual outcome", pattern: term(["counterfactual", "outcomes?"], "long") },
+  { term: "energy saving(s)", pattern: term(["energy", "savings?"], "long") },
+  { term: "cooling savings", pattern: term(["cooling", "savings?"], "long") },
+  { term: "removes hotspots", pattern: term(["removes?", "hotspots?"], "long") },
+  { term: "hotspot removal", pattern: term(["hotspot", "removal"], "long") },
+  { term: "winner", pattern: term(["winners?"], "long") },
+  { term: "best policy", pattern: term(["best", "polic(?:y|ies)"], "long") },
+  { term: "significant(ly)", pattern: term(["significant(?:ly)?"], "word") },
+  { term: "real Summit temperature", pattern: term(["real", "summit", "temperatures?"], "long") },
+  { term: "hardware temperature", pattern: term(["hardware", "temperatures?"], "long") },
+  { term: "safety limit", pattern: term(["safety", "limits?"], "long") },
 ];
 
 export interface Hit {

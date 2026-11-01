@@ -67,6 +67,16 @@ test("the gap table has one row per seed with 3 decimals and the full value in t
   expect(String(outcome.decision.per_seed["1"].power_minus_thermal_c).length).toBeGreaterThan(5);
 });
 
+test("the 0.5 requirement is noted in the power_balance gap header and not in the packing header", () => {
+  const heads = Array.from(render().querySelectorAll("table.outcome-gaps thead th")).map((h) => h.textContent ?? "");
+  expect(heads).toHaveLength(3);
+  expect(heads[1]).toContain("power_balance − thermal_predictive");
+  expect(heads[1]).toContain("≥ 0.5");
+  expect(heads[2]).toContain("packing − thermal_predictive");
+  expect(heads[2]).not.toContain("0.5");
+  expect(heads[0]).not.toContain("0.5");
+});
+
 test("the policy table shows maxrack_mean_c for the policies in metrics order and marks the active seed and policies", () => {
   const el = render();
   const table = el.querySelector("table.outcome-metrics")!;
