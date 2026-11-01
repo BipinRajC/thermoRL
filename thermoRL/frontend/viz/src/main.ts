@@ -30,6 +30,7 @@ import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
 import { Timeline } from "./ui/timeline";
 import { placeTooltip, tooltipHtml } from "./ui/tooltip";
+import { renderWhy } from "./ui/whyDrawer";
 
 interface Session {
   exp: ExperimentBundle;
@@ -199,6 +200,39 @@ function syncInfoDrawer(): void {
   if (!infoPane.isConnected) drawerBody.append(infoPane);
 }
 
+const whyPane = document.createElement("div");
+whyPane.dataset.pane = "why";
+let whyBase = "";
+let whyPage = 0;
+let whyKey = "";
+
+function syncWhyDrawer(s: Session | null): void {
+  const st = store.get();
+  if (!s || st.drawer !== "why") {
+    whyBase = "";
+    whyKey = "";
+    whyPane.remove();
+    return;
+  }
+  const base = [s.left.meta.run_id, s.right.meta.run_id, s.player.tick, st.whySide].join("|");
+  if (base !== whyBase) {
+    whyBase = base;
+    whyPage = 0;
+  }
+  const key = `${base}|${whyPage}`;
+  if (key === whyKey && whyPane.isConnected) return;
+  whyKey = key;
+  const handlers = {
+    onSide: (side: Side) => store.set({ whySide: side }),
+    onPage: (page: number) => {
+      whyPage = page;
+      whyKey = `${base}|${page}`;
+    },
+  };
+  renderWhy(whyPane, st.whySide === "left" ? s.left : s.right, st.whySide, tickToTs(s.player.tick), s.exp.catalog, whyPage, handlers);
+  if (!whyPane.isConnected) drawerBody.append(whyPane);
+}
+
 function endSession(): void {
   const s = session;
   session = null;
@@ -211,6 +245,7 @@ function endSession(): void {
   hover = null;
   updateTooltip(null);
   syncRackDrawer(null);
+  syncWhyDrawer(null);
   controls.bind(null, null);
   header.setPanels(null, null);
   dualView?.clear();
@@ -319,6 +354,7 @@ function draw(s: Session): void {
   }
   s.timeline.setCursor(k);
   syncRackDrawer(s);
+  syncWhyDrawer(s);
   sparkline?.setCursor(k);
   updateTooltip(s);
   dualView!.render(s.leftGrid, s.rightGrid, leftEl, rightEl);
