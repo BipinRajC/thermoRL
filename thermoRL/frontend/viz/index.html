@@ -3,63 +3,64 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ThermoRL · Scenario: RAMP</title>
-    <link rel="stylesheet" href="/src/style.css" />
+    <title>ThermoRL</title>
   </head>
   <body>
-    <header id="banner">
-      <div class="brand-block">
-        <div id="title">THERMORL <span>· DIGITAL TWIN REPLAY</span></div>
-        <div class="scenario-line">Scenario: <strong>demo_ramp</strong> · Constructed wiring fixture · 24 jobs</div>
+    <div id="app">
+      <header id="app-header">
+        <div class="title-row">
+          <h1 id="app-title"></h1>
+          <span id="app-badge" class="badge badge-replay"></span>
+        </div>
+        <div class="control-row">
+          <label id="lbl-exp"><select id="sel-exp"></select></label>
+          <label id="lbl-seed"><select id="sel-seed"></select></label>
+          <label id="lbl-cmp"><select id="sel-cmp"></select></label>
+          <div class="segmented" role="group" aria-labelledby="lbl-overlay">
+            <span id="lbl-overlay"></span>
+            <button type="button" id="overlay-tc" aria-pressed="true"></button>
+            <button type="button" id="overlay-kw" aria-pressed="false"></button>
+            <button type="button" id="overlay-occupied" aria-pressed="false"></button>
+          </div>
+          <div class="drawer-buttons">
+            <button type="button" id="btn-outcome" aria-pressed="false" aria-controls="drawer"></button>
+            <button type="button" id="btn-why" aria-pressed="false" aria-controls="drawer"></button>
+            <button type="button" id="btn-about" aria-pressed="false" aria-controls="drawer"></button>
+          </div>
+        </div>
+        <div id="identity"></div>
+      </header>
+
+      <div id="body">
+        <main id="stage" data-state="loading">
+          <canvas id="gl"></canvas>
+          <div id="panels" hidden>
+            <section class="panel" id="panel-left">
+              <div class="panel-head"><h2 id="title-left"></h2><span id="badge-left" class="badge" hidden></span></div>
+              <div class="panel-body">
+                <div id="view-left" class="view"></div>
+                <div id="legend-left" class="legend" data-mount="legend"></div>
+              </div>
+            </section>
+            <section class="panel" id="panel-right">
+              <div class="panel-head"><h2 id="title-right"></h2><span id="badge-right" class="badge" hidden></span></div>
+              <div class="panel-body">
+                <div id="view-right" class="view"></div>
+                <div id="legend-right" class="legend" data-mount="legend"></div>
+              </div>
+            </section>
+          </div>
+          <div id="status" class="status" hidden></div>
+          <div id="fallback" hidden></div>
+        </main>
+        <aside id="drawer" hidden data-drawer="">
+          <div id="drawer-body" data-mount="drawer"></div>
+        </aside>
       </div>
-      <div class="status-block">
-        <div id="regime">Regime: —</div>
-        <div class="mode-line">MODE <strong>STATIC REPLAY</strong> · BACKEND <strong>PYTHON</strong></div>
-      </div>
-    </header>
-    <main>
-      <section class="panel-col">
-        <h2><span class="policy-dot baseline"></span><span>ROUND-ROBIN</span><small>thermal-naive baseline</small></h2>
-        <div id="view-rr" class="viewport"></div>
-      </section>
-      <section class="panel-col">
-        <h2><span class="policy-dot thermorl"></span><span>THERMORL</span><small>THI-Lookahead policy</small></h2>
-        <div id="view-th" class="viewport"></div>
-      </section>
-    </main>
-    <section id="metrics">
-      <div class="metric"><span>THERMAL VIOLATIONS / 1K</span><b id="m-viol">—</b></div>
-      <div class="metric"><span>EMERGENCY EVENTS / 1K</span><b id="m-emerg">—</b></div>
-      <div class="metric"><span>JOBS COMPLETED</span><b id="m-jobs">—</b></div>
-      <div class="metric"><span>MEAN WAIT / S</span><b id="m-wait">—</b></div>
-      <div class="metric"><span>SLO COMPLIANCE</span><b id="m-slo">—</b></div>
-      <div class="metric single"><span>OFFERED LOAD</span><b id="m-offered">—</b></div>
-      <div class="metric"><span>IT LOAD / KW</span><b id="m-load">—</b></div>
-    </section>
-    <section id="why" hidden>
-      <div class="drawer-head"><div><span class="eyebrow">DECISION TRACE</span><h3>Why this placement?</h3></div><span class="drawer-tag">LEDGER-BACKED</span></div>
-      <div id="why-body"></div>
-      <details><summary>Raw ledger record</summary><pre id="why-raw"></pre></details>
-    </section>
-    <section id="advanced" hidden>
-      <div class="drawer-head"><div><span class="eyebrow">CMDP SIGNAL</span><h3>Constraint Prices</h3></div><span class="drawer-tag">FRAME-BACKED</span></div>
-      <div id="adv-body"></div>
-    </section>
-    <footer id="controls">
-      <div class="transport-group">
-        <button type="button" id="btn-play" aria-label="Play">▶</button>
-        <button type="button" id="btn-pause" aria-label="Pause">⏸</button>
-        <button type="button" id="btn-back" aria-label="Previous frame">⏮</button>
-        <button type="button" id="btn-fwd" aria-label="Next frame">⏭</button>
-      </div>
-      <input type="range" id="scrub" min="0" max="0" value="0" />
-      <span id="clock">t=0 0s</span>
-      <div class="utility-group">
-        <button type="button" id="btn-why">WHY?</button>
-        <button type="button" id="btn-adv">λ PRICES</button>
-      </div>
-    </footer>
-    <script src="./bundle-data.js"></script>
+
+      <section id="timeline" data-mount="timeline"></section>
+      <section id="controls"></section>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

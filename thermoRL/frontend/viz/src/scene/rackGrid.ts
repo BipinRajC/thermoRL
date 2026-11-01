@@ -7,7 +7,7 @@ const TILE = 0.88;
 const HALF_TILE = TILE / 2;
 const PAD = 0.04;
 const PULSE_COLOUR = [0x22 / 255, 0xd3 / 255, 0xee / 255] as const;
-const EMPTY_COLOUR = 0x475569;
+const EMPTY_COLOUR = [0x47 / 255, 0x55 / 255, 0x69 / 255] as const;
 const OUTLINE_HALF = 0.47;
 
 export function cellOf(r: number, cols: number): { row: number; col: number } {
@@ -112,7 +112,9 @@ export class RackGrid {
     this.emptyOutlineCount = empty.length;
     const emptyGeo = new THREE.BufferGeometry();
     emptyGeo.setAttribute("position", new THREE.BufferAttribute(squareSegments(empty, HALF_TILE), 3));
-    this.emptyLines = new THREE.LineSegments(emptyGeo, new THREE.LineBasicMaterial({ color: EMPTY_COLOUR }));
+    const emptyMat = new THREE.LineBasicMaterial();
+    emptyMat.color.setRGB(...EMPTY_COLOUR, THREE.LinearSRGBColorSpace);
+    this.emptyLines = new THREE.LineSegments(emptyGeo, emptyMat);
     this.emptyLines.frustumCulled = false;
 
     const ringMat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide });

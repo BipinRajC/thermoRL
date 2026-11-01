@@ -11,7 +11,7 @@ export class DualView {
     this.canvas = canvas;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x0b0d12, 1);
+    this.renderer.setClearColor(new THREE.Color().setRGB(0x0b / 255, 0x0d / 255, 0x12 / 255, THREE.LinearSRGBColorSpace), 1);
     this.renderer.autoClear = false;
     this.renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
     this.camera.position.set(0, 0, 10);
@@ -22,28 +22,40 @@ export class DualView {
     try {
       const c = document.createElement("canvas");
       if (typeof c.getContext !== "function") return false;
-      return Boolean(c.getContext("webgl2") ?? c.getContext("webgl"));
+      const gl = c.getContext("webgl2") ?? c.getContext("webgl");
+      if (!gl) return false;
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      return true;
     } catch {
       return false;
     }
   }
 
   resize(): void {
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     const w = this.canvas.clientWidth || window.innerWidth;
     const h = this.canvas.clientHeight || window.innerHeight;
     this.renderer.setSize(w, h, false);
   }
 
+  clear(): void {
+    this.renderer.setScissorTest(false);
+    this.renderer.clear(true, true, true);
+  }
+
+  dispose(): void {
+    this.renderer.dispose();
+  }
+
   render(left: RackGrid, right: RackGrid, leftEl: HTMLElement, rightEl: HTMLElement): void {
     const r = this.renderer;
-    r.setScissorTest(false);
-    r.clear(true, true, true);
+    this.clear();
     r.setScissorTest(true);
+    const canvasRect = this.canvas.getBoundingClientRect();
     for (const [grid, el] of [
       [left, leftEl],
       [right, rightEl],
     ] as const) {
-      const canvasRect = this.canvas.getBoundingClientRect();
       const rect = el.getBoundingClientRect();
       if (rect.width < 2 || rect.height < 2) continue;
       const x = rect.left - canvasRect.left;
