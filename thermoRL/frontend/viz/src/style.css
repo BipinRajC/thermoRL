@@ -419,3 +419,88 @@ h1 {
   font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
+
+.outcome-headline {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.outcome-rule,
+.outcome-statement {
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.outcome-footer {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.outcome-table {
+  width: 100%;
+  margin: 0 0 12px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.outcome-table caption {
+  margin-bottom: 4px;
+  color: var(--muted);
+  text-align: left;
+}
+
+.outcome-table th,
+.outcome-table td {
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.outcome-table td.num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.outcome-table tr.is-active th,
+.outcome-table tr.is-active td {
+  background: rgba(34, 211, 238, 0.1);
+}
+
+.outcome-table th.is-active-seed,
+.outcome-table td.is-active-seed {
+  box-shadow: inset 0 -2px 0 var(--accent);
+  font-weight: 600;
+}
+
+.about-recorded {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.about-section {
+  margin-bottom: 10px;
+}
+
+.about-heading {
+  margin: 0 0 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.about-section p,
+.about-caveats {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.about-caveats {
+  padding-left: 18px;
+}
+
+.about-link a {
+  color: var(--accent);
+}

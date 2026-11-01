@@ -1,4 +1,4 @@
-import { beforeAll, expect, test, vi } from "vitest";
+import { afterEach, beforeAll, expect, test, vi } from "vitest";
 import type { Catalog } from "../../src/schema/replay";
 import type { LoadedRun } from "../../src/data/loader";
 import { loadFixtureRun } from "../fixture/loadFixtureRun";
@@ -8,6 +8,10 @@ let run: LoadedRun;
 let cat: Catalog;
 beforeAll(async () => {
   ({ run, cat } = await loadFixtureRun("thermal_predictive", 1));
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 const N = 2160;
@@ -58,5 +62,21 @@ test("a Timeline without a 2D context still accepts runs, cursors and seek handl
     t.setCursor(5);
   }).not.toThrow();
   expect(seeked).toBe(-1);
+  t.dispose();
+});
+
+test("only the primary button starts a seek", () => {
+  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+  const canvas = document.createElement("canvas");
+  const t = new Timeline(canvas, cat);
+  const seeks: number[] = [];
+  t.onSeek((k) => seeks.push(k));
+  canvas.dispatchEvent(new MouseEvent("pointerdown", { button: 2, clientX: 100 }));
+  canvas.dispatchEvent(new MouseEvent("pointermove", { button: 2, clientX: 200 }));
+  expect(seeks).toEqual([]);
+  canvas.dispatchEvent(new MouseEvent("pointerdown", { button: 0, clientX: 100 }));
+  expect(seeks).toHaveLength(1);
+  canvas.dispatchEvent(new MouseEvent("pointermove", { clientX: 200 }));
+  expect(seeks).toHaveLength(2);
   t.dispose();
 });

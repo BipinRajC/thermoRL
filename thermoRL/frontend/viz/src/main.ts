@@ -19,11 +19,13 @@ import { pulseBounds, tickToTs } from "./model/time";
 import { Player } from "./replay/player";
 import { DualView } from "./scene/dualView";
 import { RackGrid, pointerToNorm, rackAt } from "./scene/rackGrid";
+import { renderAbout } from "./ui/aboutPanel";
 import { COPY } from "./ui/copy";
 import { Controls, installKeyboard } from "./ui/controls";
 import { hideFallback, renderFallback } from "./ui/fallback";
 import { Header } from "./ui/header";
 import { renderLegend } from "./ui/legend";
+import { renderOutcome } from "./ui/outcomeCard";
 import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
 import { Timeline } from "./ui/timeline";
@@ -175,6 +177,28 @@ function syncRackDrawer(s: Session | null): void {
   sparkFor = { session: s, rack };
 }
 
+const infoPane = document.createElement("div");
+infoPane.dataset.pane = "info";
+let infoKey = "";
+
+function syncInfoDrawer(): void {
+  const st = store.get();
+  const info = st.drawer === "outcome" || st.drawer === "about" ? st.drawer : null;
+  const exp = info ? cache.loadedExperiment(dataDir, st.experimentId) : undefined;
+  if (!info || !exp) {
+    infoKey = "";
+    infoPane.remove();
+    return;
+  }
+  const cmp = exp.catalog.comparisons.find((c) => c.id === st.comparisonId) ?? exp.catalog.comparisons.find((c) => c.default) ?? exp.catalog.comparisons[0];
+  const key = [info, st.experimentId, st.seed, cmp?.id].join("|");
+  if (key === infoKey && infoPane.isConnected) return;
+  infoKey = key;
+  if (info === "about") renderAbout(infoPane, exp.catalog, exp.outcome);
+  else if (cmp) renderOutcome(infoPane, exp.outcome, exp.catalog, { seed: st.seed, left: cmp.left, right: cmp.right });
+  if (!infoPane.isConnected) drawerBody.append(infoPane);
+}
+
 function endSession(): void {
   const s = session;
   session = null;
@@ -321,13 +345,15 @@ async function boot(): Promise<void> {
     header.setExperiments(index);
     header.setCatalog(exp.catalog);
     const sel = resolveSelection(exp.catalog, entry.id === query.experimentId ? query : {});
-    store.set({ experimentId: entry.id, ...sel, tick: query.tick ?? 0 });
+    store.set({ experimentId: entry.id, ...sel, tick: query.tick ?? 0, drawer: "outcome" });
     header.sync(store.get());
+    syncInfoDrawer();
     store.subscribe((s, prev) => {
       scheduleUrlUpdate();
       if (SELECTION_KEYS.some((key) => s[key] !== prev[key]) && dualView) void reload();
       if ((Object.keys(s) as (keyof AppState)[]).some((key) => key !== "tick" && s[key] !== prev[key])) {
         header.sync(s);
+        syncInfoDrawer();
         if (!dualView) renderFallback(fallbackEl, s.experimentId);
       }
     });

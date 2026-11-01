@@ -38,6 +38,30 @@ export const COPY = {
     shadeNote: "Grey: before evaluation window",
     label: (title: string) => `${title}: modelled coolant and rack power across the episode`,
   },
+  outcome: {
+    footer: "The preregistered rule decides; this viewer is descriptive.",
+    gapCaption: "Per-seed gaps from the recorded decision (°C, time-mean max-rack modelled coolant)",
+    gapSeed: "Seed",
+    gapPower: "power_balance − thermal_predictive (°C)",
+    gapPacking: "packing − thermal_predictive (°C)",
+    metricsCaption: "Time-mean max-rack modelled coolant °C, evaluation window, per recorded run",
+    metricsPolicy: "Policy",
+    metricsSeed: (seed: number) => `seed ${seed}`,
+    missing: "—",
+  },
+  about: {
+    heading: { s2: "Decision timing (S2)", interval: "Interval semantics", pulse: "Pulse rings", precision: "Logged precision", repro: "Reproducibility", caveats: "Caveats" },
+    recorded: "This viewer replays recorded runs; there is no new simulation.",
+    bullets: [
+      "Warm-up is capped (7200 s), not settled",
+      "G1 thermal predictor parameters are a frozen heuristic",
+      "Temperatures are modelled by the POWER9 cooling FMU, not measured on hardware",
+      "45 °C is a reference value only",
+    ],
+    resultsLabel: "Full results write-up (docs/results/2026-11-parasparam-demo-results.md)",
+    resultsUrl:
+      "https://github.com/BipinRajC/thermoRL/blob/feat/parasparam-demo/docs/results/2026-11-parasparam-demo-results.md",
+  },
   fallbackFigures: [
     { file: "heatmaps_seed1.png", caption: "Heatmaps, seed 1 (labelled figure)" },
     { file: "timeseries_seed1.png", caption: "Time series, seed 1 (labelled figure)" },

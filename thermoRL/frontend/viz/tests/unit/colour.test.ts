@@ -14,7 +14,7 @@ beforeAll(async () => {
   lut = lutToRgb(cat.colormap.lut);
 });
 
-const scale: Scale = { min: 10, max: 20, unit: "u", label: "l" };
+const scale: Scale = { min: 10, max: 20, unit: "u", label: "l", overlay: "tc" };
 const lutAt = (i: number) => [lut[i * 3], lut[i * 3 + 1], lut[i * 3 + 2]];
 const outAt = (o: Float32Array, off = 0) => [o[off], o[off + 1], o[off + 2]];
 
@@ -60,19 +60,19 @@ test("float32 slack: values within F32_SLACK of the scale ends are inside", () =
 test("frameColours does not count a float32 rack just past a 6-decimal scale end", () => {
   const n = run.meta.n_racks;
   const hottest = run.tc[5 * n + n - 1];
-  const s: Scale = { min: 0, max: hottest - 1.5e-6, unit: "°C", label: "l" };
+  const s: Scale = { min: 0, max: hottest - 1.5e-6, unit: "°C", label: "l", overlay: "tc" };
   const out = new Float32Array(n * 3);
   expect(frameColours(run, 5, "tc", s, lut, out).above).toBe(0);
 });
 
 test("degenerate or NaN scale bounds never write NaN colours", () => {
   const out = new Float32Array(3);
-  const flat: Scale = { min: 5, max: 5, unit: "u", label: "l" };
+  const flat: Scale = { min: 5, max: 5, unit: "u", label: "l", overlay: "tc" };
   expect(mapValue(5, flat, lut, out, 0)).toBe(0);
   expect(outAt(out)).toEqual(lutAt(0));
   expect(mapValue(6, flat, lut, out, 0)).toBe(1);
   expect(outAt(out)).toEqual(lutAt(255));
-  const nan: Scale = { min: NaN, max: NaN, unit: "u", label: "l" };
+  const nan: Scale = { min: NaN, max: NaN, unit: "u", label: "l", overlay: "tc" };
   expect(mapValue(5, nan, lut, out, 0)).toBe(0);
   expect(outAt(out)).toEqual(lutAt(0));
   expect(out.some(Number.isNaN)).toBe(false);
@@ -117,12 +117,13 @@ test("scaleFor kw uses the catalog power range", () => {
     max: cat.rack_kw_range.peak_kw,
     unit: "kW",
     label: "Rack power kW (RAPS input over the interval ending at t)",
+    overlay: "kw",
   });
 });
 
 test("occupied scale is 0..nodes_per_rack and the value is nodes_per_rack − free", () => {
   const s = scaleFor("occupied", cat, 1);
-  expect(s).toEqual({ min: 0, max: 18, unit: "nodes", label: "Occupied nodes (18 − free)" });
+  expect(s).toEqual({ min: 0, max: 18, unit: "nodes", label: "Occupied nodes (18 − free)", overlay: "occupied" });
   const n = run.meta.n_racks;
   const out = new Float32Array(n * 3);
   const k = 4;
@@ -148,4 +149,10 @@ test("scaleSide uses the same float32 slack as mapValue", () => {
   expect(scaleSide(20 + F32_SLACK / 2, scale)).toBe(0);
   expect(scaleSide(20 + 2 * F32_SLACK, scale)).toBe(1);
   expect(scaleSide(Number.NaN, scale)).toBe(-1);
+});
+
+test("scaleFor records which overlay produced the scale", () => {
+  expect(scaleFor("tc", cat, 1).overlay).toBe("tc");
+  expect(scaleFor("kw", cat, 1).overlay).toBe("kw");
+  expect(scaleFor("occupied", cat, 1).overlay).toBe("occupied");
 });

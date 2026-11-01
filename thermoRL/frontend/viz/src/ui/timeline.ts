@@ -60,6 +60,7 @@ export class Timeline {
   private dragging = false;
   private readonly view: CachedCanvas;
   private readonly onDown = (e: PointerEvent) => {
+    if (e.button !== 0) return;
     this.dragging = true;
     this.el.setPointerCapture?.(e.pointerId);
     this.seekFrom(e);

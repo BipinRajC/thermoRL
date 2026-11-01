@@ -8,6 +8,7 @@ export interface Scale {
   max: number;
   unit: string;
   label: string;
+  overlay: Overlay;
 }
 
 export const F32_SLACK = 5e-6;
@@ -20,13 +21,13 @@ export function scaleFor(overlay: Overlay, cat: Catalog, seed: number): Scale {
   if (overlay === "tc") {
     const entry = cat.seeds.find((s) => s.seed === seed);
     if (!entry) throw new Error(`No colour scale for seed ${seed}`);
-    return { min: entry.colour_scale_c.min, max: entry.colour_scale_c.max, unit: "°C", label: TC_LABEL };
+    return { min: entry.colour_scale_c.min, max: entry.colour_scale_c.max, unit: "°C", label: TC_LABEL, overlay };
   }
   if (overlay === "kw") {
-    return { min: cat.rack_kw_range.idle_kw, max: cat.rack_kw_range.peak_kw, unit: "kW", label: KW_LABEL };
+    return { min: cat.rack_kw_range.idle_kw, max: cat.rack_kw_range.peak_kw, unit: "kW", label: KW_LABEL, overlay };
   }
   const n = cat.grid.nodes_per_rack;
-  return { min: 0, max: n, unit: "nodes", label: occupiedLabel(n) };
+  return { min: 0, max: n, unit: "nodes", label: occupiedLabel(n), overlay };
 }
 
 export function lutToRgb(lut: string[]): Float32Array {

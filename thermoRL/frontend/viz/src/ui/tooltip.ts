@@ -13,8 +13,8 @@ export function rackTitle(r: number, grid: Catalog["grid"]): string {
 }
 
 function activeValue(run: LoadedRun, k: number, r: number, scale: Scale, cat: Catalog): number {
-  if (scale.unit === "kW") return rackKw(run, k, r);
-  if (scale.unit === "nodes") return cat.grid.nodes_per_rack - rackFree(run, k, r);
+  if (scale.overlay === "kw") return rackKw(run, k, r);
+  if (scale.overlay === "occupied") return cat.grid.nodes_per_rack - rackFree(run, k, r);
   return rackTc(run, k, r);
 }
 

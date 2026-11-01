@@ -62,3 +62,10 @@ test("catalog text is escaped before it is placed in HTML", () => {
   expect(html).not.toContain("<img");
   expect(html).toContain("&lt;img src=x onerror=1&gt; &amp; more");
 });
+
+test("the active value is chosen by the scale overlay, not by its unit text", () => {
+  const tcMislabelled: Scale = { ...scaleFor("tc", cat, 1), max: 100, unit: "kW" };
+  expect(tooltipHtml(run, 5, 3, tcMislabelled, cat)).not.toContain("outside scale");
+  const kwMislabelled: Scale = { ...scaleFor("kw", cat, 1), max: 15, unit: "°C" };
+  expect(tooltipHtml(run, 5, 3, kwMislabelled, cat)).toContain("outside scale");
+});
