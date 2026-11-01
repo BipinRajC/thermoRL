@@ -1,0 +1,1 @@
+`thermorl/`, `artifacts/bundles/demo_ramp/`, `tests/`, `config/` and `pyproject.toml` in this directory are the legacy three-zone simulator and a constructed 24-frame fixture. They are not FMU evidence, are not used by the viewer, and must not be run or reconnected. The viewer replays `replay_v1` exports of the recorded Summit FMU runs (see `viz/README_DEMO.md`).

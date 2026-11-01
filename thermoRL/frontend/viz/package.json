@@ -10,7 +10,8 @@
     "test": "vitest run",
     "e2e": "npm run make-fixture && playwright test",
     "make-fixture": "tsx scripts/make-fixture.mjs",
-    "sync-replay": "node scripts/sync-replay.mjs"
+    "sync-replay": "node scripts/sync-replay.mjs",
+    "test:scripts": "tsx --test scripts/sync-replay.test.mjs"
   },
   "dependencies": {
     "three": "^0.170.0"
