@@ -1,0 +1,46 @@
+{
+  "check": "post-rename acceptance (CK-A)",
+  "utc": "2026-11-01T10:30:52.314345+00:00",
+  "clone": {
+    "source": "https://github.com/BipinRajC/thermoRL.git",
+    "branch": "feat/parasparam-demo",
+    "sha": "05594d7fadb6a30c0884cf6f0db620f734c47b24",
+    "location": "fresh scratch clone outside the working repository (macOS temp dir)",
+    "working_tree_clean_after": true
+  },
+  "environment": {
+    "machine": "Mac",
+    "os": "macOS 26.5.2",
+    "arch": "arm64",
+    "python": "3.12.13",
+    "uv": "uv 0.11.7 (Homebrew 2026-04-15 aarch64-apple-darwin)",
+    "setup": "uv sync --frozen (lock unchanged)"
+  },
+  "commands": [
+    "git clone --branch feat/parasparam-demo <origin> <scratch>",
+    "cd thermoRL/backend",
+    "uv sync --frozen",
+    "uv run --frozen pytest tests/unit tests/integration -q"
+  ],
+  "result": {
+    "passed": 200,
+    "failed": 0,
+    "pytest_wall_s": 56.74,
+    "end_to_end_wall_s": 130
+  },
+  "imports_resolve_inside_clone": {
+    "thermorl2": "<clone>/thermoRL/backend/thermorl2/__init__.py",
+    "raps": "<clone>/sim-raps/raps/__init__.py"
+  },
+  "fmu_executions": 0,
+  "scope": "Bounded non-FMU tier only (D-C: no FMU smoke). Same-repository fresh clone on macOS; FMUs have no macOS binary. Not a matrix repeat, FMU check or cross-machine portability claim. Historical D7 (06032b4, Arch, 196 tests + 1 smoke) remains a separate record.",
+  "prior_state": {
+    "pre_repair_arch": "195 passed, 1 failed (Sol-reported)",
+    "pre_retrack_clean_checkout_mac": "192 passed, 4 failed"
+  },
+  "repairs": [
+    "a5d3824 relocation-safe paths",
+    "5282bbc re-track of 81 files",
+    "a1c29e9 / 05594d7 docs"
+  ]
+}
