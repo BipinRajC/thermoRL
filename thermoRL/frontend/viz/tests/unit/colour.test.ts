@@ -3,7 +3,7 @@ import type { Catalog } from "../../src/schema/replay";
 import type { LoadedRun } from "../../src/data/loader";
 import { fixtureFree, fixtureKw } from "../fixture/buildFixture";
 import { loadFixtureRun } from "../fixture/loadFixtureRun";
-import { F32_SLACK, frameColours, lutToRgb, mapValue, scaleFor, type Scale } from "../../src/model/colour";
+import { F32_SLACK, frameColours, lutToRgb, mapValue, scaleFor, scaleSide, type Scale } from "../../src/model/colour";
 
 let run: LoadedRun;
 let cat: Catalog;
@@ -140,4 +140,12 @@ test("frameColours for kw reads the recorded rack power", () => {
   const v = fixtureKw(3, 2);
   const idx = Math.round(((v - s.min) / (s.max - s.min)) * 255);
   expect(outAt(out, 6)).toEqual(lutAt(Math.max(0, Math.min(255, idx))));
+});
+
+test("scaleSide uses the same float32 slack as mapValue", () => {
+  expect(scaleSide(10 - F32_SLACK / 2, scale)).toBe(0);
+  expect(scaleSide(10 - 2 * F32_SLACK, scale)).toBe(-1);
+  expect(scaleSide(20 + F32_SLACK / 2, scale)).toBe(0);
+  expect(scaleSide(20 + 2 * F32_SLACK, scale)).toBe(1);
+  expect(scaleSide(Number.NaN, scale)).toBe(-1);
 });

@@ -1,3 +1,5 @@
+export const LEGEND_NOTE = "Scale fixed per experiment and seed; E11 and E12 scales differ";
+
 export const COPY = {
   appTitle: "ThermoRL — closed-loop FMU replay",
   badge: "Replay of recorded runs · no live simulation",
@@ -20,6 +22,21 @@ export const COPY = {
     speed: "Speed",
     scrubber: "Time",
     speedOption: (s: number) => `${s} ticks/s`,
+  },
+  legend: {
+    outOfRange: (n: number) => `${n} ${n === 1 ? "rack" : "racks"} outside scale this frame`,
+  },
+  timeline: {
+    yAxis: "Max-rack modelled coolant °C",
+    spreadAxis: "Spread (max − min) °C",
+    before: "before evaluation window",
+    label: "Timeline: max-rack modelled coolant °C and spread across the episode; click or drag to seek",
+  },
+  rack: {
+    coolant: "Modelled coolant °C",
+    power: "Rack power kW",
+    shadeNote: "Grey: before evaluation window",
+    label: (title: string) => `${title}: modelled coolant and rack power across the episode`,
   },
   fallbackFigures: [
     { file: "heatmaps_seed1.png", caption: "Heatmaps, seed 1 (labelled figure)" },

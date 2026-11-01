@@ -39,19 +39,16 @@ export function lutToRgb(lut: string[]): Float32Array {
   return out;
 }
 
+export function scaleSide(v: number, s: Scale): -1 | 0 | 1 {
+  if (Number.isNaN(v) || v < s.min - F32_SLACK) return -1;
+  return v > s.max + F32_SLACK ? 1 : 0;
+}
+
 export function mapValue(v: number, s: Scale, lut: Float32Array, out: Float32Array, offset: number): -1 | 0 | 1 {
-  let idx: number;
-  let code: -1 | 0 | 1 = 0;
-  if (Number.isNaN(v) || v < s.min - F32_SLACK) {
-    idx = 0;
-    code = -1;
-  } else if (v > s.max + F32_SLACK) {
-    idx = 255;
-    code = 1;
-  } else {
-    const span = s.max - s.min;
-    idx = span > 0 ? Math.min(255, Math.max(0, Math.round(((v - s.min) / span) * 255))) : 0;
-  }
+  const code = scaleSide(v, s);
+  const span = s.max - s.min;
+  const idx =
+    code < 0 ? 0 : code > 0 ? 255 : span > 0 ? Math.min(255, Math.max(0, Math.round(((v - s.min) / span) * 255))) : 0;
   out[offset] = lut[idx * 3];
   out[offset + 1] = lut[idx * 3 + 1];
   out[offset + 2] = lut[idx * 3 + 2];

@@ -18,12 +18,16 @@ import {
 import { pulseBounds, tickToTs } from "./model/time";
 import { Player } from "./replay/player";
 import { DualView } from "./scene/dualView";
-import { RackGrid } from "./scene/rackGrid";
+import { RackGrid, pointerToNorm, rackAt } from "./scene/rackGrid";
 import { COPY } from "./ui/copy";
 import { Controls, installKeyboard } from "./ui/controls";
 import { hideFallback, renderFallback } from "./ui/fallback";
 import { Header } from "./ui/header";
+import { renderLegend } from "./ui/legend";
+import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
+import { Timeline } from "./ui/timeline";
+import { placeTooltip, tooltipHtml } from "./ui/tooltip";
 
 interface Session {
   exp: ExperimentBundle;
@@ -34,6 +38,7 @@ interface Session {
   lut: Float32Array;
   rgb: Float32Array;
   player: Player;
+  timeline: Timeline;
   unsubscribe: () => void;
 }
 
@@ -56,6 +61,12 @@ const panels = byId("panels");
 const fallbackEl = byId("fallback");
 const leftEl = byId("view-left");
 const rightEl = byId("view-right");
+const timelineEl = byId("timeline");
+const tooltipEl = byId("tooltip");
+const drawerBody = byId("drawer-body");
+const legendEls = { left: byId("legend-left"), right: byId("legend-right") };
+const viewEls = { left: leftEl, right: rightEl };
+type Side = "left" | "right";
 
 let dualView: DualView | null = null;
 if (DualView.webglAvailable()) {
@@ -87,6 +98,81 @@ installKeyboard(
 function setStage(state: "loading" | "error" | "ready" | "fallback"): void {
   stage.dataset.state = state;
   panels.hidden = state !== "ready";
+  timelineEl.classList.toggle("is-idle", state !== "ready");
+}
+
+let hover: { side: Side; r: number; x: number; y: number } | null = null;
+let tooltipHtmlShown = "";
+
+function updateTooltip(s: Session | null): void {
+  if (!hover || !s) {
+    tooltipEl.hidden = true;
+    tooltipHtmlShown = "";
+    return;
+  }
+  const st = store.get();
+  const html = tooltipHtml(hover.side === "left" ? s.left : s.right, s.player.tick, hover.r, scaleFor(st.overlay, s.exp.catalog, st.seed), s.exp.catalog);
+  if (html !== tooltipHtmlShown) {
+    tooltipEl.innerHTML = html;
+    tooltipHtmlShown = html;
+  }
+  tooltipEl.hidden = false;
+  placeTooltip(tooltipEl, hover.x, hover.y);
+}
+
+function rackUnderPointer(e: MouseEvent, side: Side): number | null {
+  const s = session;
+  if (!s) return null;
+  const grid = s.exp.catalog.grid;
+  const p = pointerToNorm(e.clientX, e.clientY, viewEls[side].getBoundingClientRect(), grid);
+  return rackAt(p.x, p.y, grid);
+}
+
+for (const side of ["left", "right"] as const) {
+  const el = viewEls[side];
+  el.addEventListener("pointermove", (e) => {
+    const r = rackUnderPointer(e, side);
+    hover = r === null ? null : { side, r, x: e.clientX, y: e.clientY };
+    updateTooltip(session);
+  });
+  el.addEventListener("pointerleave", () => {
+    hover = null;
+    updateTooltip(session);
+  });
+  el.addEventListener("click", (e) => {
+    const r = rackUnderPointer(e, side);
+    if (r !== null) store.set({ pinnedRack: r, drawer: "rack" });
+  });
+}
+
+window.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const st = store.get();
+  if (st.pinnedRack !== null) store.set({ pinnedRack: null, drawer: st.drawer === "rack" ? null : st.drawer });
+});
+
+const rackPane = document.createElement("div");
+rackPane.dataset.pane = "rack";
+let sparkline: Sparkline | null = null;
+let sparkFor: { session: Session; rack: number } | null = null;
+
+function syncRackDrawer(s: Session | null): void {
+  const st = store.get();
+  const rack = s && st.drawer === "rack" ? st.pinnedRack : null;
+  if (rack === null || !s) {
+    if (sparkFor) {
+      sparkline?.dispose();
+      sparkline = null;
+      sparkFor = null;
+      rackPane.remove();
+    }
+    return;
+  }
+  if (sparkFor?.session === s && sparkFor.rack === rack && rackPane.isConnected) return;
+  sparkline?.dispose();
+  if (!rackPane.isConnected) drawerBody.append(rackPane);
+  sparkline = renderSparkline(rackPane, s.left, s.right, rack, s.exp.catalog);
+  sparkFor = { session: s, rack };
 }
 
 function endSession(): void {
@@ -94,9 +180,13 @@ function endSession(): void {
   session = null;
   if (s) {
     s.unsubscribe();
+    s.timeline.dispose();
     s.leftGrid.dispose();
     s.rightGrid.dispose();
   }
+  hover = null;
+  updateTooltip(null);
+  syncRackDrawer(null);
   controls.bind(null, null);
   header.setPanels(null, null);
   dualView?.clear();
@@ -113,6 +203,9 @@ function startSession(left: LoadedRun, right: LoadedRun, exp: ExperimentBundle):
   const player = new Player(cat.time.n_ticks);
   player.seek(store.get().tick);
   const unsubscribe = player.onChange((tick) => store.set({ tick }));
+  const timeline = new Timeline(byId<HTMLCanvasElement>("timeline-canvas"), cat);
+  timeline.setRuns(left, right, [left.meta.policy, right.meta.policy]);
+  timeline.onSeek((k) => player.seek(k));
   session = {
     exp,
     left,
@@ -122,6 +215,7 @@ function startSession(left: LoadedRun, right: LoadedRun, exp: ExperimentBundle):
     lut: lutToRgb(cat.colormap.lut),
     rgb: new Float32Array(cat.grid.n_racks * 3),
     player,
+    timeline,
     unsubscribe,
   };
   header.setPanels(left, right);
@@ -188,15 +282,21 @@ function draw(s: Session): void {
   const k = s.player.tick;
   const scale = scaleFor(st.overlay, cat, st.seed);
   const [lo, hi] = pulseBounds(tickToTs(k), cat);
-  for (const [run, grid] of [
-    [s.left, s.leftGrid],
-    [s.right, s.rightGrid],
+  for (const [side, run, grid] of [
+    ["left", s.left, s.leftGrid],
+    ["right", s.right, s.rightGrid],
   ] as const) {
-    frameColours(run, k, st.overlay, scale, s.lut, s.rgb);
+    const outOfRange = frameColours(run, k, st.overlay, scale, s.lut, s.rgb);
     grid.setColours(s.rgb);
     grid.setPulses(startRacksIn(run, lo, hi));
     grid.setPinned(st.pinnedRack);
+    grid.setHover(hover?.side === side ? hover.r : null);
+    renderLegend(legendEls[side], scale, s.lut, outOfRange);
   }
+  s.timeline.setCursor(k);
+  syncRackDrawer(s);
+  sparkline?.setCursor(k);
+  updateTooltip(s);
   dualView!.render(s.leftGrid, s.rightGrid, leftEl, rightEl);
 }
 
