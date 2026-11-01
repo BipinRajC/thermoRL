@@ -1,42 +1,46 @@
-import type { VizFrame } from "../schema/vizevent";
+export const SPEEDS = [1, 2, 5, 10, 30, 60] as const;
 
 export class Player {
-  frames: VizFrame[];
-  index = 0;
-  playing = true;
-  acc = 0;
-  msPerFrame = 80;
+  tick = 0;
+  playing = false;
+  speed = 10;
+  private acc = 0;
+  private listeners = new Set<(k: number) => void>();
 
-  constructor(frames: VizFrame[]) {
-    this.frames = frames;
+  constructor(readonly nTicks: number) {}
+
+  private moveTo(k: number): boolean {
+    const next = Math.min(this.nTicks - 1, Math.max(0, Math.trunc(k)));
+    if (next === this.tick) return false;
+    this.tick = next;
+    for (const fn of this.listeners) fn(next);
+    return true;
   }
 
-  get current(): VizFrame {
-    return this.frames[this.index] ?? this.frames[0];
-  }
-
-  get last(): number {
-    return Math.max(this.frames.length - 1, 0);
-  }
-
-  step(dir: number): void {
-    this.index = Math.min(this.last, Math.max(0, this.index + dir));
-  }
-
-  jump(i: number): void {
-    this.index = Math.min(this.last, Math.max(0, i));
-  }
-
-  tick(dtMs: number): boolean {
-    if (!this.playing || this.frames.length === 0) return false;
-    this.acc += dtMs;
-    if (this.acc < this.msPerFrame) return false;
-    this.acc = 0;
-    if (this.index < this.last) {
-      this.index += 1;
-      return true;
+  advance(dtMs: number): boolean {
+    this.acc += (dtMs * this.speed) / 1000;
+    const whole = Math.floor(this.acc);
+    this.acc -= whole;
+    const changed = this.moveTo(this.tick + whole);
+    if (this.tick >= this.nTicks - 1) {
+      this.playing = false;
+      this.acc = 0;
     }
-    this.playing = false;
-    return false;
+    return changed;
+  }
+
+  seek(k: number): void {
+    this.moveTo(k);
+  }
+
+  step(dk: number): void {
+    this.moveTo(this.tick + dk);
+  }
+
+  onChange(fn: (k: number) => void): () => void {
+    this.listeners.add(fn);
+    return () => {
+      this.listeners.delete(fn);
+    };
   }
 }
