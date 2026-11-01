@@ -1078,3 +1078,17 @@ Bipin accepted C3 with Opus wording conditions (`docs/checkpoints/C3-review-opus
 
 - Bipin explicitly instructed: "yes lets skip the backup thing". The raw-data backup requirement is waived, not completed. No copy or destination verification was performed; local Arch data remains in place. Earlier C6/pending-destination wording is historical and superseded by this decision and `docs/results/raw_backup_record.json`.
 - Requested next workflow: a full report and independent Opus 5.5 review of completed work and current backend/frontend integration gaps, followed by a separately scoped frontend implementation handoff to Sonnet 5.5. This assignment is reporting/review preparation; it does not authorize new simulations or silently change the accepted scientific conclusions.
+
+## Approved post-C6 integration decisions (2026-11-01)
+
+Bipin approved all recommendations of the Opus post-C6 integration review (`docs/reviews/2026-10-31-opus-post-c6-integration-review.md`, §6): "i agree with your recommendations".
+
+- **D-A — retain all 81 dropped files.** Done in `5282bbc`: restored from `b3bd5ac` history, every staged blob identical to its pre-rename object, SHA-256 matching the post-C6 evidence JSON; no E11/E12 raw runs tracked.
+- **D-B — force-add the verified explicit list only;** `.gitignore` rules unchanged.
+- **D-C — no FMU smoke** after the relocation repair. Post-rename acceptance is the bounded non-FMU tier in a fresh clone.
+- **D-D — replay-first.** The demo replays recorded FMU runs; no live simulation API and no FMU execution during the demo.
+- **D-E — commit the replay exports** (every file < 25 MB; never raw ledgers).
+- **D-F — default comparisons on seed 1** (E12 PB vs TP default; E12 packing vs TP; E11 PB vs TP; E11 packing vs TP) **plus a seed selector for seeds 2 and 3.** All-seed frozen outcomes always shown; E12 seed 3 ≈ seed 2 caveat displayed.
+- **D-G — keep the legacy frontend simulator and `demo_ramp` bundle untouched,** labelled legacy; never run or reconnected.
+- **D-H — execute on the Mac.** E11/E12 raw `runs/` (all 15 per experiment, 180 files) were copied from Arch and verified against `results/run_files.json` (0 missing, 0 mismatches) on 2026-11-01; the exporter reads these read-only copies. Arch is needed only for any future FMU execution.
+- **Task 15 — replay viewer approved** under the Sonnet brief (`docs/handoffs/2026-10-31-sonnet-5-5-demo-integration-brief.md`), superseding its earlier deferral. Frozen science, policies, metrics, thresholds, workloads, G1, FMU and both G4 conclusions remain unchanged; no new simulation is authorized.

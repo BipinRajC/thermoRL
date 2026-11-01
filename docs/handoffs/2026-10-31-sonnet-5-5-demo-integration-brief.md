@@ -1,14 +1,26 @@
 # Sonnet 5.5 Brief — ThermoRL Demo Integration (Repository Repair → FMU Replay Export → Frontend)
 
-**Status:** ready to execute **only after Bipin approves** the decisions in `docs/reviews/2026-10-31-opus-post-c6-integration-review.md` §6. Where a decision is not yet approved, follow the default marked **[default]** and say so in your report.
+**Status: APPROVED (Bipin, 2026-11-01).** All decisions D-A…D-H in `docs/reviews/2026-10-31-opus-post-c6-integration-review.md` §6 are approved as recommended; recorded in the plan addendum "Approved post-C6 integration decisions (2026-11-01)".
 
-**Author:** Opus (independent reviewer and integration architect), 2026-10-31. **Base:** `feat/parasparam-demo` at `beafb51` or later.
+**Author:** Opus (independent reviewer and integration architect), 2026-10-31; updated 2026-11-01. **Base:** `feat/parasparam-demo` at the commit containing this update or later.
 
-> **Progress update (2026-10-31, done on the Mac by Opus at Bipin's request):**
-> - **A1 is DONE** in commit `a5d3824`. `project_root()` lives in `systems.py` and `application_source_hashes()` in `provenance.py`; the runner, bench and probes use them. `tests/unit/test_relocation.py` was added and the stale path in `test_e11_review_fixes.py:107` was fixed. Non-FMU tier on the Mac: 196 passed, 4 failed. All 4 failures are the E10-ledger tests, which pass only after A2 re-tracks those files.
-> - **A3 is PARTLY DONE:** `docs/results/path_mapping.md` was added, and the runbook and results-note links and backup wording were updated. **Still to do on Arch, after A2:** the `DEMO.md`, `INDEX.md` and backend README link/backup updates (those files are absent from git until A2), and `uv sync --frozen`.
-> - **A2 tool ready:** `docs/handoffs/scripts/retrack_dropped_files.py`. Run it as a dry run first, then `--apply`. It hash-verifies every file, refuses E11/E12 raw `runs/`, stages paths one at a time and writes `docs/results/post_rename_retrack_check.json`. It never commits.
-> - **Next on Arch:** A2 → the rest of A3 → A4 (fresh on-disk clone; expect all ≈ 200 tests to pass) → **CK-A STOP**.
+> ## ⚠️ Current status and binding overrides (2026-11-01) — read before Part A
+> These overrides take precedence over any conflicting text later in this brief.
+>
+> **Done already (do not redo):**
+> - **A1** relocation fixes — `a5d3824` (`project_root()`, `application_source_hashes()`, `tests/unit/test_relocation.py`).
+> - **A2** re-track of all 81 dropped files — `5282bbc` (restored from `b3bd5ac`; every blob identical to its pre-rename object; report `docs/results/post_rename_retrack_check.json`).
+> - **A3** path mapping (`docs/results/path_mapping.md`) and living-doc updates (results note, runbook, `DEMO.md`, backend README).
+> - **A4** post-rename acceptance — recorded in `docs/results/post_rename_acceptance.json` (fresh clone, bounded non-FMU tier). **No FMU smoke (D-C).**
+> - **Start at A5.**
+>
+> **Machine (D-H): everything runs on the Mac**, including the exporter. All E11 and E12 raw `runs/` (15 per experiment, 180 files) were copied from Arch and verified against each `results/run_files.json` (0 missing, 0 mismatches). Wherever this brief says "on Arch", read "on the Mac, using these verified read-only copies". Before exporting, re-run that hash check and stop on any mismatch. Raw `runs/` stay gitignored and must never be modified or committed. No FMU, RAPS simulation, `run.py`, `run_matrix`, report CLI or legacy simulator is ever run.
+>
+> **Seeds (D-F): export all three seeds** for `packing`, `power_balance`, `thermal_predictive` in both experiments (18 runs). Layout `runs/<policy>_seed<s>/`; `catalog.json` lists `seeds_exported: [1,2,3]`, a `default_seed: 1`, and per-seed comparison entries. **Colour scale is per experiment *and* per seed**, computed over all five policies of that seed (raw copies of all five are available); the **seed-1** scales must equal the recorded demo scales (E11 39.252402–56.233641 °C, E12 38.702230–42.413286 °C) within 1e-6, otherwise STOP. The viewer adds a **seed selector** (default seed 1), always shows which seed and scale are active, and for E12 seeds 2/3 shows "seed 3 ≈ seed 2 shifted 33 s; ≈ two independent conditions". The `C′ verified` badge applies only to E12 `thermal_predictive` seed 1.
+>
+> **Size budget (D-E, commit exports):** every file < 25 MB; ≤ 100 MB per experiment `replay_v1`; reduce top-K before anything else; never downsample time without a new Bipin decision. Real-data exporter tests (A6) run on the Mac against the verified copies.
+>
+> **Checkpoints:** CK-A is complete. Stop at **CK-B** (exports committed) and **CK-C** (viewer done).
 
 **You have no prior conversation context.** Everything you need is in this brief and the files it names.
 

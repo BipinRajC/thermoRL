@@ -21,3 +21,5 @@ Verification on Arch Linux / Python 3.12.14: unit/integration **19 passed**; FMU
 ## Reproduce the demo
 
 See the [ParasParam runbook](../../docs/results/runbook.md) for separately labelled historical execution and future reproduction commands, source SHAs, frozen inputs, measured resource scopes and the narrow D7(b) fresh-clone check. The [demo asset-to-claim map](experiments/DEMO.md) is the presentation entry point. On macOS use the pre-rendered assets; the FMUs ship Linux/Windows binaries only. No matrix or policy rerun is part of this packaging phase.
+
+**Post-rename note (2026-11-01).** This directory was `thermoRL/thermorl-v2` before rename `c09f735`; historical records keep that path ([path mapping](../../docs/results/path_mapping.md)). Code resolves its inputs relative to this package root. An interactive replay viewer of the recorded FMU runs is approved (replay-first; no live simulation) — see the [integration brief](../../docs/handoffs/2026-10-31-sonnet-5-5-demo-integration-brief.md).
