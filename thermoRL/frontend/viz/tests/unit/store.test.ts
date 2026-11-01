@@ -225,6 +225,43 @@ test("a corrupted run file rejects with the file named, never stale", async () =
   expect(progress.mock.calls.length).toBe(n);
 });
 
+test("a run whose meta names another experiment, policy or seed than the catalog slot is rejected", async () => {
+  const cases: [string, (m: any) => void, RegExp][] = [
+    ["experiment_id", (m) => (m.experiment_id = "EOTHER"), /EOTHER/],
+    ["policy", (m) => (m.policy = "packing"), /packing/],
+    ["seed", (m) => (m.seed = 2), /seed/],
+  ];
+  for (const [field, edit, text] of cases) {
+    const { f, files } = await fixtureFetcher();
+    const path = "EFIX/runs/power_balance_seed1/run.json";
+    const m = JSON.parse(new TextDecoder().decode(files.get(path)!));
+    edit(m);
+    files.set(path, new TextEncoder().encode(JSON.stringify(m)));
+    const err = await loadComparison(BASE, newStore(), new RunCache(), f).catch((e) => e);
+    expect(err, field).toBeInstanceOf(ReplayError);
+    expect(err.kind, field).toBe("mismatch");
+    expect(err.message, field).toContain("power_balance_seed1");
+    expect(err.message, field).toMatch(text);
+    expect(err.file, field).toContain("power_balance_seed1/run.json");
+  }
+});
+
+test("a mismatched run is never cached", async () => {
+  const { f, files } = await fixtureFetcher();
+  const path = "EFIX/runs/thermal_predictive_seed1/run.json";
+  const good = files.get(path)!;
+  const m = JSON.parse(new TextDecoder().decode(good));
+  m.seed = 2;
+  files.set(path, new TextEncoder().encode(JSON.stringify(m)));
+  const cache = new RunCache();
+  await expect(loadComparison(BASE, newStore(), cache, f)).rejects.toMatchObject({ kind: "mismatch" });
+  expect(cache.get("EFIX:thermal_predictive:1")).toBeUndefined();
+  expect(cache.get("EFIX:power_balance:1")).toBeUndefined();
+  files.set(path, good);
+  const res = await loadComparison(BASE, newStore(), cache, f);
+  expect(res).not.toBe("stale");
+});
+
 test("RunCache evicts the least recently used entry beyond 6", () => {
   const cache = new RunCache();
   const run = (n: number) => ({ n }) as unknown as LoadedRun;

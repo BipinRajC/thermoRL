@@ -52,6 +52,22 @@ export interface LoadedRun {
 
 const ELEMENT_BYTES: Record<string, number> = { float32: 4, float64: 8, uint8: 1 };
 const TICK_STRIDE = 8;
+const ROWS_PER_DECISION = 6;
+const RECORD_BYTES = 15;
+const EVENT_COLUMNS = ["kind", "raps_t_s", "job_id", "decision_index", "rack_offsets", "racks"] as const;
+const DECISION_COLUMNS = [
+  "decision_index",
+  "raps_t_s",
+  "job_id",
+  "nodes_required",
+  "rule",
+  "job_kw",
+  "t_obs_s",
+  "chosen_offsets",
+  "chosen_racks",
+  "n_ties_at_logged_best",
+  "chosen_is_logged_best",
+] as const;
 
 const abortError = () => new DOMException("The operation was aborted.", "AbortError");
 const isAbort = (e: unknown) => e instanceof DOMException && e.name === "AbortError";
@@ -86,6 +102,16 @@ const parseJson = <T>(buf: ArrayBuffer, path: string): T => {
     throw new ReplayError("schema", `${path} is not valid JSON`, path);
   }
 };
+
+function columns<K extends string>(json: unknown, names: readonly K[], path: string): Record<K, any[]> {
+  const obj = json as Record<string, unknown> | null;
+  for (const name of names) {
+    if (!obj || typeof obj !== "object" || !Array.isArray(obj[name])) {
+      throw new ReplayError("schema", `${path}: column ${name} is missing or not an array`, path);
+    }
+  }
+  return obj as Record<K, any[]>;
+}
 
 async function fetchJson<T extends { schema: string }>(base: string, path: string, f: Fetcher, signal?: AbortSignal): Promise<T> {
   const json = parseJson<T>(await fetchBytes(base, path, f, signal), path);
@@ -158,8 +184,44 @@ export async function loadRun(
   ]);
   if (signal?.aborted) throw abortError();
 
-  const ev = parseJson<Record<keyof EventsColumns, number[]>>(events, join(runDir, fl.events.path));
-  const dc = parseJson<Record<string, any[]>>(decisions, join(runDir, fl.decisions.path));
+  const evPath = join(runDir, fl.events.path);
+  const dcPath = join(runDir, fl.decisions.path);
+  const ev = columns(parseJson<unknown>(events, evPath), EVENT_COLUMNS, evPath);
+  const dc = columns(parseJson<unknown>(decisions, dcPath), DECISION_COLUMNS, dcPath);
+
+  const expectArray = (entry: FileEntry, dtype: string, rows: number, cols: number) => {
+    const s = entry.shape;
+    if (entry.dtype !== dtype || !s || s.length !== 2 || s[0] !== rows || s[1] !== cols) {
+      const path = join(runDir, entry.path);
+      throw new ReplayError("shape", `${path}: expected ${dtype} [${rows}, ${cols}] from run.json, found ${entry.dtype} [${s?.join(", ")}]`, path);
+    }
+  };
+  const expectLengths = (cols: Record<string, any[]>, path: string, rows: number, offsets: string, flat: string) => {
+    const want: Record<string, number> = {};
+    for (const name of Object.keys(cols)) want[name] = rows;
+    want[offsets] = rows + 1;
+    want[flat] = cols[offsets][rows] ?? -1;
+    for (const [name, col] of Object.entries(cols)) {
+      if (col.length !== want[name]) {
+        throw new ReplayError("mismatch", `${path}: column ${name} has ${col.length} entries, run.json expects ${want[name]}`, path);
+      }
+    }
+  };
+  expectArray(fl.rack_tc, "float32", meta.n_ticks, meta.n_racks);
+  expectArray(fl.rack_kw, "float32", meta.n_ticks, meta.n_racks);
+  expectArray(fl.rack_free, "uint8", meta.n_ticks, meta.n_racks);
+  expectArray(fl.tick, "float64", meta.n_ticks, TICK_STRIDE);
+  expectLengths(dc, dcPath, meta.n_decisions, "chosen_offsets", "chosen_racks");
+  expectLengths(ev, evPath, meta.n_events, "rack_offsets", "racks");
+  if (candidates.byteLength !== meta.n_decisions * ROWS_PER_DECISION * RECORD_BYTES) {
+    const path = join(runDir, fl.candidates.path);
+    throw new ReplayError(
+      "shape",
+      `${path}: ${candidates.byteLength} bytes, run.json expects ${meta.n_decisions} decisions x ${ROWS_PER_DECISION} rows x ${RECORD_BYTES} bytes`,
+      path,
+    );
+  }
+
   const i32 = (a: number[]) => Int32Array.from(a);
   return {
     meta,

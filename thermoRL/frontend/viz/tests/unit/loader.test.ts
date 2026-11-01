@@ -1,4 +1,5 @@
-import { expect, test } from "vitest";
+import { createHash } from "node:crypto";
+import { afterEach, expect, test, vi } from "vitest";
 import { buildFixture, fixtureFree, fixtureKw, fixtureTc } from "../fixture/buildFixture";
 import { sha256Hex } from "../../src/data/hash";
 import {
@@ -41,6 +42,21 @@ test("sha256Hex matches a known digest", async () => {
   expect(await sha256Hex(new TextEncoder().encode("abc").buffer)).toBe(
     "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
   );
+});
+
+afterEach(() => vi.unstubAllGlobals());
+
+test("sha256Hex without crypto.subtle (non-secure origin) rejects with a hash ReplayError", async () => {
+  vi.stubGlobal("crypto", { subtle: undefined });
+  const err = await sha256Hex(new Uint8Array([1])).catch((e) => e);
+  expect(err).toBeInstanceOf(ReplayError);
+  expect(err).toMatchObject({ kind: "hash", message: "Hash verification needs a secure context (localhost or https)" });
+});
+
+test("loadRun on a non-secure origin reports the secure-context error, not a TypeError", async () => {
+  const files = await buildFixture();
+  vi.stubGlobal("crypto", { subtle: undefined });
+  await expect(load(files)).rejects.toMatchObject({ kind: "hash", message: /secure context/ });
 });
 
 test("loads a valid run", async () => {
@@ -231,4 +247,135 @@ test("abort during a fetch is not reported as network", async () => {
   const err = await loadRun(BASE, "EFIX", RUN_JSON, aborting, ctl.signal).catch((e) => e);
   expect(err).not.toBeInstanceOf(ReplayError);
   expect(err.name).toBe("AbortError");
+});
+
+const hex = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
+
+function rewrite(
+  files: Map<string, Uint8Array>,
+  key: string,
+  mutate: (bytes: Uint8Array) => Uint8Array,
+  entry: (e: any) => void = () => {},
+  meta: (m: any) => void = () => {},
+) {
+  const runPath = `${RUN_DIR}/run.json`;
+  const m = JSON.parse(dec(files.get(runPath)!));
+  const e = m.files[key];
+  const path = `${RUN_DIR}/${e.path}`;
+  const bytes = mutate(files.get(path)!);
+  files.set(path, bytes);
+  e.bytes = bytes.byteLength;
+  e.sha256 = hex(bytes);
+  entry(e);
+  meta(m);
+  files.set(runPath, enc(m));
+  return path;
+}
+
+const dropJson = (fn: (j: any) => void) => (b: Uint8Array) => {
+  const j = JSON.parse(dec(b));
+  fn(j);
+  return enc(j);
+};
+
+test("hash-consistent files whose shape disagrees with run.json meta are rejected, naming the file", async () => {
+  const cases: [string, string, (b: Uint8Array) => Uint8Array, number[]][] = [
+    ["rack_tc", "short ticks", (b) => b.slice(0, b.byteLength - 11 * 4), [399, 11]],
+    ["rack_kw", "short ticks", (b) => b.slice(0, b.byteLength - 11 * 4), [399, 11]],
+    ["rack_free", "short ticks", (b) => b.slice(0, b.byteLength - 11), [399, 11]],
+    ["rack_tc", "wrong layout", (b) => b, [200, 22]],
+    ["rack_free", "wrong layout", (b) => b, [11, 400]],
+    ["tick", "short ticks", (b) => b.slice(0, b.byteLength - 8 * 8), [399, 8]],
+    ["tick", "wrong columns", (b) => b, [800, 4]],
+  ];
+  for (const [key, label, mutate, shape] of cases) {
+    const files = await buildFixture();
+    const path = rewrite(files, key, mutate, (e) => (e.shape = shape));
+    const err = await load(files).catch((e) => e);
+    expect(err, `${key} ${label}`).toBeInstanceOf(ReplayError);
+    expect(err, `${key} ${label}`).toMatchObject({ kind: "shape", file: path });
+  }
+});
+
+test("meta.n_ticks or meta.n_racks that disagree with the decoded arrays are rejected", async () => {
+  for (const edit of [(m: any) => (m.n_ticks = 401), (m: any) => (m.n_racks = 12)]) {
+    const files = await buildFixture();
+    const m = JSON.parse(dec(files.get(`${RUN_DIR}/run.json`)!));
+    edit(m);
+    files.set(`${RUN_DIR}/run.json`, enc(m));
+    await expect(load(files)).rejects.toMatchObject({ kind: "shape", file: `${RUN_DIR}/rack_tc.f32` });
+  }
+});
+
+test("a dtype that disagrees with the file role is rejected", async () => {
+  const files = await buildFixture();
+  const path = rewrite(files, "rack_tc", (b) => b, (e) => {
+    e.dtype = "float64";
+    e.shape = [200, 11];
+  });
+  await expect(load(files)).rejects.toMatchObject({ kind: "shape", file: path });
+});
+
+test("candidates.bin whose size is not n_decisions x 6 x 15 is rejected", async () => {
+  const files = await buildFixture();
+  const path = rewrite(files, "candidates", (b) => b.slice(0, b.byteLength - 90));
+  await expect(load(files)).rejects.toMatchObject({ kind: "shape", file: path });
+});
+
+test("decision columns whose length disagrees with meta.n_decisions are rejected", async () => {
+  for (const col of ["decision_index", "raps_t_s", "job_kw", "chosen_is_logged_best", "rule"]) {
+    const files = await buildFixture();
+    const path = rewrite(files, "decisions", dropJson((j) => j[col].pop()));
+    await expect(load(files), col).rejects.toMatchObject({ kind: "mismatch", file: path });
+  }
+  const files = await buildFixture();
+  const path = rewrite(files, "decisions", dropJson((j) => j.chosen_offsets.pop()));
+  await expect(load(files)).rejects.toMatchObject({ kind: "mismatch", file: path });
+});
+
+test("flat rack lists that disagree with their offsets are rejected", async () => {
+  for (const [key, col] of [
+    ["events", "racks"],
+    ["decisions", "chosen_racks"],
+  ]) {
+    const files = await buildFixture();
+    const path = rewrite(files, key, dropJson((j) => j[col].pop()));
+    await expect(load(files), col).rejects.toMatchObject({ kind: "mismatch", file: path });
+  }
+});
+
+test("event columns whose length disagrees with meta.n_events are rejected", async () => {
+  for (const col of ["kind", "rack_offsets", "raps_t_s", "decision_index"]) {
+    const files = await buildFixture();
+    const path = rewrite(files, "events", dropJson((j) => j[col].pop()));
+    await expect(load(files), col).rejects.toMatchObject({ kind: "mismatch", file: path });
+  }
+  const files = await buildFixture();
+  const path = rewrite(files, "events", (b) => b, () => {}, (m) => (m.n_events += 1));
+  await expect(load(files)).rejects.toMatchObject({ kind: "mismatch", file: path });
+});
+
+test("meta.n_decisions that disagrees with the decoded decisions is rejected", async () => {
+  const files = await buildFixture();
+  const path = rewrite(files, "decisions", (b) => b, () => {}, (m) => (m.n_decisions += 1));
+  await expect(load(files)).rejects.toMatchObject({ kind: "mismatch", file: path });
+});
+
+test("a missing column in events/decisions JSON is a schema ReplayError, not a TypeError", async () => {
+  for (const [key, col] of [
+    ["decisions", "job_kw"],
+    ["decisions", "chosen_racks"],
+    ["events", "racks"],
+    ["events", "rack_offsets"],
+  ]) {
+    const files = await buildFixture();
+    const path = rewrite(files, key, dropJson((j) => delete j[col]));
+    const err = await load(files).catch((e) => e);
+    expect(err, `${key}.${col}`).toBeInstanceOf(ReplayError);
+    expect(err, `${key}.${col}`).toMatchObject({ kind: "schema", file: path });
+    expect(err.message).toContain(col);
+  }
+  const files = await buildFixture();
+  const path = rewrite(files, "events", () => enc([1, 2, 3]));
+  await expect(load(files)).rejects.toMatchObject({ kind: "schema", file: path });
 });

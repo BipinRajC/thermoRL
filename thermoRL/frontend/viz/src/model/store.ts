@@ -123,6 +123,7 @@ function memo<T>(map: Map<string, Promise<T>>, key: string, make: () => Promise<
 }
 
 const dirOf = (path: string) => path.slice(0, Math.max(0, path.lastIndexOf("/")));
+const join = (a: string, b: string) => (a ? `${a}/${b}` : b);
 
 interface LoadSlot {
   token: number;
@@ -167,11 +168,21 @@ export async function loadComparison(
       if (hit) return hit;
       const path = seedEntry.runs[policy];
       if (!path) throw new ReplayError("schema", `No ${policy} run for seed ${seed}`, entry.catalog);
-      return loadRun(base, expDir, path, f, controller.signal, (file, d, t) => {
+      const run = await loadRun(base, expDir, path, f, controller.signal, (file, d, t) => {
         done[side] = d;
         total[side] = t;
         if (current() && !controller.signal.aborted) onProgress?.(file, done[0] + done[1], total[0] + total[1]);
       });
+      const { experiment_id, policy: runPolicy, seed: runSeed } = run.meta;
+      if (experiment_id !== experimentId || runPolicy !== policy || runSeed !== seed) {
+        const runFile = join(expDir, path);
+        throw new ReplayError(
+          "mismatch",
+          `${path}: run.json describes ${experiment_id} ${runPolicy} seed ${runSeed}, but the catalog slot is ${experimentId} ${policy} seed ${seed}`,
+          runFile,
+        );
+      }
+      return run;
     };
     const [left, right] = await Promise.all([fetchRun(cmp.left, 0), fetchRun(cmp.right, 1)]);
     if (!current()) return "stale";
