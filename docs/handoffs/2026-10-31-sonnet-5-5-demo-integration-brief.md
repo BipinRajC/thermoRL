@@ -21,6 +21,10 @@
 > **Size budget (D-E, commit exports):** every file < 25 MB; ≤ 100 MB per experiment `replay_v1`; reduce top-K before anything else; never downsample time without a new Bipin decision. Real-data exporter tests (A6) run on the Mac against the verified copies.
 >
 > **Checkpoints:** CK-A is complete. Stop at **CK-B** (exports committed) and **CK-C** (viewer done).
+>
+> **Binding companion documents (2026-11-01):**
+> - **Data contract:** `docs/superpowers/specs/2026-11-01-replay-v1-contract.md`. The exporter (A5–A7) **must** produce exactly this layout, these file names, the 15-byte candidate records (K = 5, 6 rows per decision), the colormap LUT, `rack_kw_range` and the verbatim strings. Where A5's sketch below differs, the contract wins.
+> - **UI implementation plan:** `docs/superpowers/plans/2026-11-01-thermorl-replay-viewer.md`. It **supersedes Part B** below. Its Tasks 1–12 run against a generated fixture and may start before CK-B; Task 13 needs the real exports.
 
 **You have no prior conversation context.** Everything you need is in this brief and the files it names.
 
