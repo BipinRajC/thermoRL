@@ -1,0 +1,145 @@
+{
+  "schema": "thermorl.replay.v1",
+  "run_id": "E12_g4_alibaba:packing_seed1",
+  "experiment_id": "E12_g4_alibaba",
+  "policy": "packing",
+  "seed": 1,
+  "launch_sha": "18dfea14aa42bc21a191cc1f9a39fc421d8723bd",
+  "selected_attempt": 1,
+  "c_prime_status": "inherited_not_remeasured",
+  "n_ticks": 2160,
+  "n_racks": 257,
+  "n_decisions": 21885,
+  "n_events": 41337,
+  "source": {
+    "manifest_sha256": "320189149a524d17f3e1f9aacd28561a069e9bf2f9fca2e7d5cb6dab36b4f886",
+    "decisions_sha256": "40dfc92d3b8717f28e46b7dff15395301eb365d3d1172c3570c6effb8260d84b",
+    "intervals_sha256": "8505c2499b285cb7ee3051c978eba919a8f94920a2742bafd6c673ec4ba293de",
+    "job_events_sha256": "720ef92b62a5224121bd8b55d7c6d66f3c048307dbf2b054dfadd6bbd0f033ae"
+  },
+  "metrics": {
+    "name": "packing_seed1",
+    "policy": "packing",
+    "seed": 1,
+    "maxrack_mean_c": 41.41086946629474,
+    "maxrack_p99_c": 42.41044358885879,
+    "spread_mean_c": 1.794206655710764,
+    "mean_rack_c": 40.27028944454451,
+    "raw_max_c": 42.41328616130187,
+    "hot_rack_seconds": 0,
+    "thi_t_below_0p1_frac": 0.0,
+    "pump_energy_kwh": 6376.507141794471,
+    "it_energy_kwh": 25559.41423335592,
+    "jobs_started": 21885,
+    "jobs_censored": 0,
+    "wait_mean_s": 8.621865744804627,
+    "wait_p95_s": 38.15091680350971,
+    "decision_latency_mean_us": 436.01066666666674,
+    "decision_latency_p95_us": 892.4709999999998,
+    "rack_t_std_mean_c": 0.3579745581014792,
+    "top_decile_mean_c": 40.90765070956015,
+    "rack_kw_std_mean": 1.6135824101121496,
+    "realised_node_utilisation_mean": 0.4856178844213863,
+    "coolant_over_70_samples": 0,
+    "raps_s": 172.72745470001746,
+    "fmu_s": 1064.7541237910618,
+    "total_s": 1260.9366410459997
+  },
+  "files": {
+    "rack_tc": {
+      "path": "rack_tc.f32",
+      "dtype": "float32",
+      "shape": [
+        2160,
+        257
+      ],
+      "bytes": 2220480,
+      "sha256": "cc43c9d1c6f73b492ab7aeb78f7f2b399f6e0aaa159c727fc48673a2cf19cf5b"
+    },
+    "rack_kw": {
+      "path": "rack_kw.f32",
+      "dtype": "float32",
+      "shape": [
+        2160,
+        257
+      ],
+      "bytes": 2220480,
+      "sha256": "28f53832711e4bea664394780be88f9d5e0aa65b1bcb6ebef75ab9c91e8a1bb3"
+    },
+    "rack_free": {
+      "path": "rack_free.u8",
+      "dtype": "uint8",
+      "shape": [
+        2160,
+        257
+      ],
+      "bytes": 555120,
+      "sha256": "a81d81d77599ac59829ef8df2069deb29159659f37269e232519dc43a6942abf"
+    },
+    "tick": {
+      "path": "tick.f64",
+      "dtype": "float64",
+      "shape": [
+        2160,
+        8
+      ],
+      "columns": [
+        "t_s",
+        "it_kw_total",
+        "n_running",
+        "n_queued",
+        "maxrack_c",
+        "minrack_c",
+        "argmax_rack",
+        "pump_kw_sum"
+      ],
+      "bytes": 138240,
+      "sha256": "79d48209d16bd1b055bcf451c6495110a649c141e81d9b0f15bb1e74a08c4cd6"
+    },
+    "events": {
+      "path": "events.json",
+      "dtype": "json",
+      "bytes": 1094557,
+      "sha256": "4742909ffddd76ba93ab556e932e8deadf61ed7efc9988798cdedfd9dff22f59"
+    },
+    "decisions": {
+      "path": "decisions.json",
+      "dtype": "json",
+      "bytes": 1326070,
+      "sha256": "3f67c847340c5d00954650478391eeddb75273672b5fd583bb06eb49d78bb6f6"
+    },
+    "candidates": {
+      "path": "candidates.bin",
+      "dtype": "record",
+      "record_bytes": 15,
+      "rows_per_decision": 6,
+      "fields": [
+        [
+          "rack",
+          "uint16"
+        ],
+        [
+          "score",
+          "float32"
+        ],
+        [
+          "t_c",
+          "float32"
+        ],
+        [
+          "committed_kw",
+          "float32"
+        ],
+        [
+          "free",
+          "uint8"
+        ]
+      ],
+      "empty_rack": 65535,
+      "bytes": 1969650,
+      "sha256": "b2ee086e8e3b1917848c1b1d77c61ccb6a110a5a88db58349dbfaf5d1de670f6"
+    }
+  },
+  "precision_note": "Logged six-decimal context. Live decisions used full precision; near-ties below logging precision occur (thermal_predictive reproduces from logged context ≈ 94.8 % in E11 and ≈ 97.7 % in E12). This view shows logged values only; it does not reconstruct or rescore decisions.",
+  "empty_candidate_values": "score, t_c and committed_kw are NaN and free is 0 where rack == empty_rack"
+}
