@@ -10,6 +10,8 @@ export interface Scale {
   label: string;
 }
 
+export const F32_SLACK = 5e-6;
+
 export const TC_LABEL = "Modelled coolant °C";
 export const KW_LABEL = "Rack power kW (RAPS input over the interval ending at t)";
 export const occupiedLabel = (nodesPerRack: number) => `Occupied nodes (${nodesPerRack} − free)`;
@@ -40,14 +42,15 @@ export function lutToRgb(lut: string[]): Float32Array {
 export function mapValue(v: number, s: Scale, lut: Float32Array, out: Float32Array, offset: number): -1 | 0 | 1 {
   let idx: number;
   let code: -1 | 0 | 1 = 0;
-  if (Number.isNaN(v) || v < s.min) {
+  if (Number.isNaN(v) || v < s.min - F32_SLACK) {
     idx = 0;
     code = -1;
-  } else if (v > s.max) {
+  } else if (v > s.max + F32_SLACK) {
     idx = 255;
     code = 1;
   } else {
-    idx = Math.min(255, Math.max(0, Math.round(((v - s.min) / (s.max - s.min)) * 255)));
+    const span = s.max - s.min;
+    idx = span > 0 ? Math.min(255, Math.max(0, Math.round(((v - s.min) / span) * 255))) : 0;
   }
   out[offset] = lut[idx * 3];
   out[offset + 1] = lut[idx * 3 + 1];

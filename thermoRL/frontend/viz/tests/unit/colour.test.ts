@@ -3,7 +3,7 @@ import type { Catalog } from "../../src/schema/replay";
 import type { LoadedRun } from "../../src/data/loader";
 import { fixtureFree, fixtureKw } from "../fixture/buildFixture";
 import { loadFixtureRun } from "../fixture/loadFixtureRun";
-import { frameColours, lutToRgb, mapValue, scaleFor, type Scale } from "../../src/model/colour";
+import { F32_SLACK, frameColours, lutToRgb, mapValue, scaleFor, type Scale } from "../../src/model/colour";
 
 let run: LoadedRun;
 let cat: Catalog;
@@ -35,8 +35,7 @@ test("mapValue endpoints and midpoint", () => {
   expect(mapValue(20, scale, lut, out, 3)).toBe(0);
   expect(outAt(out, 3)).toEqual(lutAt(255));
   expect(mapValue(15, scale, lut, out, 0)).toBe(0);
-  const mid = outAt(out);
-  expect([lutAt(127), lutAt(128)]).toContainEqual(mid);
+  expect(outAt(out)).toEqual(lutAt(128));
 });
 
 test("mapValue clamps below and above the scale and reports it", () => {
@@ -45,6 +44,38 @@ test("mapValue clamps below and above the scale and reports it", () => {
   expect(outAt(out)).toEqual(lutAt(0));
   expect(mapValue(20.001, scale, lut, out, 0)).toBe(1);
   expect(outAt(out)).toEqual(lutAt(255));
+});
+
+test("float32 slack: values within F32_SLACK of the scale ends are inside", () => {
+  const out = new Float32Array(3);
+  expect(F32_SLACK).toBe(5e-6);
+  expect(mapValue(20 + 1.5e-6, scale, lut, out, 0)).toBe(0);
+  expect(outAt(out)).toEqual(lutAt(255));
+  expect(mapValue(10 - 1.9e-6, scale, lut, out, 0)).toBe(0);
+  expect(outAt(out)).toEqual(lutAt(0));
+  expect(mapValue(20 + 1e-3, scale, lut, out, 0)).toBe(1);
+  expect(mapValue(10 - 1e-3, scale, lut, out, 0)).toBe(-1);
+});
+
+test("frameColours does not count a float32 rack just past a 6-decimal scale end", () => {
+  const n = run.meta.n_racks;
+  const hottest = run.tc[5 * n + n - 1];
+  const s: Scale = { min: 0, max: hottest - 1.5e-6, unit: "°C", label: "l" };
+  const out = new Float32Array(n * 3);
+  expect(frameColours(run, 5, "tc", s, lut, out).above).toBe(0);
+});
+
+test("degenerate or NaN scale bounds never write NaN colours", () => {
+  const out = new Float32Array(3);
+  const flat: Scale = { min: 5, max: 5, unit: "u", label: "l" };
+  expect(mapValue(5, flat, lut, out, 0)).toBe(0);
+  expect(outAt(out)).toEqual(lutAt(0));
+  expect(mapValue(6, flat, lut, out, 0)).toBe(1);
+  expect(outAt(out)).toEqual(lutAt(255));
+  const nan: Scale = { min: NaN, max: NaN, unit: "u", label: "l" };
+  expect(mapValue(5, nan, lut, out, 0)).toBe(0);
+  expect(outAt(out)).toEqual(lutAt(0));
+  expect(out.some(Number.isNaN)).toBe(false);
 });
 
 test("mapValue never reads NaN as in range", () => {
