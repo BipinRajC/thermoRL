@@ -1,0 +1,1174 @@
+{
+  "schema": "thermorl.demo_replay_check.v1",
+  "task": "Task 13 (CK-C)",
+  "commit_sha_before_this_commit": "906af29a573d1a4342ec691b8698871d073d652c",
+  "branch": "feat/parasparam-demo",
+  "generated_utc": "2026-11-01",
+  "versions": {
+    "node": "v26.7.0",
+    "npm": "11.19.0",
+    "playwright": "1.64.1",
+    "vitest": "5.0.5",
+    "browser": "Google Chrome (channel: chrome) 156.0.8078.80"
+  },
+  "tests": {
+    "vitest": {
+      "files": 14,
+      "tests": 147,
+      "passed": 147,
+      "failed": 0
+    },
+    "tsc_noEmit": "clean",
+    "playwright": {
+      "fixture_project": {
+        "tests": 10,
+        "passed": 10
+      },
+      "real_project": {
+        "tests": 9,
+        "passed": 9
+      },
+      "total": 19,
+      "renderer": "bundled Chromium, swiftshader"
+    },
+    "test_scripts": {
+      "tests": 8,
+      "passed": 8
+    }
+  },
+  "sync": {
+    "default_experiment": "E12_g4_alibaba",
+    "experiments_verified": [
+      "E12_g4_alibaba",
+      "E11_g4_synthetic"
+    ],
+    "bytes": {
+      "E12_g4_alibaba": {
+        "replay_v1_files": 74,
+        "replay_v1_bytes": 83154129,
+        "fallback_files": 4,
+        "fallback_bytes": 43080555
+      },
+      "E11_g4_synthetic": {
+        "replay_v1_files": 74,
+        "replay_v1_bytes": 54485387,
+        "fallback_files": 4,
+        "fallback_bytes": 35236628
+      }
+    }
+  },
+  "spot_checks": {
+    "method": "Chrome (channel chrome, headless) against npm run build + vite preview; text read from the DOM; data-side expectations computed read-only from public/replay files",
+    "dom": {
+      "E12_g4_alibaba": {
+        "title": "ThermoRL — closed-loop FMU replay",
+        "headline_dom": "no material value on the homogeneous twin",
+        "headline_equals_frozen_outcome_file": true,
+        "rule_equals_file": true,
+        "statement_dom": "In E12 (small, low-density, bursty Alibaba-derived jobs), thermal_predictive had the lowest and packing the highest time-mean max-rack coolant temperature in all three seeds (PB−TP 0.08–0.18 °C; packing−TP 0.35–0.44 °C). This is below the preregistered 0.5 °C materiality threshold, rests on about two independent workload conditions (seed 3 ≈ seed 2 shifted 33 s), and is descriptive only.",
+        "statement_equals_file": true,
+        "gap_table_dom": [
+          [
+            "Seed",
+            "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
+            "packing − thermal_predictive (°C)"
+          ],
+          [
+            "1",
+            "0.178",
+            "0.353"
+          ],
+          [
+            "2",
+            "0.077",
+            "0.441"
+          ],
+          [
+            "3",
+            "0.109",
+            "0.423"
+          ]
+        ],
+        "metrics_table_dom": [
+          [
+            "Policy",
+            "seed 1",
+            "seed 2",
+            "seed 3"
+          ],
+          [
+            "packing",
+            "41.411",
+            "41.346",
+            "41.309"
+          ],
+          [
+            "node_balance",
+            "41.257",
+            "40.970",
+            "41.129"
+          ],
+          [
+            "power_balance",
+            "41.235",
+            "40.982",
+            "40.995"
+          ],
+          [
+            "coolest_rack",
+            "41.165",
+            "41.240",
+            "41.095"
+          ],
+          [
+            "thermal_predictive",
+            "41.058",
+            "40.905",
+            "40.886"
+          ]
+        ],
+        "metrics_cells_vs_results_metrics_csv": {
+          "cells_compared": 15,
+          "all_equal_at_3_decimals": true,
+          "sample_cells": [
+            {
+              "policy": "packing",
+              "seed": 1,
+              "dom": "41.411",
+              "csv": "41.411",
+              "ok": true
+            },
+            {
+              "policy": "coolest_rack",
+              "seed": 3,
+              "dom": "41.095",
+              "csv": "41.095",
+              "ok": true
+            },
+            {
+              "policy": "thermal_predictive",
+              "seed": 2,
+              "dom": "40.905",
+              "csv": "40.905",
+              "ok": true
+            }
+          ]
+        },
+        "legend_text_at_tick0": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "42.41 °C 38.70 °C",
+              "right": "42.41 °C 38.70 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.41 °C 38.70 °C",
+              "right": "42.41 °C 38.70 °C"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "42.64 °C 38.41 °C",
+              "right": "42.64 °C 38.41 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.64 °C 38.41 °C",
+              "right": "42.64 °C 38.41 °C"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "42.71 °C 38.49 °C",
+              "right": "42.71 °C 38.49 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.71 °C 38.49 °C",
+              "right": "42.71 °C 38.49 °C"
+            }
+          }
+        },
+        "badge_matrix": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: C′ verified (6 h repeat)"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: C′ verified (6 h repeat)"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          }
+        },
+        "identity_strip": {
+          "1": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 1 of 3",
+          "2": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 2 of 3",
+          "3": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 3 of 3 — ≈ seed 2 shifted 33 s; about two independent workload conditions in E12"
+        },
+        "hottest_sample_ticks_outside_scale_lines": [
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 1598,
+            "t_s": 15990,
+            "clock": "04:26:30 · tick 1598/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 1648,
+            "t_s": 16490,
+            "clock": "04:34:50 · tick 1648/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 975,
+            "t_s": 9760,
+            "clock": "02:42:40 · tick 975/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 1648,
+            "t_s": 16490,
+            "clock": "04:34:50 · tick 1648/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2111,
+            "t_s": 21120,
+            "clock": "05:52:00 · tick 2111/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2124,
+            "t_s": 21250,
+            "clock": "05:54:10 · tick 2124/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 2124,
+            "t_s": 21250,
+            "clock": "05:54:10 · tick 2124/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          }
+        ],
+        "overlay_out_of_scale_sampled": {
+          "1": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "2": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "3": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          }
+        }
+      },
+      "E11_g4_synthetic": {
+        "title": "ThermoRL — closed-loop FMU replay",
+        "headline_dom": "no material value on the homogeneous twin",
+        "headline_equals_frozen_outcome_file": true,
+        "rule_equals_file": true,
+        "statement_dom": "E11 (synthetic): no material value beyond power balancing (PB−TP +0.342, −0.147, −0.071 °C). Packing ≈ thermal_predictive on the primary metric (packing−TP +0.08, −0.11, +0.28 °C); no consistent primary ordering.",
+        "statement_equals_file": true,
+        "gap_table_dom": [
+          [
+            "Seed",
+            "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
+            "packing − thermal_predictive (°C)"
+          ],
+          [
+            "1",
+            "0.342",
+            "0.082"
+          ],
+          [
+            "2",
+            "-0.147",
+            "-0.108"
+          ],
+          [
+            "3",
+            "-0.071",
+            "0.276"
+          ]
+        ],
+        "metrics_table_dom": [
+          [
+            "Policy",
+            "seed 1",
+            "seed 2",
+            "seed 3"
+          ],
+          [
+            "packing",
+            "54.070",
+            "54.177",
+            "54.123"
+          ],
+          [
+            "node_balance",
+            "53.884",
+            "54.095",
+            "53.560"
+          ],
+          [
+            "power_balance",
+            "54.330",
+            "54.138",
+            "53.776"
+          ],
+          [
+            "coolest_rack",
+            "53.535",
+            "54.123",
+            "53.780"
+          ],
+          [
+            "thermal_predictive",
+            "53.988",
+            "54.285",
+            "53.847"
+          ]
+        ],
+        "metrics_cells_vs_results_metrics_csv": {
+          "cells_compared": 15,
+          "all_equal_at_3_decimals": true,
+          "sample_cells": [
+            {
+              "policy": "packing",
+              "seed": 1,
+              "dom": "54.070",
+              "csv": "54.070",
+              "ok": true
+            },
+            {
+              "policy": "coolest_rack",
+              "seed": 3,
+              "dom": "53.780",
+              "csv": "53.780",
+              "ok": true
+            },
+            {
+              "policy": "thermal_predictive",
+              "seed": 2,
+              "dom": "54.285",
+              "csv": "54.285",
+              "ok": true
+            }
+          ]
+        },
+        "legend_text_at_tick0": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "56.23 °C 39.25 °C",
+              "right": "56.23 °C 39.25 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.23 °C 39.25 °C",
+              "right": "56.23 °C 39.25 °C"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "56.93 °C 38.92 °C",
+              "right": "56.93 °C 38.92 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.93 °C 38.92 °C",
+              "right": "56.93 °C 38.92 °C"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "56.70 °C 39.46 °C",
+              "right": "56.70 °C 39.46 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.70 °C 39.46 °C",
+              "right": "56.70 °C 39.46 °C"
+            }
+          }
+        },
+        "badge_matrix": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          }
+        },
+        "identity_strip": {
+          "1": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 1 of 3",
+          "2": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 2 of 3",
+          "3": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 3 of 3"
+        },
+        "hottest_sample_ticks_outside_scale_lines": [
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 780,
+            "t_s": 7810,
+            "clock": "02:10:10 · tick 780/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 780,
+            "t_s": 7810,
+            "clock": "02:10:10 · tick 780/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 1681,
+            "t_s": 16820,
+            "clock": "04:40:20 · tick 1681/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 1901,
+            "t_s": 19020,
+            "clock": "05:17:00 · tick 1901/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2057,
+            "t_s": 20580,
+            "clock": "05:43:00 · tick 2057/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 1901,
+            "t_s": 19020,
+            "clock": "05:17:00 · tick 1901/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          }
+        ],
+        "overlay_out_of_scale_sampled": {
+          "1": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "2": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "3": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "data_side_read_only": {
+      "E12_g4_alibaba": {
+        "seed1": {
+          "scale": [
+            38.70223045300105,
+            42.41328616130187
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 975,
+              "hot_t_s": 9760,
+              "hot_maxrack_c": 42.41328616130187,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 26.321273803710938,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 1598,
+              "hot_t_s": 15990,
+              "hot_maxrack_c": 42.38871146172255,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.9953670501709,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 1648,
+              "hot_t_s": 16490,
+              "hot_maxrack_c": 42.23145580286092,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.797203063964844,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            }
+          }
+        },
+        "seed2": {
+          "scale": [
+            38.4071537784738,
+            42.64483422619912
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.64483422619912,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 25.383651733398438,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2111,
+              "hot_t_s": 21120,
+              "hot_maxrack_c": 41.87348604578932,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 25.116764068603516,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 41.81990290326172,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.741405487060547,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            }
+          }
+        },
+        "seed3": {
+          "scale": [
+            38.48699377708806,
+            42.706885557581984
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.706885557581984,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 26.850849151611328,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.2063884497162,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.69993782043457,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2124,
+              "hot_t_s": 21250,
+              "hot_maxrack_c": 41.72209005732344,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 23.399002075195312,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            }
+          }
+        }
+      },
+      "E11_g4_synthetic": {
+        "seed1": {
+          "scale": [
+            39.25240157610551,
+            56.233641451962114
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.057982892967345,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.233641451962114,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.23279844581646,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            }
+          }
+        },
+        "seed2": {
+          "scale": [
+            38.91742670221288,
+            56.93195956490433
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 56.81393353857993,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 48.844940185546875,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 1681,
+              "hot_t_s": 16820,
+              "hot_maxrack_c": 56.93195956490433,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 56.315833804690726,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            }
+          }
+        },
+        "seed3": {
+          "scale": [
+            39.45932600475669,
+            56.7046570082407
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 1901,
+              "hot_t_s": 19020,
+              "hot_maxrack_c": 56.694001643055856,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.054603576660156,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2057,
+              "hot_t_s": 20580,
+              "hot_maxrack_c": 56.21481035148673,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 1901,
+              "hot_t_s": 19020,
+              "hot_maxrack_c": 56.7046570082407,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            }
+          }
+        }
+      }
+    },
+    "float32_slack": "Without the 5e-6 slack, 5 float32 samples across the 6 experiment-seeds sit above/below the colour scale by at most 1.9e-6 C; with the slack the viewer shows no outside-scale line anywhere (checked at every policy hottest tick and, from the files, at all 2160 ticks for coolant, rack kW and occupied overlays).",
+    "burst_for_why_drawer": {
+      "finding": "In E12 the job-start bursts are at about 0.2 h, 1.93 h, 3.9 h and 5.9 h (decisions per 2 h bin: 3278, 6195, 11, 6193, 21, 6187). The 2-3 h range holds only 34 decisions in total (max 2 per 30 s window). The largest 30 s window is tick 694 (t=6950 s = 01:55:50): 493 decisions.",
+      "observed": {
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ],
+        "bad_responses": [],
+        "clock694": "01:55:50 · tick 694/2160 · evaluation window (1 h < t ≤ 6 h)",
+        "count": "493 decisions",
+        "header": "Job starts in the 30 s ending at 01:55:50 — power_balance (seed 1)",
+        "page1": "Page 1 of 10 · 1–50 of 493",
+        "items1": 50,
+        "precision_ok": true,
+        "page2": "Page 2 of 10 · 51–100 of 493",
+        "items2": 50,
+        "cand_rows": 6,
+        "ties": "Ties at logged precision: 1",
+        "first_item": "Job 8946\n1 node\nsingle\nrack 38\nlogged at 6930 s\nRAPS start 6926 s",
+        "precision_visible_after_expand": true,
+        "header_after_side": "Job starts in the 30 s ending at 01:55:50 — thermal_predictive (seed 1)",
+        "clock0": "00:00:10 · tick 0/2160 · before evaluation window (t ≤ 1 h)",
+        "t0_header": "Job starts in the 30 s ending at 00:00:10 — power_balance (seed 1)",
+        "t0_count": "40 decisions",
+        "t0_items": 40
+      }
+    },
+    "timeline_vs_plot": {
+      "screenshot": "test-artifacts/real-timeline-packing_vs_tp-seed1.png",
+      "plot": "thermoRL/backend/experiments/summit/E12_g4_alibaba/plots/demo/timeseries_seed1.png",
+      "FACT": "Viewer and plot show the same shape for packing and thermal_predictive: a pre-window hour near 40.3-40.6 C, a packing hump from about 1.7 h to a peak near 2.6-2.7 h (viewer axis top 42.56), a drop at about 3.2 h, a second thermal_predictive rise to a peak near 4.6 h, and the same spread panel pattern. File data: packing maximum 42.4133 C at tick 975 (t=9760 s, 2.71 h); thermal_predictive maximum 42.2315 C at tick 1648 (4.58 h).",
+      "INFERENCE": "The match was judged by eye from one screenshot against the PNG; the PNG has five policies, the viewer two. The viewer timeline has no hour axis ticks, so the 2.7 h position is read from the cursor and the data, not the axis."
+    }
+  },
+  "performance": {
+    "definitions": {
+      "first_render": "performance.now() (origin = navigation start) at the first animation frame after #stage is ready, #status is hidden and the legend is present; this is one frame after the draw that follows ready; 5 fresh contexts, cold cache, local preview server (no network latency)",
+      "fps": "requestAnimationFrame callbacks per second over 30 s with the player playing from tick 0 at the stated speed (E12 seed 1 power_balance vs thermal_predictive); display refresh is the ceiling",
+      "heap": "CDP Runtime.getHeapUsage (usedSize) after loading E12 pb_vs_tp, then packing_vs_tp, then E11 pb_vs_tp in one page; typed-array data is external to the JS heap, so renderer RSS is listed for context"
+    },
+    "targets": {
+      "first_render_ms_max": 5000,
+      "fps_min": 50,
+      "js_heap_mb_max": 400
+    },
+    "headed_chrome": {
+      "browser": "Google Chrome (channel: chrome)",
+      "browser_version": "156.0.8078.80",
+      "headed": true,
+      "first_render_ms": [
+        257,
+        242,
+        229,
+        226,
+        235
+      ],
+      "fps": {
+        "speed_10": {
+          "frames": 3600,
+          "elapsed_s": 30,
+          "fps_mean": 119.97,
+          "frame_ms_p50": 8.3,
+          "frame_ms_p99": 9.4,
+          "frame_ms_max": 16.7,
+          "frames_over_33ms": 0,
+          "start_tick": 0,
+          "end_tick": 300,
+          "heap_max_mb_during": 25.76
+        },
+        "speed_60": {
+          "frames": 3600,
+          "elapsed_s": 30,
+          "fps_mean": 119.97,
+          "frame_ms_p50": 8.3,
+          "frame_ms_p99": 9.4,
+          "frame_ms_max": 15.8,
+          "frames_over_33ms": 0,
+          "start_tick": 0,
+          "end_tick": 1800,
+          "heap_max_mb_during": 25.68
+        }
+      },
+      "heap": [
+        {
+          "label": "about:blank baseline",
+          "used_js_heap_mb": 0.9,
+          "after_gc_mb": 0.5,
+          "renderer_rss_mb": 400
+        },
+        {
+          "label": "E12 seed 1 pb_vs_tp",
+          "used_js_heap_mb": 5.4,
+          "after_gc_mb": 3.4,
+          "renderer_rss_mb": 525
+        },
+        {
+          "label": "E12 seed 1 packing_vs_tp",
+          "used_js_heap_mb": 4.7,
+          "after_gc_mb": 4.3,
+          "renderer_rss_mb": 550
+        },
+        {
+          "label": "E11 seed 1 pb_vs_tp",
+          "used_js_heap_mb": 5.4,
+          "after_gc_mb": 4.4,
+          "renderer_rss_mb": 585
+        }
+      ],
+      "summary": {
+        "first_render_median_ms": 235,
+        "first_render_max_ms": 257,
+        "fps_speed_10": 119.97,
+        "fps_speed_60": 119.97,
+        "heap_final_mb": 5.4,
+        "heap_final_after_gc_mb": 4.4
+      },
+      "met": {
+        "first_render": true,
+        "fps": true,
+        "heap": true
+      }
+    },
+    "headless_chrome": {
+      "browser": "Google Chrome (channel: chrome)",
+      "browser_version": "156.0.8078.80",
+      "headed": false,
+      "first_render_ms": [
+        278,
+        236,
+        229,
+        231,
+        228
+      ],
+      "fps": {
+        "speed_10": {
+          "frames": 1801,
+          "elapsed_s": 30,
+          "fps_mean": 60,
+          "frame_ms_p50": 16.7,
+          "frame_ms_p99": 16.8,
+          "frame_ms_max": 16.8,
+          "frames_over_33ms": 0,
+          "start_tick": 0,
+          "end_tick": 300,
+          "heap_max_mb_during": 25.4
+        },
+        "speed_60": {
+          "frames": 1801,
+          "elapsed_s": 30,
+          "fps_mean": 60,
+          "frame_ms_p50": 16.7,
+          "frame_ms_p99": 16.8,
+          "frame_ms_max": 16.8,
+          "frames_over_33ms": 0,
+          "start_tick": 0,
+          "end_tick": 1800,
+          "heap_max_mb_during": 25.58
+        }
+      },
+      "heap": [
+        {
+          "label": "about:blank baseline",
+          "used_js_heap_mb": 0.9,
+          "after_gc_mb": 0.5,
+          "renderer_rss_mb": 398
+        },
+        {
+          "label": "E12 seed 1 pb_vs_tp",
+          "used_js_heap_mb": 4.1,
+          "after_gc_mb": 3.2,
+          "renderer_rss_mb": 516
+        },
+        {
+          "label": "E12 seed 1 packing_vs_tp",
+          "used_js_heap_mb": 4.7,
+          "after_gc_mb": 4.2,
+          "renderer_rss_mb": 543
+        },
+        {
+          "label": "E11 seed 1 pb_vs_tp",
+          "used_js_heap_mb": 5.3,
+          "after_gc_mb": 4.4,
+          "renderer_rss_mb": 577
+        }
+      ],
+      "summary": {
+        "first_render_median_ms": 231,
+        "first_render_max_ms": 278,
+        "fps_speed_10": 60,
+        "fps_speed_60": 60,
+        "heap_final_mb": 5.3,
+        "heap_final_after_gc_mb": 4.4
+      },
+      "met": {
+        "first_render": true,
+        "fps": true,
+        "heap": true
+      }
+    },
+    "machine_note": "Presenting Mac; the headed window ran at the display rate (about 120 frames/s); headless ran at 60 frames/s. Real GPU, no software rasteriser.",
+    "script": "thermoRL/frontend/viz/scripts/perf-check.mjs"
+  },
+  "screenshots_gitignored_under_viz": [
+    "test-artifacts/real-default.png",
+    "test-artifacts/real-e12-default.png",
+    "test-artifacts/real-e12-packing_vs_tp-seed1-full.png",
+    "test-artifacts/real-timeline-packing_vs_tp-seed1.png",
+    "test-artifacts/real-burst-why.png",
+    "test-artifacts/real-tick0-why.png"
+  ],
+  "observations": [
+    "favicon.ico returns 404 (the only console error seen); not a data request.",
+    "Negative gap values in the outcome table render with a hyphen-minus (for example -0.147), the experiment statement text uses the minus sign.",
+    "The walkthrough phrase \"2-3 h burst\": the job-start burst is at 01:55:50; the thermal rise follows through about 3 h."
+  ],
+  "files_changed_outside_viz": [
+    "thermoRL/backend/experiments/DEMO.md (one added row)",
+    "docs/results/demo_replay_check.json"
+  ]
+}

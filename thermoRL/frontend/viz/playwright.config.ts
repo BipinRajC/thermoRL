@@ -1,5 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const viewer = {
+  ...devices["Desktop Chrome"],
+  viewport: { width: 1440, height: 900 },
+  launchOptions: { args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] },
+};
+
 export default defineConfig({
   testDir: "tests/e2e",
   outputDir: "test-artifacts/pw-results",
@@ -13,12 +19,14 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chromium",
-      use: {
-        ...devices["Desktop Chrome"],
-        viewport: { width: 1440, height: 900 },
-        launchOptions: { args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] },
-      },
+      name: "fixture",
+      testMatch: /smoke\.spec\.ts/,
+      use: viewer,
+    },
+    {
+      name: "real",
+      testMatch: /real\.spec\.ts/,
+      use: viewer,
     },
   ],
   webServer: {

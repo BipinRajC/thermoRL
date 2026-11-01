@@ -26,6 +26,7 @@ The originals are untouched. New copies are under `plots/demo/`; the display ran
 | [X01 G2 comparison](cross_system/X01_fmu_selection/plots/g2_cross_system.png) | Three FMU fixed-power packed/spread screening results | Summit selected by the preregistered gate; measured cross-FMU G2 contrast. | Closed-loop G4 scheduling benefit; degraded-cooling policy result. | [X01](cross_system/X01_fmu_selection/README.md) |
 | [G1 trajectories](summit/E01_g1_uniform/plots/g1_trajectories.png) | Summit uniform-load characterization and frozen fit | Finite-horizon operating proxies and heuristic parameter provenance. | Validated first-order dynamics, settled state, hardware calibration or safety limits. | [E01](summit/E01_g1_uniform/README.md) |
 | [G3 trajectories](summit/E03_g3_room_air/plots/g3_trajectories.png) | Room-air lever probe, not observed Summit hardware behaviour | Weak affected response 0.538986 °C; G5/E13 was therefore not run. | Any degraded-cooling scheduling result or tested substitute lever. | [E03](summit/E03_g3_room_air/README.md) |
+| [thermoRL/frontend/viz](../../frontend/viz/README_DEMO.md) (replay viewer) | Recorded E11 and E12 runs, all 3 seeds, 3 policies each; exports hash-verified; replay only, no live simulation | Placement changes the spatial distribution at identical IT power, plus the frozen negative outcome. | A validated benefit, savings, live simulation, or hardware temperatures. | [README_DEMO](../../frontend/viz/README_DEMO.md) |
 
 ## Short demo script
 
