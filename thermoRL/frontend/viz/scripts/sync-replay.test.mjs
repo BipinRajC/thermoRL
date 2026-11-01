@@ -29,7 +29,13 @@ function writeTree(source, eid, files, withDemo = null) {
     const dest = join(root, "exports", "replay_v1", rel.slice(rel.indexOf("/") + 1));
     if (rel.indexOf("/") < 0) continue;
     mkdirSync(dirname(dest), { recursive: true });
-    writeFileSync(dest, bytes);
+    if (rel.endsWith("/catalog.json")) {
+      const catalog = JSON.parse(new TextDecoder().decode(bytes));
+      if (catalog.experiment.id === "EFIX") catalog.experiment.id = eid;
+      writeFileSync(dest, JSON.stringify(catalog));
+    } else {
+      writeFileSync(dest, bytes);
+    }
   }
   if (withDemo) {
     const assets = {};
@@ -172,4 +178,29 @@ test("a real id without plots/demo exits 2; a test id without it is skipped", ()
   const ok = run(join(tmp, "ok-src"), join(tmp, "nodemo-out2"), "EFIX");
   assert.equal(ok.status, 0, ok.stderr + ok.stdout);
   assert.match(ok.stdout, /skip/i);
+});
+
+test("experiment ids outside [A-Za-z0-9_] exit 64 before touching anything", () => {
+  const out = join(tmp, "badid-out");
+  for (const ids of ["../escape", "EFIX/../x", "E 1", "EFIX,E-2", "a.b"]) {
+    const r = run(join(tmp, "ok-src"), out, ids);
+    assert.equal(r.status, 64, `${ids}: ${r.stderr + r.stdout}`);
+    assert.match(r.stderr, /--experiments/);
+  }
+  assert.throws(() => statSync(join(out, "replay")));
+});
+
+test("a catalog whose experiment.id differs from the requested id exits 1 naming the file", () => {
+  const source = join(tmp, "idmismatch-src");
+  const out = join(tmp, "idmismatch-out");
+  const files = new Map(fixture);
+  const catalog = JSON.parse(new TextDecoder().decode(files.get("EFIX/catalog.json")));
+  catalog.experiment.id = "EOTHER";
+  files.set("EFIX/catalog.json", new TextEncoder().encode(JSON.stringify(catalog)));
+  writeTree(source, "EFIX", files);
+  const r = run(source, out, "EFIX");
+  assert.equal(r.status, 1, r.stderr + r.stdout);
+  assert.match(r.stderr, /EFIX[\\/]catalog\.json/);
+  assert.match(r.stderr, /EOTHER/);
+  assert.throws(() => statSync(join(out, "replay")));
 });

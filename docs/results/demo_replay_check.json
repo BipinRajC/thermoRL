@@ -13,9 +13,9 @@
   },
   "tests": {
     "vitest": {
-      "files": 14,
-      "tests": 147,
-      "passed": 147,
+      "files": 15,
+      "tests": 166,
+      "passed": 166,
       "failed": 0
     },
     "tsc_noEmit": "clean",
@@ -32,8 +32,8 @@
       "renderer": "bundled Chromium, swiftshader"
     },
     "test_scripts": {
-      "tests": 8,
-      "passed": 8
+      "tests": 10,
+      "passed": 10
     }
   },
   "sync": {
@@ -1337,14 +1337,19 @@
     "test-artifacts/real-tick0-why.png"
   ],
   "observations": [
-    "favicon.ico returns 404 (the only console error seen); not a data request.",
+    "favicon.ico returned 404 (the only console error seen; not a data request) when this check was run; index.html now declares an empty data: icon, so the request is no longer made.",
     "Negative gap values in the outcome table render with a hyphen-minus (for example -0.147), the experiment statement text uses the minus sign.",
     "The brief phrase \"2-3 h burst\": the job-start burst nearest that range is at 01:55:50 (t=6950 s); only 11 distinct decisions fall in 7200 < t <= 10800 s (power_balance seed 1)."
   ],
   "files_changed_outside_viz": [
     "thermoRL/backend/experiments/DEMO.md (one added row, reworded in fix round 1)",
+    "thermoRL/frontend/LEGACY.md",
     "docs/results/demo_replay_check.json"
   ],
+  "fix_round_final": {
+    "summary": "Final whole-branch review fixes: render loop re-arms before drawing and reports draw errors once to the status panel; webglcontextlost message; loader cross-checks decoded shapes/lengths against run.json and run identity against the catalog slot; secure-context guard for hashing; table caption note; README alignment; sync id validation; empty favicon link",
+    "counts_after": "vitest 15 files / 166 tests; playwright fixture 10 + real 9 = 19; test:scripts 10"
+  },
   "fix_round_1": {
     "parent_commit": "1a76988",
     "summary": "DEMO.md row reworded; burst evidence recomputed; performance re-run with GPU/host strings; README step 2 reworded; real.spec preflight and aligned Float64Array"

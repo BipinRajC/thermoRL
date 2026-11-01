@@ -20,7 +20,8 @@ npm run preview          # serves dist/ at http://localhost:4173
 ```
 
 - `npm run sync-replay` reads `thermoRL/backend/experiments/summit/<EID>/exports/replay_v1` (`E12_g4_alibaba`, `E11_g4_synthetic`), the labelled figures under `plots/demo/`, and `provenance/demo_asset_inventory.json`. It checks every file hash and writes `public/replay/` (about 79 MiB for E12 and 52 MiB for E11) and `public/fallback/`. Both folders are generated and not committed.
-- E12 is the default experiment. Deep links look like `/?data=replay&exp=E12_g4_alibaba&seed=1&cmp=pb_vs_tp&t=6950`.
+- E12 is the default experiment. Deep links look like `/?data=replay&exp=E12_g4_alibaba&seed=1&cmp=pb_vs_tp&t=6950`. The `data` query parameter names the data directory under `public/` (default `replay`; `replay-fixture` is the generated test fixture used by the `fixture` e2e project).
+- Serve the viewer from `localhost` or over `https`. The browser only offers hash verification (`crypto.subtle`) in a secure context, so opening it by a plain `http://` LAN address shows a "Hash verification needs a secure context" error instead of the replay.
 - If a file is missing or its hash differs, the viewer shows an error panel naming the file and the kind of problem, and no partial view.
 - Checks: `npm test` (unit), `npx tsc --noEmit`, `npm run e2e` (a `fixture` project and a `real` project against the synced exports), `npm run test:scripts`. `node scripts/perf-check.mjs --base http://localhost:4173 [--headed]` repeats the timing and frame-rate measurements recorded in `docs/results/demo_replay_check.json`.
 
@@ -42,7 +43,7 @@ npm run preview          # serves dist/ at http://localhost:4173
 6. **Switch to E11.** A different regime and scale (39.25–56.23 °C for seed 1); here packing and `thermal_predictive` are close and the gaps change sign across seeds. E11 and E12 are never shown in one view.
 7. **Open About this data.** The S2 timing statement, interval semantics, pulse rule, precision note, reproducibility scope and the limits list.
 
-Tips: hover a rack for modelled coolant and rack power; click a rack to pin it (sparklines in the drawer); the overlays *Rack kW* and *Occupied* use fixed scales; keyboard: Space, ←/→, Shift+←/→.
+Tips: hover a rack for modelled coolant and rack power; click a rack to pin it (sparklines in the drawer; `Esc` unpins); the overlays *Rack kW* and *Occupied* use fixed scales; keyboard: Space, ←/→, Shift+←/→.
 
 ## Fallback
 
@@ -52,7 +53,7 @@ If WebGL is unavailable the viewer shows labelled pre-rendered figures instead (
 
 - These are recorded runs of the FMU-driven closed loop, replayed; there is no live simulation.
 - Temperatures are modelled coolant °C on a scale fixed per experiment and seed; the E11 and E12 scales differ.
-- Placement changes the spatial distribution of rack temperatures at identical IT power and timing.
+- Placement changes the spatial distribution of rack temperatures at identical IT power.
 - The frozen outcome is the headline on the Outcome card: "no material value on the homogeneous twin". The preregistered rule decides; the viewer is descriptive only, and no validated benefit is claimed.
 - Rings mark recent job starts; they are not a cooling effect.
 - Why? shows logged context only; it does not reconstruct decisions.
@@ -60,4 +61,4 @@ If WebGL is unavailable the viewer shows labelled pre-rendered figures instead (
 
 ## Limits and S2
 
-The About panel (button **About this data**) carries the S2 statement, the interval semantics, the pulse rule, the precision note, the reproducibility scope and the list of limits, all rendered verbatim from the export. The schematic grid is a layout of 257 racks, not a floor plan. Read the About panel before presenting any number.
+The About panel (button **About this data**) shows the S2 statement, the interval semantics, the pulse rule and the precision note, all rendered verbatim from the catalog, and the reproducibility scope, rendered verbatim from the frozen outcome. It also carries fixed viewer text: the "recorded runs, no new simulation" line and four short caveats (capped warm-up, frozen G1 predictor parameters, modelled rather than measured temperatures, 45 °C as a reference value only). The schematic grid is a layout of 257 racks, not a floor plan. Read the About panel before presenting any number.

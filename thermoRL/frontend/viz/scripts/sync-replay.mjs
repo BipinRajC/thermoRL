@@ -49,6 +49,8 @@ function parseArgs(argv) {
     }
   }
   if (opts.experiments.length === 0) throw new SyncError(64, "--experiments is empty");
+  const bad = opts.experiments.find((id) => !/^[A-Za-z0-9_]+$/.test(id));
+  if (bad !== undefined) throw new SyncError(64, `--experiments: invalid id ${JSON.stringify(bad)} (allowed: letters, digits, underscore)`);
   return opts;
 }
 
@@ -80,7 +82,8 @@ async function planExperiment(source, eid) {
 
   const catalog = await readJson(catalogPath, `${eid}/catalog.json`);
   if (catalog.schema !== SCHEMA) throw new SyncError(1, `${eid}/catalog.json: schema ${JSON.stringify(catalog.schema)} != ${SCHEMA}`);
-  const { short, workload_label: workload } = catalog.experiment ?? {};
+  const { id: catalogId, short, workload_label: workload } = catalog.experiment ?? {};
+  if (catalogId !== eid) throw new SyncError(1, `${eid}/catalog.json: experiment.id ${JSON.stringify(catalogId)} != requested ${eid}`);
   if (!short || !workload) throw new SyncError(1, `${eid}/catalog.json: experiment.short / workload_label missing`);
   add(catalogPath, "catalog.json");
 
