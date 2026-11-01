@@ -3,7 +3,7 @@
   "task": "Task 13 (CK-C)",
   "commit_sha_before_this_commit": "906af29a573d1a4342ec691b8698871d073d652c",
   "branch": "feat/parasparam-demo",
-  "generated_utc": "2026-11-01",
+  "generated_utc": "2026-11-01T20:43:53Z",
   "versions": {
     "node": "v26.7.0",
     "npm": "11.19.0",
@@ -954,7 +954,7 @@
     },
     "float32_slack": "Without the 5e-6 slack, 5 float32 samples across the 6 experiment-seeds sit above/below the colour scale by at most 1.9e-6 C; with the slack the viewer shows no outside-scale line anywhere (checked at every policy hottest tick and, from the files, at all 2160 ticks for coolant, rack kW and occupied overlays).",
     "burst_for_why_drawer": {
-      "finding": "In E12 the job-start bursts are at about 0.2 h, 1.93 h, 3.9 h and 5.9 h (decisions per 2 h bin: 3278, 6195, 11, 6193, 21, 6187). The 2-3 h range holds only 34 decisions in total (max 2 per 30 s window). The largest 30 s window is tick 694 (t=6950 s = 01:55:50): 493 decisions.",
+      "finding": "Recomputed from public/replay/E12_g4_alibaba/runs/power_balance_seed1/decisions.json (thermal_predictive and packing seed 1 give identical counts): 21885 decisions; distinct decisions per 1 h bin on raps_t_s (0-1 h, 1-2 h, 2-3 h, 3-4 h, 4-5 h, 5-6 h) = 3278, 6195, 11, 6193, 21, 6187; for 7200 < t <= 10800 s: 11 decisions. The earlier '34' was the sum over ticks 719..1078 of per-tick 30 s window counts (each decision is counted in up to three overlapping windows), not a count of distinct decisions; the largest 30 s window within 2-3 h holds 2 decisions. Clusters with at least 100 decisions in a 30 s window span t = 30-720 s (max 468 at 690 s), 5590-6970 s (max 493 at 6950 s = 01:55:50), 11850-13210 s (max 323 at 13180 s) and 18100-19400 s (max 258 at 18390 s). The Why drawer check therefore uses tick 694 (t=6950 s, 493 decisions).",
       "observed": {
         "errors": [
           "Failed to load resource: the server responded with a status of 404 (Not Found)"
@@ -982,8 +982,8 @@
     "timeline_vs_plot": {
       "screenshot": "test-artifacts/real-timeline-packing_vs_tp-seed1.png",
       "plot": "thermoRL/backend/experiments/summit/E12_g4_alibaba/plots/demo/timeseries_seed1.png",
-      "FACT": "Viewer and plot show the same shape for packing and thermal_predictive: a pre-window hour near 40.3-40.6 C, a packing hump from about 1.7 h to a peak near 2.6-2.7 h (viewer axis top 42.56), a drop at about 3.2 h, a second thermal_predictive rise to a peak near 4.6 h, and the same spread panel pattern. File data: packing maximum 42.4133 C at tick 975 (t=9760 s, 2.71 h); thermal_predictive maximum 42.2315 C at tick 1648 (4.58 h).",
-      "INFERENCE": "The match was judged by eye from one screenshot against the PNG; the PNG has five policies, the viewer two. The viewer timeline has no hour axis ticks, so the 2.7 h position is read from the cursor and the data, not the axis."
+      "FACT": "From tick.f64 (read-only): packing maximum 42.4133 C at tick 975 (t=9760 s, 2.71 h); thermal_predictive maximum 42.2315 C at tick 1648 (t=16490 s, 4.58 h). The viewer timeline axis top for packing_vs_tp seed 1 reads 42.56 and its bottom 39.40.",
+      "INFERENCE": "By eye, one viewer screenshot against the PNG shows the same shape: pre-window plateau near 40.3-40.6 C, a packing hump peaking near 2.6-2.7 h, a dip near 3.2 h, a thermal_predictive rise near 4.6 h and the same spread-panel pattern. The PNG has five policies, the viewer two; the viewer timeline has no hour tick labels, so the hour positions are read from the cursor and the data."
     }
   },
   "performance": {
@@ -997,162 +997,336 @@
       "fps_min": 50,
       "js_heap_mb_max": 400
     },
-    "headed_chrome": {
-      "browser": "Google Chrome (channel: chrome)",
-      "browser_version": "156.0.8078.80",
-      "headed": true,
-      "first_render_ms": [
-        257,
-        242,
-        229,
-        226,
-        235
-      ],
-      "fps": {
-        "speed_10": {
-          "frames": 3600,
-          "elapsed_s": 30,
-          "fps_mean": 119.97,
-          "frame_ms_p50": 8.3,
-          "frame_ms_p99": 9.4,
-          "frame_ms_max": 16.7,
-          "frames_over_33ms": 0,
-          "start_tick": 0,
-          "end_tick": 300,
-          "heap_max_mb_during": 25.76
+    "script": "thermoRL/frontend/viz/scripts/perf-check.mjs",
+    "superseded": "Numbers from the first measurement (headed 226-257 ms, 119.97 fps, heap 5.4 MB; headless 228-278 ms, 60 fps, 5.3 MB) were replaced by the re-run below; they agreed within run-to-run variation.",
+    "rerun_after_fix_round_1": {
+      "headed_chrome": {
+        "browser": "Google Chrome (channel: chrome)",
+        "browser_version": "156.0.8078.80",
+        "headed": true,
+        "host": {
+          "model": "Mac16,8",
+          "cpu": "Apple M4 Pro",
+          "arch": "arm64",
+          "platform": "darwin",
+          "release": "25.5.0",
+          "node": "v26.7.0"
         },
-        "speed_60": {
-          "frames": 3600,
-          "elapsed_s": 30,
-          "fps_mean": 119.97,
-          "frame_ms_p50": 8.3,
-          "frame_ms_p99": 9.4,
-          "frame_ms_max": 15.8,
-          "frames_over_33ms": 0,
-          "start_tick": 0,
-          "end_tick": 1800,
-          "heap_max_mb_during": 25.68
+        "webgl": {
+          "context": "webgl2",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "vendor": "Google Inc. (Apple)"
+        },
+        "first_render_ms": [
+          273,
+          233,
+          241,
+          233,
+          252
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.1,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.76,
+            "tick_each_second": "10,20,30,40,50,59,70,80,90,100,110,120,130,140,150,160,170,180,190,199,210,220,230,240,250,260,270,280,290,300",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@263"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 15.3,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.62,
+            "tick_each_second": "60,119,180,240,300,360,419,479,540,600,660,720,779,840,899,959,1020,1080,1139,1200,1259,1320,1379,1439,1499,1559,1620,1680,1740,1800",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@267"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
+        },
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 405
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.2,
+            "after_gc_mb": 3.4,
+            "renderer_rss_mb": 520
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 8.6,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 546
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.5,
+            "renderer_rss_mb": 578
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 241,
+          "first_render_max_ms": 273,
+          "fps_speed_10": 119.97,
+          "fps_speed_60": 119.97,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.5
+        },
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
+        },
+        "met_notes": {
+          "heap": "met on the JS-heap definition (Runtime.getHeapUsage); renderer RSS growth is reported separately in heap[].renderer_rss_mb and is not the target quantity"
         }
       },
-      "heap": [
-        {
-          "label": "about:blank baseline",
-          "used_js_heap_mb": 0.9,
-          "after_gc_mb": 0.5,
-          "renderer_rss_mb": 400
+      "headed_chrome_repeat": {
+        "first_render_ms": [
+          279,
+          234,
+          236,
+          237,
+          234
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.5,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.69,
+            "tick_each_second": "10,20,29,40,50,59,69,79,90,100,110,120,130,140,150,160,170,179,190,200,210,219,230,240,250,260,270,280,290,300",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@260"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.3,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.63,
+            "tick_each_second": "60,120,180,240,300,360,420,480,540,600,659,720,780,840,900,959,1020,1080,1140,1200,1260,1319,1379,1440,1500,1560,1619,1680,1739,1800",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@259"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
         },
-        {
-          "label": "E12 seed 1 pb_vs_tp",
-          "used_js_heap_mb": 5.4,
-          "after_gc_mb": 3.4,
-          "renderer_rss_mb": 525
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 407
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 11.4,
+            "after_gc_mb": 3.4,
+            "renderer_rss_mb": 520
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 8.6,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 545
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.5,
+            "renderer_rss_mb": 580
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 236,
+          "first_render_max_ms": 279,
+          "fps_speed_10": 119.97,
+          "fps_speed_60": 119.97,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.5
         },
-        {
-          "label": "E12 seed 1 packing_vs_tp",
-          "used_js_heap_mb": 4.7,
-          "after_gc_mb": 4.3,
-          "renderer_rss_mb": 550
-        },
-        {
-          "label": "E11 seed 1 pb_vs_tp",
-          "used_js_heap_mb": 5.4,
-          "after_gc_mb": 4.4,
-          "renderer_rss_mb": 585
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
         }
-      ],
-      "summary": {
-        "first_render_median_ms": 235,
-        "first_render_max_ms": 257,
-        "fps_speed_10": 119.97,
-        "fps_speed_60": 119.97,
-        "heap_final_mb": 5.4,
-        "heap_final_after_gc_mb": 4.4
       },
-      "met": {
-        "first_render": true,
-        "fps": true,
-        "heap": true
+      "headless_chrome": {
+        "browser": "Google Chrome (channel: chrome)",
+        "browser_version": "156.0.8078.80",
+        "headed": false,
+        "host": {
+          "model": "Mac16,8",
+          "cpu": "Apple M4 Pro",
+          "arch": "arm64",
+          "platform": "darwin",
+          "release": "25.5.0",
+          "node": "v26.7.0"
+        },
+        "webgl": {
+          "context": "webgl2",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "vendor": "Google Inc. (Apple)"
+        },
+        "first_render_ms": [
+          248,
+          232,
+          227,
+          237,
+          228
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 1801,
+            "elapsed_s": 30,
+            "fps_mean": 60,
+            "frame_ms_p50": 16.7,
+            "frame_ms_p99": 16.8,
+            "frame_ms_max": 16.8,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.76,
+            "tick_each_second": "10,19,29,39,49,59,69,79,89,99,109,119,129,139,149,159,169,179,189,199,209,219,229,239,249,259,269,279,289,299",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@258"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 1801,
+            "elapsed_s": 30,
+            "fps_mean": 60,
+            "frame_ms_p50": 16.7,
+            "frame_ms_p99": 16.8,
+            "frame_ms_max": 16.8,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.66,
+            "tick_each_second": "59,119,179,239,299,359,419,479,539,599,659,719,779,839,899,959,1019,1079,1139,1199,1259,1319,1379,1439,1499,1559,1619,1679,1739,1799",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@254"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
+        },
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 406
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 5.9,
+            "after_gc_mb": 3.9,
+            "renderer_rss_mb": 518
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 544
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.4,
+            "renderer_rss_mb": 576
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 232,
+          "first_render_max_ms": 248,
+          "fps_speed_10": 60,
+          "fps_speed_60": 60,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.4
+        },
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
+        },
+        "met_notes": {
+          "heap": "met on the JS-heap definition (Runtime.getHeapUsage); renderer RSS growth is reported separately in heap[].renderer_rss_mb and is not the target quantity"
+        }
       }
     },
-    "headless_chrome": {
-      "browser": "Google Chrome (channel: chrome)",
-      "browser_version": "156.0.8078.80",
-      "headed": false,
-      "first_render_ms": [
-        278,
-        236,
-        229,
-        231,
-        228
-      ],
-      "fps": {
-        "speed_10": {
-          "frames": 1801,
-          "elapsed_s": 30,
-          "fps_mean": 60,
-          "frame_ms_p50": 16.7,
-          "frame_ms_p99": 16.8,
-          "frame_ms_max": 16.8,
-          "frames_over_33ms": 0,
-          "start_tick": 0,
-          "end_tick": 300,
-          "heap_max_mb_during": 25.4
-        },
-        "speed_60": {
-          "frames": 1801,
-          "elapsed_s": 30,
-          "fps_mean": 60,
-          "frame_ms_p50": 16.7,
-          "frame_ms_p99": 16.8,
-          "frame_ms_max": 16.8,
-          "frames_over_33ms": 0,
-          "start_tick": 0,
-          "end_tick": 1800,
-          "heap_max_mb_during": 25.58
-        }
+    "host_and_gpu": {
+      "host": {
+        "model": "Mac16,8",
+        "cpu": "Apple M4 Pro",
+        "arch": "arm64",
+        "platform": "darwin",
+        "release": "25.5.0",
+        "node": "v26.7.0"
       },
-      "heap": [
-        {
-          "label": "about:blank baseline",
-          "used_js_heap_mb": 0.9,
-          "after_gc_mb": 0.5,
-          "renderer_rss_mb": 398
-        },
-        {
-          "label": "E12 seed 1 pb_vs_tp",
-          "used_js_heap_mb": 4.1,
-          "after_gc_mb": 3.2,
-          "renderer_rss_mb": 516
-        },
-        {
-          "label": "E12 seed 1 packing_vs_tp",
-          "used_js_heap_mb": 4.7,
-          "after_gc_mb": 4.2,
-          "renderer_rss_mb": 543
-        },
-        {
-          "label": "E11 seed 1 pb_vs_tp",
-          "used_js_heap_mb": 5.3,
-          "after_gc_mb": 4.4,
-          "renderer_rss_mb": 577
-        }
-      ],
-      "summary": {
-        "first_render_median_ms": 231,
-        "first_render_max_ms": 278,
-        "fps_speed_10": 60,
-        "fps_speed_60": 60,
-        "heap_final_mb": 5.3,
-        "heap_final_after_gc_mb": 4.4
+      "webgl": {
+        "context": "webgl2",
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)"
       },
-      "met": {
-        "first_render": true,
-        "fps": true,
-        "heap": true
-      }
+      "FACT": "WEBGL_debug_renderer_info reports \"ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)\" in both headed and headless Chrome, i.e. hardware Metal rendering on an Apple M4 Pro (Mac16,8); no software rasteriser string was reported.",
+      "INFERENCE": "This host is assumed to be the presenting Mac; that is not recorded anywhere in the repository."
     },
-    "machine_note": "Presenting Mac; the headed window ran at the display rate (about 120 frames/s); headless ran at 60 frames/s. Real GPU, no software rasteriser.",
-    "script": "thermoRL/frontend/viz/scripts/perf-check.mjs"
+    "playback_rate_check": {
+      "definition": "end_tick must be within 5 % (+1 tick) of speed x 30 s, i.e. 300 at speed 10 and 1800 at speed 60",
+      "recorded_runs_ok": "All recorded runs above (headed x2, headless) pass.",
+      "unexplained_earlier_runs": "Three headed re-runs made immediately after the first edit of the script each had one playback leg off the commanded rate (end_tick 2159 at speed 10; 1315 at speed 60; 173 at speed 10) while rAF stayed at about 120 Hz. Two further headed runs with per-second tick sampling and input-event capture, and the two recorded headed runs, were all on rate with no input events seen. The cause was not identified; INFERENCE only: interference with the visible headed window on the shared desktop, not proven. These runs are not used for the numbers."
+    },
+    "heap_note": "The heap target is met on the JS-heap definition (CDP Runtime.getHeapUsage, with --enable-precise-memory-info for the in-page samples). Renderer RSS growth of about 170-185 MB over an empty page (about 405 MB -> about 576-580 MB after the three loads) is reported separately and is not the target quantity.",
+    "machine_note": "Headed Chrome ran at about 120 frames/s on this host display; headless is capped at 60 frames/s. Rendering used the Apple M4 Pro Metal renderer reported above (FACT); that it is the presenting Mac is an INFERENCE."
   },
   "screenshots_gitignored_under_viz": [
     "test-artifacts/real-default.png",
@@ -1165,10 +1339,14 @@
   "observations": [
     "favicon.ico returns 404 (the only console error seen); not a data request.",
     "Negative gap values in the outcome table render with a hyphen-minus (for example -0.147), the experiment statement text uses the minus sign.",
-    "The walkthrough phrase \"2-3 h burst\": the job-start burst is at 01:55:50; the thermal rise follows through about 3 h."
+    "The brief phrase \"2-3 h burst\": the job-start burst nearest that range is at 01:55:50 (t=6950 s); only 11 distinct decisions fall in 7200 < t <= 10800 s (power_balance seed 1)."
   ],
   "files_changed_outside_viz": [
-    "thermoRL/backend/experiments/DEMO.md (one added row)",
+    "thermoRL/backend/experiments/DEMO.md (one added row, reworded in fix round 1)",
     "docs/results/demo_replay_check.json"
-  ]
+  ],
+  "fix_round_1": {
+    "parent_commit": "1a76988",
+    "summary": "DEMO.md row reworded; burst evidence recomputed; performance re-run with GPU/host strings; README step 2 reworded; real.spec preflight and aligned Float64Array"
+  }
 }

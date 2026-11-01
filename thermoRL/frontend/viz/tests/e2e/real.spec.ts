@@ -37,6 +37,18 @@ async function seek(page: Page, tick: number): Promise<void> {
 const clock = (page: Page) => page.locator("#clock");
 
 test.describe("real hash-verified E12 export", () => {
+  test.beforeAll(async ({ request }) => {
+    const res = await request.get("/replay/index.json");
+    const body = res.ok() ? await res.text() : "";
+    let ok = false;
+    try {
+      ok = (JSON.parse(body) as { schema?: string }).schema === "thermorl.replay.v1";
+    } catch {
+      ok = false;
+    }
+    if (!ok) throw new Error(`Real replay data is missing: /replay/index.json (HTTP ${res.status()}) is not a thermorl.replay.v1 index. Run \`npm run sync-replay\` first.`);
+  });
+
   test("title, verbatim headline and legend on seed 1", async ({ page }) => {
     await ready(page, "&cmp=pb_vs_tp");
     await expect(page.locator("#app-title")).toHaveText("ThermoRL — closed-loop FMU replay");
@@ -96,7 +108,7 @@ test.describe("real hash-verified E12 export", () => {
 
   test("no racks fall outside the scale at the hottest packing sample", async ({ page }) => {
     const tick = Buffer.from(await (await page.request.get(`${DATA}/runs/packing_seed1/tick.f64`)).body());
-    const values = new Float64Array(tick.buffer, tick.byteOffset, tick.byteLength / 8);
+    const values = new Float64Array(tick.buffer.slice(tick.byteOffset, tick.byteOffset + tick.byteLength));
     let hot = 0;
     for (let k = 1; k < 2160; k++) if (values[k * 8 + 4] > values[hot * 8 + 4]) hot = k;
     await ready(page, "&cmp=packing_vs_tp");
