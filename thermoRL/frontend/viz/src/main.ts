@@ -15,6 +15,7 @@ import {
   type AppState,
   type ExperimentBundle,
 } from "./model/store";
+import { guardedFrame } from "./model/frameGuard";
 import { pulseBounds, tickToTs } from "./model/time";
 import { Player } from "./replay/player";
 import { DualView } from "./scene/dualView";
@@ -366,18 +367,31 @@ function draw(s: Session): void {
   dualView!.render(s.leftGrid, s.rightGrid, leftEl, rightEl);
 }
 
-let last = performance.now();
-function frame(now: number): void {
-  const dt = Math.max(0, Math.min(MAX_FRAME_MS, now - last));
-  last = now;
-  const s = session;
-  if (s && dualView) {
-    if (s.player.playing) s.player.advance(dt);
-    controls.refresh();
-    draw(s);
+function failRender(e: unknown): void {
+  status.error(e);
+  setStage("error");
+  try {
+    endSession();
+  } catch {
+    session = null;
   }
-  requestAnimationFrame(frame);
 }
+
+let last = performance.now();
+const frame = guardedFrame(
+  (now) => {
+    const dt = Math.max(0, Math.min(MAX_FRAME_MS, now - last));
+    last = now;
+    const s = session;
+    if (s && dualView) {
+      if (s.player.playing) s.player.advance(dt);
+      controls.refresh();
+      draw(s);
+    }
+  },
+  () => requestAnimationFrame(frame),
+  failRender,
+);
 
 async function boot(): Promise<void> {
   status.loading();
@@ -416,6 +430,10 @@ async function boot(): Promise<void> {
 
 if (dualView) {
   const view = dualView;
+  byId<HTMLCanvasElement>("gl").addEventListener("webglcontextlost", (e) => {
+    e.preventDefault();
+    failRender(new Error(COPY.contextLost));
+  });
   window.addEventListener("resize", () => view.resize());
   new ResizeObserver(() => view.resize()).observe(stage);
   requestAnimationFrame(frame);

@@ -9,6 +9,7 @@ export const COPY = {
   errorTitle: "Replay data could not be loaded",
   syncHint:
     "Run `npm run sync-replay` (exports must exist under thermoRL/backend/experiments/summit/<EID>/exports/replay_v1)",
+  contextLost: "WebGL context lost — reload the page",
   emptyNoExperiments: "No experiments are listed in index.json.",
   cPrimeVerified: "C′ verified (6 h repeat)",
   cPrimeNot: "not directly repeated",
@@ -44,7 +45,7 @@ export const COPY = {
     gapSeed: "Seed",
     gapPower: "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
     gapPacking: "packing − thermal_predictive (°C)",
-    metricsCaption: "Time-mean max-rack modelled coolant °C, evaluation window, per recorded run",
+    metricsCaption: "Time-mean max-rack modelled coolant °C, evaluation window, per recorded run (policies without a replay are shown for the frozen outcome only)",
     metricsPolicy: "Policy",
     metricsSeed: (seed: number) => `seed ${seed}`,
     missing: "—",

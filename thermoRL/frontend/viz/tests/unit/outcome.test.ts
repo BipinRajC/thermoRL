@@ -146,3 +146,8 @@ test("renderAbout lists the fixed caveats, the recorded-runs statement and the r
   expect(a.getAttribute("href")).toContain("docs/results/2026-11-parasparam-demo-results.md");
   expect(a.rel).toContain("noopener");
 });
+
+test("the five-policy table caption says policies without a replay are shown for the frozen outcome only", () => {
+  const caption = render().querySelector("table.outcome-metrics caption")!.textContent!;
+  expect(caption).toContain("(policies without a replay are shown for the frozen outcome only)");
+});
