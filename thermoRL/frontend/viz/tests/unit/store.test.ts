@@ -59,7 +59,7 @@ test("set merges and notifies with the previous state", () => {
   expect(calls).toHaveLength(1);
 });
 
-test("RACE: the newest comparison load wins and the superseded one is stale", async () => {
+test("RACE: a load superseded before the catalog resolves is stale and the newest wins", async () => {
   const { f } = await fixtureFetcher({ seed: 1, ms: 50, honourAbort: true });
   const store = newStore({ seed: 1 });
   const cache = new RunCache();
@@ -79,16 +79,102 @@ test("RACE: the newest comparison load wins and the superseded one is stale", as
   expect(cache.get("EFIX:power_balance:2")).toBe(b.left);
 });
 
-test("RACE: a superseded load whose fetches ignore the abort signal is still stale", async () => {
-  const { f } = await fixtureFetcher({ seed: 1, ms: 50, honourAbort: false });
+function deferred() {
+  let resolve!: () => void;
+  const promise = new Promise<void>((r) => (resolve = r));
+  return { promise, resolve };
+}
+
+async function gatedFetcher(onGate: "serve" | "fail") {
+  const files = await buildFixture({ seeds: [1, 2] });
+  const started = deferred();
+  const gate = deferred();
+  const f: Fetcher = async (url) => {
+    if (url.includes("_seed1/") && !url.endsWith("run.json")) {
+      started.resolve();
+      await gate.promise;
+      if (onGate === "fail") throw new TypeError("network down");
+    }
+    const bytes = files.get(url.startsWith(`${BASE}/`) ? url.slice(BASE.length + 1) : url);
+    return bytes ? new Response(bytes as BodyInit) : new Response(null, { status: 404 });
+  };
+  const warm = async (cache: RunCache) => {
+    const index = await cache.index(BASE, f);
+    await cache.experiment(BASE, index.experiments[0], f);
+  };
+  return { f, warm, started: started.promise, release: gate.resolve };
+}
+
+test("RACE: a load superseded while its run files are in flight is stale and reports no further progress", async () => {
+  const { f, warm, started, release } = await gatedFetcher("serve");
   const store = newStore({ seed: 1 });
   const cache = new RunCache();
-  const first = loadComparison(BASE, store, cache, f);
+  await warm(cache);
+  const progress = vi.fn();
+  const first = loadComparison(BASE, store, cache, f, progress);
+  await started;
+  const before = progress.mock.calls.length;
+  expect(before).toBeGreaterThan(0);
   store.set({ seed: 2 });
   const second = loadComparison(BASE, store, cache, f);
-  expect(await second).not.toBe("stale");
-  expect(await first).toBe("stale");
+  release();
+  const [a, b] = await Promise.all([first, second]);
+  expect(a).toBe("stale");
+  expect(b).not.toBe("stale");
+  expect(progress.mock.calls.length).toBe(before);
+  expect(store.get().seed).toBe(2);
   expect(cache.get("EFIX:power_balance:1")).toBeUndefined();
+  expect(cache.get("EFIX:power_balance:2")).toBeDefined();
+});
+
+test("RACE: an in-flight load that rejects after being superseded resolves stale, not an error", async () => {
+  const { f, warm, started, release } = await gatedFetcher("fail");
+  const store = newStore({ seed: 1 });
+  const cache = new RunCache();
+  await warm(cache);
+  const first = loadComparison(BASE, store, cache, f);
+  await started;
+  store.set({ seed: 2 });
+  const second = loadComparison(BASE, store, cache, f);
+  release();
+  await expect(first).resolves.toBe("stale");
+  const b = await second;
+  expect(b).not.toBe("stale");
+  expect(cache.get("EFIX:power_balance:1")).toBeUndefined();
+});
+
+test("RACE: a load that finishes after being superseded is stale and does not touch the cache", async () => {
+  const { f } = await fixtureFetcher();
+  const store = newStore({ seed: 1 });
+  const puts: string[] = [];
+  let hook: (() => void) | null = null;
+  class HookCache extends RunCache {
+    get(id: string) {
+      const h = hook;
+      hook = null;
+      h?.();
+      return super.get(id);
+    }
+    put(id: string, run: LoadedRun) {
+      puts.push(id);
+      super.put(id, run);
+    }
+  }
+  const cache = new HookCache();
+  expect(await loadComparison(BASE, store, cache, f)).not.toBe("stale");
+  puts.length = 0;
+  let second!: ReturnType<typeof loadComparison>;
+  hook = () => {
+    store.set({ seed: 2 });
+    second = loadComparison(BASE, store, cache, f);
+  };
+  const first = await loadComparison(BASE, store, cache, f);
+  expect(first).toBe("stale");
+  const b = await second;
+  expect(b).not.toBe("stale");
+  expect(store.get().seed).toBe(2);
+  expect(puts.every((id) => id.endsWith(":2"))).toBe(true);
+  expect(puts).toHaveLength(2);
 });
 
 test("progress is only reported for the current load", async () => {

@@ -202,7 +202,7 @@ function draw(s: Session): void {
 
 let last = performance.now();
 function frame(now: number): void {
-  const dt = Math.min(MAX_FRAME_MS, now - last);
+  const dt = Math.max(0, Math.min(MAX_FRAME_MS, now - last));
   last = now;
   const s = session;
   if (s && dualView) {

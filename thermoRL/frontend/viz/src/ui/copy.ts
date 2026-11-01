@@ -8,7 +8,6 @@ export const COPY = {
   syncHint:
     "Run `npm run sync-replay` (exports must exist under thermoRL/backend/experiments/summit/<EID>/exports/replay_v1)",
   emptyNoExperiments: "No experiments are listed in index.json.",
-  emptyNoComparison: "This experiment has no comparison for the selected seed.",
   cPrimeVerified: "C′ verified (6 h repeat)",
   cPrimeNot: "not directly repeated",
   overlays: { tc: "Coolant °C", kw: "Rack kW", occupied: "Occupied" },
