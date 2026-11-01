@@ -36,6 +36,7 @@ const NODES_PER_RACK = 18;
 const COMPLETE_AFTER_S = 300;
 const enc = new TextEncoder();
 const sha256 = (b: Uint8Array | string) => createHash("sha256").update(b).digest("hex");
+const avg = (a: number[]) => a.reduce((sum, x) => sum + x, 0) / a.length;
 const round6 = (x: number) => Math.round(x * 1e6) / 1e6;
 
 export const fixtureTc = (policy: PolicyId, k: number, r: number) =>
@@ -116,7 +117,7 @@ function buildCandidates(decisions: Decision[], policy: PolicyId, nTicks: number
   const dv = new DataView(buf);
   decisions.forEach((d, i) => {
     const k = Math.min(nTicks - 1, Math.max(0, Math.floor(d.t / 10) - 1));
-    const order = d.scores.map((s, r) => r).sort((a, b) => d.scores[b] - d.scores[a] || a - b);
+    const order = Array.from(d.scores.keys()).sort((a, b) => d.scores[b] - d.scores[a] || a - b);
     const rows = order.slice(0, 5);
     while (rows.length < 5) rows.push(-1);
     rows.push(rows.includes(d.racks[0]) ? -1 : d.racks[0]);
@@ -143,6 +144,8 @@ export async function buildFixture(opts: FixtureOptions = {}): Promise<Map<strin
   const nRacks = opts.nRacks ?? 11;
   const seeds = opts.seeds ?? [1, 2];
   const perTick = opts.decisionsPerTick ?? defaultDecisionsPerTick;
+  if (nRacks < 8) throw new Error(`buildFixture: nRacks must be >= 8 (got ${nRacks})`);
+  if (nTicks < 360) throw new Error(`buildFixture: nTicks must be >= 360 so an evaluation window exists (got ${nTicks})`);
   const files = new Map<string, Uint8Array>();
 
   const decisions = buildDecisions(nTicks, nRacks, perTick);
@@ -198,14 +201,13 @@ export async function buildFixture(opts: FixtureOptions = {}): Promise<Map<strin
         );
       }
       const evalMaxes = maxes.filter((_, k) => 10 * (k + 1) > 3600 && 10 * (k + 1) <= 21600);
-      const mean = (a: number[]) => a.reduce((s, x) => s + x, 0) / a.length;
-      const row: MetricsRow = {
+            const row: MetricsRow = {
         name: `${policy}_seed${seed}`,
         policy,
         seed,
-        maxrack_mean_c: mean(evalMaxes.length ? evalMaxes : maxes),
+        maxrack_mean_c: avg(evalMaxes),
         raw_max_c: Math.max(...maxes),
-        it_kw_mean: mean(itKw),
+        it_kw_mean: avg(itKw),
         jobs_started: decisions.length,
       };
       metricsRows.push(row);
@@ -316,13 +318,10 @@ export async function buildFixture(opts: FixtureOptions = {}): Promise<Map<strin
       { id: "packing_vs_tp", left: "packing", right: "thermal_predictive" },
     ],
     strings: {
-      interval_semantics:
-        "Rack power, free nodes and job counts are RAPS inputs at t − 10 s, held over the 10 s interval ending at t; coolant temperature is the FMU output at the end of that interval (t).",
-      s2: "published view = FMU endpoint t+Δ of interval driven by P(t); decisions in (t, t+Δ) observe it (≤9 s hold-power forecast, E10 max 10 s per-rack change 0.31 °C, p99 0.057 °C); no future-decision information; identical for all policies.",
-      precision_note:
-        "Logged six-decimal context. Live decisions used full precision; near-ties below logging precision occur (thermal_predictive reproduces from logged context ≈ 94.8 % in E11 and ≈ 97.7 % in E12). This view shows logged values only; it does not reconstruct or rescore decisions.",
-      pulse_rule:
-        "Rings mark racks that received a job start in the 30 s ending at the displayed time (RAPS start time). A placement's power first appears in the rack power of the following 10 s interval. Rings are not a cooling effect.",
+      interval_semantics: "fixture interval semantics text",
+      s2: "fixture s2 text",
+      precision_note: "fixture precision note text",
+      pulse_rule: "fixture pulse rule text",
     },
     unavailable_fields: ["fixture_unavailable_field"],
     provenance: {
@@ -333,13 +332,13 @@ export async function buildFixture(opts: FixtureOptions = {}): Promise<Map<strin
     },
   };
 
-  const mean = (policy: PolicyId, seed: number) =>
+  const meanOf = (policy: PolicyId, seed: number) =>
     metricsRows.find((m) => m.policy === policy && m.seed === seed)!.maxrack_mean_c;
   const perSeed: FrozenOutcome["decision"]["per_seed"] = {};
   for (const seed of seeds) {
     perSeed[String(seed)] = {
-      packing_minus_thermal_c: mean("packing", seed) - mean("thermal_predictive", seed),
-      power_minus_thermal_c: mean("power_balance", seed) - mean("thermal_predictive", seed),
+      packing_minus_thermal_c: meanOf("packing", seed) - meanOf("thermal_predictive", seed),
+      power_minus_thermal_c: meanOf("power_balance", seed) - meanOf("thermal_predictive", seed),
     };
   }
   const decisionRule = "fixture decision rule text";

@@ -77,3 +77,36 @@ test("corrupt option changes bytes without changing the recorded hash", async ()
   expect(bytes.byteLength).toBe(run.files.rack_tc.bytes);
   expect(await sha256Hex(bytes)).not.toBe(run.files.rack_tc.sha256);
 });
+
+test("fixture exact values and sentinel strings that later tasks rely on", async () => {
+  const files = await buildFixture();
+  const cat = load(files, "EFIX/catalog.json");
+  expect(cat.strings).toEqual({
+    interval_semantics: "fixture interval semantics text",
+    s2: "fixture s2 text",
+    precision_note: "fixture precision note text",
+    pulse_rule: "fixture pulse rule text",
+  });
+  const f64 = (p: string) => {
+    const b = files.get(`EFIX/runs/${p}/tick.f64`)!;
+    return new Float64Array(b.slice().buffer);
+  };
+  const f32 = (p: string) => new Float32Array(files.get(`EFIX/runs/${p}/rack_tc.f32`)!.slice().buffer);
+  const tp = f32("thermal_predictive_seed1");
+  const pb = f32("power_balance_seed1");
+  for (const [k, r] of [[0, 0], [5, 9], [359, 10], [399, 3]]) {
+    expect(tp[k * 11 + r]).toBeCloseTo(40 + 0.01 * k + 0.1 * r, 5);
+    expect(pb[k * 11 + r]).toBeCloseTo(40 + 0.01 * k + 0.1 * r + 0.2, 5);
+  }
+  const ticks = ["packing", "power_balance", "thermal_predictive"].map((p) => f64(`${p}_seed1`));
+  for (let k = 0; k < 400; k++) {
+    for (const t of ticks) expect(t[k * 8]).toBe(10 * (k + 1));
+    expect(ticks[0][k * 8 + 1]).toBe(ticks[1][k * 8 + 1]);
+    expect(ticks[1][k * 8 + 1]).toBe(ticks[2][k * 8 + 1]);
+  }
+});
+
+test("fixture rejects shapes it cannot honour", async () => {
+  await expect(buildFixture({ nRacks: 7 })).rejects.toThrow(/nRacks/);
+  await expect(buildFixture({ nTicks: 100 })).rejects.toThrow(/nTicks/);
+});
