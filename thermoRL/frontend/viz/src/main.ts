@@ -30,7 +30,7 @@ import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
 import { Timeline } from "./ui/timeline";
 import { placeTooltip, tooltipHtml } from "./ui/tooltip";
-import { renderWhy } from "./ui/whyDrawer";
+import { renderWhy, updateWhyHeader, whyWindowKey } from "./ui/whyDrawer";
 
 interface Session {
   exp: ExperimentBundle;
@@ -214,13 +214,19 @@ function syncWhyDrawer(s: Session | null): void {
     whyPane.remove();
     return;
   }
-  const base = [s.left.meta.run_id, s.right.meta.run_id, s.player.tick, st.whySide].join("|");
+  const run = st.whySide === "left" ? s.left : s.right;
+  const t_s = tickToTs(s.player.tick);
+  const cat = s.exp.catalog;
+  const base = [whyWindowKey(run, t_s, cat), st.whySide].join("|");
   if (base !== whyBase) {
     whyBase = base;
     whyPage = 0;
   }
   const key = `${base}|${whyPage}`;
-  if (key === whyKey && whyPane.isConnected) return;
+  if (key === whyKey && whyPane.isConnected) {
+    updateWhyHeader(whyPane, run, t_s, cat);
+    return;
+  }
   whyKey = key;
   const handlers = {
     onSide: (side: Side) => store.set({ whySide: side }),
@@ -229,7 +235,7 @@ function syncWhyDrawer(s: Session | null): void {
       whyKey = `${base}|${page}`;
     },
   };
-  renderWhy(whyPane, st.whySide === "left" ? s.left : s.right, st.whySide, tickToTs(s.player.tick), s.exp.catalog, whyPage, handlers);
+  renderWhy(whyPane, run, st.whySide, t_s, cat, whyPage, handlers);
   if (!whyPane.isConnected) drawerBody.append(whyPane);
 }
 

@@ -4,14 +4,16 @@ import type { LoadedRun } from "../../src/data/loader";
 import { candidatesFor, decisionAt, decisionsIn } from "../../src/data/views";
 import { pulseBounds, tickToTs } from "../../src/model/time";
 import { COPY } from "../../src/ui/copy";
-import { renderWhy } from "../../src/ui/whyDrawer";
+import { renderWhy, updateWhyHeader, whyWindowKey } from "../../src/ui/whyDrawer";
 import { loadFixtureRun } from "../fixture/loadFixtureRun";
 
 const PRECISION = "SENTINEL-PRECISION <b>raw</b> ≈ 94.8 %";
 let run: LoadedRun;
 let cat: Catalog;
+let cat100: Catalog;
 beforeAll(async () => {
   ({ run, cat } = await loadFixtureRun());
+  cat100 = { ...cat, time: { ...cat.time, pulse_window_s: 100 } };
   cat.strings = { ...cat.strings, precision_note: PRECISION };
 });
 
@@ -175,4 +177,60 @@ test("expanding reports through onExpand, and re-rendering replaces the content"
 test("no ranking wording or other-policy choices are rendered", () => {
   const text = render(tickToTs(360)).textContent ?? "";
   expect(text).not.toMatch(/winner|significan|power_balance|thermal_predictive/i);
+});
+
+test("whyWindowKey depends on the decision set, not the tick", () => {
+  expect(whyWindowKey(run, 50, cat)).toBe(whyWindowKey(run, 54, cat));
+  expect(whyWindowKey(run, 50, cat)).not.toBe(whyWindowKey(run, 55, cat));
+  expect(whyWindowKey(run, 3610, cat100)).toBe(whyWindowKey(run, 3615, cat100));
+  expect(whyWindowKey(run, 3610, cat)).not.toBe(whyWindowKey(run, 3611, cat));
+  expect(whyWindowKey(run, 3610, cat)).not.toBe(whyWindowKey(run, 3620, cat));
+  expect(whyWindowKey(run, 3610, cat)).not.toBe(whyWindowKey(run, 1200, cat));
+  expect(whyWindowKey(run, 1200, cat)).toBe(whyWindowKey(run, 1210, cat));
+  const cat60: Catalog = { ...cat, time: { ...cat.time, pulse_window_s: 60 } };
+  expect(whyWindowKey(run, 90, cat60)).not.toBe(whyWindowKey(run, 90, cat));
+});
+
+test("updateWhyHeader changes only the clock text and keeps the page, the expansion and the nodes", () => {
+  const el = render(3610, 1, cat100);
+  const item = items(el)[3];
+  expand(item);
+  const list = el.querySelector(".why-list");
+  const table = item.querySelector("table");
+  expect(whyWindowKey(run, 3610, cat100)).toBe(whyWindowKey(run, 3615, cat100));
+  updateWhyHeader(el, run, 3615, cat100);
+  expect(el.querySelector(".why-header")?.textContent).toBe("Job starts in the 100 s ending at 01:00:15 — packing (seed 1)");
+  expect(el.querySelector(".why-list")).toBe(list);
+  expect(item.querySelector("table")).toBe(table);
+  expect(items(el)).toHaveLength(50);
+  expect(el.querySelector(".why-page")?.textContent).toContain("Page 2 of 3");
+  expect(item.querySelector(".why-item-head")?.getAttribute("aria-expanded")).toBe("true");
+});
+
+test("re-rendering keeps keyboard focus on the pager or side button that was used", () => {
+  document.body.append(document.createElement("div"));
+  const el = document.createElement("div");
+  document.body.append(el);
+  renderWhy(el, run, "left", tickToTs(360), cat, 0, undefined);
+  button(el, "Next").focus();
+  button(el, "Next").click();
+  expect(document.activeElement).toBe(button(el, "Next"));
+  button(el, "Next").click();
+  expect(button(el, "Next").disabled).toBe(true);
+  expect(document.activeElement).toBe(button(el, "Prev"));
+  const side = el.querySelectorAll<HTMLButtonElement>(".why-side button")[1];
+  side.focus();
+  renderWhy(el, run, "right", tickToTs(360), cat, 0);
+  expect(document.activeElement).toBe(el.querySelectorAll(".why-side button")[1]);
+  el.remove();
+});
+
+test("candidate titles are rounded to 9 significant digits", () => {
+  const el = render(30);
+  expand(itemFor(el, 0));
+  const c = candidatesFor(run, 0)[0];
+  const cells = el.querySelectorAll("tbody tr")[0].querySelectorAll("td");
+  expect(cells[1].getAttribute("title")).toBe(c.score.toPrecision(9));
+  expect(cells[2].getAttribute("title")).toBe(c.tc.toPrecision(9));
+  expect(cells[3].getAttribute("title")).toBe(c.committedKw.toPrecision(9));
 });

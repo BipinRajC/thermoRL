@@ -34,9 +34,9 @@ function candidatesBlock(run: LoadedRun, d: DecisionView): HTMLElement {
     const tr = el("tr", c.chosen ? "is-chosen" : "");
     const cells: [string, string?][] = [
       [String(c.rack)],
-      [c.score.toFixed(6), String(c.score)],
-      [c.tc.toFixed(3), String(c.tc)],
-      [c.committedKw.toFixed(2), String(c.committedKw)],
+      [c.score.toFixed(6), c.score.toPrecision(9)],
+      [c.tc.toFixed(3), c.tc.toPrecision(9)],
+      [c.committedKw.toFixed(2), c.committedKw.toPrecision(9)],
       [String(c.free)],
     ];
     cells.forEach(([text, title], i) => {
@@ -84,6 +84,22 @@ function itemNode(run: LoadedRun, d: DecisionView, handlers?: WhyHandlers): HTML
   return li;
 }
 
+export function whyWindowKey(run: LoadedRun, t_s: number, cat: Catalog): string {
+  const ids = decisionsIn(run, ...pulseBounds(t_s, cat));
+  return `${run.meta.run_id}|${ids.length}|${ids[0] ?? ""}|${ids[ids.length - 1] ?? ""}`;
+}
+
+const headerText = (run: LoadedRun, t_s: number, cat: Catalog) =>
+  COPY.why.header(cat.time.pulse_window_s, formatClock(t_s), run.meta.policy, run.meta.seed);
+
+export function updateWhyHeader(root: HTMLElement, run: LoadedRun, t_s: number, cat: Catalog): void {
+  const h = root.querySelector(".why-header");
+  const text = headerText(run, t_s, cat);
+  if (h && h.textContent !== text) h.textContent = text;
+}
+
+const FOCUS_FALLBACK: Record<string, string> = { prev: "next", next: "prev" };
+
 export function renderWhy(
   root: HTMLElement,
   run: LoadedRun,
@@ -100,12 +116,20 @@ export function renderWhy(
   const from = p * WHY_PAGE_SIZE;
   const to = Math.min(ids.length, from + WHY_PAGE_SIZE);
 
+  const active = document.activeElement instanceof HTMLElement && root.contains(document.activeElement) ? document.activeElement.dataset.focus : undefined;
+  const restoreFocus = () => {
+    if (!active) return;
+    const find = (id: string) => root.querySelector<HTMLButtonElement>(`[data-focus="${id}"]:not(:disabled)`);
+    (find(active) ?? find(FOCUS_FALLBACK[active] ?? ""))?.focus();
+  };
+
   const toggle = el("div", "why-side");
   toggle.setAttribute("role", "group");
   toggle.append(el("span", "why-side-label", COPY.why.sideLabel));
   for (const s of ["left", "right"] as const) {
     const b = el("button", "", COPY.why.sides[s]);
     b.type = "button";
+    b.dataset.focus = s;
     b.setAttribute("aria-pressed", String(s === side));
     b.addEventListener("click", () => handlers?.onSide?.(s));
     toggle.append(b);
@@ -113,12 +137,13 @@ export function renderWhy(
 
   root.replaceChildren(
     el("p", "why-precision", cat.strings.precision_note),
-    el("h3", "why-header", COPY.why.header(windowS, formatClock(t_s), run.meta.policy, run.meta.seed)),
+    el("h3", "why-header", headerText(run, t_s, cat)),
     toggle,
     el("p", "why-count", COPY.why.count(ids.length)),
   );
   if (!ids.length) {
     root.append(el("p", "why-empty", COPY.why.empty(windowS)));
+    restoreFocus();
     return;
   }
 
@@ -130,6 +155,8 @@ export function renderWhy(
   const prev = el("button", "", COPY.why.prev);
   const next = el("button", "", COPY.why.next);
   prev.type = next.type = "button";
+  prev.dataset.focus = "prev";
+  next.dataset.focus = "next";
   prev.disabled = p === 0;
   next.disabled = p >= pages - 1;
   prev.addEventListener("click", () => go(p - 1));
@@ -140,4 +167,5 @@ export function renderWhy(
   list.start = from + 1;
   for (let i = from; i < to; i++) list.append(itemNode(run, decisionAt(run, ids[i]), handlers));
   root.append(pager, list);
+  restoreFocus();
 }
