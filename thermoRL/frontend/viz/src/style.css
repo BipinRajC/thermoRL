@@ -542,7 +542,7 @@ h1 {
 
 .outcome-table th,
 .outcome-table td {
-  padding: 5px 6px;
+  padding: 5px 3px;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: bottom;
@@ -621,6 +621,18 @@ details > summary {
   color: var(--muted);
   font-size: 13px;
   cursor: pointer;
+}
+
+details > summary::before {
+  content: "\25B8";
+  display: inline-block;
+  width: 1em;
+  margin-right: 2px;
+  text-align: center;
+}
+
+details[open] > summary::before {
+  content: "\25BE";
 }
 
 details > summary:hover {
@@ -787,6 +799,7 @@ details[open] > summary {
   vertical-align: bottom;
 }
 
+.outcome-table th,
 .why-table th {
   overflow-wrap: break-word;
   font-size: 12px;

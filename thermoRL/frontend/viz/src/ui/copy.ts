@@ -83,7 +83,7 @@ export const COPY = {
       precision:
         "The Why? list shows numbers as logged, to six decimals. The live scheduler used full precision, so near-ties can differ. Nothing is re-scored.",
       repro:
-        "A few runs were repeated and matched exactly (E12 thermal_predictive seed 1 for 6 h; E11 seed-1 packing and power_balance for the first 2 h). The others were not repeated.",
+        "A few runs were repeated in a fresh process and matched: E10 packing seed 1 (2 h), E11 seed-1 packing and power_balance (first 2 h), and E12 thermal_predictive seed 1 (6 h). No other run was repeated, and we do not claim it carries over to other machines.",
     },
     recorded: "This viewer replays recorded runs; there is no new simulation.",
     bullets: [

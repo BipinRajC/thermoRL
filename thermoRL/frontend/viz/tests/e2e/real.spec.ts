@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { COPY } from "../../src/ui/copy";
 import { scanText } from "../support/forbidden";
 
 const DATA = "/replay/E12_g4_alibaba";
@@ -184,6 +185,27 @@ test.describe("real hash-verified E12 export", () => {
     for (const name of ["Rack kW", "Occupied", "Coolant °C"]) {
       await page.getByRole("button", { name }).click();
       expect(scanText(await page.evaluate(() => document.body.innerText)), name).toEqual([]);
+    }
+  });
+
+  test("tokens hard-coded in the plain-words About lines appear in the verbatim bundle strings", async ({ page }) => {
+    const cat = (await (await page.request.get(`${DATA}/catalog.json`)).json()) as {
+      strings: { s2: string; interval_semantics: string; pulse_rule: string; precision_note: string };
+    };
+    const outcome = (await (await page.request.get(`${DATA}/frozen_outcome.json`)).json()) as { reproducibility_scope: string };
+    const checks: [string, string, [string, string][]][] = [
+      ["s2", cat.strings.s2, [["9-second", "≤9 s"], ["power stays constant", "hold-power"]]],
+      ["interval", cat.strings.interval_semantics, [["10 seconds", "10 s"]]],
+      ["pulse", cat.strings.pulse_rule, [["not a cooling effect", "not a cooling effect"]]],
+      ["precision", cat.strings.precision_note, [["six decimals", "six-decimal"], ["Nothing is re-scored", "rescore"], ["full precision", "full precision"]]],
+      ["repro", outcome.reproducibility_scope, [["E10 packing seed 1 (2 h)", "E10 packing seed 1 (2 h)"], ["E11 seed-1 packing and power_balance (first 2 h)", "E11 seed-1 packing and power_balance over the first 2 h"], ["E12 thermal_predictive seed 1 (6 h)", "E12 thermal_predictive seed 1 (6 h"], ["other machines", "cross-machine portability is claimed"]]],
+    ];
+    for (const [key, verbatim, pairs] of checks) {
+      const plain = COPY.about.plain[key as keyof typeof COPY.about.plain];
+      for (const [inPlain, inVerbatim] of pairs) {
+        expect(plain, `${key} plain line`).toContain(inPlain);
+        expect(verbatim, `${key} verbatim string`).toContain(inVerbatim);
+      }
     }
   });
 });

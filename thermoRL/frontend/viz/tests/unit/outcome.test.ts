@@ -157,7 +157,7 @@ const PLAIN = {
   interval: "Rack power is what the scheduler fed in during the 10 seconds before the time shown. Temperature is what the cooling model returned at the end of those 10 seconds.",
   pulse: "Cyan rings mark racks that just received a job. They show where jobs landed, not a cooling effect.",
   precision: "The Why? list shows numbers as logged, to six decimals. The live scheduler used full precision, so near-ties can differ. Nothing is re-scored.",
-  repro: "A few runs were repeated and matched exactly (E12 thermal_predictive seed 1 for 6 h; E11 seed-1 packing and power_balance for the first 2 h). The others were not repeated.",
+  repro: "A few runs were repeated in a fresh process and matched: E10 packing seed 1 (2 h), E11 seed-1 packing and power_balance (first 2 h), and E12 thermal_predictive seed 1 (6 h). No other run was repeated, and we do not claim it carries over to other machines.",
 };
 
 test("About shows the fixed plain-words line under each heading, with the verbatim text in a closed Technical detail", () => {
