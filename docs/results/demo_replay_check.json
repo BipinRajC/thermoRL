@@ -13,22 +13,22 @@
   },
   "tests": {
     "vitest": {
-      "files": 15,
-      "tests": 166,
-      "passed": 166,
+      "files": 17,
+      "tests": 219,
+      "passed": 219,
       "failed": 0
     },
     "tsc_noEmit": "clean",
     "playwright": {
       "fixture_project": {
+        "tests": 19,
+        "passed": 19
+      },
+      "real_project": {
         "tests": 10,
         "passed": 10
       },
-      "real_project": {
-        "tests": 9,
-        "passed": 9
-      },
-      "total": 19,
+      "total": 29,
       "renderer": "bundled Chromium, swiftshader"
     },
     "test_scripts": {
@@ -1353,5 +1353,15 @@
   "fix_round_1": {
     "parent_commit": "1a76988",
     "summary": "DEMO.md row reworded; burst evidence recomputed; performance re-run with GPU/host strings; README step 2 reworded; real.spec preflight and aligned Float64Array"
+  },
+  "layout_update_2026_11_02": {
+    "summary": "UI-only: draggable splitters (grids, side panel, timeline) and plain-words About/Why? with collapsible Technical detail. No data, contract or exporter change; the performance and spot-check records above were not re-measured.",
+    "commits": [
+      "1469584 feat(viz): draggable splitters for panels, drawer and timeline",
+      "4c98efa fix(viz): splitter keys no longer drive playback; drag robustness; re-clamp on window resize",
+      "d9bbeb1 feat(viz): plain-words About and Why? with collapsible technical detail; readable type",
+      "09a2aa0 fix(viz): reproducibility plain line matches verbatim scope; visible toggle marker"
+    ],
+    "counts_after": "vitest 17 files / 219 tests; playwright fixture 19 + real 10 = 29; test:scripts 10"
   }
 }
