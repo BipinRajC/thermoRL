@@ -73,6 +73,10 @@ test.describe("fixture bundle", () => {
     await expect(clock(page)).toContainText("tick 360/400");
     await page.getByRole("button", { name: "Why?" }).click();
     const why = page.locator('#drawer [data-pane="why"]');
+    await expect(why.locator(".why-precision-plain")).toBeVisible();
+    await expect(why.locator(".why-precision")).toBeHidden();
+    await why.getByText("Technical detail").click();
+    await expect(why.locator(".why-precision")).toBeVisible();
     await expect(why.locator(".why-precision")).toHaveText(cat.strings.precision_note);
     await expect(why.locator(".why-item").first()).toBeVisible();
     expect(await why.locator(".why-item").count()).toBeGreaterThanOrEqual(1);

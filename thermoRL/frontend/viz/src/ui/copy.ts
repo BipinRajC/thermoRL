@@ -69,9 +69,22 @@ export const COPY = {
     candidatesCaption: "Logged candidates: top 5 logged scores, plus the first chosen rack if it is not among them. Chosen racks are highlighted.",
     ties: (n: number) => `Ties at logged precision: ${n}`,
     notBest: "Chosen rack is not the top logged score — the live decision used full precision.",
+    precisionPlain: "Numbers here are the logged six-decimal values; the live decision used full precision, and nothing is re-scored.",
+    technicalDetail: "Technical detail",
   },
   about: {
     heading: { s2: "Decision timing (S2)", interval: "Interval semantics", pulse: "Pulse rings", precision: "Logged precision", repro: "Reproducibility", caveats: "Caveats" },
+    technicalDetail: "Technical detail",
+    plain: {
+      s2: "Every policy sees the same latest temperatures from the cooling model, with at most a 9-second look-ahead that assumes power stays constant. None of them sees future placements.",
+      interval:
+        "Rack power is what the scheduler fed in during the 10 seconds before the time shown. Temperature is what the cooling model returned at the end of those 10 seconds.",
+      pulse: "Cyan rings mark racks that just received a job. They show where jobs landed, not a cooling effect.",
+      precision:
+        "The Why? list shows numbers as logged, to six decimals. The live scheduler used full precision, so near-ties can differ. Nothing is re-scored.",
+      repro:
+        "A few runs were repeated and matched exactly (E12 thermal_predictive seed 1 for 6 h; E11 seed-1 packing and power_balance for the first 2 h). The others were not repeated.",
+    },
     recorded: "This viewer replays recorded runs; there is no new simulation.",
     bullets: [
       "Warm-up is capped (7200 s), not settled",

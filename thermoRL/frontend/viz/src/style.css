@@ -298,7 +298,10 @@ h1 {
   overflow-y: auto;
   border-left: 1px solid var(--line);
   background: var(--panel);
-  padding: 12px;
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 #timeline {
@@ -426,8 +429,8 @@ h1 {
 }
 
 .drawer-title {
-  margin: 0 0 8px;
-  font-size: 16px;
+  margin: 0 0 10px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -497,45 +500,65 @@ h1 {
 }
 
 .outcome-headline {
-  margin: 0 0 8px;
-  font-size: 22px;
+  margin: 0 0 10px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .outcome-rule,
 .outcome-statement {
-  margin: 0 0 12px;
-  line-height: 1.4;
+  margin: 0 0 14px;
+  line-height: 1.55;
+}
+
+.outcome-statement.is-callout {
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: rgba(34, 211, 238, 0.07);
+  border-radius: 0 4px 4px 0;
 }
 
 .outcome-footer {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .outcome-table {
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .outcome-table caption {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   color: var(--muted);
   text-align: left;
+  line-height: 1.45;
 }
 
 .outcome-table th,
 .outcome-table td {
-  padding: 3px 6px;
+  padding: 5px 6px;
   border-bottom: 1px solid var(--line);
   text-align: left;
+  vertical-align: bottom;
+}
+
+.outcome-table th:first-child,
+.why-table th:first-child {
+  white-space: nowrap;
+}
+
+.outcome-table thead th:not(:first-child) {
+  text-align: right;
 }
 
 .outcome-table td.num {
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -552,74 +575,124 @@ h1 {
 }
 
 .about-recorded {
-  margin: 0 0 10px;
+  margin: 0 0 16px;
   font-weight: 600;
 }
 
 .about-section {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .about-heading {
-  margin: 0 0 2px;
-  font-size: 12px;
+  margin: 0 0 4px;
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
 .about-section p,
 .about-caveats {
   margin: 0;
-  line-height: 1.4;
+}
+
+.about-plain {
+  color: var(--text);
 }
 
 .about-caveats {
-  padding-left: 18px;
+  padding-left: 20px;
+}
+
+.about-caveats li + li {
+  margin-top: 4px;
 }
 
 .about-link a {
   color: var(--accent);
 }
 
-.why-precision {
-  margin: 0 0 10px;
+details > summary {
+  display: inline-block;
+  margin: 6px 0 0 -4px;
+  padding: 1px 4px;
+  border-radius: 3px;
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+details > summary:hover {
+  color: var(--text);
+}
+
+details > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+details[open] > summary {
+  margin-bottom: 4px;
+}
+
+.about-tech > p,
+.why-tech > p {
+  padding-left: 10px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.why-precision-callout {
+  margin: 0 0 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.why-precision-plain {
+  margin: 0;
+}
+
+.why-precision {
+  margin: 0;
 }
 
 .why-header {
-  margin: 0 0 8px;
-  font-size: 15px;
+  margin: 0 0 10px;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .why-side {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .why-side-label {
   margin-right: 2px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .why-count,
 .why-empty {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
 .why-pager {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 12px;
+  gap: 6px 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
 }
 
 .why-pager button:disabled {
@@ -640,16 +713,23 @@ h1 {
 .why-item-head {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 10px;
+  align-items: center;
+  gap: 4px 8px;
   width: 100%;
-  padding: 6px 4px;
+  padding: 8px 4px;
   border: 0;
+  border-radius: 0;
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
   cursor: pointer;
+}
+
+.why-item-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .why-item-head[aria-expanded="true"] {
@@ -657,38 +737,63 @@ h1 {
 }
 
 .why-job {
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.why-nodes,
+.why-racks {
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.why-rule {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .why-obs,
 .why-raps {
   color: var(--muted);
+  font-size: 13px;
 }
 
 .why-candidates {
-  padding: 4px 4px 10px;
+  padding: 4px 4px 12px;
 }
 
 .why-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .why-table caption {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   color: var(--muted);
   text-align: left;
+  line-height: 1.45;
 }
 
 .why-table th,
 .why-table td {
-  padding: 3px 4px;
+  padding: 5px 2px;
   border-bottom: 1px solid var(--line);
   text-align: left;
+  vertical-align: bottom;
+}
+
+.why-table th {
+  overflow-wrap: break-word;
+  font-size: 12px;
 }
 
 .why-table td.num {
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -700,8 +805,8 @@ h1 {
 
 .why-ties,
 .why-note {
-  margin: 6px 0 0;
-  font-size: 12px;
+  margin: 8px 0 0;
+  font-size: 14px;
 }
 
 .why-note {

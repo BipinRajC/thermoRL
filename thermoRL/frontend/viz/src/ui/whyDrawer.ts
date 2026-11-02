@@ -84,6 +84,14 @@ function itemNode(run: LoadedRun, d: DecisionView, handlers?: WhyHandlers): HTML
   return li;
 }
 
+function precisionCallout(cat: Catalog): HTMLElement {
+  const box = el("div", "why-precision-callout");
+  const tech = el("details", "why-tech");
+  tech.append(el("summary", "", COPY.why.technicalDetail), el("p", "why-precision", cat.strings.precision_note));
+  box.append(el("p", "why-precision-plain", COPY.why.precisionPlain), tech);
+  return box;
+}
+
 export function whyWindowKey(run: LoadedRun, t_s: number, cat: Catalog): string {
   const ids = decisionsIn(run, ...pulseBounds(t_s, cat));
   return `${run.meta.run_id}|${ids.length}|${ids[0] ?? ""}|${ids[ids.length - 1] ?? ""}`;
@@ -136,7 +144,7 @@ export function renderWhy(
   }
 
   root.replaceChildren(
-    el("p", "why-precision", cat.strings.precision_note),
+    precisionCallout(cat),
     el("h3", "why-header", headerText(run, t_s, cat)),
     toggle,
     el("p", "why-count", COPY.why.count(ids.length)),

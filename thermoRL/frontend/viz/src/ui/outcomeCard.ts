@@ -76,7 +76,7 @@ export function renderOutcome(
     el("p", "outcome-rule", outcome.rule),
     gapTable(outcome),
     metricsTable(outcome, active),
-    el("p", "outcome-statement", outcome.experiment_statement),
+    el("p", "outcome-statement is-callout", outcome.experiment_statement),
     el("p", "outcome-footer", COPY.outcome.footer),
   );
 }

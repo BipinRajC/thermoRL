@@ -151,3 +151,47 @@ test("the five-policy table caption says policies without a replay are shown for
   const caption = render().querySelector("table.outcome-metrics caption")!.textContent!;
   expect(caption).toContain("(policies without a replay are shown for the frozen outcome only)");
 });
+
+const PLAIN = {
+  s2: "Every policy sees the same latest temperatures from the cooling model, with at most a 9-second look-ahead that assumes power stays constant. None of them sees future placements.",
+  interval: "Rack power is what the scheduler fed in during the 10 seconds before the time shown. Temperature is what the cooling model returned at the end of those 10 seconds.",
+  pulse: "Cyan rings mark racks that just received a job. They show where jobs landed, not a cooling effect.",
+  precision: "The Why? list shows numbers as logged, to six decimals. The live scheduler used full precision, so near-ties can differ. Nothing is re-scored.",
+  repro: "A few runs were repeated and matched exactly (E12 thermal_predictive seed 1 for 6 h; E11 seed-1 packing and power_balance for the first 2 h). The others were not repeated.",
+};
+
+test("About shows the fixed plain-words line under each heading, with the verbatim text in a closed Technical detail", () => {
+  const el = document.createElement("div");
+  renderAbout(el, cat, outcome);
+  expect(COPY.about.plain).toEqual(PLAIN);
+  for (const key of ["s2", "interval", "pulse", "precision", "repro"] as const) {
+    const verbatim = el.querySelector<HTMLElement>(`.about-${key}`)!;
+    const details = verbatim.closest("details")!;
+    expect(details.classList.contains("about-tech")).toBe(true);
+    expect(details.open).toBe(false);
+    expect(details.querySelector("summary")?.textContent).toBe("Technical detail");
+    expect(verbatim.parentElement).toBe(details);
+    const section = verbatim.closest(".about-section")!;
+    const plain = section.querySelector<HTMLElement>(".about-plain")!;
+    expect(plain.textContent).toBe(PLAIN[key]);
+    expect(plain.closest("details")).toBeNull();
+    expect(Array.from(section.children).map((c) => c.className.split(" ")[0])).toEqual(["about-heading", "about-plain", "about-tech"]);
+  }
+  expect(Array.from(el.querySelectorAll("details")).every((d) => !d.open)).toBe(true);
+  expect(el.querySelectorAll("details")).toHaveLength(5);
+});
+
+test("About keeps the recorded-runs line, the caveats and the results link outside any details", () => {
+  const el = document.createElement("div");
+  renderAbout(el, cat, outcome);
+  expect(el.querySelector(".about-recorded")?.closest("details")).toBeNull();
+  expect(el.querySelector(".about-caveats")?.closest("details")).toBeNull();
+  expect(el.querySelectorAll(".about-caveats li")).toHaveLength(4);
+  expect(el.querySelector(".about-link a")?.closest("details")).toBeNull();
+});
+
+test("the experiment statement is a callout with unchanged text and order", () => {
+  const st = render().querySelector(".outcome-statement")!;
+  expect(st.classList.contains("is-callout")).toBe(true);
+  expect(st.textContent).toBe(outcome.experiment_statement);
+});

@@ -144,11 +144,23 @@ test("a chosen rack outside the six records is not invented", () => {
   expect(racks).toEqual(candidatesFor(run, 0).map((c) => c.rack));
 });
 
-test("the precision note is always the first block, verbatim, and bundle text is not parsed as HTML", () => {
+test("the precision callout is always the first block: plain line visible, verbatim note in a closed Technical detail, not parsed as HTML", () => {
   for (const t of [tickToTs(119), tickToTs(360), 30]) {
     const el = render(t);
     expect(el.querySelector(".why-precision")?.textContent).toBe(PRECISION);
-    expect(el.firstElementChild?.classList.contains("why-precision")).toBe(true);
+    const callout = el.firstElementChild!;
+    expect(callout.classList.contains("why-precision-callout")).toBe(true);
+    const plain = callout.querySelector(".why-precision-plain")!;
+    expect(plain.textContent).toBe(COPY.why.precisionPlain);
+    expect(COPY.why.precisionPlain).toBe(
+      "Numbers here are the logged six-decimal values; the live decision used full precision, and nothing is re-scored.",
+    );
+    expect(plain.closest("details")).toBeNull();
+    const details = callout.querySelector<HTMLDetailsElement>("details.why-tech")!;
+    expect(details.open).toBe(false);
+    expect(details.querySelector("summary")?.textContent).toBe("Technical detail");
+    expect(details.querySelector(".why-precision")?.parentElement).toBe(details);
+    expect(el.querySelectorAll("details")).toHaveLength(1);
     expect(el.querySelector("b")).toBeNull();
   }
 });
@@ -171,6 +183,7 @@ test("expanding reports through onExpand, and re-rendering replaces the content"
   expect(onExpand).toHaveBeenLastCalledWith(0);
   renderWhy(el, run, "left", 30, cat);
   expect(el.querySelectorAll(".why-precision")).toHaveLength(1);
+  expect(el.querySelectorAll(".why-precision-callout")).toHaveLength(1);
   expect(el.querySelector("table")).toBeNull();
 });
 
