@@ -1,0 +1,64 @@
+{
+  "experiment": "E11_g4_synthetic",
+  "assets": {
+    "plots/demo/anim_packing_vs_thermal_predictive_seed1.gif": {
+      "bytes": 17098184,
+      "sha256": "4a1709173d4e31d08517fcc2be1b71390749d1b965e6078fd3dc5a569b6a20b6",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/anim_power_balance_vs_thermal_predictive_seed1.gif": {
+      "bytes": 17370956,
+      "sha256": "39192225821a3249be3eb67cbfe34d10e868d9748c09d34db519055c77feaf6c",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/heatmaps_seed1.png": {
+      "bytes": 633915,
+      "sha256": "76d4b29d36ae840f84c6877db3616a969ba7101b1d161f2a1e031a6149a133d3",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/timeseries_seed1.png": {
+      "bytes": 133573,
+      "sha256": "44b077969b6a691d110794a42a5d91ac719fbb528ed4009db104fd928e0401c8",
+      "exceeds_25_MB": false
+    }
+  },
+  "wall_s": 196.69593681100002,
+  "process_memory": {
+    "ru_maxrss": 2174652,
+    "unit": "KiB",
+    "peak_rss_bytes": 2226843648,
+    "scope": "own process lifetime high-water resident set, including imports"
+  }
+}
+{
+  "experiment": "E12_g4_alibaba",
+  "assets": {
+    "plots/demo/anim_packing_vs_thermal_predictive_seed1.gif": {
+      "bytes": 20589630,
+      "sha256": "45444f976d78e5665bb0140679ee8a2e416bef352f952ca2a2ce95e539ce338b",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/anim_power_balance_vs_thermal_predictive_seed1.gif": {
+      "bytes": 21470118,
+      "sha256": "69072486e7c238630c1f11b5c0d9d28cf88b709b4746a3fd81046d1108244aaa",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/heatmaps_seed1.png": {
+      "bytes": 821001,
+      "sha256": "153220a90e356649ece7091eaa49baa9a7977541bbf88d9156d06668dd500b82",
+      "exceeds_25_MB": false
+    },
+    "plots/demo/timeseries_seed1.png": {
+      "bytes": 199806,
+      "sha256": "342a469fd0ffdeae241d9577ce60b8be58d9153857c57fd890e517329befc067",
+      "exceeds_25_MB": false
+    }
+  },
+  "wall_s": 218.146840526,
+  "process_memory": {
+    "ru_maxrss": 2575548,
+    "unit": "KiB",
+    "peak_rss_bytes": 2637361152,
+    "scope": "own process lifetime high-water resident set, including imports"
+  }
+}

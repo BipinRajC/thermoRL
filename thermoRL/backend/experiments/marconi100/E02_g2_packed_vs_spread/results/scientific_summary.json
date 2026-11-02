@@ -1,0 +1,31 @@
+{
+  "class": "STOP",
+  "delta_max_c": 0.0547968067009208,
+  "dt_s": 20,
+  "fmu_sha256": "9dac7818338d0be7fcb887ee88acab01a62eeb7aff4bd286e65874e0ef5c3f77",
+  "idle_kw": 12.365200000000002,
+  "k_full_racks": 29,
+  "n_racks": 49,
+  "packed": {
+    "max_c": 40.28324705212524,
+    "mean_c": 36.92606316267599,
+    "spread_c": 8.563890840123797
+  },
+  "peak_kw": 38.5552,
+  "sane": true,
+  "sanity_detail": {
+    "all_outputs_finite": true,
+    "coolant_max_c": 40.581387524434945,
+    "coolant_min_c": 30.0,
+    "warmup_completed": true
+  },
+  "spread": {
+    "max_c": 40.22845024542432,
+    "mean_c": 40.2284501475314,
+    "spread_c": 1.9600228458532204e-07
+  },
+  "system": "marconi100",
+  "total_kw": 1375.8808000000001,
+  "warmup_status": "capped_preconditioned_not_settled",
+  "warmup_used_s": 7200.0
+}

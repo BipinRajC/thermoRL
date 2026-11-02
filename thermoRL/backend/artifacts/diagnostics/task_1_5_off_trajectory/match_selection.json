@@ -1,0 +1,184 @@
+{
+  "all_candidate_results": {
+    "30.0": {
+      "constant_hold": {
+        "cdu_01_primary_return_c": 24.722389047530896,
+        "cdu_01_primary_supply_c": 18.916431268974065,
+        "eligible": true,
+        "error_from_target_c": -0.0035640863181924942,
+        "primary_flow_gpm": 388.00767453522224,
+        "target_rack_01_coolant_c": 29.996435913681808,
+        "time_s": 6420.0,
+        "within_tolerance": true
+      },
+      "delayed_high_then_base": {
+        "cdu_01_primary_return_c": 24.7245371870942,
+        "cdu_01_primary_supply_c": 18.917053957710493,
+        "eligible": true,
+        "error_from_target_c": -0.00046695046484046543,
+        "primary_flow_gpm": 388.00673969109647,
+        "target_rack_01_coolant_c": 29.99953304953516,
+        "time_s": 6680.0,
+        "within_tolerance": true
+      },
+      "high_then_base": {
+        "cdu_01_primary_return_c": 24.722816798700478,
+        "cdu_01_primary_supply_c": 18.916555354739955,
+        "eligible": true,
+        "error_from_target_c": -0.002947536074202617,
+        "primary_flow_gpm": 388.0074883968223,
+        "target_rack_01_coolant_c": 29.997052463925797,
+        "time_s": 6600.0,
+        "within_tolerance": true
+      },
+      "low_then_base": {
+        "cdu_01_primary_return_c": 24.72810282492719,
+        "cdu_01_primary_supply_c": 18.918095679403052,
+        "eligible": true,
+        "error_from_target_c": 0.00464593472645447,
+        "primary_flow_gpm": 388.0051865879957,
+        "target_rack_01_coolant_c": 30.004645934726454,
+        "time_s": 6280.0,
+        "within_tolerance": true
+      }
+    },
+    "31.0": {
+      "constant_hold": {
+        "cdu_01_primary_return_c": 25.41641467303384,
+        "cdu_01_primary_supply_c": 19.11838362580113,
+        "eligible": true,
+        "error_from_target_c": -0.006538334815843427,
+        "primary_flow_gpm": 387.7054557178994,
+        "target_rack_01_coolant_c": 30.993461665184157,
+        "time_s": 4780.0,
+        "within_tolerance": true
+      },
+      "delayed_high_then_base": {
+        "cdu_01_primary_return_c": 25.419616160913733,
+        "cdu_01_primary_supply_c": 19.119226952310214,
+        "eligible": true,
+        "error_from_target_c": -0.0016380767644363914,
+        "primary_flow_gpm": 387.70407625916476,
+        "target_rack_01_coolant_c": 30.998361923235564,
+        "time_s": 5040.0,
+        "within_tolerance": true
+      },
+      "high_then_base": {
+        "cdu_01_primary_return_c": 25.41705440774024,
+        "cdu_01_primary_supply_c": 19.11855354561112,
+        "eligible": true,
+        "error_from_target_c": -0.005564228910941438,
+        "primary_flow_gpm": 387.70517985082824,
+        "target_rack_01_coolant_c": 30.99443577108906,
+        "time_s": 4960.0,
+        "within_tolerance": true
+      },
+      "low_then_base": {
+        "cdu_01_primary_return_c": 25.425320220420417,
+        "cdu_01_primary_supply_c": 19.120991351802957,
+        "eligible": true,
+        "error_from_target_c": 0.00618699500881803,
+        "primary_flow_gpm": 387.70157423303044,
+        "target_rack_01_coolant_c": 31.006186995008818,
+        "time_s": 4640.0,
+        "within_tolerance": true
+      }
+    },
+    "32.0": {
+      "constant_hold": {
+        "cdu_01_primary_return_c": 26.115100783540925,
+        "cdu_01_primary_supply_c": 19.321600027826264,
+        "eligible": true,
+        "error_from_target_c": -0.004371075817346082,
+        "primary_flow_gpm": 387.4011054359014,
+        "target_rack_01_coolant_c": 31.995628924182654,
+        "time_s": 3640.0,
+        "within_tolerance": true
+      },
+      "delayed_high_then_base": {
+        "cdu_01_primary_return_c": 26.11807684405619,
+        "cdu_01_primary_supply_c": 19.32150194556857,
+        "eligible": true,
+        "error_from_target_c": 0.0032292782283320776,
+        "primary_flow_gpm": 387.3999730551309,
+        "target_rack_01_coolant_c": 32.00322927822833,
+        "time_s": 3900.0,
+        "within_tolerance": true
+      },
+      "high_then_base": {
+        "cdu_01_primary_return_c": 26.11571878653399,
+        "cdu_01_primary_supply_c": 19.321603345410097,
+        "eligible": true,
+        "error_from_target_c": -0.0028750623139330855,
+        "primary_flow_gpm": 387.4008663724595,
+        "target_rack_01_coolant_c": 31.997124937686067,
+        "time_s": 3820.0,
+        "within_tolerance": true
+      },
+      "low_then_base": {
+        "cdu_01_primary_return_c": 26.113213757463768,
+        "cdu_01_primary_supply_c": 19.321237187945826,
+        "eligible": true,
+        "error_from_target_c": -0.007718449987862641,
+        "primary_flow_gpm": 387.401895865786,
+        "target_rack_01_coolant_c": 31.992281550012137,
+        "time_s": 3520.0,
+        "within_tolerance": true
+      }
+    }
+  },
+  "feasibility_preconditioning_sha256": "1d3a6eac3ebdee1a2eef288e77b3c3d22a09d4b0312f95654fee65ba17b46cb7",
+  "feasibility_script_sha256": "f244373280822209688a0ac96047bd3bdee854688aad40bd87b19a43bd520472",
+  "fmu_sha256": "2207549908a4c7452cdb8a5e3409a0ab210a71da199d12809cc621bbaae35c0b",
+  "frozen_model_sha256": "87d6965f171d6ccd4e9b5df9bc2356e155bb5f64c7f8af41b51cb0b95d0a419a",
+  "preregistration_sha256": "ff39d06d8e96a5523a2ed1bc0b12ca99da392cf0d22882fc056df066f7d2d1f5",
+  "python_version": "3.12.14",
+  "recorded_at_utc": "2026-09-28T21:18:55.468533+00:00",
+  "sample_count": 2164,
+  "selected": {
+    "matches": {
+      "constant_hold": {
+        "cdu_01_primary_return_c": 26.115100783540925,
+        "cdu_01_primary_supply_c": 19.321600027826264,
+        "eligible": true,
+        "error_from_target_c": -0.004371075817346082,
+        "primary_flow_gpm": 387.4011054359014,
+        "target_rack_01_coolant_c": 31.995628924182654,
+        "time_s": 3640.0,
+        "within_tolerance": true
+      },
+      "delayed_high_then_base": {
+        "cdu_01_primary_return_c": 26.11807684405619,
+        "cdu_01_primary_supply_c": 19.32150194556857,
+        "eligible": true,
+        "error_from_target_c": 0.0032292782283320776,
+        "primary_flow_gpm": 387.3999730551309,
+        "target_rack_01_coolant_c": 32.00322927822833,
+        "time_s": 3900.0,
+        "within_tolerance": true
+      },
+      "high_then_base": {
+        "cdu_01_primary_return_c": 26.11571878653399,
+        "cdu_01_primary_supply_c": 19.321603345410097,
+        "eligible": true,
+        "error_from_target_c": -0.0028750623139330855,
+        "primary_flow_gpm": 387.4008663724595,
+        "target_rack_01_coolant_c": 31.997124937686067,
+        "time_s": 3820.0,
+        "within_tolerance": true
+      },
+      "low_then_base": {
+        "cdu_01_primary_return_c": 26.113213757463768,
+        "cdu_01_primary_supply_c": 19.321237187945826,
+        "eligible": true,
+        "error_from_target_c": -0.007718449987862641,
+        "primary_flow_gpm": 387.401895865786,
+        "target_rack_01_coolant_c": 31.992281550012137,
+        "time_s": 3520.0,
+        "within_tolerance": true
+      }
+    },
+    "target_c": 32.0
+  },
+  "status": "matched"
+}

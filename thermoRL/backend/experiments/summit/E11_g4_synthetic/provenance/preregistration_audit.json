@@ -1,0 +1,12 @@
+{
+  "configs_byte_identical": true,
+  "frozen_readme_sections_unchanged": true,
+  "frozen_section_sha256": {
+    "Configuration": "34c047563fcc9f77c8d22d0e5e91cd5a5b3bcdf76054cd4e056259d0b54e0b57",
+    "Limitations": "84e7a484131ef613204d33f2e90259670a47152f700a1a12d24457b92ff8d80a",
+    "Method": "e014978460db5718050cb96db2ab137dab6b41cac7415ef1fc27976e4a7da2f3",
+    "Metrics": "be7559075d5bd461b7a6162834a2408a8a9e7246b11050cd4abcd7adce3f7de0",
+    "Pre-registered decision rule": "970fd088f351ea4120d04d8eef4805b95e8319c8f727f8c0c15281e4a8d58632",
+    "Question": "b3a12f53406accf63df4b55963c386e58e415dd56dbe2dac7ca0e72c69a90c11"
+  }
+}

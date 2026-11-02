@@ -1,0 +1,24 @@
+{
+  "cost_used_for_x01": "original",
+  "excluded_timing_keys": [
+    "fmu_s_per_sim_h",
+    "projected_closed_loop_min_6h"
+  ],
+  "full_summary_byte_identical": false,
+  "original_series_sha256": "b55e7e98c137dcd7f81412526c7d606fe8e4cfb7c242165ddad584b737e6cf34",
+  "original_summary_sha256": "27317ba300b3892ea2e9c4d6e08a472cec3e3acfa778e0804edf7385b46cc6f2",
+  "original_timing": {
+    "fmu_s_per_sim_h": 2.027717812992705,
+    "projected_closed_loop_min_6h": 0.30415767194890575
+  },
+  "rerun_path": "experiments/lassen/E02_g2_packed_vs_spread/provenance/rerun_1_data",
+  "rerun_series_sha256": "b55e7e98c137dcd7f81412526c7d606fe8e4cfb7c242165ddad584b737e6cf34",
+  "rerun_summary_sha256": "107b3a8384570e6b281c695d9af1d4a4bd162a58d12303dedbb422c685f842d0",
+  "rerun_timing": {
+    "fmu_s_per_sim_h": 1.9469835393722406,
+    "projected_closed_loop_min_6h": 0.2920475309058361
+  },
+  "scientific_summary_byte_identical": true,
+  "thermal_series_byte_identical": true,
+  "thermal_series_values_identical": true
+}

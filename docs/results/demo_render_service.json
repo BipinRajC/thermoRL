@@ -1,0 +1,16 @@
+{
+  "ActiveState": "active",
+  "ExecMainExitTimestamp": "Sat 2026-10-31 18:21:53 IST",
+  "ExecMainStartTimestamp": "Sat 2026-10-31 18:14:57 IST",
+  "ExecMainStatus": "0",
+  "Id": "thermorl-demo-assets-20261031-packaging.service",
+  "InvocationID": "99af197f26e54f24bd49e4a7d1eb7617",
+  "MemoryPeak": "3245518848",
+  "NRestarts": "0",
+  "Restart": "no",
+  "Result": "success",
+  "RuntimeMaxUSec": "infinity",
+  "SubState": "exited",
+  "memory_scope": "service cgroup high-water; distinct from per-renderer own RSS",
+  "observed_utc": "2026-10-31T12:58:17.381882+00:00"
+}

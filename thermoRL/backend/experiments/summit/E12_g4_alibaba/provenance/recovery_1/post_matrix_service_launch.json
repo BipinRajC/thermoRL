@@ -1,0 +1,15 @@
+{
+  "RemainAfterExit": true,
+  "Restart": "no",
+  "RuntimeMaxSec": "infinity",
+  "command": [
+    "/usr/bin/python",
+    "/home/bipin/thermoRL/thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/recovery_1/post_matrix_driver.py"
+  ],
+  "driver": "provenance/recovery_1/post_matrix_driver.py",
+  "invocation_id": "7ba20ec9c8ff4da19869c58367ba6316",
+  "launch_guard": "primary service SubState=exited, ExecMainStatus=0, runtime file exists; guarded rerun CLI validates 15 outcomes and per-seed invariants",
+  "source_sha": "e0e1522ac52b5780cb3088232051e26dbd492804",
+  "supervisor": "user systemd",
+  "unit": "thermorl-e12-postmatrix-20261030T2123Z.service"
+}

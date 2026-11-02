@@ -1,0 +1,12 @@
+A `SYSTEM.md` records the following:
+- system name;
+- FMU path and SHA-256;
+- RAPS config path;
+- topology (racks/CDUs, nodes per rack, GPUs per node);
+- power tick Δ;
+- measured idle and peak rack kW (from `rack_power_bounds`);
+- schematic grid;
+- what-if racks;
+- FMU-only cost per simulated hour (filled in by G2);
+- known caveats;
+- links to all of this system's experiments.

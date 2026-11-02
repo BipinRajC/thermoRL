@@ -1,0 +1,16 @@
+{
+  "additional_RAPS_files_match_original_manifest_and_launch_commit": true,
+  "all_preflight_entries_match_TP_seed1": true,
+  "environment_matches": true,
+  "full_map_diff_vs_original": [
+    "thermoRL/thermorl-v2/thermorl2/experiments/e12_evidence.py",
+    "thermoRL/thermorl-v2/thermorl2/experiments/run_matrix.py"
+  ],
+  "launch_sha": "e0e1522ac52b5780cb3088232051e26dbd492804",
+  "preflight_source_map_domain": "thermorl2 Python files only, as in original launch preflight",
+  "runner_additional_source_files": {
+    "sim-raps/config/summit.yaml": "017e287da0aa7ef36346b2ece3c86265d6d0e22409616282acdfc4cba9c14d04",
+    "sim-raps/raps/engine.py": "f04e0a97dccf6b18d2c11413136109eae3b3e99165b830c2123ee50a7135b39f",
+    "sim-raps/raps/power.py": "24db829eff768aa5f4e9c79ef6c4e6773e3a8f771fc9008276af047071bada5a"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "question": "In a small FMU counterfactual placement set, does a prospective coolant+primary-flow peak predictor choose a different rack from state-blind round-robin, and what are the measured outcomes when it does?",
+  "scope": "FMU thermal placement relevance only; no RAPS scheduler, Task 1.6, acceptance change, or RL",
+  "training_data": {
+    "sources": [
+      "../task_1_5_state_sufficiency/state_observables_and_responses.csv",
+      "../task_1_5_state_sufficiency/run_01/branch_ledger.csv",
+      "../task_1_5_state_identification/state_observables_and_outcomes.csv",
+      "../task_1_5_state_identification/run_01/branch_ledger.csv"
+    ],
+    "exclude_original_60_s_initialization_state": true,
+    "n_training_states_expected": 13,
+    "predictors": ["candidate_rack_coolant_c", "datacenter_primary_flow_gpm"],
+    "targets": ["absolute_step_branch_peak_c", "absolute_step_branch_final_c"],
+    "method": "ridge alpha 1.0, predictor standardization on training set, unpenalized intercept; freeze coefficients and training hashes before any new scenario FMU run",
+    "internal_check": "leave-one-state-out errors on the 13 available states; descriptive only because training states are correlated"
+  },
+  "ordered_scenarios": [
+    {"name": "S1_base_hot_rack01", "plant_context": "baseline", "hot_rack": 1, "blind_round_robin_choice": 1},
+    {"name": "S2_highplant_hot_rack01", "plant_context": "other_racks_high", "hot_rack": 1, "blind_round_robin_choice": 44},
+    {"name": "S3_lowplant_hot_rack44", "plant_context": "other_racks_low", "hot_rack": 44, "blind_round_robin_choice": 1},
+    {"name": "S4_base_hot_rack44", "plant_context": "baseline", "hot_rack": 44, "blind_round_robin_choice": 44}
+  ],
+  "scenario_preconditioning": {
+    "initial_uniform_background_kw_each_rack": 10.86,
+    "initial_uniform_background_duration_s": 7200,
+    "other_rack_context_pulse_duration_s": 600,
+    "other_rack_context_high_kw": 20.0,
+    "other_rack_context_low_kw": 5.0,
+    "other_rack_context_scope": "all racks except candidate racks 1 and 44",
+    "hot_candidate_pulse_kw": 20.0,
+    "hot_candidate_pulse_duration_s": 600,
+    "baseline_interval_after_all_pulses_s": 20,
+    "current_power_at_decision_kw_each_rack": 10.86,
+    "measurement_interval_s": 20,
+    "ambient_air_k": 290.0,
+    "ambient_external_k": 290.0
+  },
+  "counterfactual_branches": {
+    "same_saved_state": ["no_step_control", "place_on_rack_01", "place_on_rack_44"],
+    "offered_load": "step exactly one chosen candidate rack from 10.86 to 40.0 kW; all other racks remain 10.86 kW",
+    "horizon_s": 3600,
+    "dt_s": 20,
+    "branch_order": ["no_step_control", "place_on_rack_01", "place_on_rack_44"],
+    "effect_definition": "candidate placement branch minus same-state no-step control"
+  },
+  "decision_rules": {
+    "blind": "the listed round-robin rack choice for each ordered scenario, without reading FMU observations",
+    "aware": "use the frozen coolant+flow model to predict absolute peak coolant for each candidate rack; choose lower predicted peak; on equality within 1e-9 C choose lower predicted final; on another tie choose lower rack ID",
+    "model_limit": "The primary-flow feature is identical for both candidates within one scenario. In an additive model it cancels from their ranking; this design tests coolant-informed ranking against round-robin, not the incremental decision value of primary flow."
+  },
+  "primary_metrics": [
+    "number of scenarios where blind and aware rules choose different racks",
+    "for every scenario and especially disagreements: aware minus blind actual absolute peak coolant of the placed rack over 0-3600 s",
+    "aware minus blind actual maximum coolant across all 44 racks over 0-3600 s"
+  ],
+  "secondary_metrics": [
+    "placed-rack absolute final coolant and paired peak/final incremental response",
+    "predicted scores and ranking margins for both candidate racks",
+    "oracle best-of-two peak outcome as an analysis reference, not a third policy",
+    "complete power, FMU heat-input, rack coolant, CDU primary supply/return, and primary-flow trajectories",
+    "two fresh-process repeats and source/data hashes"
+  ],
+  "interpretation": "No pass/fail threshold selected from outcomes. If choices do not differ or actual peak differences are negligible, report a negative relevance result. A difference in this FMU counterfactual is not yet a RAPS closed-loop scheduler benefit. No causal flow claim or RL claim.",
+  "stop_gate": "Stop after this experiment for research review; no Task 1.5 revision, Task 1.6, history experiment, scheduler implementation, or RL."
+}

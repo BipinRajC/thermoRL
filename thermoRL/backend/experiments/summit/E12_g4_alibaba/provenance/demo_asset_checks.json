@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-10-31T12:48:16.338321+00:00",
+  "early_frame_caption": "tie-breaking among thermally identical idle racks; not a thermal decision",
+  "experiment": "E12_g4_alibaba",
+  "initial_tp": {
+    "all_rows_thermally_identical": true,
+    "distinct_six_decimal_values_per_row": [
+      1,
+      1,
+      1
+    ],
+    "sample_rows_checked": 3,
+    "sample_rows_requested": 3,
+    "scope": "per-row logged t_c at six decimals only; not full-precision equality or causation",
+    "source_path": "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl",
+    "source_sha256": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+    "times_s": [
+      1,
+      1,
+      1
+    ]
+  },
+  "read_only_check_before_rendering": true
+}

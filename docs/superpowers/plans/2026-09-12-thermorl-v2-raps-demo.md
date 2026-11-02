@@ -325,6 +325,8 @@ def test_dispatcher():
 
 - [ ] **Step 4: Implement `thermorl2/core/constraints.py`**
 
+**Task 1.2 correction (2026-09-29, approved by Bipin):** `_safe_div` allocates the broadcast shape so array numerators work with scalar limits. THI formulas and test expectations are unchanged.
+
 ```python
 from __future__ import annotations
 import numpy as np
@@ -333,8 +335,8 @@ THI_MIN, THI_MAX = -0.5, 1.0
 
 
 def _safe_div(a, b):
-    b = np.asarray(b, dtype=np.float64)
-    return np.divide(np.asarray(a, dtype=np.float64), b, out=np.zeros_like(b), where=b != 0)
+    a, b = np.broadcast_arrays(np.asarray(a, dtype=np.float64), np.asarray(b, dtype=np.float64))
+    return np.divide(a, b, out=np.zeros_like(a), where=b != 0)
 
 
 def thi_headroom(t_c, t_idle_c, t_max_c, p_kw, p_max_kw):
@@ -616,6 +618,8 @@ def test_second_instance_in_process_is_refused(backend, fmu_path):
 - [ ] **Step 2: Run** `uv run pytest tests/fmu -v` → FAIL (import). **Step 3: Implement** `base.py` and `fmu_backend.py` per Interfaces. **Step 4: Run** → PASS (expect ~30–60 s total). If `test_single_rack_step_is_local_and_matches_probe` fails on the τ bounds, **stop and report** the measured value (do not widen bounds).
 
 - [ ] **Step 5: Commit** `feat(thermal): FMU backend with single-instance guard, warm-up snapshot reset, RAPS-identical stepping`
+
+**Approved Task 1.5 backend closeout clarification (2026-09-29):** Use the separate direct-FMU-versus-backend asymmetric replay gate defined in [`2026-09-29-task-1-5-backend-closeout.md`](../proposals/2026-09-29-task-1-5-backend-closeout.md), including fixed 7200 s capped preconditioning, exact time-axis and communication-point assertions, and snapshot restoration. Keep the original physical-response test and its bounds unchanged as a recorded failure; a passing backend gate closes Task 1.5 as *backend-correctness verified; historical physical-response test unresolved*, without claiming the full FMU suite is green. The `artifacts/diagnostics/task_1_5_*` characterization artifacts are research evidence only and may never be cited as acceptance-gate satisfaction by any future task. Then follow Task 1.6 and the existing Task 1.7 five-level uniform-load characterization, including its stop-and-report gate. The approved clarification is a narrow exception to the Task 1.5 Step 4 stop condition, not approval to alter later response-time gates.
 
 ---
 

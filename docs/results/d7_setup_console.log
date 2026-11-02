@@ -1,0 +1,8 @@
+['git', 'status', '--porcelain'] 0
+['git', 'fsck', '--connectivity-only', '--no-dangling'] 0
+['/usr/bin/uv', 'sync', '--frozen'] 2
+Traceback (most recent call last):
+  File "/tmp/thermorl_d7_resume.py", line 26, in <module>
+    v2=CLONE/'thermoRL/thermorl-v2';p=run(['/usr/bin/uv','sync','--frozen'],v2);assert p.returncode==0,'uv sync failed'
+                                                                                       ^^^^^^^^^^^^^^^
+AssertionError: uv sync failed

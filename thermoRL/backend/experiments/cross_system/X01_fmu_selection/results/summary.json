@@ -1,0 +1,49 @@
+{
+  "class": "GO",
+  "cost_source": "original G2 runs only",
+  "eligible": [
+    "lassen",
+    "marconi100",
+    "summit"
+  ],
+  "primary": "summit",
+  "ranking": [
+    "summit",
+    "lassen",
+    "marconi100"
+  ],
+  "rule_version": "spec-2026-10-27-\u00a74.1",
+  "runner_up": "lassen",
+  "selection_stages": [
+    {
+      "changed_winner": false,
+      "chosen": "summit",
+      "delta_candidate": "summit",
+      "tie_pool": [
+        "summit"
+      ]
+    },
+    {
+      "changed_winner": false,
+      "chosen": "lassen",
+      "delta_candidate": "lassen",
+      "tie_pool": [
+        "lassen"
+      ]
+    },
+    {
+      "changed_winner": false,
+      "chosen": "marconi100",
+      "delta_candidate": "marconi100",
+      "tie_pool": [
+        "marconi100"
+      ]
+    }
+  ],
+  "source_summary_sha256": {
+    "experiments/lassen/E02_g2_packed_vs_spread/results/summary.json": "27317ba300b3892ea2e9c4d6e08a472cec3e3acfa778e0804edf7385b46cc6f2",
+    "experiments/marconi100/E02_g2_packed_vs_spread/results/summary.json": "735c8a21eab166a9b7467c331b5377345ebcb2cbea0191ec8beb1cf65b138e52",
+    "experiments/summit/E02_g2_packed_vs_spread/results/summary.json": "4168de53f3869868859fb2770adf8dab40c4283f0b2868230426469fd9de885b"
+  },
+  "tie_break_applied": false
+}

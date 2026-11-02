@@ -1,0 +1,20 @@
+RK-method: sdirk34hw
+Local extrapolation
+FSAL
+Continuous extension
+WARNING: Failed to load dataloader: No module named 'raps.dataloaders.summit'
+Using scheduler: default, with policy PolicyType.FCFS and backfill BackfillType.NONE
+RUN packing: fixed warm-up complete; 21600s episode starting
+RUN packing: 1800/21600s; step calls=180; jobs started=1015
+RUN packing: 3600/21600s; step calls=360; jobs started=1021
+RUN packing: 5400/21600s; step calls=540; jobs started=2879
+RUN packing: 7200/21600s; step calls=720; jobs started=7214
+RUN packing: 9000/21600s; step calls=900; jobs started=7221
+RUN packing: 10800/21600s; step calls=1080; jobs started=7226
+RUN packing: 12600/21600s; step calls=1260; jobs started=13187
+RUN packing: 14400/21600s; step calls=1440; jobs started=13421
+RUN packing: 16200/21600s; step calls=1620; jobs started=13427
+RUN packing: 18000/21600s; step calls=1800; jobs started=15591
+RUN packing: 19800/21600s; step calls=1980; jobs started=19620
+RUN packing: 21600/21600s; step calls=2160; jobs started=19627
+{"fmu_steps": 2160, "jobs_started": 19627, "policy": "packing", "run_dir": "experiments/summit/E12_g4_alibaba/runs/packing_seed2", "total_s": 1321.3752456599996}

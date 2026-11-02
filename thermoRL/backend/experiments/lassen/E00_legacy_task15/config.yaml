@@ -1,0 +1,5 @@
+system: lassen
+backend: fmu
+kind: legacy_evidence_index
+source: artifacts/diagnostics/task_1_5_*
+new_research_experiment: false

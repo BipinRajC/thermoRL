@@ -1,15 +1,17 @@
 import argparse
 import abc
+import re
 from pathlib import Path
 import pandas as pd
 from functools import cached_property
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Literal, Annotated as A
 from annotated_types import Len
 import importlib
+from raps.cache import runs_dir
 from raps.schedulers.default import PolicyType, BackfillType
 from raps.utils import (
-    parse_time_unit, convert_to_time_unit, infer_time_unit, ResolvedPath, create_casename,
+    parse_time_unit, convert_to_time_unit, infer_time_unit, ResolvedPath,
     RAPSBaseModel, AutoAwareDatetime, SmartTimedelta, yaml_dump,
 )
 from raps.system_config import (
@@ -23,6 +25,11 @@ Distribution = Literal['uniform', 'weibull', 'normal']
 class SimConfig(RAPSBaseModel, abc.ABC):
     cooling: bool = False
     """ Include the FMU cooling model """
+    cooling_model: Literal["fmu", "surrogate"] = "fmu"
+    """
+    Cooling backend when --cooling is set: the FMU, or the ML surrogate bundle at
+    the system's cooling.surrogate_path.
+    """
     simulate_network: bool = False
     """ Include network model """
     weather: bool = False
@@ -82,10 +89,19 @@ class SimConfig(RAPSBaseModel, abc.ABC):
     seed: int | None = None
     """ Set RNG seed for deterministic simulation """
 
+    name: str | None = None
+    """
+    Experiment name, used in the default output directory name. Defaults to the name of the YAML
+    config file (without extension) when one is given.
+    """
+
     output: ResolvedPath | Literal['none'] | None = None
     """
     Where to output power, cooling, and loss models for later analysis.
-    If omitted it will output to raps-output-<id> by default.
+    If omitted it will output to runs/<timestamp>-<system>-<name> by default, where name is the
+    experiment name (see `name`); the system is left out if the name already starts with it, and
+    a -2, -3, ... suffix is added if the directory exists (the parent can be changed with the
+    RAPS_RUNS_DIR environment variable).
     Set to "none" to disable file output entirely.
     """
 
@@ -94,7 +110,18 @@ class SimConfig(RAPSBaseModel, abc.ABC):
     def get_output(self) -> Path | None:
         if self.output is None:  # by default, output to a random directory
             if not self._random_output:
-                self._random_output = Path(create_casename("raps-output-")).resolve()
+                system = str(self.system_name).replace("/", "_")
+                label = re.sub(r"[^A-Za-z0-9._-]+", "-", self.name or "").strip("-")
+                if not label:
+                    label = system
+                elif not label.startswith(system):
+                    label = f"{system}-{label}"
+                base = runs_dir() / f"{datetime.now():%Y%m%d-%H%M%S}-{label}"
+                path, n = base, 1
+                while path.exists():  # two runs started in the same second with the same name
+                    n += 1
+                    path = base.with_name(f"{base.name}-{n}")
+                self._random_output = path.resolve()
             return self._random_output
         elif self.output == "none":  # allow explicitly disabling output with "none"
             return None
@@ -108,7 +135,17 @@ class SimConfig(RAPSBaseModel, abc.ABC):
     verbose: bool = False
     """ Enable verbose output """
     layout: Literal["layout1", "layout2"] = "layout1"
-    """ UI layout """
+    """ Layout for the classic UI (layout2 is selected automatically with --cooling) """
+    ui: Literal["textual", "classic", "none"] | None = None
+    """
+    Console UI: the multi-view Textual app, the original single-screen rich layout, or none.
+    Defaults to textual when stdout is a terminal and textual is installed, otherwise classic.
+    --noui and --debug mean none.
+    """
+    ui_hz: A[float, Field(gt=0)] = 4.0
+    """ Maximum Textual UI updates per real second """
+    ui_cycle: A[float, Field(gt=0)] | None = None
+    """ Auto-cycle the Textual UI through its views every this many seconds """
     plot: list[Literal["power", "loss", "pue", "temp", "util", "net"]] | None = None
     """ Plots to generate """
 
@@ -117,6 +154,13 @@ class SimConfig(RAPSBaseModel, abc.ABC):
 
     replay: list[ResolvedPath] | None = None
     """ Either: path/to/joblive path/to/jobprofile OR filename.npz """
+
+    cache: Literal["use", "refresh", "off"] = "use"
+    """
+    Cache of parsed replay data (stored under $RAPS_CACHE_DIR, default ~/.cache/raps). "use" loads
+    a matching cached snapshot if there is one, "refresh" re-parses and overwrites it, "off"
+    ignores the cache.
+    """
 
     dataloader: str | None = None
     """
@@ -345,6 +389,9 @@ class SimConfig(RAPSBaseModel, abc.ABC):
 
         if self.cooling:
             self.layout = "layout2"
+
+        if self.ui == "none":
+            self.noui = True
 
         if 'weather' not in self.model_fields_set:
             self.weather = self.cooling and bool(self.replay)

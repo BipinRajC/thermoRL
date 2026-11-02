@@ -1,0 +1,8 @@
+{
+  "paired_response_plot_sha256": "11d1208d4f7364d619ca78e0260a105de8d635f52e5add0be8417a4ac93422b2",
+  "plot_script_sha256": "87a0a6f3810259f7dec98627687b64f439791150d7858d3dbc851cee03a6415e",
+  "prediction_ledger_sha256": "fee9da51b2b476369c7e16976d7bb5759f09f1fcf9cbfd82b45eda8677810e7e",
+  "predictor_association_plot_sha256": "117533777f710098b8d7aacca42111dbd6cde5578c7663337d0f47cadbf04817",
+  "response_ledger_sha256": "d32953f64a42f667c1b0eeedc126aae73cc439a8cf7b65fd67a50a204f413dc3",
+  "state_table_sha256": "36413451d60092fd37b156f6be47290540e7ec81e83d56eef065d08b39919f35"
+}

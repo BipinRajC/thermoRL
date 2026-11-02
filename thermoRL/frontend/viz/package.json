@@ -1,0 +1,29 @@
+{
+  "name": "thermorl-viz",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run sync-replay --if-present && vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "e2e": "npm run make-fixture && playwright test",
+    "make-fixture": "tsx scripts/make-fixture.mjs",
+    "sync-replay": "node scripts/sync-replay.mjs",
+    "test:scripts": "tsx --test scripts/sync-replay.test.mjs"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "@types/three": "^0.170.0",
+    "jsdom": "^30.1.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vitest": "^5.0.5"
+  }
+}

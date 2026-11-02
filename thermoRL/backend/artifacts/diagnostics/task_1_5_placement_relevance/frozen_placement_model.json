@@ -1,0 +1,312 @@
+{
+  "internal_leave_one_state_out": {
+    "absolute_step_branch_final_c": {
+      "leave_one_state_out_mae_c": 0.17190984979385165,
+      "leave_one_state_out_max_abs_error_c": 0.41260099269646133,
+      "residuals": [
+        {
+          "observed_c": 40.09755272032771,
+          "predicted_c": 40.295386540379376,
+          "signed_residual_c": -0.19783382005166317,
+          "source": "original_120"
+        },
+        {
+          "observed_c": 39.9232572807104,
+          "predicted_c": 40.18120793603578,
+          "signed_residual_c": -0.25795065532538075,
+          "source": "original_600"
+        },
+        {
+          "observed_c": 40.413717245543694,
+          "predicted_c": 40.00111625284723,
+          "signed_residual_c": 0.41260099269646133,
+          "source": "original_1200"
+        },
+        {
+          "observed_c": 40.30641590536186,
+          "predicted_c": 40.093324467354854,
+          "signed_residual_c": 0.21309143800700525,
+          "source": "original_1800"
+        },
+        {
+          "observed_c": 40.07124981517626,
+          "predicted_c": 40.16928586521406,
+          "signed_residual_c": -0.09803605003779836,
+          "source": "original_3600"
+        },
+        {
+          "observed_c": 40.458564444281706,
+          "predicted_c": 40.12610357971095,
+          "signed_residual_c": 0.33246086457075563,
+          "source": "original_5400"
+        },
+        {
+          "observed_c": 40.13542269074435,
+          "predicted_c": 40.22089749748791,
+          "signed_residual_c": -0.08547480674356223,
+          "source": "original_7200"
+        },
+        {
+          "observed_c": 40.246559617293656,
+          "predicted_c": 40.17606542599759,
+          "signed_residual_c": 0.07049419129606349,
+          "source": "spatial_high_7200_20"
+        },
+        {
+          "observed_c": 40.050012409270664,
+          "predicted_c": 40.1646181546228,
+          "signed_residual_c": -0.11460574535213652,
+          "source": "spatial_low_0600_08"
+        },
+        {
+          "observed_c": 39.975443506205636,
+          "predicted_c": 40.15789771319887,
+          "signed_residual_c": -0.1824542069932349,
+          "source": "spatial_others_high_long"
+        },
+        {
+          "observed_c": 40.215002785961815,
+          "predicted_c": 40.18652533252385,
+          "signed_residual_c": 0.02847745343796504,
+          "source": "spatial_others_low_long"
+        },
+        {
+          "observed_c": 40.09115383990411,
+          "predicted_c": 40.169200651285465,
+          "signed_residual_c": -0.0780468113813555,
+          "source": "spatial_target_high"
+        },
+        {
+          "observed_c": 39.992692029315094,
+          "predicted_c": 40.155993040741784,
+          "signed_residual_c": -0.1633010114266895,
+          "source": "spatial_target_low"
+        }
+      ]
+    },
+    "absolute_step_branch_peak_c": {
+      "leave_one_state_out_mae_c": 0.011862833675397045,
+      "leave_one_state_out_max_abs_error_c": 0.05907549338262186,
+      "residuals": [
+        {
+          "observed_c": 40.66236939574776,
+          "predicted_c": 40.60329390236514,
+          "signed_residual_c": 0.05907549338262186,
+          "source": "original_120"
+        },
+        {
+          "observed_c": 40.62264866256152,
+          "predicted_c": 40.624114833855536,
+          "signed_residual_c": -0.0014661712940196026,
+          "source": "original_600"
+        },
+        {
+          "observed_c": 40.60165868752813,
+          "predicted_c": 40.61486487504998,
+          "signed_residual_c": -0.013206187521852542,
+          "source": "original_1200"
+        },
+        {
+          "observed_c": 40.59086840089981,
+          "predicted_c": 40.602759556489616,
+          "signed_residual_c": -0.011891155589808022,
+          "source": "original_1800"
+        },
+        {
+          "observed_c": 40.57298048603974,
+          "predicted_c": 40.57773194653385,
+          "signed_residual_c": -0.004751460494112791,
+          "source": "original_3600"
+        },
+        {
+          "observed_c": 40.565034228850436,
+          "predicted_c": 40.5619098767605,
+          "signed_residual_c": 0.0031243520899337796,
+          "source": "original_5400"
+        },
+        {
+          "observed_c": 40.561401963806986,
+          "predicted_c": 40.55022167736041,
+          "signed_residual_c": 0.011180286446574428,
+          "source": "original_7200"
+        },
+        {
+          "observed_c": 40.57034397245479,
+          "predicted_c": 40.578658617905035,
+          "signed_residual_c": -0.008314645450241187,
+          "source": "spatial_high_7200_20"
+        },
+        {
+          "observed_c": 40.574282118591384,
+          "predicted_c": 40.577108906201396,
+          "signed_residual_c": -0.0028267876100116496,
+          "source": "spatial_low_0600_08"
+        },
+        {
+          "observed_c": 40.58800768936794,
+          "predicted_c": 40.571828898953285,
+          "signed_residual_c": 0.01617879041465642,
+          "source": "spatial_others_high_long"
+        },
+        {
+          "observed_c": 40.56555532519985,
+          "predicted_c": 40.57991150918846,
+          "signed_residual_c": -0.014356183988610383,
+          "source": "spatial_others_low_long"
+        },
+        {
+          "observed_c": 40.57307591342612,
+          "predicted_c": 40.577365549043705,
+          "signed_residual_c": -0.004289635617581666,
+          "source": "spatial_target_high"
+        },
+        {
+          "observed_c": 40.579374439845026,
+          "predicted_c": 40.57581875196489,
+          "signed_residual_c": 0.0035556878801372704,
+          "source": "spatial_target_low"
+        }
+      ]
+    }
+  },
+  "models": {
+    "absolute_step_branch_final_c": {
+      "intercept_c": 40.15208033000746,
+      "predictor_mean": [
+        32.96149455550986,
+        387.18817821303804
+      ],
+      "predictor_std": [
+        2.286923707547679,
+        0.5928692053282067
+      ],
+      "standardized_weights": [
+        0.015638839422854756,
+        0.04380499892444127
+      ]
+    },
+    "absolute_step_branch_peak_c": {
+      "intercept_c": 40.58673856033227,
+      "predictor_mean": [
+        32.96149455550986,
+        387.18817821303804
+      ],
+      "predictor_std": [
+        2.286923707547679,
+        0.5928692053282067
+      ],
+      "standardized_weights": [
+        0.02444574466748209,
+        0.0012360948384144217
+      ]
+    }
+  },
+  "predictor_names": [
+    "candidate_rack_coolant_c",
+    "datacenter_primary_flow_gpm"
+  ],
+  "preregistration_sha256": "254a091b5c29ee5c1e1c2db90dd53df273f22d5aeaa7be10f4823bb92420534b",
+  "ranking_limit": "Primary flow is shared by candidate racks in one state and enters additively, so it cancels from pairwise score differences. This model cannot test flow-specific ranking value.",
+  "ridge_alpha": 1.0,
+  "source_sha256": {
+    "freeze_script": "1bf21d0ec7a48182e0da35586f27c2c1e9448d033cc4ca435be7a38c5ec042dd",
+    "original_branches": "6c3547b73f29167e7e063a0e4326d73cfb7c0ef4eb948ada02f31cedf2db9744",
+    "original_table": "89dcff53618c7306ce3f41031046b68597a618b4589d068bc2d9db3ba0423d20",
+    "spatial_branches": "f2694f6228f5bd113be13742bff1537bdb1aebef1f2531e89d7fa89ca60c96b4",
+    "spatial_table": "36413451d60092fd37b156f6be47290540e7ec81e83d56eef065d08b39919f35"
+  },
+  "status": "frozen before new placement-scenario FMU runs",
+  "training_rows": [
+    {
+      "absolute_step_branch_final_c": 40.09755272032771,
+      "absolute_step_branch_peak_c": 40.66236939574776,
+      "candidate_rack_coolant_c": 37.774286872972596,
+      "datacenter_primary_flow_gpm": 387.0078311959191,
+      "source": "original_120"
+    },
+    {
+      "absolute_step_branch_final_c": 39.9232572807104,
+      "absolute_step_branch_peak_c": 40.62264866256152,
+      "candidate_rack_coolant_c": 36.60946091491422,
+      "datacenter_primary_flow_gpm": 386.1198614520407,
+      "source": "original_600"
+    },
+    {
+      "absolute_step_branch_final_c": 40.413717245543694,
+      "absolute_step_branch_peak_c": 40.60165868752813,
+      "candidate_rack_coolant_c": 35.46876256500008,
+      "datacenter_primary_flow_gpm": 386.2849362286774,
+      "source": "original_1200"
+    },
+    {
+      "absolute_step_branch_final_c": 40.30641590536186,
+      "absolute_step_branch_peak_c": 40.59086840089981,
+      "candidate_rack_coolant_c": 34.41398612366089,
+      "datacenter_primary_flow_gpm": 386.6498167468534,
+      "source": "original_1800"
+    },
+    {
+      "absolute_step_branch_final_c": 40.07124981517626,
+      "absolute_step_branch_peak_c": 40.57298048603974,
+      "candidate_rack_coolant_c": 32.03666536789706,
+      "datacenter_primary_flow_gpm": 387.38861959001673,
+      "source": "original_3600"
+    },
+    {
+      "absolute_step_branch_final_c": 40.458564444281706,
+      "absolute_step_branch_peak_c": 40.565034228850436,
+      "candidate_rack_coolant_c": 30.564269110504654,
+      "datacenter_primary_flow_gpm": 387.83559828653256,
+      "source": "original_5400"
+    },
+    {
+      "absolute_step_branch_final_c": 40.13542269074435,
+      "absolute_step_branch_peak_c": 40.561401963806986,
+      "candidate_rack_coolant_c": 29.655666404839337,
+      "datacenter_primary_flow_gpm": 388.1108920584411,
+      "source": "original_7200"
+    },
+    {
+      "absolute_step_branch_final_c": 40.246559617293656,
+      "absolute_step_branch_peak_c": 40.57034397245479,
+      "candidate_rack_coolant_c": 31.986906237935784,
+      "datacenter_primary_flow_gpm": 387.74522706246245,
+      "source": "spatial_high_7200_20"
+    },
+    {
+      "absolute_step_branch_final_c": 40.050012409270664,
+      "absolute_step_branch_peak_c": 40.574282118591384,
+      "candidate_rack_coolant_c": 32.00774662205566,
+      "datacenter_primary_flow_gpm": 387.30422574786377,
+      "source": "spatial_low_0600_08"
+    },
+    {
+      "absolute_step_branch_final_c": 39.975443506205636,
+      "absolute_step_branch_peak_c": 40.58800768936794,
+      "candidate_rack_coolant_c": 31.997723963744875,
+      "datacenter_primary_flow_gpm": 386.7519294508237,
+      "source": "spatial_others_high_long"
+    },
+    {
+      "absolute_step_branch_final_c": 40.215002785961815,
+      "absolute_step_branch_peak_c": 40.56555532519985,
+      "candidate_rack_coolant_c": 31.979591351757506,
+      "datacenter_primary_flow_gpm": 387.8104647327328,
+      "source": "spatial_others_low_long"
+    },
+    {
+      "absolute_step_branch_final_c": 40.09115383990411,
+      "absolute_step_branch_peak_c": 40.57307591342612,
+      "candidate_rack_coolant_c": 32.001194470423115,
+      "datacenter_primary_flow_gpm": 387.4134286761608,
+      "source": "spatial_target_high"
+    },
+    {
+      "absolute_step_branch_final_c": 39.992692029315094,
+      "absolute_step_branch_peak_c": 40.579374439845026,
+      "candidate_rack_coolant_c": 32.003169215922355,
+      "datacenter_primary_flow_gpm": 387.02348554096994,
+      "source": "spatial_target_low"
+    }
+  ]
+}

@@ -1,0 +1,1098 @@
+{
+  "backend_package_comparison": [
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/constraints.py",
+      "sha256": "5d86faec900f8bf25789d0d19493c4b0411f749212ea41723a2c75f92160ffb1"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/kernels/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/kernels/rc.py",
+      "sha256": "ac402b5a31b9b6455aefe9e43837963adad2b54a23db4f3b749d93407da083c9"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/kernels/thi.py",
+      "sha256": "033fb21430dc85eb653f3c7b5221ee7b18ccbd0b09cfd1b4298790e5da84c708"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/metrics.py",
+      "sha256": "2edb1795c5f21ce2d19a12b7d11cc28145393fe30c710bf871bbee7054775cc7"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/placement.py",
+      "sha256": "038d792a43b18a5e41b25e01f804e2a5d79a3b0768efa511ae8cf1e77985824d"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/scorers.py",
+      "sha256": "39cef76587486ad7d172dfed50d9533d62b1dd60bd36ef0fb27f5f64072d9ccf"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/core/state.py",
+      "sha256": "93f2c4a335fd6a94b3519d02bf456db7688cee482f22dca6e55b048e5c2e138e"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/__init__.py",
+      "sha256": "4b4066da53562473466bb703bf2b594a7ae26ae35c91ff54432bdd917dccbca6"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/bench.py",
+      "sha256": "002da5c3a70e48a0044e5590cd92b50edc9f71ee589d141ab66d1f27c365f165"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/configs/g4_alibaba.yaml",
+      "sha256": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/configs/g4_synthetic.yaml",
+      "sha256": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/configs/primary.yaml",
+      "sha256": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/configs/smoke_2h.yaml",
+      "sha256": "8346e453e8a71f0efef4306a14b68f1fb80225cc2698d7ae9ff5e7e0959cadd4"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/demo_assets.py",
+      "sha256": "f4c51b770c24e9659cac9b1a7f9b868b5623f662bcf1fab01dacf77dbcab081a"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/e12_evidence.py",
+      "sha256": "dc986179be2c085ffd58384b859eb17f86940c8505e0866b9a069732dbe7d79d"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/evidence.py",
+      "sha256": "b3b15b439bae2c4cdaf38cf7c80b67a0e3246a7afec6530a618b2c72a32cc9d2"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/fmu_smoke.py",
+      "sha256": "037f46a7be6d028061e7c6cc69a2764a4e1a154a5e19ab732a53d832d37189d2"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/plots.py",
+      "sha256": "81c111b1c1d6c08e37e4e8f4b8e3003c9c850dee864fc48f37a3067f6e59e51b"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/probes.py",
+      "sha256": "ac1af90172e9437ba592d2cbba09102027788b0b2acab60a7ce166a3e3c2bfe6"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/provenance.py",
+      "sha256": "b8cb4e8e8881e07570ffa70a57febe54baa12607e9ae03b4889fd7fb7836c2fc"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/report.py",
+      "sha256": "3caf3bbfe71213baf5a6ec20e9dddd18a4ef998211af4f4dd452839605f4a3c5"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/run.py",
+      "sha256": "610f67fd782cc51c43175c1cf3dfda90572d89672fe26a3abb454ec75b39d9c0"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/run_matrix.py",
+      "sha256": "5c5c24db4179164acbc7197a7352cb6f8aa55a35ed62866886378ff7d43e56d0"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/select_fmu.py",
+      "sha256": "16c0dbc61770ec1e2e31cf334f1f09fed1b923af5c9ff8153b9803ee875ff9e3"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/experiments/workload_regime.py",
+      "sha256": "af092df01e0f6f89cfbf7f653d9ec41724b9bb47b596b69272908feaed7cad70"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/coupling.py",
+      "sha256": "911c5bfee5855f684ec3705e56e276c2d1d22945aa394a4a7c2a0337b6bd89e1"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/engine_factory.py",
+      "sha256": "1de90915a6e22b645e53cd51c4f92f6f11abd7fd4b6ba891b251f793b5d38d57"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/jobs.py",
+      "sha256": "f54b882e06b039a4349165c12c037abbc16e1ef9d7685fe396a3648c3a367243"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/power_model.py",
+      "sha256": "513fb1e9aa3254fdd6d4b9111470b37d7f417264562be6becfa7222c8682eb09"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/rack_geometry.py",
+      "sha256": "333a51ccd231971c3f733b07fcb8e44f0e4ae9b9a6632ef5ffe99042c831c12c"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/runner.py",
+      "sha256": "db4fbb01c382f3cce99609573eb643f86bed9aa5434807cda2e4cc516076eb94"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/scheduler.py",
+      "sha256": "6890e88d586504d114941d80f8910b076a6d3fd391ef7ad79df451cc94e62570"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/systems.py",
+      "sha256": "d80c73226b5e5c6c148c4c33d7abf6a300d068ccfd1dddf2e5ce4dda28808d28"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/workload/__init__.py",
+      "sha256": "ffb12c12ef2182fb30dde7271018b55d1003b41a332d0a06838b3407612059eb"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/workload/alibaba.py",
+      "sha256": "39665ab90f2e3cc1f74b2c910b66b94ecaff018dac8f754716937382e18aad7c"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/raps_adapter/workload/synthetic.py",
+      "sha256": "0e63550edf31ee1f2bc4e64b0277e68df13b2a8aedbd685ab827872201993335"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/thermal/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/thermal/base.py",
+      "sha256": "b0797435dc91057657906dccd6e3647a4d2f123ea4df2bc4d8a811455229a305"
+    },
+    {
+      "byte_identical_to_tested_b3bd5ac": true,
+      "path": "thermoRL/backend/thermorl2/thermal/fmu_backend.py",
+      "sha256": "8aa154e06d7abfd906404810a1e319d2b56784cb2372ce1a63618a0d405b4044"
+    }
+  ],
+  "backend_package_files_compared": 43,
+  "backup_decision": {
+    "copied_files": 0,
+    "off_machine_copy_verified": false,
+    "quote": "yes lets skip the backup thing",
+    "status": "skipped_by_user"
+  },
+  "cleanup_change_categories": {
+    "D": 81,
+    "R": 596
+  },
+  "cleanup_commit": "c09f735ddde82d0acaf54f2f0900a2563c3915ee",
+  "dropped_tracked_files": [
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/README.md",
+      "current_sha256": "a44920663ef4eee3435ccadd16a5d1beef95f928b90d935254288e3dee19c0bc",
+      "historical_sha256": "a44920663ef4eee3435ccadd16a5d1beef95f928b90d935254288e3dee19c0bc",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_backend_replay_trial/README.md",
+      "current_sha256": "1c3504dcd90cf8560213eb53fdf1173173603cfed8568da55dafc749053dfb81",
+      "historical_sha256": "1c3504dcd90cf8560213eb53fdf1173173603cfed8568da55dafc749053dfb81",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_backend_replay_trial/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_followup/README.md",
+      "current_sha256": "19bc0b3801eaecfe8b55b81584e5f3ab8b226f34351266d2a9c52b81e9a9d7ef",
+      "historical_sha256": "19bc0b3801eaecfe8b55b81584e5f3ab8b226f34351266d2a9c52b81e9a9d7ef",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_followup/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_followup/characterization_report.md",
+      "current_sha256": "559f27200023095659376579c274af8344c132b073e576569ca42f280ba9b519",
+      "historical_sha256": "559f27200023095659376579c274af8344c132b073e576569ca42f280ba9b519",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_followup/characterization_report.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_matched_step_20s/README.md",
+      "current_sha256": "13c8d5a8c1ce2a3821f7e936c03412f3b579f561259185bab3115cfbb1546e1b",
+      "historical_sha256": "13c8d5a8c1ce2a3821f7e936c03412f3b579f561259185bab3115cfbb1546e1b",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_matched_step_20s/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_off_trajectory/README.md",
+      "current_sha256": "264ffcecc64da9dae0c93f2a0dff74bef7f906909d89add84c0f87f04ce1b8c2",
+      "historical_sha256": "264ffcecc64da9dae0c93f2a0dff74bef7f906909d89add84c0f87f04ce1b8c2",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_off_trajectory/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_placement_relevance/README.md",
+      "current_sha256": "3dfbb71838acb98f715dea717cd6ca42fc3151c5606871e3e40e349b0ac86fea",
+      "historical_sha256": "3dfbb71838acb98f715dea717cd6ca42fc3151c5606871e3e40e349b0ac86fea",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_placement_relevance/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_state_dependence/README.md",
+      "current_sha256": "84f4da5f60359761484bf2b4ce90fd1d8ae2468456e56d6b69ad54b53f6bab2a",
+      "historical_sha256": "84f4da5f60359761484bf2b4ce90fd1d8ae2468456e56d6b69ad54b53f6bab2a",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_state_dependence/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_state_identification/README.md",
+      "current_sha256": "ae51b1952d3ea4bb885290010fc764d2334ae5f27d814f173ef2817bfe24e949",
+      "historical_sha256": "ae51b1952d3ea4bb885290010fc764d2334ae5f27d814f173ef2817bfe24e949",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_state_identification/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/artifacts/diagnostics/task_1_5_state_sufficiency/README.md",
+      "current_sha256": "b00e44b5e4ad720dcbea1695ddedf92679d423cbffba57d0845791a24ef89073",
+      "historical_sha256": "b00e44b5e4ad720dcbea1695ddedf92679d423cbffba57d0845791a24ef89073",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/artifacts/diagnostics/task_1_5_state_sufficiency/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/DEMO.md",
+      "current_sha256": "4238bb601085644e190092b75b5b83b8a04b3eaaf8aaacf07ef5caef2595b3be",
+      "historical_sha256": "4238bb601085644e190092b75b5b83b8a04b3eaaf8aaacf07ef5caef2595b3be",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/DEMO.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/INDEX.md",
+      "current_sha256": "d590632df1d5f69a7f1073b002e422bf7aabc79da9a05a87e6f20b8138c879b0",
+      "historical_sha256": "d590632df1d5f69a7f1073b002e422bf7aabc79da9a05a87e6f20b8138c879b0",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/INDEX.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/_templates/EXPERIMENT_README.md",
+      "current_sha256": "d97644b6c8236db2644d37d7bd971c077706a4e7747d44d0f30afcc52c372706",
+      "historical_sha256": "d97644b6c8236db2644d37d7bd971c077706a4e7747d44d0f30afcc52c372706",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/_templates/EXPERIMENT_README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/_templates/SYSTEM.md",
+      "current_sha256": "542f0483eeb692c7b72c4cbaddc9f110c3c3560279bcd958380fa39190eee074",
+      "historical_sha256": "542f0483eeb692c7b72c4cbaddc9f110c3c3560279bcd958380fa39190eee074",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/_templates/SYSTEM.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/cross_system/X01_fmu_selection/README.md",
+      "current_sha256": "159e60df8b9d2f3fc8d1eef4135de11cbe8b6c23519423fe305d1f19b061bcf5",
+      "historical_sha256": "159e60df8b9d2f3fc8d1eef4135de11cbe8b6c23519423fe305d1f19b061bcf5",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/cross_system/X01_fmu_selection/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/lassen/E00_legacy_task15/README.md",
+      "current_sha256": "c33ad3f901e4e3fb1c420b70f4f27da1a1fa9527c8967684232ace1c16425b4a",
+      "historical_sha256": "c33ad3f901e4e3fb1c420b70f4f27da1a1fa9527c8967684232ace1c16425b4a",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/lassen/E00_legacy_task15/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/lassen/E02_g2_packed_vs_spread/README.md",
+      "current_sha256": "718a909d1fd1833da4b0e724e60588fa4ca89df7de2141fefcde50fd82a31757",
+      "historical_sha256": "718a909d1fd1833da4b0e724e60588fa4ca89df7de2141fefcde50fd82a31757",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/lassen/E02_g2_packed_vs_spread/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/lassen/SYSTEM.md",
+      "current_sha256": "afb11593f66ddc540e3c96075997a6a161d93163ef5b1100caf8633307545c39",
+      "historical_sha256": "afb11593f66ddc540e3c96075997a6a161d93163ef5b1100caf8633307545c39",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/lassen/SYSTEM.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/marconi100/E02_g2_packed_vs_spread/README.md",
+      "current_sha256": "840de903c6d0b511f4df8a43f4cdcd24d1329054bc2db1b099da578067c14212",
+      "historical_sha256": "840de903c6d0b511f4df8a43f4cdcd24d1329054bc2db1b099da578067c14212",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/marconi100/E02_g2_packed_vs_spread/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/marconi100/SYSTEM.md",
+      "current_sha256": "0570c1d370fc0fe4d30f204de4f1b50eaeaeebe80170e58426d007d69d6b49e3",
+      "historical_sha256": "0570c1d370fc0fe4d30f204de4f1b50eaeaeebe80170e58426d007d69d6b49e3",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/marconi100/SYSTEM.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E01_g1_uniform/README.md",
+      "current_sha256": "40ecb3aa1119c5b5347f75b199cf0bdd9e543309490f9e7726bf0021ab68f50d",
+      "historical_sha256": "40ecb3aa1119c5b5347f75b199cf0bdd9e543309490f9e7726bf0021ab68f50d",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E01_g1_uniform/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E02_g2_packed_vs_spread/README.md",
+      "current_sha256": "3f7e1b9beb168903a6a42965e0d69ca89370fabadc0036e9440c722787ba80d0",
+      "historical_sha256": "3f7e1b9beb168903a6a42965e0d69ca89370fabadc0036e9440c722787ba80d0",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E02_g2_packed_vs_spread/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E03_g3_room_air/README.md",
+      "current_sha256": "aab97d41313d54f60e05f722a587934785071f3148702c7261308df6dc325138",
+      "historical_sha256": "aab97d41313d54f60e05f722a587934785071f3148702c7261308df6dc325138",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E03_g3_room_air/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/README.md",
+      "current_sha256": "26776fd44559bdbf84ea575e92626a2881e8aa9d5349e6bf8d7b40283bef2a4e",
+      "historical_sha256": "26776fd44559bdbf84ea575e92626a2881e8aa9d5349e6bf8d7b40283bef2a4e",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/provenance/packing_console.log",
+      "current_sha256": "851ae78df0b55e44fdf556b5eb2f6720c3359bba5f92df2ea16c967109198962",
+      "historical_sha256": "851ae78df0b55e44fdf556b5eb2f6720c3359bba5f92df2ea16c967109198962",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/provenance/packing_console.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/provenance/packing_rerun_console.log",
+      "current_sha256": "cf6e2d2982e89c3a203dad2f7d87e035f42a2025f57d44024b42be5c60c3d30b",
+      "historical_sha256": "cf6e2d2982e89c3a203dad2f7d87e035f42a2025f57d44024b42be5c60c3d30b",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/provenance/packing_rerun_console.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/provenance/power_balance_console.log",
+      "current_sha256": "31fb3473ef72ad36bdf8edc186c53c2b1a8b17270623c9d71ae6c460efffa516",
+      "historical_sha256": "31fb3473ef72ad36bdf8edc186c53c2b1a8b17270623c9d71ae6c460efffa516",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/provenance/power_balance_console.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/.gitkeep",
+      "current_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "historical_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/.gitkeep",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/decisions.jsonl",
+      "current_sha256": "56abb6c14d4db49b3caac8aa68fd8531868902e3c2d988eb537c9c622d383bec",
+      "historical_sha256": "56abb6c14d4db49b3caac8aa68fd8531868902e3c2d988eb537c9c622d383bec",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/decisions.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/intervals.parquet",
+      "current_sha256": "9cbc19b38c07378c7f6ddbed6d8f3528b62ce0a4cb4bc6f27f144de6ded3bad1",
+      "historical_sha256": "9cbc19b38c07378c7f6ddbed6d8f3528b62ce0a4cb4bc6f27f144de6ded3bad1",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/intervals.parquet",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/manifest.json",
+      "current_sha256": "20fecbff692812530df99cace65aafbb61aee287b1a6dfdb592b928a3ae1b592",
+      "historical_sha256": "20fecbff692812530df99cace65aafbb61aee287b1a6dfdb592b928a3ae1b592",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/manifest.json",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/decision_latency.jsonl",
+      "current_sha256": "c95cc186c5ca89540ddcba298b63f4ce53927d3f8197c715b98f67ddbab0a5d4",
+      "historical_sha256": "c95cc186c5ca89540ddcba298b63f4ce53927d3f8197c715b98f67ddbab0a5d4",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/decision_latency.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/job_events.jsonl",
+      "current_sha256": "dae04285f2de1342febfe824d0ceaf7256ccf41a638b33447ce9614cd8b453c7",
+      "historical_sha256": "dae04285f2de1342febfe824d0ceaf7256ccf41a638b33447ce9614cd8b453c7",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/job_events.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/thermal_publications.jsonl",
+      "current_sha256": "466ccda6dd574ffb99139c75dcc21a00f5384b6e5e7c2e204ef795a66d96394d",
+      "historical_sha256": "466ccda6dd574ffb99139c75dcc21a00f5384b6e5e7c2e204ef795a66d96394d",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/packing_seed1/provenance/thermal_publications.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/decisions.jsonl",
+      "current_sha256": "37b8e11c8dd275b9f2a53a1cd9f2466f3c91765f58c487152f25fea27b7b0139",
+      "historical_sha256": "37b8e11c8dd275b9f2a53a1cd9f2466f3c91765f58c487152f25fea27b7b0139",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/decisions.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/intervals.parquet",
+      "current_sha256": "ef8a8d38c644927d718b26db601a0772cdb22a5febf2ea6b447f8b9ac4da9ea7",
+      "historical_sha256": "ef8a8d38c644927d718b26db601a0772cdb22a5febf2ea6b447f8b9ac4da9ea7",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/intervals.parquet",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/manifest.json",
+      "current_sha256": "384684b17f92fecdb40270f8568c68bbff4acc81f552ecabb609e0478248d707",
+      "historical_sha256": "384684b17f92fecdb40270f8568c68bbff4acc81f552ecabb609e0478248d707",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/manifest.json",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/decision_latency.jsonl",
+      "current_sha256": "6cc258de608ca0045a4b782cb8db41691136927a6c709fd224c6d40fbc1148a4",
+      "historical_sha256": "6cc258de608ca0045a4b782cb8db41691136927a6c709fd224c6d40fbc1148a4",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/decision_latency.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/job_events.jsonl",
+      "current_sha256": "a1d3e1695567119ccda399748c289da6b8892f53e9c188e9a9209839df58c3c7",
+      "historical_sha256": "a1d3e1695567119ccda399748c289da6b8892f53e9c188e9a9209839df58c3c7",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/job_events.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/thermal_publications.jsonl",
+      "current_sha256": "466ccda6dd574ffb99139c75dcc21a00f5384b6e5e7c2e204ef795a66d96394d",
+      "historical_sha256": "466ccda6dd574ffb99139c75dcc21a00f5384b6e5e7c2e204ef795a66d96394d",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E10_c2_vertical_slice/runs/power_balance_seed1/provenance/thermal_publications.jsonl",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/README.md",
+      "current_sha256": "a7e603626f419ef8fdb4c9fac84f9df4776e334c451adc31f223abe3afc9c5ee",
+      "historical_sha256": "a7e603626f419ef8fdb4c9fac84f9df4776e334c451adc31f223abe3afc9c5ee",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed1_attempt1.log",
+      "current_sha256": "f5860e0a1c512bc13201469e03bca3110c837b776e54acdb72f260d47567bce6",
+      "historical_sha256": "f5860e0a1c512bc13201469e03bca3110c837b776e54acdb72f260d47567bce6",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed2_attempt1.log",
+      "current_sha256": "6eeba61ec652489930bfefe8233bbf68d257dd4d136c0d6afec29d732e792609",
+      "historical_sha256": "6eeba61ec652489930bfefe8233bbf68d257dd4d136c0d6afec29d732e792609",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed3_attempt1.log",
+      "current_sha256": "09c11070f25d8eeebaaabd9139ae1ec14335e906aa95347f28f85e3430efc27a",
+      "historical_sha256": "09c11070f25d8eeebaaabd9139ae1ec14335e906aa95347f28f85e3430efc27a",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_coolest_rack_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed1_attempt1.log",
+      "current_sha256": "e77aae5d252fdd59877c58e7d94ce22bb24b9a54d2eef5ee32a7e601de190fcb",
+      "historical_sha256": "e77aae5d252fdd59877c58e7d94ce22bb24b9a54d2eef5ee32a7e601de190fcb",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed2_attempt1.log",
+      "current_sha256": "ba8168265a3667fdfef3a8c72b798ba0dc423c752e13130c996fb0fd24c5f330",
+      "historical_sha256": "ba8168265a3667fdfef3a8c72b798ba0dc423c752e13130c996fb0fd24c5f330",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed3_attempt1.log",
+      "current_sha256": "47f4f6f804c60d835bccd3f01d6d4e9d93822364c2f43ebcbddad60714df653c",
+      "historical_sha256": "47f4f6f804c60d835bccd3f01d6d4e9d93822364c2f43ebcbddad60714df653c",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_node_balance_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed1_attempt1.log",
+      "current_sha256": "0480ebb345d1efb1faf9eb6cd6462f835246ea4eaa6158c4f73568d0a5172182",
+      "historical_sha256": "0480ebb345d1efb1faf9eb6cd6462f835246ea4eaa6158c4f73568d0a5172182",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed2_attempt1.log",
+      "current_sha256": "2689e9d8f45cacc9dbaad5eba2e3683b1beed7b48984b487c60ff53e59e691b1",
+      "historical_sha256": "2689e9d8f45cacc9dbaad5eba2e3683b1beed7b48984b487c60ff53e59e691b1",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed3_attempt1.log",
+      "current_sha256": "f907c9b3e1864151470edf52f1094bc7efe3998cf2981c8c6c2f6cdd5a6f5b6b",
+      "historical_sha256": "f907c9b3e1864151470edf52f1094bc7efe3998cf2981c8c6c2f6cdd5a6f5b6b",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_packing_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed1_attempt1.log",
+      "current_sha256": "7b3b4df20fc09c18af58a1a728c5e7bf123cf2086034fbaa2cd7aac23c55f9a4",
+      "historical_sha256": "7b3b4df20fc09c18af58a1a728c5e7bf123cf2086034fbaa2cd7aac23c55f9a4",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed2_attempt1.log",
+      "current_sha256": "9c6771be7c9a4abebbdaf9c55bf02e9c2f8e5fac469a4a487df1d9393c0f4437",
+      "historical_sha256": "9c6771be7c9a4abebbdaf9c55bf02e9c2f8e5fac469a4a487df1d9393c0f4437",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed3_attempt1.log",
+      "current_sha256": "a30b6d7ce50c9360d192e9039fd8a58f6f6b0b5c93bedb82c67babe1fdee0ce8",
+      "historical_sha256": "a30b6d7ce50c9360d192e9039fd8a58f6f6b0b5c93bedb82c67babe1fdee0ce8",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_power_balance_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed1_attempt1.log",
+      "current_sha256": "c40a25ef4bcfd3753a56655028d450a1a3c9cff28c4bfc9c82150d80e737c514",
+      "historical_sha256": "c40a25ef4bcfd3753a56655028d450a1a3c9cff28c4bfc9c82150d80e737c514",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed2_attempt1.log",
+      "current_sha256": "21325095c57b9f9f253322e74030f15b962e3aac0353b68ff2869d7dffd24022",
+      "historical_sha256": "21325095c57b9f9f253322e74030f15b962e3aac0353b68ff2869d7dffd24022",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed3_attempt1.log",
+      "current_sha256": "a09cf3d6d10dc5325be65533a299f1430979dc322567cfbe1f3300b3f0a51ecb",
+      "historical_sha256": "a09cf3d6d10dc5325be65533a299f1430979dc322567cfbe1f3300b3f0a51ecb",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/provenance/console_thermal_predictive_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E11_g4_synthetic/results/metrics.md",
+      "current_sha256": "fb888739528bb8ae0b11ca01b17ef1c56da5620f661f8822642d7180fe9baaac",
+      "historical_sha256": "fb888739528bb8ae0b11ca01b17ef1c56da5620f661f8822642d7180fe9baaac",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/results/metrics.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/README.md",
+      "current_sha256": "b99c90ef8a9dd9df528b606eeaffea9bc797a14522f68b1c7ca7cd6cbca0723d",
+      "historical_sha256": "b99c90ef8a9dd9df528b606eeaffea9bc797a14522f68b1c7ca7cd6cbca0723d",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/README.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed1_attempt1.log",
+      "current_sha256": "7024fcd0b5427048a9ed33dee0ca05423764077a9dd1d84798922701d17e6f42",
+      "historical_sha256": "7024fcd0b5427048a9ed33dee0ca05423764077a9dd1d84798922701d17e6f42",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed2_attempt1.log",
+      "current_sha256": "5d816d802298a2cd5629a1f88794cdac0936bbc6d7966b42400a43d30818b37c",
+      "historical_sha256": "5d816d802298a2cd5629a1f88794cdac0936bbc6d7966b42400a43d30818b37c",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed3_attempt1.log",
+      "current_sha256": "8a91d2c76045582fa42a193353049282650767b9e800057f7d6129e74eb5adff",
+      "historical_sha256": "8a91d2c76045582fa42a193353049282650767b9e800057f7d6129e74eb5adff",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_coolest_rack_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed1_attempt1.log",
+      "current_sha256": "4189a4240bed9aee3994816bcb84490b48219ec347cea2a68cdd6fdb00304793",
+      "historical_sha256": "4189a4240bed9aee3994816bcb84490b48219ec347cea2a68cdd6fdb00304793",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed2_attempt1.log",
+      "current_sha256": "840b62e8975fa0b8d44a89ba884c859f7cf0e4a303722984f7bee701ac6af1f5",
+      "historical_sha256": "840b62e8975fa0b8d44a89ba884c859f7cf0e4a303722984f7bee701ac6af1f5",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed2_attempt2.log",
+      "current_sha256": "c093526a41a2086838faa299bcbab7a0b49c85c90b16d50d59c767c5f2779660",
+      "historical_sha256": "c093526a41a2086838faa299bcbab7a0b49c85c90b16d50d59c767c5f2779660",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed2_attempt2.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed3_attempt1.log",
+      "current_sha256": "58caa5be4cd76cbfebff13466ab7e2c6329d94f129e9fdc953c6d1877bfc291e",
+      "historical_sha256": "58caa5be4cd76cbfebff13466ab7e2c6329d94f129e9fdc953c6d1877bfc291e",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_node_balance_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed1_attempt1.log",
+      "current_sha256": "94d5ba48f154c2ca078eb86ff81af0b35eae9126b423b1df8ef1cf31e5682d6b",
+      "historical_sha256": "94d5ba48f154c2ca078eb86ff81af0b35eae9126b423b1df8ef1cf31e5682d6b",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed2_attempt1.log",
+      "current_sha256": "3eae4d6a6c8c8a3604f75b09f9416ac67cf7f6e32a9a86dd1ba241d127ff7778",
+      "historical_sha256": "3eae4d6a6c8c8a3604f75b09f9416ac67cf7f6e32a9a86dd1ba241d127ff7778",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed2_attempt2.log",
+      "current_sha256": "89011ada665cd5d9017e43c253ceb29c5d94516167d1803c87c4dad8cf218110",
+      "historical_sha256": "89011ada665cd5d9017e43c253ceb29c5d94516167d1803c87c4dad8cf218110",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed2_attempt2.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed3_attempt1.log",
+      "current_sha256": "a3298b78618a4dbf5fcd77adb29441a7b44108aa9a6d4ce3f9a087b246c367d1",
+      "historical_sha256": "a3298b78618a4dbf5fcd77adb29441a7b44108aa9a6d4ce3f9a087b246c367d1",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_packing_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed1_attempt1.log",
+      "current_sha256": "e0abd36e9a2683fdc9e525985a01b9fd0299437f04ad30cd4936e3d8e6130aca",
+      "historical_sha256": "e0abd36e9a2683fdc9e525985a01b9fd0299437f04ad30cd4936e3d8e6130aca",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed2_attempt1.log",
+      "current_sha256": "14292b959ad137ef9f45ae5a88613b892e8427e0a5caa319782c8f30f75ba48e",
+      "historical_sha256": "14292b959ad137ef9f45ae5a88613b892e8427e0a5caa319782c8f30f75ba48e",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed3_attempt1.log",
+      "current_sha256": "330477dc7c9b1e155cc3d93abe4df07c308487c9bbbef26618a6b9fe7e17372f",
+      "historical_sha256": "330477dc7c9b1e155cc3d93abe4df07c308487c9bbbef26618a6b9fe7e17372f",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_power_balance_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed1_attempt1.log",
+      "current_sha256": "6144e6a2d661e56b70d87233c67832fb40c20f5d2ceddfd75cb32706f4e4c8a1",
+      "historical_sha256": "6144e6a2d661e56b70d87233c67832fb40c20f5d2ceddfd75cb32706f4e4c8a1",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed1_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed1_attempt2.log",
+      "current_sha256": "d84c345812a6ecfe804e8a21b70a950e9711966983eb374b58aeab81d9dd0760",
+      "historical_sha256": "d84c345812a6ecfe804e8a21b70a950e9711966983eb374b58aeab81d9dd0760",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed1_attempt2.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed2_attempt1.log",
+      "current_sha256": "4da64cee7098b2e1549eb98c20f13a7999636a293f5d021a6180e83dfe00f676",
+      "historical_sha256": "4da64cee7098b2e1549eb98c20f13a7999636a293f5d021a6180e83dfe00f676",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed2_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed3_attempt1.log",
+      "current_sha256": "3678dd395070e5c552040b0b1d6fda7277eaaa6ed0e80b1f328a743e088e85ab",
+      "historical_sha256": "3678dd395070e5c552040b0b1d6fda7277eaaa6ed0e80b1f328a743e088e85ab",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/console_thermal_predictive_seed3_attempt1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/recovery_1/controller_console.log",
+      "current_sha256": "fcf27014a2b344a24015f2015f1449886f191574ae4c01cc70c4bed7107d45ff",
+      "historical_sha256": "fcf27014a2b344a24015f2015f1449886f191574ae4c01cc70c4bed7107d45ff",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/recovery_1/controller_console.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/recovery_1/post_matrix_console.log",
+      "current_sha256": "9f817859d16f05a2a728737f45d352ec8960769673b702a7164424deac229d3b",
+      "historical_sha256": "9f817859d16f05a2a728737f45d352ec8960769673b702a7164424deac229d3b",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/recovery_1/post_matrix_console.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/rerun_1/console_thermal_predictive_seed1.log",
+      "current_sha256": "e423a50ff037441ddab95b60ff868a73dae1bf06c657ada10db6896762a55fc3",
+      "historical_sha256": "e423a50ff037441ddab95b60ff868a73dae1bf06c657ada10db6896762a55fc3",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/rerun_1/console_thermal_predictive_seed1.log",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/E12_g4_alibaba/results/metrics.md",
+      "current_sha256": "dcf3c3df8777165c25655f0ab5ac41c94f506894a3a93554b7c89858db98cbc4",
+      "historical_sha256": "dcf3c3df8777165c25655f0ab5ac41c94f506894a3a93554b7c89858db98cbc4",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/results/metrics.md",
+      "tracked_at_current_path": false
+    },
+    {
+      "byte_identical": true,
+      "current_local_path": "thermoRL/backend/experiments/summit/SYSTEM.md",
+      "current_sha256": "246648bddad7cf53c10d4d01e3299a68fd5f25258d189e7d79c0918cbf1fbae2",
+      "historical_sha256": "246648bddad7cf53c10d4d01e3299a68fd5f25258d189e7d79c0918cbf1fbae2",
+      "local_exists": true,
+      "old_path": "thermoRL/thermorl-v2/experiments/summit/SYSTEM.md",
+      "tracked_at_current_path": false
+    }
+  ],
+  "frontend_current_fixture": {
+    "end_s": 460.0,
+    "frames_per_policy": 24,
+    "racks_per_zone": [
+      16,
+      16,
+      16
+    ],
+    "role": "legacy constructed wiring fixture, not E11/E12 FMU results",
+    "zones": [
+      "Air",
+      "Direct-to-chip",
+      "Immersion"
+    ]
+  },
+  "frontend_source_geometry_check": {
+    "allocated_racks_per_zone": 16,
+    "reason": "COLS=4 gives4rows, while rowZ has2 entries and rows2/3 both fall back to0",
+    "status": "source-derived; not a browser-rendering validation",
+    "unique_x_z_positions_per_zone": 12
+  },
+  "frozen_README_sections": {
+    "E11_g4_synthetic": {
+      "Configuration": {
+        "actual": "34c047563fcc9f77c8d22d0e5e91cd5a5b3bcdf76054cd4e056259d0b54e0b57",
+        "expected": "34c047563fcc9f77c8d22d0e5e91cd5a5b3bcdf76054cd4e056259d0b54e0b57",
+        "pass": true
+      },
+      "Limitations": {
+        "actual": "84e7a484131ef613204d33f2e90259670a47152f700a1a12d24457b92ff8d80a",
+        "expected": "84e7a484131ef613204d33f2e90259670a47152f700a1a12d24457b92ff8d80a",
+        "pass": true
+      },
+      "Method": {
+        "actual": "e014978460db5718050cb96db2ab137dab6b41cac7415ef1fc27976e4a7da2f3",
+        "expected": "e014978460db5718050cb96db2ab137dab6b41cac7415ef1fc27976e4a7da2f3",
+        "pass": true
+      },
+      "Metrics": {
+        "actual": "be7559075d5bd461b7a6162834a2408a8a9e7246b11050cd4abcd7adce3f7de0",
+        "expected": "be7559075d5bd461b7a6162834a2408a8a9e7246b11050cd4abcd7adce3f7de0",
+        "pass": true
+      },
+      "Pre-registered decision rule": {
+        "actual": "970fd088f351ea4120d04d8eef4805b95e8319c8f727f8c0c15281e4a8d58632",
+        "expected": "970fd088f351ea4120d04d8eef4805b95e8319c8f727f8c0c15281e4a8d58632",
+        "pass": true
+      },
+      "Question": {
+        "actual": "b3a12f53406accf63df4b55963c386e58e415dd56dbe2dac7ca0e72c69a90c11",
+        "expected": "b3a12f53406accf63df4b55963c386e58e415dd56dbe2dac7ca0e72c69a90c11",
+        "pass": true
+      }
+    },
+    "E12_g4_alibaba": {
+      "Configuration": {
+        "actual": "49d1018101c783c1251391fa7f956f3d6adb02aca14f2fdff4b789ea9843b3fd",
+        "expected": "49d1018101c783c1251391fa7f956f3d6adb02aca14f2fdff4b789ea9843b3fd",
+        "pass": true
+      },
+      "Limitations": {
+        "actual": "39b0a294c3210e6da6fea2026a1eec27b2d68b6c4825122c772d285ccca1e639",
+        "expected": "39b0a294c3210e6da6fea2026a1eec27b2d68b6c4825122c772d285ccca1e639",
+        "pass": true
+      },
+      "Method": {
+        "actual": "8d2813f89f278cbfaf2f2e4e5565ace10cdad63be73c46dfcab09ab6e0cdece4",
+        "expected": "8d2813f89f278cbfaf2f2e4e5565ace10cdad63be73c46dfcab09ab6e0cdece4",
+        "pass": true
+      },
+      "Metrics": {
+        "actual": "2f93b701d4bc31d9af1600bf6b0cf0983e972c635434c702fd9df75505a9f96b",
+        "expected": "2f93b701d4bc31d9af1600bf6b0cf0983e972c635434c702fd9df75505a9f96b",
+        "pass": true
+      },
+      "Pre-registered decision rule": {
+        "actual": "f2115e2b174a47f4a3a33724ae25ace15a71b2d4f7ac5a3e4f149165056e31e3",
+        "expected": "f2115e2b174a47f4a3a33724ae25ace15a71b2d4f7ac5a3e4f149165056e31e3",
+        "pass": true
+      },
+      "Question": {
+        "actual": "d43d968687e2eb5fed7a34a06c935698442d8025826c47e7443662e1a67cedb0",
+        "expected": "d43d968687e2eb5fed7a34a06c935698442d8025826c47e7443662e1a67cedb0",
+        "pass": true
+      }
+    }
+  },
+  "historical_packaging_HEAD": "b3bd5ac7078bb5dc5610239c0d7a2be1340fc559",
+  "postrename_acceptance": {
+    "cause": "FileNotFoundError in runner.load_episode_workload: forced thermoRL/thermorl-v2 prefix no longer exists, including for the temporary fixture path",
+    "classification": "post-rename path/layout regression; not a scientific FMU outcome or missing ignored input",
+    "command": ".venv/bin/python -m pytest tests/unit tests/integration -q",
+    "cwd": "/home/bipin/thermoRL/thermoRL/backend",
+    "exit_code": 1,
+    "failed": 1,
+    "failed_test": "tests/integration/test_runner_contract.py::test_runner_wiring_counts_steps_and_records_completion_reuse",
+    "fix_applied": false,
+    "new_FMU_executions": 0,
+    "passed": 195,
+    "python": "3.12.14",
+    "wall_s_reported_by_pytest": 35.43
+  },
+  "prepared_utc": "2026-10-31T13:37:06.693635+00:00",
+  "raw_inventory_checks": [
+    {
+      "files_verified": 106,
+      "inventory": "thermoRL/backend/experiments/summit/E11_g4_synthetic/results/run_files.json",
+      "mismatches": [],
+      "path_interpretation": "inventory-relative paths under renamed backend; historical records unchanged",
+      "sha256": "f2c78da2f68eb23e9c64577453be2c372a980e644dc786a341af1fdbb8d108d8"
+    },
+    {
+      "files_verified": 115,
+      "inventory": "thermoRL/backend/experiments/summit/E12_g4_alibaba/results/run_files.json",
+      "mismatches": [],
+      "path_interpretation": "inventory-relative paths under renamed backend; historical records unchanged",
+      "sha256": "0a5f5cc961a8319a61c56d68d2cda53dfbe0b1300db8846de31a2725790b83ad"
+    },
+    {
+      "files_verified": 9,
+      "inventory": "thermoRL/backend/experiments/summit/E12_g4_alibaba/provenance/rerun_1/run_files.json",
+      "mismatches": [],
+      "path_interpretation": "inventory-relative paths under renamed backend; historical records unchanged",
+      "sha256": "6b3d55429ef861862bb36bf6c50b19e7a63adc1ab67c9d363b7bfbc3027f3fd3"
+    }
+  ],
+  "read_only_loader_check": {
+    "FMU_initialized": false,
+    "actual_error": "FileNotFoundError: old thermoRL/thermorl-v2/experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet",
+    "application_python_modules_present_under_backend": 39,
+    "application_source_modules_found_at_hardcoded_old_root": 0,
+    "cwd": "thermoRL/backend",
+    "expected_workload_exists_under_backend": true,
+    "implementation_import_origin": "/home/bipin/thermoRL/thermoRL/backend/thermorl2/__init__.py"
+  },
+  "reviewed_HEAD": "c09f735ddde82d0acaf54f2f0900a2563c3915ee"
+}

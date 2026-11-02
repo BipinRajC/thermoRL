@@ -1,0 +1,4 @@
+system: summit
+thermal_predictive:
+  from: experiments/summit/E01_g1_uniform/results/summary.json
+  horizon_s: 600

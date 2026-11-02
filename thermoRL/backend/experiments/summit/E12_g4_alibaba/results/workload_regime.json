@@ -1,0 +1,181 @@
+{
+  "calculation_source_sha256": "af092df01e0f6f89cfbf7f653d9ec41724b9bb47b596b69272908feaed7cad70",
+  "comparison_to_review": "hourly counts should agree exactly; means/overload are exact event integrals rather than any sampled approximation; review numbers rounded to 2-3 decimals",
+  "dense_tail_99_percent_proxy_minutes": 23.36704082375318,
+  "multigpu50_resource_only_cpu_cap": {
+    "active_at_or_above_cap_pod_fraction": 0.042518499937288345,
+    "definition": "strict clipping uses uncapped CPU>2; active includes equality at 2",
+    "pods": 7973,
+    "strictly_clipped_count": 339,
+    "strictly_clipped_node_fraction": 0.07316215265564545,
+    "strictly_clipped_pod_fraction": 0.042518499937288345
+  },
+  "nominal_rho": 0.6,
+  "per_seed": {
+    "1": {
+      "cpu_cap": {
+        "active_at_or_above_cap_pod_fraction": 0.0042037925519762395,
+        "definition": "strict clipping uses uncapped CPU>2; active includes equality at 2",
+        "pods": 21885,
+        "strictly_clipped_count": 92,
+        "strictly_clipped_node_fraction": 0.007806826434277415,
+        "strictly_clipped_pod_fraction": 0.0042037925519762395
+      },
+      "hourly_arrivals": [
+        3278,
+        6195,
+        11,
+        6193,
+        21,
+        6187
+      ],
+      "hourly_mean_offered_utilisation": [
+        0.2528028653859388,
+        0.3267471671702162,
+        0.41278608828028285,
+        0.5672962855189612,
+        0.40993450223202355,
+        0.7120639226581773
+      ],
+      "integration": "exact piecewise-constant offered nodes on continuous [submit,submit+R), not RAPS realised occupancy",
+      "jobs_offered": 21885,
+      "power_basis": "frozen job_increment_kw; RAPS node model, network0, loss-exclusive; actual rectifier-inclusive rack inputs are observed at execution",
+      "window_fraction_above_1": 0.029730925146976006,
+      "window_max_offered_utilisation": 1.1502377864245568,
+      "window_mean_modelled_kw_above_idle_per_rack": 2.872015517117357,
+      "window_mean_offered_utilisation": 0.4857655931719323,
+      "window_min_offered_utilisation": 0.09424989191526156
+    },
+    "2": {
+      "cpu_cap": {
+        "active_at_or_above_cap_pod_fraction": 0.004228868395577521,
+        "definition": "strict clipping uses uncapped CPU>2; active includes equality at 2",
+        "pods": 19627,
+        "strictly_clipped_count": 83,
+        "strictly_clipped_node_fraction": 0.0077931278781438185,
+        "strictly_clipped_pod_fraction": 0.004228868395577521
+      },
+      "hourly_arrivals": [
+        1021,
+        6193,
+        12,
+        6195,
+        2178,
+        4028
+      ],
+      "hourly_mean_offered_utilisation": [
+        0.05792046616755755,
+        0.33916729131934603,
+        0.29522694896741175,
+        0.5770488328396214,
+        0.3729872084480176,
+        0.6886631688754076
+      ],
+      "integration": "exact piecewise-constant offered nodes on continuous [submit,submit+R), not RAPS realised occupancy",
+      "jobs_offered": 19627,
+      "power_basis": "frozen job_increment_kw; RAPS node model, network0, loss-exclusive; actual rectifier-inclusive rack inputs are observed at execution",
+      "window_fraction_above_1": 0.022921059003566672,
+      "window_max_offered_utilisation": 1.1234327712926935,
+      "window_mean_modelled_kw_above_idle_per_rack": 2.6763298497517,
+      "window_mean_offered_utilisation": 0.45461869008996086,
+      "window_min_offered_utilisation": 0.019022913964548204
+    },
+    "3": {
+      "cpu_cap": {
+        "active_at_or_above_cap_pod_fraction": 0.004194249330436101,
+        "definition": "strict clipping uses uncapped CPU>2; active includes equality at 2",
+        "pods": 19789,
+        "strictly_clipped_count": 83,
+        "strictly_clipped_node_fraction": 0.007729759574361291,
+        "strictly_clipped_pod_fraction": 0.004194249330436101
+      },
+      "hourly_arrivals": [
+        1183,
+        6193,
+        12,
+        6195,
+        2086,
+        4120
+      ],
+      "hourly_mean_offered_utilisation": [
+        0.07170550129015223,
+        0.33954702889737887,
+        0.3014254600589653,
+        0.5768909329047395,
+        0.37354845082609395,
+        0.691713802240802
+      ],
+      "integration": "exact piecewise-constant offered nodes on continuous [submit,submit+R), not RAPS realised occupancy",
+      "jobs_offered": 19789,
+      "power_basis": "frozen job_increment_kw; RAPS node model, network0, loss-exclusive; actual rectifier-inclusive rack inputs are observed at execution",
+      "window_fraction_above_1": 0.023336333581735744,
+      "window_max_offered_utilisation": 1.1249459576307825,
+      "window_mean_modelled_kw_above_idle_per_rack": 2.686167307320416,
+      "window_mean_offered_utilisation": 0.4566251349855959,
+      "window_min_offered_utilisation": 0.023346303501945526
+    }
+  },
+  "references_sha256": {
+    "datasets/alibaba_gpu_2023/raw/openb_pod_list_default.csv": "1ee7ed79c27a3b0861cda8ddba86a004c6aba904caafa329a76ae93ca63834a8",
+    "experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904",
+    "experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+    "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c"
+  },
+  "scope": "descriptive pre-run input characterisation only; no simulation or policy outcome",
+  "seed2_seed3_identity": {
+    "id_offset_exact": true,
+    "leading_pods_in_seed3": 162,
+    "max_deviation_from_first_s": 3.623767952376511e-13,
+    "remaining_jobs": 19627,
+    "request_columns_exactly_equal": true,
+    "scope": "about two workload conditions; seed2/3 are not determinism or sensitivity evidence; time-shift differences reflect sequential float accumulation",
+    "time_shift_first_s": 33.03657272057935,
+    "time_shift_max_s": 33.03657272057936,
+    "time_shift_min_s": 33.03657272057899
+  },
+  "source_cpu_cap": {
+    "active_at_or_above_cap_pod_fraction": 0.004191520232145736,
+    "definition": "strict clipping uses uncapped CPU>2; active includes equality at 2",
+    "pods": 6203,
+    "strictly_clipped_count": 26,
+    "strictly_clipped_node_fraction": 0.007843765007203457,
+    "strictly_clipped_pod_fraction": 0.004191520232145736
+  },
+  "source_creation_concentration": {
+    "largest_gap_span_shares": {
+      "1": 0.10932120041597422,
+      "10": 0.6944656624781687,
+      "20": 0.7690018440118368,
+      "5": 0.46475283490370034
+    },
+    "pods": 6203,
+    "pods_first_30_days": 3,
+    "quantiles_days": {
+      "0": 0.0,
+      "0.01": 115.83783842592592,
+      "0.1": 119.14218055555556,
+      "0.25": 124.01818287037037,
+      "0.5": 133.17680555555555,
+      "0.75": 143.49971643518518,
+      "0.9": 148.0443402777778,
+      "0.99": 148.99839074074075,
+      "1": 149.3259375
+    },
+    "quantiles_s": {
+      "0": 0.0,
+      "0.01": 10008389.24,
+      "0.1": 10293884.4,
+      "0.25": 10715171.0,
+      "0.5": 11506476.0,
+      "0.75": 12398375.5,
+      "0.9": 12791031.0,
+      "0.99": 12873460.96,
+      "1": 12901761.0
+    },
+    "span_days": 149.3259375,
+    "span_s": 12901761.0,
+    "tail_covering_last_99_percent_s": 2893371.76
+  },
+  "source_span_compressed_minutes": 104.19538206362623,
+  "window": "3600 < t <= 21600; positive-duration segments; continuous offered demand"
+}

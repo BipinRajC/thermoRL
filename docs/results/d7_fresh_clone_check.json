@@ -1,0 +1,236 @@
+{
+  "clone_directory": "/home/bipin/thermorl-freshclone-20261031-disk",
+  "clone_left_outside_repo": true,
+  "clone_sha": "06032b45ee650e235d5b2b69a5eb5d012a2732e8",
+  "clone_status_after": "",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--branch",
+        "feat/parasparam-demo",
+        "https://github.com/BipinRajC/HPC-exadigit.git",
+        "/home/bipin/thermorl-freshclone-20261031-disk"
+      ],
+      "cwd": "/tmp",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "",
+      "wall_s": 37.895652129000155
+    },
+    {
+      "command": [
+        "/usr/bin/uv",
+        "sync",
+        "--frozen"
+      ],
+      "cwd": "/home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2",
+      "returncode": 0,
+      "stderr": "Using CPython 3.12.14\nCreating virtual environment at: .venv\n   Building thermorl2 @ file:///home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2\n   Building raps @ file:///home/bipin/thermorl-freshclone-20261031-disk/sim-raps\n      Built thermorl2 @ file:///home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2\n      Built raps @ file:///home/bipin/thermorl-freshclone-20261031-disk/sim-raps\nPrepared 2 packages in 304ms\nInstalled 138 packages in 130ms\n + aiohappyeyeballs==2.7.1\n + aiohttp==3.14.3\n + aiosignal==1.4.0\n + annotated-types==0.8.0\n + argcomplete==3.6.2\n + attrs==26.1.0\n + boto3==1.43.103\n + botocore==1.43.103\n + certifi==2026.7.22\n + cffi==2.1.1\n + cfgv==3.5.0\n + charset-normalizer==3.5.1\n + cloudpickle==3.1.2\n + cmake==4.4.3\n + contourpy==1.4.0\n + cryptography==50.0.1\n + cuda-bindings==13.4.3\n + cuda-pathfinder==1.8.2\n + cuda-toolkit==13.0.3.0\n + cycler==0.12.1\n + decorator==5.3.1\n + dill==0.4.0\n + distlib==0.4.3\n + execnet==2.1.2\n + farama-notifications==0.0.6\n + fastjsonschema==2.22.2\n + filelock==4.0.5\n + fmpy==0.3.32\n + fonttools==4.66.0\n + frozenlist==1.8.0\n + fsspec==2026.9.0\n + gcsfs==2026.8.1\n + google-api-core==2.39.0\n + google-auth==2.58.1\n + google-auth-oauthlib==1.4.1\n + google-cloud-core==2.7.0\n + google-cloud-storage==3.15.0\n + google-cloud-storage-control==1.15.0\n + google-crc32c==1.9.0\n + google-resumable-media==2.10.2\n + googleapis-common-protos==1.75.4\n + grpc-google-iam-v1==0.14.5\n + grpcio==1.84.0\n + grpcio-status==1.84.0\n + gym==0.26.2\n + gym-notices==0.1.0\n + gymnasium==1.2.3\n + identify==2.6.20\n + idna==3.20\n + iniconfig==2.3.0\n + jinja2==3.1.6\n + jmespath==1.1.0\n + jsonschema==4.26.0\n + jsonschema-specifications==2025.9.1\n + jupyter-core==5.9.1\n + kiwisolver==1.5.1\n + lark==1.3.1\n + linkify-it-py==2.2.0\n + lxml==6.1.3\n + markdown-it-py==4.2.0\n + markupsafe==3.0.3\n + matplotlib==3.11.2\n + mdit-py-plugins==0.6.1\n + mdurl==0.1.2\n + mpmath==1.3.0\n + msgpack==1.2.2\n + multidict==6.9.1\n + nbformat==5.11.1\n + networkx==3.7\n + nodeenv==1.11.0\n + numpy==2.5.3\n + nvidia-cublas==13.1.1.3\n + nvidia-cuda-cupti==13.0.85\n + nvidia-cuda-nvrtc==13.0.88\n + nvidia-cuda-runtime==13.0.96\n + nvidia-cudnn-cu13==9.24.0.43\n + nvidia-cufft==12.0.0.61\n + nvidia-cufile==1.15.1.6\n + nvidia-curand==10.4.0.35\n + nvidia-cusolver==12.0.4.66\n + nvidia-cusparse==12.6.3.3\n + nvidia-cusparselt-cu13==0.8.1\n + nvidia-nccl-cu13==2.30.7\n + nvidia-nvjitlink==13.4.92\n + nvidia-nvshmem-cu13==3.4.5\n + nvidia-nvtx==13.0.85\n + oauthlib==4.0.0\n + opentelemetry-api==1.45.0\n + packaging==26.3\n + pandas==3.0.6\n + pillow==12.3.0\n + platformdirs==4.12.1\n + pluggy==1.6.0\n + pre-commit==4.6.2\n + propcache==0.5.4\n + proto-plus==1.28.4\n + protobuf==7.36.2\n + pyarrow==25.0.1\n + pyasn1==0.6.4\n + pyasn1-modules==0.4.2\n + pycparser==3.0\n + pydantic==2.13.5\n + pydantic-core==2.46.5\n + pydantic-settings==2.15.0\n + pygments==2.21.0\n + pyparsing==3.3.3\n + pytest==9.1.1\n + pytest-order==1.5.0\n + pytest-xdist==3.8.0\n + python-dateutil==2.9.0.post0\n + python-discovery==1.6.1\n + python-dotenv==1.2.3\n + pyyaml==6.0.3\n + pyzmq==27.1.0\n + raps==2.0.0.dev0 (from file:///home/bipin/thermorl-freshclone-20261031-disk/sim-raps)\n + referencing==0.37.0\n + requests==2.34.2\n + requests-oauthlib==2.0.0\n + rich==15.0.0\n + rpds-py==2026.6.3\n + s3transfer==0.19.2\n + scipy==1.18.1\n + setuptools==84.0.0\n + six==1.17.0\n + stable-baselines3==2.7.0\n + sympy==1.14.0\n + textual==8.2.8\n + thermorl2==0.1.0 (from file:///home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2)\n + torch==2.14.0\n + tqdm==4.70.1\n + traitlets==5.16.1\n + triton==3.8.0\n + typing-extensions==4.16.0\n + typing-inspection==0.4.4\n + uncertainties==3.2.3\n + urllib3==2.8.0\n + virtualenv==21.13.0\n + yarl==1.25.1\n",
+      "stdout": "",
+      "wall_s": 0.5016713289996915
+    },
+    {
+      "command": [
+        "/usr/bin/uv",
+        "run",
+        "pytest",
+        "tests/unit",
+        "tests/integration",
+        "-q"
+      ],
+      "cwd": "/home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "........................................................................ [ 36%]\n........................................................................ [ 73%]\n....................................................                     [100%]\n196 passed in 39.99s\n",
+      "wall_s": 40.87433145399973
+    },
+    {
+      "command": [
+        "/usr/bin/uv",
+        "run",
+        "python",
+        "-c",
+        "import json; from thermorl2.experiments.provenance import environment; import raps; print(json.dumps({\"environment\":environment(),\"raps_module\":raps.__file__},sort_keys=True))"
+      ],
+      "cwd": "/home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"environment\": {\"fmpy\": \"0.3.32\", \"numpy\": \"2.5.3\", \"platform\": \"Linux-7.2.9-zen1-1-zen-x86_64-with-glibc2.44\", \"python\": \"3.12.14\", \"uv\": \"uv 0.13.0 (4ecd0eff2 2026-10-09 x86_64-unknown-linux-gnu)\"}, \"raps_module\": \"/home/bipin/thermorl-freshclone-20261031-disk/sim-raps/raps/__init__.py\"}\n",
+      "wall_s": 1.5129558860003272
+    },
+    {
+      "command": [
+        "/usr/bin/uv",
+        "run",
+        "python",
+        "-m",
+        "thermorl2.experiments.fmu_smoke",
+        "--system",
+        "summit"
+      ],
+      "cwd": "/home/bipin/thermorl-freshclone-20261031-disk/thermoRL/thermorl-v2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "RK-method: sdirk34hw\nLocal extrapolation\nFSAL\nContinuous extension\n{\"finite\": true, \"fmu_sha256\": \"0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233\", \"idle_kw\": 13.201714285714285, \"n_units\": 257, \"peak_kw\": 47.282326530612245, \"system\": \"summit\", \"t_c_max\": 37.54036906294215, \"t_c_min\": 37.5403672951083, \"wall_s\": 67.98363489600024, \"warmup_used_s\": 600.0}\n",
+      "wall_s": 69.59988749900003
+    }
+  ],
+  "environment_record": {
+    "environment": {
+      "fmpy": "0.3.32",
+      "numpy": "2.5.3",
+      "platform": "Linux-7.2.9-zen1-1-zen-x86_64-with-glibc2.44",
+      "python": "3.12.14",
+      "uv": "uv 0.13.0 (4ecd0eff2 2026-10-09 x86_64-unknown-linux-gnu)"
+    },
+    "raps_module": "/home/bipin/thermorl-freshclone-20261031-disk/sim-raps/raps/__init__.py"
+  },
+  "finished_utc": "2026-10-31T13:10:03.702695+00:00",
+  "fmu_executions_in_this_phase": 1,
+  "forbidden_commands_executed": false,
+  "hash_checks": {
+    "models/POWER9CSM/fmus/summit.fmu": {
+      "actual": "0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233",
+      "expected": "0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E01_g1_uniform/results/summary.json": {
+      "actual": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+      "expected": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E11_g4_synthetic/config.yaml": {
+      "actual": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+      "expected": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/config.yaml": {
+      "actual": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+      "expected": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/provenance/determinism_scope.json": {
+      "actual": "44060930460107e0ad80a494d19dafd972df03a4ea0d17aa35828b2a4198cd2c",
+      "expected": "44060930460107e0ad80a494d19dafd972df03a4ea0d17aa35828b2a4198cd2c",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/results/feasibility.json": {
+      "actual": "77b953b2f940d820af47bbe889b8004ca2cb3430b867db37629e64f5768a7bd3",
+      "expected": "77b953b2f940d820af47bbe889b8004ca2cb3430b867db37629e64f5768a7bd3",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/results/variant_choice.json": {
+      "actual": "7cfb0054855acc4d9aadd9a2c85490f27a244d834601c10e58f0fdf0ccf868ea",
+      "expected": "7cfb0054855acc4d9aadd9a2c85490f27a244d834601c10e58f0fdf0ccf868ea",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet": {
+      "actual": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904",
+      "expected": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet.meta.json": {
+      "actual": "ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d",
+      "expected": "ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet": {
+      "actual": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+      "expected": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet.meta.json": {
+      "actual": "995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7",
+      "expected": "995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": {
+      "actual": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+      "expected": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": {
+      "actual": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0",
+      "expected": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d.parquet": {
+      "actual": "7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d",
+      "expected": "7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d.parquet.meta.json": {
+      "actual": "9a343afd39ca1c83e8a920d9f653cfc3afd1dbd6e27f0c8acd64e77272dabe61",
+      "expected": "9a343afd39ca1c83e8a920d9f653cfc3afd1dbd6e27f0c8acd64e77272dabe61",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet": {
+      "actual": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27",
+      "expected": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet.meta.json": {
+      "actual": "06d90bc04422ec0a48a97eb5c47ecaa74645abfcae970c81f30b4991211840e2",
+      "expected": "06d90bc04422ec0a48a97eb5c47ecaa74645abfcae970c81f30b4991211840e2",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91.parquet": {
+      "actual": "d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91",
+      "expected": "d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/experiments/summit/_workloads/d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91.parquet.meta.json": {
+      "actual": "4244d9ef9567628ca4f5291bf69a955b48ce505ea215576eb83d01377f9619b5",
+      "expected": "4244d9ef9567628ca4f5291bf69a955b48ce505ea215576eb83d01377f9619b5",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/thermorl2/experiments/configs/g4_alibaba.yaml": {
+      "actual": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+      "expected": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/thermorl2/experiments/configs/g4_synthetic.yaml": {
+      "actual": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+      "expected": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+      "pass": true
+    },
+    "thermoRL/thermorl-v2/thermorl2/experiments/configs/primary.yaml": {
+      "actual": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec",
+      "expected": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec",
+      "pass": true
+    }
+  },
+  "non_fmu_tests": {
+    "passed": 196,
+    "returncode": 0,
+    "summary_lines": [
+      "196 passed in 39.99s"
+    ]
+  },
+  "previous_setup_attempt": {
+    "FMU_executions": 0,
+    "failure": "uv sync --frozen: disk quota exceeded copying torch into /tmp; no tests or FMU executed",
+    "record": "docs/results/d7_setup_attempt1.json",
+    "sha256": "c7906e53e7dc13fb55a2ce161afb198bc20348445879b5aa1ac1262f201ab74b"
+  },
+  "same_machine_only": true,
+  "setup_finished_utc": "2026-10-31T13:08:54.101077+00:00",
+  "smoke": {
+    "finite": true,
+    "fmu_sha256": "0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233",
+    "idle_kw": 13.201714285714285,
+    "n_units": 257,
+    "peak_kw": 47.282326530612245,
+    "system": "summit",
+    "t_c_max": 37.54036906294215,
+    "t_c_min": 37.5403672951083,
+    "wall_s": 67.98363489600024,
+    "warmup_used_s": 600.0
+  },
+  "started_utc": "2026-10-31T13:07:33.278955+00:00",
+  "status": "passed",
+  "summary": "196 non-FMU tests passed; 22 pinned hashes passed; exactly one Summit smoke passed with finite output."
+}

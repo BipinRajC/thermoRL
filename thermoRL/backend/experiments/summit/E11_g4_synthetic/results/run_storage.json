@@ -1,0 +1,137 @@
+{
+  "coolest_rack_seed1": {
+    "bytes": 56114214,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "1679c1023ee24e286469bfabf91f3048e2041b7ba8c3c20afdca62289eec4c62",
+    "max_c": 55.70173611992408,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "coolest_rack_seed2": {
+    "bytes": 57080759,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "9e707bb11754edc1532dbc1f61e8c569d059e93065be562d4167524d0a2b65f4",
+    "max_c": 56.25360869070096,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "coolest_rack_seed3": {
+    "bytes": 56821422,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "87546fdee0d7b75c42837271bd4ce647cca44f508350d8628534ddbd850dbb79",
+    "max_c": 56.54824036531272,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "node_balance_seed1": {
+    "bytes": 48853947,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "d67a913cad1a54613205d6513ef6c8ea64318ed2e3d61f5478a948e6c15394db",
+    "max_c": 56.2321646019177,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "node_balance_seed2": {
+    "bytes": 49724396,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "eaf4bf67e0dcc5f3280de666d096e5ed93ec55ea52a6328861fc789d9f7169de",
+    "max_c": 56.652353466684076,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "node_balance_seed3": {
+    "bytes": 49476611,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "96facc969feb92e9c6c48501b0bcac49528432a95a63a24d41132e122ddd7d3c",
+    "max_c": 56.059658081581006,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "packing_seed1": {
+    "bytes": 49652307,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "9bfa0262b5a5f783358b61dc2a3412bbcf4d7d2f83fd592b55c1d8e22dcb3bc8",
+    "max_c": 56.057982892967345,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "packing_seed2": {
+    "bytes": 50465476,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "a15a243ce636de2a4d5c374fe244e0725931403069e0ce5a8766aa32db2653c8",
+    "max_c": 56.81393353857993,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "packing_seed3": {
+    "bytes": 50240883,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "13833af980ae924f5e8b15e68250adeeda63b8fabbe08329c3f423c729f8ce69",
+    "max_c": 56.694001643055856,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "power_balance_seed1": {
+    "bytes": 56355635,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "f91051dc1957bd75c81e74faffa43f2108901895c5a7353ecba1011a22769d93",
+    "max_c": 56.233641451962114,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "power_balance_seed2": {
+    "bytes": 57271363,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "e0cbd773f3a7072c496de8e408ff73053715ff6a47ed03b2b530fbd7c63f2c5d",
+    "max_c": 56.93195956490433,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "power_balance_seed3": {
+    "bytes": 57024213,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "7f1bf835b524ad0dae060b707b5f3c6b843586c5a5cdc41c9481a3f058bb5435",
+    "max_c": 56.21481035148673,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "thermal_predictive_seed1": {
+    "bytes": 56323363,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "92c98be8fd2fe3273e713441409efcf39ade41ba1b27eac4736803516015f783",
+    "max_c": 56.23279844581646,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "thermal_predictive_seed2": {
+    "bytes": 57290782,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "d0a922dcc95f5da29b92a816b89ed2f7cfe3c320e91bb706c2638175fad7d0ae",
+    "max_c": 56.315833804690726,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  },
+  "thermal_predictive_seed3": {
+    "bytes": 57075599,
+    "git_sha": "6ee93c4fb6e3fe019f2d57534d066f208b067c6d",
+    "manifest_sha256": "78ce89463e6e14a4df80624035d143ccd6fe524eddb8ab3ce4d4789e8f1e7214",
+    "max_c": 56.7046570082407,
+    "negative_pump": 0,
+    "over70": 0,
+    "warmup": 7200.0
+  }
+}

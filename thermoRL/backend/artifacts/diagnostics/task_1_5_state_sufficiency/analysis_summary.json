@@ -1,0 +1,394 @@
+{
+  "absolute_step_peak_c_range": [
+    40.561401963806986,
+    40.669849289853914
+  ],
+  "absolute_step_peak_time_s_range": [
+    700.0,
+    2760.0
+  ],
+  "aggregate_held_out_errors": {
+    "all_eight": {
+      "absolute_step_peak_c": {
+        "T_only": {
+          "held_out_mae": 0.01590012744619873,
+          "held_out_max_abs_error": 0.031154487798069397,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 0.10570092499742412,
+          "held_out_max_abs_error": 0.7501827715565454,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 0.06895934594018538,
+          "held_out_max_abs_error": 0.49785192496707253,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 0.47681021414959623,
+          "held_out_max_abs_error": 3.754241907450286,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_final_increment_c": {
+        "T_only": {
+          "held_out_mae": 0.22996356326475853,
+          "held_out_max_abs_error": 0.4971119025605084,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 1.5257008013909004,
+          "held_out_max_abs_error": 10.334635564818466,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 106.29604283958797,
+          "held_out_max_abs_error": 848.8406443604019,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 113.96482815268608,
+          "held_out_max_abs_error": 910.1844351935331,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_peak_increment_c": {
+        "T_only": {
+          "held_out_mae": 0.19759090019279113,
+          "held_out_max_abs_error": 0.36137609923195946,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 1.7381480819063087,
+          "held_out_max_abs_error": 12.312341804918788,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 112.27618005580487,
+          "held_out_max_abs_error": 897.2053137554819,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 122.26585757818086,
+          "held_out_max_abs_error": 977.0989631211862,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_time_of_window_max_s": {
+        "T_only": {
+          "held_out_mae": 250.67741760768723,
+          "held_out_max_abs_error": 713.6466105326126,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "s"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 580.334656475442,
+          "held_out_max_abs_error": 2597.604865275264,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "s"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 25057.710834708356,
+          "held_out_max_abs_error": 198193.76244805206,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "s"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 29784.14794222365,
+          "held_out_max_abs_error": 235986.65966672314,
+          "n_states": 8,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "s"
+        }
+      }
+    },
+    "without_60_s_initialization_transient": {
+      "absolute_step_peak_c": {
+        "T_only": {
+          "held_out_mae": 0.012995194658236033,
+          "held_out_max_abs_error": 0.04357153339797293,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 0.007738650547288728,
+          "held_out_max_abs_error": 0.014629631804638166,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 0.007152081074601873,
+          "held_out_max_abs_error": 0.019614343516607846,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 0.008808391967022544,
+          "held_out_max_abs_error": 0.024897088943021117,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_final_increment_c": {
+        "T_only": {
+          "held_out_mae": 0.2544357761394626,
+          "held_out_max_abs_error": 0.5226336726957825,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 0.4499658438370289,
+          "held_out_max_abs_error": 1.501374172060994,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 0.5356114462352958,
+          "held_out_max_abs_error": 2.1699398401667054,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 0.6339579871425002,
+          "held_out_max_abs_error": 2.7180855448122996,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_peak_increment_c": {
+        "T_only": {
+          "held_out_mae": 0.21293319704244645,
+          "held_out_max_abs_error": 0.4461016997976568,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "degC"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 0.42087653975826406,
+          "held_out_max_abs_error": 1.5866473548547226,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 0.330222275200617,
+          "held_out_max_abs_error": 1.6016629716560065,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 0.44847092451257736,
+          "held_out_max_abs_error": 2.353660023743233,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "degC"
+        }
+      },
+      "paired_time_of_window_max_s": {
+        "T_only": {
+          "held_out_mae": 295.31198259126256,
+          "held_out_max_abs_error": 736.6182663138907,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c"
+          ],
+          "unit": "s"
+        },
+        "T_plus_slope": {
+          "held_out_mae": 359.6326797675028,
+          "held_out_max_abs_error": 752.1189009716668,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min"
+          ],
+          "unit": "s"
+        },
+        "current_plant_no_slope": {
+          "held_out_mae": 478.38215474182294,
+          "held_out_max_abs_error": 1146.498761146779,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "s"
+        },
+        "current_plant_plus_slope": {
+          "held_out_mae": 391.95154399896063,
+          "held_out_max_abs_error": 787.3079599721505,
+          "n_states": 7,
+          "predictors": [
+            "target_rack_coolant_c",
+            "target_rack_coolant_slope_k_per_min",
+            "cdu_01_primary_supply_c",
+            "cdu_01_primary_return_c",
+            "datacenter_primary_flow_gpm"
+          ],
+          "unit": "s"
+        }
+      }
+    }
+  },
+  "analysis_script_sha256": "5e9c1348f1019855c44d0efc18eade38fc50eca83c32456e6e4ba1e27ef7e92c",
+  "interpretation_limit": "Eight temporally correlated states on one trajectory cannot identify causal variables or prove sufficiency; models with many correlated predictors are exploratory, and a horizon-bound time of maximum is censored. No p-values or fitted-feature importance claims.",
+  "n_states": 8,
+  "preregistration_sha256": "882dd0c68a410c02673b9d906669fcdb1b401d85a6f98116ee379831aaa27c8c",
+  "regression_method": "leave-one-state-out ridge regression; predictors standardized within each training fold; intercept unpenalized; fixed alpha 1.0; no hyperparameter selection",
+  "repeat_verification_sha256": "8191d973cad5dae4f534d36b1bed708337b8bac29fe286113bc1061573d11af1",
+  "residual_csv_sha256": "8c4e721325e1faa286c0ebadf392cb7c0a6215b9740ba53da480878956969a31",
+  "run_01_metadata_sha256": "e6513abdcd8bfaedc1ec63d74a0d759fcac836323763bb0e85745deb2fd5afa7",
+  "run_01_response_ledger_sha256": "27e0b5ab4240ac99f93260f93b0d047e2701238b826141065d7696437dfb7f4c",
+  "state_table_sha256": "89dcff53618c7306ce3f41031046b68597a618b4589d068bc2d9db3ba0423d20"
+}

@@ -1,0 +1,37 @@
+{
+  "experiment": "g2",
+  "system": "summit",
+  "backend": "fmu",
+  "warmup_s": 7200.0,
+  "settle_k_per_min": -1.0,
+  "warmup_label": "capped_preconditioned_not_settled",
+  "dt_s": 10,
+  "horizon_s": 10800.0,
+  "evaluation_tail_s": 1800.0,
+  "fraction": 0.6,
+  "ambient": {
+    "t_air_k": 290.0,
+    "t_ext_k": 290.0
+  },
+  "idle_kw": 13.201714285714285,
+  "peak_kw": 47.282326530612245,
+  "n_racks": 257,
+  "branch_order": [
+    "spread",
+    "packed"
+  ],
+  "samples": "initial t=0 plus right endpoints; statistics over t > 9000 and t <= 10800",
+  "sanity": {
+    "coolant_min_c": 10.0,
+    "coolant_max_c": 70.0
+  },
+  "decision_thresholds_c": {
+    "GO": 2.0,
+    "WEAK": 1.0
+  },
+  "timing_denominator": "FMU initialization, fixed warm-up, branch resets/observations/steps and close; divided by 8 simulated h",
+  "rerun_timing_exclusions": [
+    "fmu_s_per_sim_h",
+    "projected_closed_loop_min_6h"
+  ]
+}

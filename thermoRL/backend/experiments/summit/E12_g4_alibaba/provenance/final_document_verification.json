@@ -1,0 +1,23 @@
+{
+  "all_readme_and_checkpoint_local_links_exist": true,
+  "files": {
+    "docs/checkpoints/C4-g4-alibaba.md": {
+      "bytes": 14701,
+      "sha256": "6ded93a9f0f7f246a3387d1cd3d2647e8e68b0d98997526cd38c7df5efc88601"
+    },
+    "docs/superpowers/plans/2026-10-27-parasparam-demo.md": {
+      "bytes": 69394,
+      "sha256": "d940595c6309cfd0364aae85f35dfd5256411eb943c94f2fe33daf770674884a"
+    },
+    "thermoRL/thermorl-v2/experiments/INDEX.md": {
+      "bytes": 2386,
+      "sha256": "63b61d1ea4e62540dff73afe736a60a5d762b2834e24468f68bc5f6284544a74"
+    },
+    "thermoRL/thermorl-v2/experiments/summit/E12_g4_alibaba/README.md": {
+      "bytes": 39390,
+      "sha256": "923b54445da63aa31d01cf5d843140ef621262c50995f60bcec870d4e0b2313f"
+    }
+  },
+  "frozen_readme_sections_verified_after_documentation": true,
+  "source_unchanged_since_launch": true
+}

@@ -1,0 +1,39 @@
+{
+  "authorized_run_count": 15,
+  "code_anchor": "ea3a26d",
+  "configs_byte_identical": true,
+  "decision_date": "2026-10-30",
+  "experiment_config_sha256": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+  "frozen_readme_sections_sha256": {
+    "Configuration": "34c047563fcc9f77c8d22d0e5e91cd5a5b3bcdf76054cd4e056259d0b54e0b57",
+    "Limitations": "84e7a484131ef613204d33f2e90259670a47152f700a1a12d24457b92ff8d80a",
+    "Method": "e014978460db5718050cb96db2ab137dab6b41cac7415ef1fc27976e4a7da2f3",
+    "Metrics": "be7559075d5bd461b7a6162834a2408a8a9e7246b11050cd4abcd7adce3f7de0",
+    "Pre-registered decision rule": "970fd088f351ea4120d04d8eef4805b95e8319c8f727f8c0c15281e4a8d58632",
+    "Question": "b3a12f53406accf63df4b55963c386e58e415dd56dbe2dac7ca0e72c69a90c11"
+  },
+  "g1_sha256": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+  "input_sha256": {
+    "experiments/summit/E01_g1_uniform/results/summary.json": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+    "experiments/summit/_workloads/7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d.parquet": "7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d",
+    "experiments/summit/_workloads/7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d.parquet.meta.json": "9a343afd39ca1c83e8a920d9f653cfc3afd1dbd6e27f0c8acd64e77272dabe61",
+    "experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet": "c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27",
+    "experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet.meta.json": "06d90bc04422ec0a48a97eb5c47ecaa74645abfcae970c81f30b4991211840e2",
+    "experiments/summit/_workloads/d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91.parquet": "d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91",
+    "experiments/summit/_workloads/d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91.parquet.meta.json": "4244d9ef9567628ca4f5291bf69a955b48ce505ea215576eb83d01377f9619b5",
+    "thermorl2/experiments/configs/primary.yaml": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec"
+  },
+  "launch_config": "thermorl2/experiments/configs/g4_synthetic.yaml",
+  "launch_config_sha256": "5de2c6ae8fb753923f49816abded515bfe61ee20c5f46d098d854fe1e211dac9",
+  "primary_yaml_sha256": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec",
+  "reruns_authorized": false,
+  "review_commit": "66f7753",
+  "smoke_runs_authorized": false,
+  "thermal_predictive_params": {
+    "a_c": 27.9753857271229,
+    "b_c_per_kw": 0.8052450824355937,
+    "horizon_s": 600,
+    "tau_s": 4050.0
+  },
+  "workers": 3
+}

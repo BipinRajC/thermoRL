@@ -15,6 +15,7 @@ venv/
 __pycache__/
 *.pyc
 .ruff_cache/
+.DS_Store
 
 # Node dependencies, if ExaDigiT has them
 node_modules/
@@ -33,3 +34,10 @@ logs/
 
 # claude files
 .claude/
+# Local reference clone only (ExaDigiT hpc-cooling-surrogate); not part of the ParasParam implementation path
+hpc-cooling-surrogate/
+
+# RAPS default output dirs (RAPS writes ./runs/ when output is unset)
+runs/
+# Preserve large failed simulation directories locally; commit their inventories.
+**/provenance/failed_*/

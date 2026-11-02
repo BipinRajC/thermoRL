@@ -1,0 +1,15 @@
+{
+  "byte_identical": true,
+  "command": "uv run python -m thermorl2.experiments.report experiments/summit/E11_g4_synthetic --evidence experiments/summit/E11_g4_synthetic/provenance/determinism_evidence.json --output-dir /tmp/thermorl_e11_metrics_c4_20261030153419 --metrics-only",
+  "measured_peak_rss_gib": 1.534332275390625,
+  "measured_peak_rss_kib": 1608864,
+  "memory_measurement": "resource.getrusage(RUSAGE_SELF).ru_maxrss on Arch Linux; wrapper invokes report.main with the command arguments",
+  "original_E11_files_overwritten": false,
+  "regenerated_metrics_sha256": "06cf0b3e9705a74549a0b1f3b97a34a92ec3e841d0292792b16c19019d44c43c",
+  "report_source_sha256": "b556b04866aba5135c9dc9d69695222e5cc0ebbf8cab56e8569e51050d2bc6a8",
+  "run_rows": 15,
+  "scope": "D5 offline E11 metric regeneration only; no new simulation",
+  "scratch_metrics": "/tmp/thermorl_e11_metrics_c4_20261030153419/results/metrics.csv",
+  "source_metrics": "experiments/summit/E11_g4_synthetic/results/metrics.csv",
+  "source_metrics_sha256": "06cf0b3e9705a74549a0b1f3b97a34a92ec3e841d0292792b16c19019d44c43c"
+}

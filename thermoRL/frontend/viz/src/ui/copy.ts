@@ -1,0 +1,105 @@
+export const LEGEND_NOTE = "Scale fixed per experiment and seed; E11 and E12 scales differ";
+
+export const COPY = {
+  appTitle: "ThermoRL — closed-loop FMU replay",
+  badge: "Replay of recorded runs · no live simulation",
+  webglFallback: "WebGL is unavailable. Showing the labelled pre-rendered figures instead.",
+  loading: "Loading replay data…",
+  loadingFile: (file: string, done: number, total: number) => `Loading ${file} (${done}/${total})`,
+  errorTitle: "Replay data could not be loaded",
+  syncHint:
+    "Run `npm run sync-replay` (exports must exist under thermoRL/backend/experiments/summit/<EID>/exports/replay_v1)",
+  contextLost: "WebGL context lost — reload the page",
+  emptyNoExperiments: "No experiments are listed in index.json.",
+  cPrimeVerified: "C′ verified (6 h repeat)",
+  cPrimeNot: "not directly repeated",
+  overlays: { tc: "Coolant °C", kw: "Rack kW", occupied: "Occupied" },
+  drawers: { outcome: "Outcome", why: "Why?", about: "About this data" },
+  labels: { experiment: "Experiment", seed: "Seed", comparison: "Comparison", overlay: "Overlay" },
+  controls: {
+    play: "Play",
+    pause: "Pause",
+    jumpToEval: "Jump to evaluation start",
+    speed: "Speed",
+    scrubber: "Time",
+    speedOption: (s: number) => `${s} ticks/s`,
+  },
+  legend: {
+    outOfRange: (n: number) => `${n} ${n === 1 ? "rack" : "racks"} outside scale this frame`,
+  },
+  timeline: {
+    yAxis: "Max-rack modelled coolant °C",
+    spreadAxis: "Spread (max − min) °C",
+    before: "before evaluation window",
+    label: "Timeline: max-rack modelled coolant °C and spread across the episode; click or drag to seek",
+  },
+  rack: {
+    coolant: "Modelled coolant °C",
+    power: "Rack power kW",
+    shadeNote: "Grey: before evaluation window",
+    label: (title: string) => `${title}: modelled coolant and rack power across the episode`,
+  },
+  outcome: {
+    footer: "The preregistered rule decides; this viewer is descriptive.",
+    gapCaption: "Per-seed gaps from the recorded decision (°C, time-mean max-rack modelled coolant)",
+    gapSeed: "Seed",
+    gapPower: "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
+    gapPacking: "packing − thermal_predictive (°C)",
+    metricsCaption: "Time-mean max-rack modelled coolant °C, evaluation window, per recorded run (policies without a replay are shown for the frozen outcome only)",
+    metricsPolicy: "Policy",
+    metricsSeed: (seed: number) => `seed ${seed}`,
+    missing: "—",
+  },
+  why: {
+    header: (windowS: number, clock: string, policy: string, seed: number) =>
+      `Job starts in the ${windowS} s ending at ${clock} — ${policy} (seed ${seed})`,
+    empty: (windowS: number) => `No job starts in this ${windowS} s window.`,
+    count: (n: number) => `${n} ${n === 1 ? "decision" : "decisions"}`,
+    sideLabel: "Panel",
+    sides: { left: "Left", right: "Right" },
+    prev: "Prev",
+    next: "Next",
+    page: (page: number, pages: number, from: number, to: number, n: number) => `Page ${page} of ${pages} · ${from}–${to} of ${n}`,
+    job: (id: number) => `Job ${id}`,
+    nodes: (n: number) => `${n} ${n === 1 ? "node" : "nodes"}`,
+    racks: (racks: number[]) => `${racks.length === 1 ? "rack" : "racks"} ${racks.join(", ")}`,
+    loggedAt: (s: number) => `logged at ${s} s`,
+    rapsStart: (s: number) => `RAPS start ${s} s`,
+    columns: { rack: "Rack", score: "Logged score", coolant: "Modelled coolant °C", kw: "Committed kW", free: "Free" },
+    candidatesCaption: "Logged candidates: top 5 logged scores, plus the first chosen rack if it is not among them. Chosen racks are highlighted.",
+    ties: (n: number) => `Ties at logged precision: ${n}`,
+    notBest: "Chosen rack is not the top logged score — the live decision used full precision.",
+    precisionPlain: "Numbers here are the logged six-decimal values; the live decision used full precision, and nothing is re-scored.",
+    technicalDetail: "Technical detail",
+  },
+  about: {
+    heading: { s2: "Decision timing (S2)", interval: "Interval semantics", pulse: "Pulse rings", precision: "Logged precision", repro: "Reproducibility", caveats: "Caveats" },
+    technicalDetail: "Technical detail",
+    plain: {
+      s2: "Every policy sees the same latest temperatures from the cooling model, with at most a 9-second look-ahead that assumes power stays constant. None of them sees future placements.",
+      interval:
+        "Rack power is what the scheduler fed in during the 10 seconds before the time shown. Temperature is what the cooling model returned at the end of those 10 seconds.",
+      pulse: "Cyan rings mark racks that just received a job. They show where jobs landed, not a cooling effect.",
+      precision:
+        "The Why? list shows numbers as logged, to six decimals. The live scheduler used full precision, so near-ties can differ. Nothing is re-scored.",
+      repro:
+        "A few runs were repeated in a fresh process and matched: E10 packing seed 1 (2 h), E11 seed-1 packing and power_balance (first 2 h), and E12 thermal_predictive seed 1 (6 h). No other run was repeated, and we do not claim it carries over to other machines.",
+    },
+    recorded: "This viewer replays recorded runs; there is no new simulation.",
+    bullets: [
+      "Warm-up is capped (7200 s), not settled",
+      "G1 thermal predictor parameters are a frozen heuristic",
+      "Temperatures are modelled by the POWER9 cooling FMU, not measured on hardware",
+      "45 °C is a reference value only",
+    ],
+    resultsLabel: "Full results write-up (docs/results/2026-11-parasparam-demo-results.md)",
+    resultsUrl:
+      "https://github.com/BipinRajC/thermoRL/blob/feat/parasparam-demo/docs/results/2026-11-parasparam-demo-results.md",
+  },
+  fallbackFigures: [
+    { file: "heatmaps_seed1.png", caption: "Heatmaps, seed 1 (labelled figure)" },
+    { file: "timeseries_seed1.png", caption: "Time series, seed 1 (labelled figure)" },
+    { file: "anim_packing_vs_thermal_predictive_seed1.gif", caption: "Packing vs thermal_predictive, seed 1 (labelled animation)" },
+    { file: "anim_power_balance_vs_thermal_predictive_seed1.gif", caption: "Power_balance vs thermal_predictive, seed 1 (labelled animation)" },
+  ],
+} as const;

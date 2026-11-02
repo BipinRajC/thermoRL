@@ -1,0 +1,61 @@
+{
+  "purpose": "Characterize state sufficiency and attempt to falsify a common power-dependent peak explanation; no Task 1.5 acceptance gate",
+  "preregistered_before_sweep": true,
+  "existing_preconditioning_csv_sha256": "e6781b8da38d6250bd09dee51e945bfb1fb5023660a4ab8f6cbf7569826251b3",
+  "state_times_s": [60, 120, 600, 1200, 1800, 3600, 5400, 7200],
+  "state_selection_rationale": "60 s captures the observed fast coolant overshoot; 120 s is after the initial primary-flow transient; 600 through 7200 s span slower relaxation. Selection uses only existing preconditioning data, not future step responses.",
+  "known_early_state_caveat": "The 60 s primary-flow reading is an initialization transient; report all eight states and a predeclared sensitivity analysis excluding 60 s.",
+  "protocol": {
+    "background_rack_kw_each": 10.86,
+    "step_target_rack_index_zero_based": 0,
+    "step_target_rack_kw": 40.0,
+    "communication_interval_s": 20,
+    "branch_horizon_s": 3600,
+    "ambient_air_k": 290.0,
+    "ambient_external_k": 290.0,
+    "branch_order": ["control", "step"],
+    "state_comparison": "save complete FMU state at each time; restore same handle before each branch; verify branch-time observations and inputs match; response = step minus matched control"
+  },
+  "recorded_observables": [
+    "all 44 rack coolant temperatures C",
+    "all 44 CDU primary supply temperatures C",
+    "all 44 CDU primary return temperatures C",
+    "datacenter primary flow GPM",
+    "all 44 rack powers kW",
+    "all 44 FMU heat inputs W",
+    "FMU communication time s"
+  ],
+  "candidate_predictors": {
+    "target_rack_coolant_c": "rack 1 coolant at branch time",
+    "target_rack_coolant_slope_k_per_min": "(T at t minus T at t-20 s) / 20 s times 60 s/min",
+    "cdu_01_primary_supply_c": "CDU 1 primary supply at branch time",
+    "cdu_01_primary_return_c": "CDU 1 primary return at branch time",
+    "datacenter_primary_flow_gpm": "datacenter primary flow at branch time"
+  },
+  "constant_input_not_a_predictor": "rack 1 and all other racks have 10.86 kW current background power at every branch",
+  "target_response_metrics": {
+    "paired_final_increment_c": "rack 1 step minus control at 3600 s",
+    "paired_peak_increment_c": "maximum rack 1 step minus control within 0-3600 s",
+    "paired_time_of_window_max_s": "first time of that maximum; 3600 s is right-censored for an eventual peak",
+    "absolute_step_peak_c": "maximum rack 1 temperature in the step branch within 0-3600 s"
+  },
+  "secondary_response_metrics": [
+    "CDU 1 primary supply and return paired final, peak, minimum, and times",
+    "all 43 neighboring rack coolant paired final and maximum absolute responses",
+    "full paired response curves and raw step/control curves",
+    "absolute step-branch rack 1 peak and time, for common-peak mechanism check"
+  ],
+  "regression": {
+    "method": "leave-one-state-out ridge regression; predictors standardized within each training fold; intercept unpenalized; fixed alpha 1.0; no hyperparameter selection",
+    "model_ladder": {
+      "T_only": ["target_rack_coolant_c"],
+      "T_plus_slope": ["target_rack_coolant_c", "target_rack_coolant_slope_k_per_min"],
+      "current_plant_no_slope": ["target_rack_coolant_c", "cdu_01_primary_supply_c", "cdu_01_primary_return_c", "datacenter_primary_flow_gpm"],
+      "current_plant_plus_slope": ["target_rack_coolant_c", "target_rack_coolant_slope_k_per_min", "cdu_01_primary_supply_c", "cdu_01_primary_return_c", "datacenter_primary_flow_gpm"]
+    },
+    "report": "per-state held-out predictions and signed residuals for every target metric and model; aggregate held-out MAE and maximum absolute error; repeat for seven-state sensitivity excluding t=60 s",
+    "interpretation_limit": "Eight temporally correlated states on one trajectory cannot identify causal variables or prove sufficiency; models with many correlated predictors are exploratory, and a horizon-bound time of maximum is censored. No p-values or fitted-feature importance claims."
+  },
+  "common_peak_check": "Report absolute step-branch peak temperatures and times for all states; a narrow peak range with changing peak time is consistent with, but does not prove, a common power-dependent attractor. Material peak variation or incompatible curve shapes weakens that simple account.",
+  "decision_rule": "No pass/fail threshold; report complete trajectories, effect sizes, repeated-run variation, and residuals whichever way they fall. Do not launch history matching or scheduler comparison from this script."
+}

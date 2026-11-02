@@ -1,0 +1,827 @@
+{
+  "1": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 1.8189894035458565e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "fallback_to_A_prime": false,
+      "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+      "per_configuration": {
+        "coolest_rack_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed1": {
+          "evidence": [
+            {
+              "kind": "E12_full_rerun_6h",
+              "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+              "result": true,
+              "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+            }
+          ],
+          "status": "verified_E12"
+        },
+        "thermal_predictive_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+      },
+      "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+      "scope_id": "E12_C_prime_2026_10_30",
+      "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "per_configuration": {
+          "coolest_rack_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed1": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed1": {
+            "evidence": [
+              {
+                "kind": "E12_full_rerun_6h",
+                "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+                "result": true,
+                "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+              }
+            ],
+            "status": "verified_E12"
+          }
+        },
+        "scope_id": "E12_C_prime_2026_10_30"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed1": 1.8189894035458565e-12,
+      "node_balance_seed1": 9.094947017729282e-13,
+      "packing_seed1": 9.094947017729282e-13,
+      "power_balance_seed1": 9.094947017729282e-13,
+      "thermal_predictive_seed1": 9.094947017729282e-13
+    }
+  },
+  "2": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 1.8189894035458565e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "fallback_to_A_prime": false,
+      "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+      "per_configuration": {
+        "coolest_rack_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed1": {
+          "evidence": [
+            {
+              "kind": "E12_full_rerun_6h",
+              "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+              "result": true,
+              "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+            }
+          ],
+          "status": "verified_E12"
+        },
+        "thermal_predictive_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+      },
+      "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+      "scope_id": "E12_C_prime_2026_10_30",
+      "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "per_configuration": {
+          "coolest_rack_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed2": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          }
+        },
+        "scope_id": "E12_C_prime_2026_10_30"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed2": 9.094947017729282e-13,
+      "node_balance_seed2": 1.8189894035458565e-12,
+      "packing_seed2": 9.094947017729282e-13,
+      "power_balance_seed2": 9.094947017729282e-13,
+      "thermal_predictive_seed2": 9.094947017729282e-13
+    }
+  },
+  "3": {
+    "cross_policy": {
+      "fmu_steps_ok": true,
+      "it_kw_identical": true,
+      "max_abs_it_kw_diff": 1.8189894035458565e-12,
+      "start_times_identical": true
+    },
+    "determinism_evidence": {
+      "fallback_to_A_prime": false,
+      "path": "experiments/summit/E12_g4_alibaba/provenance/determinism_evidence.json",
+      "per_configuration": {
+        "coolest_rack_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "coolest_rack_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "node_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "packing_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed1": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "power_balance_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed1": {
+          "evidence": [
+            {
+              "kind": "E12_full_rerun_6h",
+              "ref": "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json",
+              "result": true,
+              "scope": "thermal_predictive seed1 6h, same-config fresh-process rerun only"
+            }
+          ],
+          "status": "verified_E12"
+        },
+        "thermal_predictive_seed2": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        },
+        "thermal_predictive_seed3": {
+          "evidence": [
+            {
+              "kind": "inherited_E10",
+              "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+              "result": true,
+              "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+            }
+          ],
+          "status": "inherited_not_remeasured"
+        }
+      },
+      "references_sha256": {
+        "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7",
+        "experiments/summit/E12_g4_alibaba/provenance/full_rerun_comparison.json": "da9c47c56c98dbbbdde1fa02a7555bf24a2b9c0f3b4a4601eca3ae35cb30bcaf",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/manifest.json": "1384617a4747060dee107ce79b47dc180b29e6e2459246b8c19e8fc05a2a40bd",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "8c386ba44670c0a5e1d13c4303b8b2a883ddc07e952005607aefe71854bef1ff",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/provenance/rerun_1/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/decisions.jsonl": "74e8197910359c5709226851876ac0dc7a7c575e2f6464ba983f97dd00baacc9",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/intervals.parquet": "292819e1b7c435b401a10e8d4e12f045807dc2202d82886401a53539517f0a68",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/manifest.json": "a7eb94d9f2e3652ac6667e62f44a928ae55b62c00acb32ad1c73b6a4e90ff90e",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/decision_latency.jsonl": "075c0c29662cef25b5e8dd01f4fc6ae311c0b5e319901d42f31f3e7d34de36df",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/job_events.jsonl": "2383d3d4684c500d8b9fef046e058425ecf1ec218c2ceec87f1a7422108fc722",
+        "experiments/summit/E12_g4_alibaba/runs/thermal_predictive_seed1/provenance/thermal_publications.jsonl": "51d8c12fdb4e15f9e84aff5939e53f9922df595bdd1115b6c9b119ee85a939c3",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+        "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0"
+      },
+      "scope": "direct verification is TP seed1 only; the other14 primary configurations are inherited and unrepeated",
+      "scope_id": "E12_C_prime_2026_10_30",
+      "sha256": "a24fcdea7e6f20988d0deb705cc4958bbc79fc692d38a76997e4ba597783d604"
+    },
+    "errors": {},
+    "invariants": {
+      "1_it_kw_and_start_times_identical": true,
+      "2_exact_distinct_free_nodes": true,
+      "3_decisions_byte_identical_and_interval_values_identical": {
+        "per_configuration": {
+          "coolest_rack_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "node_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "packing_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "power_balance_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          },
+          "thermal_predictive_seed3": {
+            "evidence": [
+              {
+                "kind": "inherited_E10",
+                "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+                "result": true,
+                "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence"
+              }
+            ],
+            "status": "inherited_not_remeasured"
+          }
+        },
+        "scope_id": "E12_C_prime_2026_10_30"
+      },
+      "4_rack_power_sums_reconcile": true,
+      "5_independent_step_count_and_clock": true,
+      "6_manifests_and_joinable_ledgers_complete": true
+    },
+    "power_reconciliation_max_abs_kw": {
+      "coolest_rack_seed3": 9.094947017729282e-13,
+      "node_balance_seed3": 9.094947017729282e-13,
+      "packing_seed3": 9.094947017729282e-13,
+      "power_balance_seed3": 9.094947017729282e-13,
+      "thermal_predictive_seed3": 9.094947017729282e-13
+    }
+  }
+}

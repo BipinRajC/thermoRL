@@ -1,0 +1,32 @@
+name: g4_synthetic
+include: primary.yaml
+experiment_dir: experiments/{system}/E11_g4_synthetic
+horizon_h: 6
+warmup_s: 7200
+workload:
+  kind: synthetic
+  rho: 0.6
+  by_seed:
+    1:
+      path: experiments/summit/_workloads/c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27.parquet
+      sha256: c9bd815fe21806930edf225f6e3c443fcb4e8b49e905edb985190f77de967c27
+    2:
+      path: experiments/summit/_workloads/d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91.parquet
+      sha256: d2a64253d18fc92ee3c6bb42eec3189e5cc5ffd50743e3c71fc1dc4b88100b91
+    3:
+      path: experiments/summit/_workloads/7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d.parquet
+      sha256: 7e06a12548f70d5b6fbd8d3edeacbccaafbe8486dfdea48caa5533696692aa0d
+scenario:
+  name: nominal
+  label: ''
+  ambient_schedule: []
+policies:
+- packing
+- node_balance
+- power_balance
+- coolest_rack
+- thermal_predictive
+seeds:
+- 1
+- 2
+- 3

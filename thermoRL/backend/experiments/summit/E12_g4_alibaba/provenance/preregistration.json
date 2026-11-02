@@ -1,0 +1,46 @@
+{
+  "D5_commit": "20ff68f",
+  "configs_byte_identical": true,
+  "currently_authorized_policy_runs": 0,
+  "date": "2026-10-30",
+  "experiment_config_sha256": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+  "frozen_readme_sections_sha256": {
+    "Configuration": "49d1018101c783c1251391fa7f956f3d6adb02aca14f2fdff4b789ea9843b3fd",
+    "Limitations": "39b0a294c3210e6da6fea2026a1eec27b2d68b6c4825122c772d285ccca1e639",
+    "Method": "8d2813f89f278cbfaf2f2e4e5565ace10cdad63be73c46dfcab09ab6e0cdece4",
+    "Metrics": "2f93b701d4bc31d9af1600bf6b0cf0983e972c635434c702fd9df75505a9f96b",
+    "Pre-registered decision rule": "f2115e2b174a47f4a3a33724ae25ace15a71b2d4f7ac5a3e4f149165056e31e3",
+    "Question": "d43d968687e2eb5fed7a34a06c935698442d8025826c47e7443662e1a67cedb0"
+  },
+  "g1_sha256": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+  "generator_source_sha256": "39665ab90f2e3cc1f74b2c910b66b94ecaff018dac8f754716937382e18aad7c",
+  "input_sha256": {
+    "experiments/summit/E01_g1_uniform/results/summary.json": "b24aa61fbaab43f44f400c1af1923bc2895ded5a7c85c337c196c6dcc4af91c3",
+    "experiments/summit/E12_g4_alibaba/provenance/determinism_scope.json": "44060930460107e0ad80a494d19dafd972df03a4ea0d17aa35828b2a4198cd2c",
+    "experiments/summit/E12_g4_alibaba/results/feasibility.json": "77b953b2f940d820af47bbe889b8004ca2cb3430b867db37629e64f5768a7bd3",
+    "experiments/summit/E12_g4_alibaba/results/variant_choice.json": "7cfb0054855acc4d9aadd9a2c85490f27a244d834601c10e58f0fdf0ccf868ea",
+    "experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904",
+    "experiments/summit/_workloads/1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904.parquet.meta.json": "ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d",
+    "experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead",
+    "experiments/summit/_workloads/28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead.parquet.meta.json": "995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7",
+    "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c",
+    "experiments/summit/_workloads/7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c.parquet.meta.json": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0",
+    "thermorl2/experiments/configs/g4_alibaba.yaml": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+    "thermorl2/experiments/configs/primary.yaml": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec"
+  },
+  "launch_config": "thermorl2/experiments/configs/g4_alibaba.yaml",
+  "launch_config_sha256": "a44576795d075c2431ca7cbf7be992dd20d4ebd24bcd7cf930bca7380ac13fbb",
+  "planned_fresh_process_reruns": 1,
+  "planned_primary_runs": 15,
+  "primary_yaml_sha256": "bdfdd5b30e893eefc299ed4c6fe43d2d6103ab5d36f4793a57453a53739529ec",
+  "report_source_sha256": "b556b04866aba5135c9dc9d69695222e5cc0ebbf8cab56e8569e51050d2bc6a8",
+  "review_commit": "1ec6dd5",
+  "selected_scope": "C-prime",
+  "task13_commit": "75363ee",
+  "thermal_predictive_params": {
+    "a_c": 27.9753857271229,
+    "b_c_per_kw": 0.8052450824355937,
+    "horizon_s": 600,
+    "tau_s": 4050.0
+  }
+}

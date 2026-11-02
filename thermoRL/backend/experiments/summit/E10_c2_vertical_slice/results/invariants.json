@@ -1,0 +1,15 @@
+{
+  "details": {
+    "packing_power_sum_max_abs_error_kw": 1.8189894035458565e-12,
+    "packing_rerun_power_sum_max_abs_error_kw": 1.8189894035458565e-12,
+    "power_balance_power_sum_max_abs_error_kw": 9.094947017729282e-13
+  },
+  "invariants": {
+    "1_it_kw_and_start_times_identical": true,
+    "2_exact_distinct_free_nodes": true,
+    "3_decisions_byte_identical_and_interval_values_identical": true,
+    "4_rack_power_sums_reconcile": true,
+    "5_independent_step_count_and_clock": true,
+    "6_manifests_and_joinable_ledgers_complete": true
+  }
+}

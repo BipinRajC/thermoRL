@@ -1,0 +1,31 @@
+{
+  "class": "GO",
+  "delta_max_c": 6.234888984341723,
+  "dt_s": 10,
+  "fmu_sha256": "0a6ca3777ed38b75a94ea8d293a68748077db5963fa4b897fdea515615d19233",
+  "idle_kw": 13.201714285714285,
+  "k_full_racks": 154,
+  "n_racks": 257,
+  "packed": {
+    "max_c": 60.58467710490701,
+    "mean_c": 54.387868715183494,
+    "spread_c": 15.491877555469127
+  },
+  "peak_kw": 47.282326530612245,
+  "sane": true,
+  "sanity_detail": {
+    "all_outputs_finite": true,
+    "coolant_max_c": 61.08759067768557,
+    "coolant_min_c": 30.0,
+    "warmup_completed": true
+  },
+  "spread": {
+    "max_c": 54.349788120565286,
+    "mean_c": 54.349788119955484,
+    "spread_c": 1.3306636977479987e-09
+  },
+  "system": "summit",
+  "total_kw": 8648.070979591836,
+  "warmup_status": "capped_preconditioned_not_settled",
+  "warmup_used_s": 7200.0
+}

@@ -1,0 +1,13 @@
+{
+  "commit": "0c32cf5",
+  "config_sha256": "cc081d64c33b7f1c6e289cb034ee2306338ee241bc909a2f2e8acfdca8cb6fca",
+  "frozen_sections_unchanged": true,
+  "section_sha256": {
+    "Configuration": "496d0977d5109cd1f1e8dd9f648932d950f5b956aef2a0632eeb67419f23122e",
+    "Limitations": "12c03ce7ec8b7b7ca9a1b1a3c8921f0a778b140c12874161bb93e2ec22093ba4",
+    "Method": "4f7a4a399d88deb03478cb0b29b0881122a10e4ffafa8efeffde4ae9c8057a4b",
+    "Metrics": "2a9e7320ac5ebd508f997e5457ae8a70a3713b0c2629318313e3f5d040c49997",
+    "Pre-registered decision rule": "4e215dfcbf6638a96a63393233bad9efc1ae7501cd87f23740c488f20d6517ee",
+    "Question": "c19429ae7c19786bd46c30a98273846bd80b89eae49e911172aacbaa7e0c3c13"
+  }
+}

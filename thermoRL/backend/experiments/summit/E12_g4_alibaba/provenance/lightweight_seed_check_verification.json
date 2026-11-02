@@ -1,0 +1,17 @@
+{
+  "core": {
+    "fmu_steps_ok": true,
+    "it_kw_identical": true,
+    "max_abs_it_kw_diff": 2.7284841053187847e-12,
+    "start_times_identical": true
+  },
+  "exact_semantics_equal": true,
+  "lightweight": {
+    "fmu_steps_ok": true,
+    "it_kw_identical": true,
+    "max_abs_it_kw_diff": 2.7284841053187847e-12,
+    "start_times_identical": true
+  },
+  "module_sha256": "3f8f5dcb3659519d10d8418f2d38094db55bb4446a971181d302311c729f7ad2",
+  "scope": "offline E11 pair check, no simulation"
+}

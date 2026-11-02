@@ -1,0 +1,25 @@
+{
+  "all_csv_byte_identical": true,
+  "backend_hash_unchanged": true,
+  "csv_identical_by_file": {
+    "branch_ledger": true,
+    "preconditioning": true,
+    "response_ledger": true
+  },
+  "fmu_hash_unchanged": true,
+  "max_repeat_thermal_difference_c": 0.0,
+  "preregistered_state_times_s": [
+    60,
+    120,
+    600,
+    1200,
+    1800,
+    3600,
+    5400,
+    7200
+  ],
+  "run_01_paired_rows_checked": 1448,
+  "run_02_paired_rows_checked": 1448,
+  "test_hash_unchanged": true,
+  "verification_script_sha256": "8c0a077eaf76c41e9cbd3826413cc1ad371300c76cd90b7ec100257ab8e7bf5c"
+}

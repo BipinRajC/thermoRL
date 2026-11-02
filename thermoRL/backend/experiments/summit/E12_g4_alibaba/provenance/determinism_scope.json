@@ -1,0 +1,49 @@
+{
+  "E11_prefix_is_not_an_E12_prefix_test": true,
+  "adapter_status": "Task14 engineering work before execution: add and test E12 C-prime evidence generation/gate; current E11-specific evidence.py/approved_determinism must not be used unchanged.",
+  "approved_by": "Bipin",
+  "currently_authorized_policy_runs": 0,
+  "failure_rule": "Any measured comparison/invariant failure invalidates G4 pending review; no fallback to inherited-only A-prime after a failed rerun.",
+  "fresh_process_reruns": 1,
+  "future_status_per_configuration": {
+    "coolest_rack_seed1": "inherited_not_remeasured",
+    "coolest_rack_seed2": "inherited_not_remeasured",
+    "coolest_rack_seed3": "inherited_not_remeasured",
+    "node_balance_seed1": "inherited_not_remeasured",
+    "node_balance_seed2": "inherited_not_remeasured",
+    "node_balance_seed3": "inherited_not_remeasured",
+    "packing_seed1": "inherited_not_remeasured",
+    "packing_seed2": "inherited_not_remeasured",
+    "packing_seed3": "inherited_not_remeasured",
+    "power_balance_seed1": "inherited_not_remeasured",
+    "power_balance_seed2": "inherited_not_remeasured",
+    "power_balance_seed3": "inherited_not_remeasured",
+    "thermal_predictive_seed1": "verified_E12 only after the required fresh-process comparison passes",
+    "thermal_predictive_seed2": "inherited_not_remeasured",
+    "thermal_predictive_seed3": "inherited_not_remeasured"
+  },
+  "inherited_evidence": {
+    "ref": "experiments/summit/E10_c2_vertical_slice/provenance/rerun_1.json",
+    "scope": "E10 synthetic packing seed1 2h only; weak cross-workload evidence, not an E12 measurement",
+    "sha256": "4ef256e58c093d8767f46aca39da18de68b450016543cde1f1338781f1f843e7"
+  },
+  "primary_runs": 15,
+  "rerun": {
+    "horizon_s": 21600,
+    "observed_result": null,
+    "path": "provenance/rerun_1/runs/thermal_predictive_seed1",
+    "policy": "thermal_predictive",
+    "requirements": [
+      "same pinned config, workload, source and environment",
+      "fresh OS process, one FMU, full capped warm-up",
+      "full decisions.jsonl byte identity",
+      "intervals.parquet values exactly identical; no tolerance relaxation",
+      "independent step/clock, allocation, power and provenance invariants"
+    ],
+    "seed": 1,
+    "timing_ledger_excluded_from_byte_comparison": true,
+    "warmup_s": 7200
+  },
+  "scope_id": "E12_C_prime_2026_10_30",
+  "status": "preregistered_not_executed"
+}

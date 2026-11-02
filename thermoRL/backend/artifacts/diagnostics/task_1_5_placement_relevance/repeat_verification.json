@@ -1,0 +1,18 @@
+{
+  "all_ledgers_byte_identical": true,
+  "backend_hash_unchanged": true,
+  "fmu_hash_unchanged": true,
+  "frozen_model_sha256": "b17f284a877a58f80a4c1628fc75ef8ba6b2ae2f8c2820dc86286b0af7670bd7",
+  "global_flow_cancels_from_additive_within_state_peak_ranking": true,
+  "identical_by_file": {
+    "branch_ledger": true,
+    "decisions": true,
+    "scenario_preconditioning": true,
+    "warmup": true
+  },
+  "maximum_repeat_thermal_difference_c": 0.0,
+  "n_decision_disagreements": 2,
+  "paired_time_rows_checked_per_run": 724,
+  "task_1_5_test_hash_unchanged": true,
+  "verification_script_sha256": "da73480ce4fd39df981899d70d383f35ce4e39209e561b1843a52654366248a8"
+}

@@ -1,0 +1,1370 @@
+{
+  "schema": "thermorl.demo_replay_check.v1",
+  "task": "Task 13 (CK-C)",
+  "commit_sha_before_this_commit": "906af29a573d1a4342ec691b8698871d073d652c",
+  "branch": "feat/parasparam-demo",
+  "generated_utc": "2026-11-01T20:43:53Z",
+  "versions": {
+    "node": "v26.7.0",
+    "npm": "11.19.0",
+    "playwright": "1.64.1",
+    "vitest": "5.0.5",
+    "browser": "Google Chrome (channel: chrome) 156.0.8078.80"
+  },
+  "tests": {
+    "vitest": {
+      "files": 17,
+      "tests": 229,
+      "passed": 229,
+      "failed": 0
+    },
+    "tsc_noEmit": "clean",
+    "playwright": {
+      "fixture_project": {
+        "tests": 21,
+        "passed": 21
+      },
+      "real_project": {
+        "tests": 10,
+        "passed": 10
+      },
+      "total": 31,
+      "renderer": "bundled Chromium, swiftshader"
+    },
+    "test_scripts": {
+      "tests": 10,
+      "passed": 10
+    }
+  },
+  "sync": {
+    "default_experiment": "E12_g4_alibaba",
+    "experiments_verified": [
+      "E12_g4_alibaba",
+      "E11_g4_synthetic"
+    ],
+    "bytes": {
+      "E12_g4_alibaba": {
+        "replay_v1_files": 74,
+        "replay_v1_bytes": 83154129,
+        "fallback_files": 4,
+        "fallback_bytes": 43080555
+      },
+      "E11_g4_synthetic": {
+        "replay_v1_files": 74,
+        "replay_v1_bytes": 54485387,
+        "fallback_files": 4,
+        "fallback_bytes": 35236628
+      }
+    }
+  },
+  "spot_checks": {
+    "method": "Chrome (channel chrome, headless) against npm run build + vite preview; text read from the DOM; data-side expectations computed read-only from public/replay files",
+    "dom": {
+      "E12_g4_alibaba": {
+        "title": "ThermoRL — closed-loop FMU replay",
+        "headline_dom": "no material value on the homogeneous twin",
+        "headline_equals_frozen_outcome_file": true,
+        "rule_equals_file": true,
+        "statement_dom": "In E12 (small, low-density, bursty Alibaba-derived jobs), thermal_predictive had the lowest and packing the highest time-mean max-rack coolant temperature in all three seeds (PB−TP 0.08–0.18 °C; packing−TP 0.35–0.44 °C). This is below the preregistered 0.5 °C materiality threshold, rests on about two independent workload conditions (seed 3 ≈ seed 2 shifted 33 s), and is descriptive only.",
+        "statement_equals_file": true,
+        "gap_table_dom": [
+          [
+            "Seed",
+            "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
+            "packing − thermal_predictive (°C)"
+          ],
+          [
+            "1",
+            "0.178",
+            "0.353"
+          ],
+          [
+            "2",
+            "0.077",
+            "0.441"
+          ],
+          [
+            "3",
+            "0.109",
+            "0.423"
+          ]
+        ],
+        "metrics_table_dom": [
+          [
+            "Policy",
+            "seed 1",
+            "seed 2",
+            "seed 3"
+          ],
+          [
+            "packing",
+            "41.411",
+            "41.346",
+            "41.309"
+          ],
+          [
+            "node_balance",
+            "41.257",
+            "40.970",
+            "41.129"
+          ],
+          [
+            "power_balance",
+            "41.235",
+            "40.982",
+            "40.995"
+          ],
+          [
+            "coolest_rack",
+            "41.165",
+            "41.240",
+            "41.095"
+          ],
+          [
+            "thermal_predictive",
+            "41.058",
+            "40.905",
+            "40.886"
+          ]
+        ],
+        "metrics_cells_vs_results_metrics_csv": {
+          "cells_compared": 15,
+          "all_equal_at_3_decimals": true,
+          "sample_cells": [
+            {
+              "policy": "packing",
+              "seed": 1,
+              "dom": "41.411",
+              "csv": "41.411",
+              "ok": true
+            },
+            {
+              "policy": "coolest_rack",
+              "seed": 3,
+              "dom": "41.095",
+              "csv": "41.095",
+              "ok": true
+            },
+            {
+              "policy": "thermal_predictive",
+              "seed": 2,
+              "dom": "40.905",
+              "csv": "40.905",
+              "ok": true
+            }
+          ]
+        },
+        "legend_text_at_tick0": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "42.41 °C 38.70 °C",
+              "right": "42.41 °C 38.70 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.41 °C 38.70 °C",
+              "right": "42.41 °C 38.70 °C"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "42.64 °C 38.41 °C",
+              "right": "42.64 °C 38.41 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.64 °C 38.41 °C",
+              "right": "42.64 °C 38.41 °C"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "42.71 °C 38.49 °C",
+              "right": "42.71 °C 38.49 °C"
+            },
+            "packing_vs_tp": {
+              "left": "42.71 °C 38.49 °C",
+              "right": "42.71 °C 38.49 °C"
+            }
+          }
+        },
+        "badge_matrix": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: C′ verified (6 h repeat)"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: C′ verified (6 h repeat)"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          }
+        },
+        "identity_strip": {
+          "1": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 1 of 3",
+          "2": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 2 of 3",
+          "3": "Alibaba-derived · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 3 of 3 — ≈ seed 2 shifted 33 s; about two independent workload conditions in E12"
+        },
+        "hottest_sample_ticks_outside_scale_lines": [
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 1598,
+            "t_s": 15990,
+            "clock": "04:26:30 · tick 1598/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 1648,
+            "t_s": 16490,
+            "clock": "04:34:50 · tick 1648/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 975,
+            "t_s": 9760,
+            "clock": "02:42:40 · tick 975/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 1648,
+            "t_s": 16490,
+            "clock": "04:34:50 · tick 1648/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2111,
+            "t_s": 21120,
+            "clock": "05:52:00 · tick 2111/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2124,
+            "t_s": 21250,
+            "clock": "05:54:10 · tick 2124/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 2124,
+            "t_s": 21250,
+            "clock": "05:54:10 · tick 2124/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          }
+        ],
+        "overlay_out_of_scale_sampled": {
+          "1": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "2": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "3": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          }
+        }
+      },
+      "E11_g4_synthetic": {
+        "title": "ThermoRL — closed-loop FMU replay",
+        "headline_dom": "no material value on the homogeneous twin",
+        "headline_equals_frozen_outcome_file": true,
+        "rule_equals_file": true,
+        "statement_dom": "E11 (synthetic): no material value beyond power balancing (PB−TP +0.342, −0.147, −0.071 °C). Packing ≈ thermal_predictive on the primary metric (packing−TP +0.08, −0.11, +0.28 °C); no consistent primary ordering.",
+        "statement_equals_file": true,
+        "gap_table_dom": [
+          [
+            "Seed",
+            "power_balance − thermal_predictive (°C; the rule requires ≥ 0.5 in every seed)",
+            "packing − thermal_predictive (°C)"
+          ],
+          [
+            "1",
+            "0.342",
+            "0.082"
+          ],
+          [
+            "2",
+            "-0.147",
+            "-0.108"
+          ],
+          [
+            "3",
+            "-0.071",
+            "0.276"
+          ]
+        ],
+        "metrics_table_dom": [
+          [
+            "Policy",
+            "seed 1",
+            "seed 2",
+            "seed 3"
+          ],
+          [
+            "packing",
+            "54.070",
+            "54.177",
+            "54.123"
+          ],
+          [
+            "node_balance",
+            "53.884",
+            "54.095",
+            "53.560"
+          ],
+          [
+            "power_balance",
+            "54.330",
+            "54.138",
+            "53.776"
+          ],
+          [
+            "coolest_rack",
+            "53.535",
+            "54.123",
+            "53.780"
+          ],
+          [
+            "thermal_predictive",
+            "53.988",
+            "54.285",
+            "53.847"
+          ]
+        ],
+        "metrics_cells_vs_results_metrics_csv": {
+          "cells_compared": 15,
+          "all_equal_at_3_decimals": true,
+          "sample_cells": [
+            {
+              "policy": "packing",
+              "seed": 1,
+              "dom": "54.070",
+              "csv": "54.070",
+              "ok": true
+            },
+            {
+              "policy": "coolest_rack",
+              "seed": 3,
+              "dom": "53.780",
+              "csv": "53.780",
+              "ok": true
+            },
+            {
+              "policy": "thermal_predictive",
+              "seed": 2,
+              "dom": "54.285",
+              "csv": "54.285",
+              "ok": true
+            }
+          ]
+        },
+        "legend_text_at_tick0": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "56.23 °C 39.25 °C",
+              "right": "56.23 °C 39.25 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.23 °C 39.25 °C",
+              "right": "56.23 °C 39.25 °C"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "56.93 °C 38.92 °C",
+              "right": "56.93 °C 38.92 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.93 °C 38.92 °C",
+              "right": "56.93 °C 38.92 °C"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "56.70 °C 39.46 °C",
+              "right": "56.70 °C 39.46 °C"
+            },
+            "packing_vs_tp": {
+              "left": "56.70 °C 39.46 °C",
+              "right": "56.70 °C 39.46 °C"
+            }
+          }
+        },
+        "badge_matrix": {
+          "seed1": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed2": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          },
+          "seed3": {
+            "pb_vs_tp": {
+              "left": "power_balance: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            },
+            "packing_vs_tp": {
+              "left": "packing: not directly repeated",
+              "right": "thermal_predictive: not directly repeated"
+            }
+          }
+        },
+        "identity_strip": {
+          "1": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 1 of 3",
+          "2": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 2 of 3",
+          "3": "Synthetic · Summit POWER9 cooling FMU (modelled) · nominal (290 K) · seed 3 of 3"
+        },
+        "hottest_sample_ticks_outside_scale_lines": [
+          {
+            "seed": 1,
+            "comparison": "pb_vs_tp",
+            "tick": 780,
+            "t_s": 7810,
+            "clock": "02:10:10 · tick 780/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 1,
+            "comparison": "packing_vs_tp",
+            "tick": 780,
+            "t_s": 7810,
+            "clock": "02:10:10 · tick 780/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 1681,
+            "t_s": 16820,
+            "clock": "04:40:20 · tick 1681/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "pb_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 2,
+            "comparison": "packing_vs_tp",
+            "tick": 2159,
+            "t_s": 21600,
+            "clock": "06:00:00 · tick 2159/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 1901,
+            "t_s": 19020,
+            "clock": "05:17:00 · tick 1901/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "pb_vs_tp",
+            "tick": 2057,
+            "t_s": 20580,
+            "clock": "05:43:00 · tick 2057/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          },
+          {
+            "seed": 3,
+            "comparison": "packing_vs_tp",
+            "tick": 1901,
+            "t_s": 19020,
+            "clock": "05:17:00 · tick 1901/2160 · evaluation window (1 h < t ≤ 6 h)",
+            "left_outside_scale_line": null,
+            "right_outside_scale_line": null
+          }
+        ],
+        "overlay_out_of_scale_sampled": {
+          "1": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "2": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          },
+          "3": {
+            "Rack kW": {
+              "legend_ends": "49.32 kW 13.82 kW",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            },
+            "Occupied": {
+              "legend_ends": "18.00 nodes 0.00 nodes",
+              "out_of_scale_lines_seen": {
+                "left": [],
+                "right": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "data_side_read_only": {
+      "E12_g4_alibaba": {
+        "seed1": {
+          "scale": [
+            38.70223045300105,
+            42.41328616130187
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 975,
+              "hot_t_s": 9760,
+              "hot_maxrack_c": 42.41328616130187,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 26.321273803710938,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 1598,
+              "hot_t_s": 15990,
+              "hot_maxrack_c": 42.38871146172255,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.9953670501709,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 1648,
+              "hot_t_s": 16490,
+              "hot_maxrack_c": 42.23145580286092,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.797203063964844,
+              "maxdec": 493,
+              "maxdec_tick": 694
+            }
+          }
+        },
+        "seed2": {
+          "scale": [
+            38.4071537784738,
+            42.64483422619912
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.64483422619912,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 25.383651733398438,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2111,
+              "hot_t_s": 21120,
+              "hot_maxrack_c": 41.87348604578932,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 25.116764068603516,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 41.81990290326172,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.741405487060547,
+              "maxdec": 488,
+              "maxdec_tick": 8
+            }
+          }
+        },
+        "seed3": {
+          "scale": [
+            38.48699377708806,
+            42.706885557581984
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.706885557581984,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 26.850849151611328,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 42.2063884497162,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 24.69993782043457,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2124,
+              "hot_t_s": 21250,
+              "hot_maxrack_c": 41.72209005732344,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 23.399002075195312,
+              "maxdec": 486,
+              "maxdec_tick": 11
+            }
+          }
+        }
+      },
+      "E11_g4_synthetic": {
+        "seed1": {
+          "scale": [
+            39.25240157610551,
+            56.233641451962114
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.057982892967345,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.233641451962114,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 780,
+              "hot_t_s": 7810,
+              "hot_maxrack_c": 56.23279844581646,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 16,
+              "maxdec_tick": 877
+            }
+          }
+        },
+        "seed2": {
+          "scale": [
+            38.91742670221288,
+            56.93195956490433
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 56.81393353857993,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 48.844940185546875,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 1681,
+              "hot_t_s": 16820,
+              "hot_maxrack_c": 56.93195956490433,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 2159,
+              "hot_t_s": 21600,
+              "hot_maxrack_c": 56.315833804690726,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 18,
+              "maxdec_tick": 1140
+            }
+          }
+        },
+        "seed3": {
+          "scale": [
+            39.45932600475669,
+            56.7046570082407
+          ],
+          "policies": {
+            "packing": {
+              "hot_tick_tickf64": 1901,
+              "hot_t_s": 19020,
+              "hot_maxrack_c": 56.694001643055856,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.054603576660156,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            },
+            "power_balance": {
+              "hot_tick_tickf64": 2057,
+              "hot_t_s": 20580,
+              "hot_maxrack_c": 56.21481035148673,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            },
+            "thermal_predictive": {
+              "hot_tick_tickf64": 1901,
+              "hot_t_s": 19020,
+              "hot_maxrack_c": 56.7046570082407,
+              "tc_out_below_ticks": 0,
+              "tc_out_above_ticks": 0,
+              "kw_out_ticks": 0,
+              "occ_out_ticks": 0,
+              "kw_min": 13.822619438171387,
+              "kw_max": 49.32325744628906,
+              "maxdec": 17,
+              "maxdec_tick": 1595
+            }
+          }
+        }
+      }
+    },
+    "float32_slack": "Without the 5e-6 slack, 5 float32 samples across the 6 experiment-seeds sit above/below the colour scale by at most 1.9e-6 C; with the slack the viewer shows no outside-scale line anywhere (checked at every policy hottest tick and, from the files, at all 2160 ticks for coolant, rack kW and occupied overlays).",
+    "burst_for_why_drawer": {
+      "finding": "Recomputed from public/replay/E12_g4_alibaba/runs/power_balance_seed1/decisions.json (thermal_predictive and packing seed 1 give identical counts): 21885 decisions; distinct decisions per 1 h bin on raps_t_s (0-1 h, 1-2 h, 2-3 h, 3-4 h, 4-5 h, 5-6 h) = 3278, 6195, 11, 6193, 21, 6187; for 7200 < t <= 10800 s: 11 decisions. The earlier '34' was the sum over ticks 719..1078 of per-tick 30 s window counts (each decision is counted in up to three overlapping windows), not a count of distinct decisions; the largest 30 s window within 2-3 h holds 2 decisions. Clusters with at least 100 decisions in a 30 s window span t = 30-720 s (max 468 at 690 s), 5590-6970 s (max 493 at 6950 s = 01:55:50), 11850-13210 s (max 323 at 13180 s) and 18100-19400 s (max 258 at 18390 s). The Why drawer check therefore uses tick 694 (t=6950 s, 493 decisions).",
+      "observed": {
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ],
+        "bad_responses": [],
+        "clock694": "01:55:50 · tick 694/2160 · evaluation window (1 h < t ≤ 6 h)",
+        "count": "493 decisions",
+        "header": "Job starts in the 30 s ending at 01:55:50 — power_balance (seed 1)",
+        "page1": "Page 1 of 10 · 1–50 of 493",
+        "items1": 50,
+        "precision_ok": true,
+        "page2": "Page 2 of 10 · 51–100 of 493",
+        "items2": 50,
+        "cand_rows": 6,
+        "ties": "Ties at logged precision: 1",
+        "first_item": "Job 8946\n1 node\nsingle\nrack 38\nlogged at 6930 s\nRAPS start 6926 s",
+        "precision_visible_after_expand": true,
+        "header_after_side": "Job starts in the 30 s ending at 01:55:50 — thermal_predictive (seed 1)",
+        "clock0": "00:00:10 · tick 0/2160 · before evaluation window (t ≤ 1 h)",
+        "t0_header": "Job starts in the 30 s ending at 00:00:10 — power_balance (seed 1)",
+        "t0_count": "40 decisions",
+        "t0_items": 40
+      }
+    },
+    "timeline_vs_plot": {
+      "screenshot": "test-artifacts/real-timeline-packing_vs_tp-seed1.png",
+      "plot": "thermoRL/backend/experiments/summit/E12_g4_alibaba/plots/demo/timeseries_seed1.png",
+      "FACT": "From tick.f64 (read-only): packing maximum 42.4133 C at tick 975 (t=9760 s, 2.71 h); thermal_predictive maximum 42.2315 C at tick 1648 (t=16490 s, 4.58 h). The viewer timeline axis top for packing_vs_tp seed 1 reads 42.56 and its bottom 39.40.",
+      "INFERENCE": "By eye, one viewer screenshot against the PNG shows the same shape: pre-window plateau near 40.3-40.6 C, a packing hump peaking near 2.6-2.7 h, a dip near 3.2 h, a thermal_predictive rise near 4.6 h and the same spread-panel pattern. The PNG has five policies, the viewer two; the viewer timeline has no hour tick labels, so the hour positions are read from the cursor and the data."
+    }
+  },
+  "performance": {
+    "definitions": {
+      "first_render": "performance.now() (origin = navigation start) at the first animation frame after #stage is ready, #status is hidden and the legend is present; this is one frame after the draw that follows ready; 5 fresh contexts, cold cache, local preview server (no network latency)",
+      "fps": "requestAnimationFrame callbacks per second over 30 s with the player playing from tick 0 at the stated speed (E12 seed 1 power_balance vs thermal_predictive); display refresh is the ceiling",
+      "heap": "CDP Runtime.getHeapUsage (usedSize) after loading E12 pb_vs_tp, then packing_vs_tp, then E11 pb_vs_tp in one page; typed-array data is external to the JS heap, so renderer RSS is listed for context"
+    },
+    "targets": {
+      "first_render_ms_max": 5000,
+      "fps_min": 50,
+      "js_heap_mb_max": 400
+    },
+    "script": "thermoRL/frontend/viz/scripts/perf-check.mjs",
+    "superseded": "Numbers from the first measurement (headed 226-257 ms, 119.97 fps, heap 5.4 MB; headless 228-278 ms, 60 fps, 5.3 MB) were replaced by the re-run below; they agreed within run-to-run variation.",
+    "rerun_after_fix_round_1": {
+      "headed_chrome": {
+        "browser": "Google Chrome (channel: chrome)",
+        "browser_version": "156.0.8078.80",
+        "headed": true,
+        "host": {
+          "model": "Mac16,8",
+          "cpu": "Apple M4 Pro",
+          "arch": "arm64",
+          "platform": "darwin",
+          "release": "25.5.0",
+          "node": "v26.7.0"
+        },
+        "webgl": {
+          "context": "webgl2",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "vendor": "Google Inc. (Apple)"
+        },
+        "first_render_ms": [
+          273,
+          233,
+          241,
+          233,
+          252
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.1,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.76,
+            "tick_each_second": "10,20,30,40,50,59,70,80,90,100,110,120,130,140,150,160,170,180,190,199,210,220,230,240,250,260,270,280,290,300",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@263"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 15.3,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.62,
+            "tick_each_second": "60,119,180,240,300,360,419,479,540,600,660,720,779,840,899,959,1020,1080,1139,1200,1259,1320,1379,1439,1499,1559,1620,1680,1740,1800",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@267"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
+        },
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 405
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.2,
+            "after_gc_mb": 3.4,
+            "renderer_rss_mb": 520
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 8.6,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 546
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.5,
+            "renderer_rss_mb": 578
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 241,
+          "first_render_max_ms": 273,
+          "fps_speed_10": 119.97,
+          "fps_speed_60": 119.97,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.5
+        },
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
+        },
+        "met_notes": {
+          "heap": "met on the JS-heap definition (Runtime.getHeapUsage); renderer RSS growth is reported separately in heap[].renderer_rss_mb and is not the target quantity"
+        }
+      },
+      "headed_chrome_repeat": {
+        "first_render_ms": [
+          279,
+          234,
+          236,
+          237,
+          234
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.5,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.69,
+            "tick_each_second": "10,20,29,40,50,59,69,79,90,100,110,120,130,140,150,160,170,179,190,200,210,219,230,240,250,260,270,280,290,300",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@260"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 3600,
+            "elapsed_s": 30,
+            "fps_mean": 119.97,
+            "frame_ms_p50": 8.3,
+            "frame_ms_p99": 10.3,
+            "frame_ms_max": 16.3,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.63,
+            "tick_each_second": "60,120,180,240,300,360,420,480,540,600,659,720,780,840,900,959,1020,1080,1140,1200,1260,1319,1379,1440,1500,1560,1619,1680,1739,1800",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@259"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
+        },
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 407
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 11.4,
+            "after_gc_mb": 3.4,
+            "renderer_rss_mb": 520
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 8.6,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 545
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.5,
+            "renderer_rss_mb": 580
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 236,
+          "first_render_max_ms": 279,
+          "fps_speed_10": 119.97,
+          "fps_speed_60": 119.97,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.5
+        },
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
+        }
+      },
+      "headless_chrome": {
+        "browser": "Google Chrome (channel: chrome)",
+        "browser_version": "156.0.8078.80",
+        "headed": false,
+        "host": {
+          "model": "Mac16,8",
+          "cpu": "Apple M4 Pro",
+          "arch": "arm64",
+          "platform": "darwin",
+          "release": "25.5.0",
+          "node": "v26.7.0"
+        },
+        "webgl": {
+          "context": "webgl2",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "vendor": "Google Inc. (Apple)"
+        },
+        "first_render_ms": [
+          248,
+          232,
+          227,
+          237,
+          228
+        ],
+        "fps": {
+          "speed_10": {
+            "frames": 1801,
+            "elapsed_s": 30,
+            "fps_mean": 60,
+            "frame_ms_p50": 16.7,
+            "frame_ms_p99": 16.8,
+            "frame_ms_max": 16.8,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 300,
+            "heap_max_mb_during": 25.76,
+            "tick_each_second": "10,19,29,39,49,59,69,79,89,99,109,119,129,139,149,159,169,179,189,199,209,219,229,239,249,259,269,279,289,299",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@258"
+            ],
+            "expected_end_tick": 300,
+            "playback_rate_ok": true
+          },
+          "speed_60": {
+            "frames": 1801,
+            "elapsed_s": 30,
+            "fps_mean": 60,
+            "frame_ms_p50": 16.7,
+            "frame_ms_p99": 16.8,
+            "frame_ms_max": 16.8,
+            "frames_over_33ms": 0,
+            "start_tick": 0,
+            "end_tick": 1800,
+            "heap_max_mb_during": 25.66,
+            "tick_each_second": "59,119,179,239,299,359,419,479,539,599,659,719,779,839,899,959,1019,1079,1139,1199,1259,1319,1379,1439,1499,1559,1619,1679,1739,1799",
+            "visibility": "visible",
+            "inputs_seen_after_play": [
+              "click:btn-play@254"
+            ],
+            "expected_end_tick": 1800,
+            "playback_rate_ok": true
+          }
+        },
+        "heap": [
+          {
+            "label": "about:blank baseline",
+            "used_js_heap_mb": 1.6,
+            "after_gc_mb": 0.8,
+            "renderer_rss_mb": 406
+          },
+          {
+            "label": "E12 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 5.9,
+            "after_gc_mb": 3.9,
+            "renderer_rss_mb": 518
+          },
+          {
+            "label": "E12 seed 1 packing_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.2,
+            "renderer_rss_mb": 544
+          },
+          {
+            "label": "E11 seed 1 pb_vs_tp",
+            "used_js_heap_mb": 4.9,
+            "after_gc_mb": 4.4,
+            "renderer_rss_mb": 576
+          }
+        ],
+        "summary": {
+          "first_render_median_ms": 232,
+          "first_render_max_ms": 248,
+          "fps_speed_10": 60,
+          "fps_speed_60": 60,
+          "heap_final_mb": 4.9,
+          "heap_final_after_gc_mb": 4.4
+        },
+        "met": {
+          "first_render": true,
+          "fps": true,
+          "heap": true
+        },
+        "met_notes": {
+          "heap": "met on the JS-heap definition (Runtime.getHeapUsage); renderer RSS growth is reported separately in heap[].renderer_rss_mb and is not the target quantity"
+        }
+      }
+    },
+    "host_and_gpu": {
+      "host": {
+        "model": "Mac16,8",
+        "cpu": "Apple M4 Pro",
+        "arch": "arm64",
+        "platform": "darwin",
+        "release": "25.5.0",
+        "node": "v26.7.0"
+      },
+      "webgl": {
+        "context": "webgl2",
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)"
+      },
+      "FACT": "WEBGL_debug_renderer_info reports \"ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)\" in both headed and headless Chrome, i.e. hardware Metal rendering on an Apple M4 Pro (Mac16,8); no software rasteriser string was reported.",
+      "INFERENCE": "This host is assumed to be the presenting Mac; that is not recorded anywhere in the repository."
+    },
+    "playback_rate_check": {
+      "definition": "end_tick must be within 5 % (+1 tick) of speed x 30 s, i.e. 300 at speed 10 and 1800 at speed 60",
+      "recorded_runs_ok": "All recorded runs above (headed x2, headless) pass.",
+      "unexplained_earlier_runs": "Three headed re-runs made immediately after the first edit of the script each had one playback leg off the commanded rate (end_tick 2159 at speed 10; 1315 at speed 60; 173 at speed 10) while rAF stayed at about 120 Hz. Two further headed runs with per-second tick sampling and input-event capture, and the two recorded headed runs, were all on rate with no input events seen. The cause was not identified; INFERENCE only: interference with the visible headed window on the shared desktop, not proven. These runs are not used for the numbers."
+    },
+    "heap_note": "The heap target is met on the JS-heap definition (CDP Runtime.getHeapUsage, with --enable-precise-memory-info for the in-page samples). Renderer RSS growth of about 170-185 MB over an empty page (about 405 MB -> about 576-580 MB after the three loads) is reported separately and is not the target quantity.",
+    "machine_note": "Headed Chrome ran at about 120 frames/s on this host display; headless is capped at 60 frames/s. Rendering used the Apple M4 Pro Metal renderer reported above (FACT); that it is the presenting Mac is an INFERENCE."
+  },
+  "screenshots_gitignored_under_viz": [
+    "test-artifacts/real-default.png",
+    "test-artifacts/real-e12-default.png",
+    "test-artifacts/real-e12-packing_vs_tp-seed1-full.png",
+    "test-artifacts/real-timeline-packing_vs_tp-seed1.png",
+    "test-artifacts/real-burst-why.png",
+    "test-artifacts/real-tick0-why.png"
+  ],
+  "observations": [
+    "favicon.ico returned 404 (the only console error seen; not a data request) when this check was run; index.html now declares an empty data: icon, so the request is no longer made.",
+    "Negative gap values in the outcome table render with a hyphen-minus (for example -0.147), the experiment statement text uses the minus sign.",
+    "The brief phrase \"2-3 h burst\": the job-start burst nearest that range is at 01:55:50 (t=6950 s); only 11 distinct decisions fall in 7200 < t <= 10800 s (power_balance seed 1)."
+  ],
+  "files_changed_outside_viz": [
+    "thermoRL/backend/experiments/DEMO.md (one added row, reworded in fix round 1)",
+    "thermoRL/frontend/LEGACY.md",
+    "docs/results/demo_replay_check.json"
+  ],
+  "fix_round_final": {
+    "summary": "Final whole-branch review fixes: render loop re-arms before drawing and reports draw errors once to the status panel; webglcontextlost message; loader cross-checks decoded shapes/lengths against run.json and run identity against the catalog slot; secure-context guard for hashing; table caption note; README alignment; sync id validation; empty favicon link",
+    "counts_after": "vitest 15 files / 166 tests; playwright fixture 10 + real 9 = 19; test:scripts 10"
+  },
+  "fix_round_1": {
+    "parent_commit": "1a76988",
+    "summary": "DEMO.md row reworded; burst evidence recomputed; performance re-run with GPU/host strings; README step 2 reworded; real.spec preflight and aligned Float64Array"
+  },
+  "layout_update_2026_11_02": {
+    "summary": "UI-only: draggable splitters (grids, side panel, timeline) and plain-words About/Why? with collapsible Technical detail. No data, contract or exporter change; the performance and spot-check records above were not re-measured.",
+    "commits": [
+      "1469584 feat(viz): draggable splitters for panels, drawer and timeline",
+      "4c98efa fix(viz): splitter keys no longer drive playback; drag robustness; re-clamp on window resize",
+      "d9bbeb1 feat(viz): plain-words About and Why? with collapsible technical detail; readable type",
+      "09a2aa0 fix(viz): reproducibility plain line matches verbatim scope; visible toggle marker",
+      "7d9f04f test(viz): e2e for splitters and collapsible detail; README layout tips",
+      "a8f4b27 fix(viz): keep the stage usable at the drawer's maximum width",
+      "fix(viz): keyboard shortcuts work after a mouse resize; reserve the handle width; single resize listener (drawer max = max(300, min(70%, body - 640 px - 8 px handle)))"
+    ],
+    "counts_after": "vitest 17 files / 229 tests; playwright fixture 21 + real 10 = 31; test:scripts 10"
+  }
+}

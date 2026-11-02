@@ -1,0 +1,81 @@
+{
+  "coolant_over_70": {
+    "packing": {
+      "racks": [],
+      "raw_max_c": 55.60917458745587,
+      "samples": 0
+    },
+    "packing_rerun": {
+      "racks": [],
+      "raw_max_c": 55.60917458745587,
+      "samples": 0
+    },
+    "power_balance": {
+      "racks": [],
+      "raw_max_c": 55.872785112142594,
+      "samples": 0
+    }
+  },
+  "decision": "PASS",
+  "evaluation_window": "3600 < t_s <= 7200; right endpoints; p99 uses linear percentile",
+  "experiment": "E10",
+  "invariant_detail": {
+    "packing_power_sum_max_abs_error_kw": 1.8189894035458565e-12,
+    "packing_rerun_power_sum_max_abs_error_kw": 1.8189894035458565e-12,
+    "power_balance_power_sum_max_abs_error_kw": 9.094947017729282e-13
+  },
+  "invariants": {
+    "1_it_kw_and_start_times_identical": true,
+    "2_exact_distinct_free_nodes": true,
+    "3_decisions_byte_identical_and_interval_values_identical": true,
+    "4_rack_power_sums_reconcile": true,
+    "5_independent_step_count_and_clock": true,
+    "6_manifests_and_joinable_ledgers_complete": true
+  },
+  "job_start_times_identical": true,
+  "max_abs_it_kw_difference": 1.8189894035458565e-12,
+  "runs": {
+    "packing": {
+      "episode_pump_min_kw": 4.132251314082649,
+      "fmu_s": 532.7391002447694,
+      "jobs_started": 1514,
+      "maxrack_mean_c": 53.44512870303271,
+      "maxrack_p99_c": 55.579580360417175,
+      "mean_rack_c": 43.73831365651681,
+      "raps_s": 4.224714374831819,
+      "raw_max_c": 55.60917458745587,
+      "realised_node_utilisation_mean": 0.5446792285151558,
+      "temperature_only_thi_below_0p1_fraction": 0.44523346303501943,
+      "total_s": 540.665581366
+    },
+    "packing_rerun": {
+      "episode_pump_min_kw": 4.132251314082649,
+      "fmu_s": 530.5078075157471,
+      "jobs_started": 1514,
+      "maxrack_mean_c": 53.44512870303271,
+      "maxrack_p99_c": 55.579580360417175,
+      "mean_rack_c": 43.73831365651681,
+      "raps_s": 4.182109151013719,
+      "raw_max_c": 55.60917458745587,
+      "realised_node_utilisation_mean": 0.5446792285151558,
+      "temperature_only_thi_below_0p1_fraction": 0.44523346303501943,
+      "total_s": 538.3994626040003
+    },
+    "power_balance": {
+      "episode_pump_min_kw": 4.1310246021803465,
+      "fmu_s": 476.58965405189883,
+      "jobs_started": 1514,
+      "maxrack_mean_c": 54.115585106899964,
+      "maxrack_p99_c": 55.849402766564644,
+      "mean_rack_c": 43.66518461304956,
+      "raps_s": 3.9687801859690808,
+      "raw_max_c": 55.872785112142594,
+      "realised_node_utilisation_mean": 0.5446792285151558,
+      "temperature_only_thi_below_0p1_fraction": 0.287905317769131,
+      "total_s": 484.2134513500023
+    }
+  },
+  "scope": "closed-loop mechanics; no G4 policy-comparison conclusion",
+  "system": "summit",
+  "workload_sha256": "65668ff9e11cad523bf2c26541e0982e1e14e79d26b88bf7f9fd791c7d3fc29a"
+}

@@ -1,0 +1,46 @@
+{
+  "D5_E11_metric_bytes_identical": true,
+  "E11_reruns": 0,
+  "E12_policy_runs": 0,
+  "configs_byte_identical": true,
+  "dataset_files_verified": 26,
+  "independent_vectorized_D3_D4_checks_pass": true,
+  "pinned_inputs_unchanged": true,
+  "prelaunch_review_issues": [
+    "Finite-window offered utilisation 0.455-0.486 below the nominal target; no rescaling performed.",
+    "Task14 must implement/test the E12 C-prime evidence adapter; current E11-specific gate is not E12-compatible."
+  ],
+  "production_import_boundaries_pass": true,
+  "protected_paths_unchanged": true,
+  "scope": "C4 prelaunch input/code verification only; no policy simulations",
+  "tests": {
+    "command": "uv run pytest tests/unit tests/integration -q",
+    "duration_s": 29.1,
+    "integration": 27,
+    "passed": 153,
+    "unit": 126
+  },
+  "workloads": {
+    "1": {
+      "independent_vectorized_generation_matches": true,
+      "jobs": 21885,
+      "sidecar_sha256": "ac0d369ad7410058e7f8525e9a6e05655a1a15bdc77bce93ed534b1e687b2ab0",
+      "source_offset": 2935,
+      "workload_sha256": "7415a80132d0bcf993071b30bfdc586803c848e1ab582bc9730a71dfddab4c2c"
+    },
+    "2": {
+      "independent_vectorized_generation_matches": true,
+      "jobs": 19627,
+      "sidecar_sha256": "995827ca3e170753b77f9f2543c21125f222b5b8be08201155283d4852d98fd7",
+      "source_offset": 5195,
+      "workload_sha256": "28250b8c8834f281aa0cb56d35cb28d550fde05d01b8b36756116211f7fd8ead"
+    },
+    "3": {
+      "independent_vectorized_generation_matches": true,
+      "jobs": 19789,
+      "sidecar_sha256": "ca7bcc4ad7a3ee925cc7340cdf53a2dfb6f2b91b76b74cd92fdab2263840cc6d",
+      "source_offset": 5033,
+      "workload_sha256": "1e09de8c6573a2474d38f7660da0126a4ce24919b3ba8a8ff1255fc5ad09b904"
+    }
+  }
+}

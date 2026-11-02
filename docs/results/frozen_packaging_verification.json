@@ -1,0 +1,65 @@
+{
+  "base_sha": "202b9ec5a059ff620c7e6ce9f7b29a79b6539a0a",
+  "frozen_sections": {
+    "E11_g4_synthetic": {
+      "Configuration": {
+        "pass": true,
+        "sha256": "34c047563fcc9f77c8d22d0e5e91cd5a5b3bcdf76054cd4e056259d0b54e0b57"
+      },
+      "Limitations": {
+        "pass": true,
+        "sha256": "84e7a484131ef613204d33f2e90259670a47152f700a1a12d24457b92ff8d80a"
+      },
+      "Method": {
+        "pass": true,
+        "sha256": "e014978460db5718050cb96db2ab137dab6b41cac7415ef1fc27976e4a7da2f3"
+      },
+      "Metrics": {
+        "pass": true,
+        "sha256": "be7559075d5bd461b7a6162834a2408a8a9e7246b11050cd4abcd7adce3f7de0"
+      },
+      "Pre-registered decision rule": {
+        "pass": true,
+        "sha256": "970fd088f351ea4120d04d8eef4805b95e8319c8f727f8c0c15281e4a8d58632"
+      },
+      "Question": {
+        "pass": true,
+        "sha256": "b3a12f53406accf63df4b55963c386e58e415dd56dbe2dac7ca0e72c69a90c11"
+      }
+    },
+    "E12_g4_alibaba": {
+      "Configuration": {
+        "pass": true,
+        "sha256": "49d1018101c783c1251391fa7f956f3d6adb02aca14f2fdff4b789ea9843b3fd"
+      },
+      "Limitations": {
+        "pass": true,
+        "sha256": "39b0a294c3210e6da6fea2026a1eec27b2d68b6c4825122c772d285ccca1e639"
+      },
+      "Method": {
+        "pass": true,
+        "sha256": "8d2813f89f278cbfaf2f2e4e5565ace10cdad63be73c46dfcab09ab6e0cdece4"
+      },
+      "Metrics": {
+        "pass": true,
+        "sha256": "2f93b701d4bc31d9af1600bf6b0cf0983e972c635434c702fd9df75505a9f96b"
+      },
+      "Pre-registered decision rule": {
+        "pass": true,
+        "sha256": "f2115e2b174a47f4a3a33724ae25ace15a71b2d4f7ac5a3e4f149165056e31e3"
+      },
+      "Question": {
+        "pass": true,
+        "sha256": "d43d968687e2eb5fed7a34a06c935698442d8025826c47e7443662e1a67cedb0"
+      }
+    }
+  },
+  "memory_pressure_origin": {
+    "corroborated": false,
+    "exit_code": 1,
+    "journal_command": "journalctl --since '2026-10-30 20:10:00 UTC' --until '2026-10-30 20:25:00 UTC' --no-pager -o short-iso --grep='earlyoom|oomd|out of memory|memory pressure|SIGTERM|Killed process'",
+    "status": "Bipin-reported",
+    "stdout": "-- No entries --"
+  },
+  "recovery_documents_unchanged": true
+}

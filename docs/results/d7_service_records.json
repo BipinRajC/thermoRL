@@ -1,0 +1,34 @@
+{
+  "observed_utc": "2026-10-31T13:11:30.027979+00:00",
+  "scope": "service-level setup/test/smoke memory and exits, not per-FMU peak RSS",
+  "units": [
+    {
+      "ActiveState": "failed",
+      "ExecMainExitTimestamp": "Sat 2026-10-31 18:35:55 IST",
+      "ExecMainStartTimestamp": "Sat 2026-10-31 18:18:26 IST",
+      "ExecMainStatus": "1",
+      "Id": "thermorl-d7-20261031-packaging.service",
+      "InvocationID": "f449526d669749e183062317b6c58429",
+      "MemoryPeak": "9369407488",
+      "NRestarts": "0",
+      "Restart": "no",
+      "Result": "exit-code",
+      "RuntimeMaxUSec": "infinity",
+      "SubState": "failed"
+    },
+    {
+      "ActiveState": "active",
+      "ExecMainExitTimestamp": "Sat 2026-10-31 18:40:03 IST",
+      "ExecMainStartTimestamp": "Sat 2026-10-31 18:37:33 IST",
+      "ExecMainStatus": "0",
+      "Id": "thermorl-d7-disk-20261031-packaging.service",
+      "InvocationID": "391c1b0d9089468b9bd8e5d06ad1709f",
+      "MemoryPeak": "2865532928",
+      "NRestarts": "0",
+      "Restart": "no",
+      "Result": "success",
+      "RuntimeMaxUSec": "infinity",
+      "SubState": "exited"
+    }
+  ]
+}

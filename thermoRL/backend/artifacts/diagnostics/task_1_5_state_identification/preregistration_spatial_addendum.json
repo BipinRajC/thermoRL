@@ -1,0 +1,19 @@
+{
+  "status": "preconditioning-only design augmentation before any step branch",
+  "reason": "The best six-state subset from uniform-power candidates still has pairwise absolute correlations above 0.9998 among CDU return, one-tick coolant slope, and primary flow. That design cannot identify which candidate observable explains the response.",
+  "original_preregistration_sha256": "22623862dd9a01d70382239725dbdfd605fc0e54586ff97f540e2b4f365b94f9",
+  "uniform_candidate_selection_sha256": "9adcfea6f65ca06a19e2412ed723464db9285e7004b65eaaab1954fe70269143",
+  "unchanged": "32.0 +/-0.1 C rack 1 match, 10.86 kW current all-rack power, 20 s/3600 s paired control and rack-1 40 kW step, 290 K ambient, all outcomes and fixed leave-one-profile-out regression models, no Task 1.5 change",
+  "new_preconditioning_candidates": {
+    "others_high_short": {"scope": "racks_02_to_44", "power_kw": 20.0, "start_s": 3000, "fixed_end_s": 3600},
+    "others_low_short": {"scope": "racks_02_to_44", "power_kw": 5.0, "start_s": 3000, "fixed_end_s": 3600},
+    "others_high_long": {"scope": "racks_02_to_44", "power_kw": 20.0, "start_s": 1200, "fixed_end_s": 3600},
+    "others_low_long": {"scope": "racks_02_to_44", "power_kw": 5.0, "start_s": 1200, "fixed_end_s": 3600},
+    "target_high": {"scope": "rack_01", "power_kw": 20.0, "start_s": 3600, "end_rule": "first rack-1 coolant >=32.1 C"},
+    "target_low": {"scope": "rack_01", "power_kw": 5.0, "start_s": 1200, "end_rule": "first rack-1 coolant <=32.1 C"}
+  },
+  "matching": "After pulse ends, require one full 20 s interval with every rack at 10.86 kW; find the first eligible rack-1 coolant sample within 32.0 +/-0.1 C, then choose the closest eligible sample within 200 s, earliest on ties. Publish all attempts and failures.",
+  "selection": "Merge all feasible original and spatial candidates. Retain feasible minimum- and maximum-CDU-return profiles, then choose six profiles maximizing the same standardized intercept+return+slope+flow log determinant; report full correlations, rank, and condition number. If these remain highly collinear, do not claim attribution regardless of regression outcome.",
+  "spatial_caveat": "Other-rack preconditioning may change unmodeled global state and other-rack temperatures. Record all 44 rack and CDU observations in the paired experiment; any predictor association is observational, not causal attribution.",
+  "stop_gate": "No further profile search after this augmentation without research review. No history, scheduling, RL, Task 1.5, or Task 1.6 changes."
+}

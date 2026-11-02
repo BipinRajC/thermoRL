@@ -3,7 +3,9 @@
 docs/*
 
 # opencode files
-oepncode.json
+opencode.json
+
+.env
 
 #hidden folders
 .dual-graph/*.dual-graph/

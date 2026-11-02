@@ -1,0 +1,23 @@
+[
+  {
+    "index": 2,
+    "policy": "power_balance",
+    "process_wall_s": 602.6370786410007,
+    "run_dir": "experiments/summit/E11_g4_synthetic/runs/power_balance_seed1",
+    "seed": 1
+  },
+  {
+    "index": 0,
+    "policy": "packing",
+    "process_wall_s": 655.5880798360004,
+    "run_dir": "experiments/summit/E11_g4_synthetic/runs/packing_seed1",
+    "seed": 1
+  },
+  {
+    "index": 1,
+    "policy": "node_balance",
+    "process_wall_s": 1148.2114660309999,
+    "run_dir": "experiments/summit/E11_g4_synthetic/runs/node_balance_seed1",
+    "seed": 1
+  }
+]
