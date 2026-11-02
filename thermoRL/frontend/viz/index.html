@@ -43,6 +43,7 @@
                 <div id="legend-left" class="legend" data-mount="legend"></div>
               </div>
             </section>
+            <div id="split-panels" class="splitter splitter-x" title="Drag to resize the two grids; double-click to reset" aria-label="Resize left and right grids"></div>
             <section class="panel" id="panel-right">
               <div class="panel-head"><h2 id="title-right"></h2><span id="badge-right" class="badge" hidden></span></div>
               <div class="panel-body">
@@ -57,9 +58,13 @@
         <aside id="drawer" hidden data-drawer="">
           <div id="drawer-body" data-mount="drawer"></div>
         </aside>
+        <div id="split-drawer" class="splitter splitter-x" title="Drag to resize the side panel; double-click to reset" aria-label="Resize side panel"></div>
       </div>
 
-      <section id="timeline" data-mount="timeline"><canvas id="timeline-canvas"></canvas></section>
+      <section id="timeline" data-mount="timeline">
+        <div id="split-timeline" class="splitter splitter-y" title="Drag to resize the timeline; double-click to reset" aria-label="Resize timeline"></div>
+        <canvas id="timeline-canvas"></canvas>
+      </section>
       <section id="controls"></section>
     </div>
     <div id="tooltip" role="tooltip" hidden></div>
