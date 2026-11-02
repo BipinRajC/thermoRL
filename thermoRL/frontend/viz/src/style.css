@@ -293,7 +293,7 @@ h1 {
 
 #drawer {
   width: var(--drawer-w, 460px);
-  max-width: max(var(--drawer-min, 300px), min(70%, calc(100% - var(--stage-min, 640px))));
+  max-width: max(var(--drawer-min, 300px), min(70%, calc(100% - var(--stage-min, 640px) - var(--splitter-w, 8px))));
   flex: none;
   overflow-y: auto;
   border-left: 1px solid var(--line);
@@ -355,7 +355,7 @@ h1 {
 }
 
 .splitter-x {
-  width: 8px;
+  width: var(--splitter-w, 8px);
   cursor: col-resize;
 }
 

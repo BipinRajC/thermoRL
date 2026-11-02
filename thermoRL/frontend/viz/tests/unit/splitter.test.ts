@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { readFileSync } from "node:fs";
-import { attachSplitter, clampSize, DRAWER_MAX_SHARE, DRAWER_MIN_PX, drawerMax, panelMin, STAGE_MIN_PX, type SplitterHandle } from "../../src/ui/splitter";
+import { attachSplitter, clampSize, DRAWER_MAX_SHARE, DRAWER_MIN_PX, drawerMax, HANDLE_PX, panelMin, STAGE_MIN_PX, type SplitterHandle } from "../../src/ui/splitter";
 
 type Opts = Parameters<typeof attachSplitter>[1];
 
@@ -130,6 +130,36 @@ describe("pointer drag", () => {
     setCalls.length = 0;
     pointer("pointermove", 1100);
     expect(setCalls).toEqual([]);
+  });
+
+  test("the handle is blurred when a pointer drag ends, so global shortcuts keep working", () => {
+    attach();
+    handle.focus();
+    expect(document.activeElement).toBe(handle);
+    pointer("pointerdown", 1000);
+    pointer("pointermove", 1010);
+    pointer("pointerup", 1010);
+    expect(document.activeElement).not.toBe(handle);
+  });
+
+  test("the handle is blurred after a pointercancel and a click without movement", () => {
+    attach();
+    handle.focus();
+    pointer("pointerdown", 1000);
+    pointer("pointercancel", 1000);
+    expect(document.activeElement).not.toBe(handle);
+    handle.focus();
+    pointer("pointerdown", 1000);
+    pointer("pointerup", 1000);
+    expect(document.activeElement).not.toBe(handle);
+  });
+
+  test("keyboard use keeps the focus on the handle", () => {
+    attach();
+    handle.focus();
+    key("ArrowLeft");
+    key("Home");
+    expect(document.activeElement).toBe(handle);
   });
 
   test("pointercancel ends the drag", () => {
@@ -456,20 +486,25 @@ describe("drawerMax", () => {
     expect(STAGE_MIN_PX).toBe(640);
     expect(DRAWER_MIN_PX).toBe(300);
     expect(DRAWER_MAX_SHARE).toBe(0.7);
-    expect(drawerMax(1440)).toBe(800);
-    expect(drawerMax(1000)).toBe(360);
+    expect(HANDLE_PX).toBe(8);
+    expect(drawerMax(1440)).toBe(792);
+    expect(drawerMax(1000)).toBe(352);
     expect(drawerMax(800)).toBe(300);
     expect(drawerMax(0)).toBe(300);
   });
 
+  test("the stage (body minus drawer minus handle) is never below STAGE_MIN_PX once the floor does not apply", () => {
+    for (const body of [960, 1000, 1280, 1440, 1920]) expect(body - drawerMax(body) - HANDLE_PX).toBeGreaterThanOrEqual(STAGE_MIN_PX);
+  });
+
   test("uses the 70% share on very wide windows", () => {
     expect(drawerMax(4000)).toBe(2800);
-    expect(drawerMax(2000)).toBe(1360);
+    expect(drawerMax(2000)).toBe(1352);
   });
 
   test("CSS fallback values match the exported constants", () => {
     const css = readFileSync("src/style.css", "utf8");
-    expect(css).toContain(`max-width: max(var(--drawer-min, ${DRAWER_MIN_PX}px), min(${DRAWER_MAX_SHARE * 100}%, calc(100% - var(--stage-min, ${STAGE_MIN_PX}px))))`);
+    expect(css).toContain(`max-width: max(var(--drawer-min, ${DRAWER_MIN_PX}px), min(${DRAWER_MAX_SHARE * 100}%, calc(100% - var(--stage-min, ${STAGE_MIN_PX}px) - var(--splitter-w, ${HANDLE_PX}px))))`);
   });
 });
 

@@ -14,21 +14,21 @@
   "tests": {
     "vitest": {
       "files": 17,
-      "tests": 223,
-      "passed": 223,
+      "tests": 229,
+      "passed": 229,
       "failed": 0
     },
     "tsc_noEmit": "clean",
     "playwright": {
       "fixture_project": {
-        "tests": 20,
-        "passed": 20
+        "tests": 21,
+        "passed": 21
       },
       "real_project": {
         "tests": 10,
         "passed": 10
       },
-      "total": 30,
+      "total": 31,
       "renderer": "bundled Chromium, swiftshader"
     },
     "test_scripts": {
@@ -1362,8 +1362,9 @@
       "d9bbeb1 feat(viz): plain-words About and Why? with collapsible technical detail; readable type",
       "09a2aa0 fix(viz): reproducibility plain line matches verbatim scope; visible toggle marker",
       "7d9f04f test(viz): e2e for splitters and collapsible detail; README layout tips",
-      "fix(viz): keep the stage usable at the drawer's maximum width (drawer max = max(300, min(70%, body - 640 px)); grids >= 120 px at 1440 px)"
+      "a8f4b27 fix(viz): keep the stage usable at the drawer's maximum width",
+      "fix(viz): keyboard shortcuts work after a mouse resize; reserve the handle width; single resize listener (drawer max = max(300, min(70%, body - 640 px - 8 px handle)))"
     ],
-    "counts_after": "vitest 17 files / 223 tests; playwright fixture 20 + real 10 = 30; test:scripts 10"
+    "counts_after": "vitest 17 files / 229 tests; playwright fixture 21 + real 10 = 31; test:scripts 10"
   }
 }

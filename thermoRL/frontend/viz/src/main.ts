@@ -29,7 +29,7 @@ import { renderLegend } from "./ui/legend";
 import { renderOutcome } from "./ui/outcomeCard";
 import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
-import { attachSplitter, DRAWER_MIN_PX, drawerMax, panelMin as panelMinFor, STAGE_MIN_PX } from "./ui/splitter";
+import { attachSplitter, DRAWER_MIN_PX, drawerMax, HANDLE_PX, panelMin as panelMinFor, STAGE_MIN_PX } from "./ui/splitter";
 import { Timeline } from "./ui/timeline";
 import { placeTooltip, tooltipHtml } from "./ui/tooltip";
 import { renderWhy, updateWhyHeader, whyWindowKey } from "./ui/whyDrawer";
@@ -81,6 +81,83 @@ if (DualView.webglAvailable()) {
     dualView = null;
   }
 }
+
+const DRAWER_INITIAL = 460;
+const TIMELINE_H = { initial: 168, min: 80, max: 400, maxShare: 0.5 };
+
+function setupSplitters(): { refresh(): void; dispose(): void } {
+  const app = byId("app");
+  const body = byId("body");
+  const drawer = byId("drawer");
+  const left = byId("panel-left");
+  const right = byId("panel-right");
+  const refit = (): void => dualView?.resize();
+  const width = (el: HTMLElement): number => el.getBoundingClientRect().width;
+  const panelsTotal = (): number => width(left) + width(right);
+  const panelMin = (): number => panelMinFor(panelsTotal());
+  document.documentElement.style.setProperty("--stage-min", `${STAGE_MIN_PX}px`);
+  document.documentElement.style.setProperty("--drawer-min", `${DRAWER_MIN_PX}px`);
+  document.documentElement.style.setProperty("--splitter-w", `${HANDLE_PX}px`);
+
+  const panelsHandle = attachSplitter(byId("split-panels"), {
+    axis: "x",
+    get: () => width(left),
+    set: (px) => {
+      const total = panelsTotal();
+      if (total <= 0) return;
+      panels.style.setProperty("--left-fr", `${(px / total) * 100}fr`);
+      panels.style.setProperty("--right-fr", `${((total - px) / total) * 100}fr`);
+      refit();
+    },
+    min: () => panelMin(),
+    max: () => panelsTotal() - panelMin(),
+    initial: () => panelsTotal() / 2,
+    total: panelsTotal,
+  });
+
+  const drawerHandle = attachSplitter(byId("split-drawer"), {
+    axis: "x",
+    invert: true,
+    get: () => width(drawer),
+    set: (px) => {
+      drawer.style.setProperty("--drawer-w", `${px}px`);
+      refit();
+    },
+    min: () => DRAWER_MIN_PX,
+    max: () => drawerMax(body.clientWidth),
+    initial: DRAWER_INITIAL,
+    total: () => body.clientWidth,
+  });
+
+  const timelineHandle = attachSplitter(byId("split-timeline"), {
+    axis: "y",
+    invert: true,
+    get: () => timelineEl.getBoundingClientRect().height,
+    set: (px) => {
+      app.style.setProperty("--timeline-h", `${px}px`);
+      refit();
+    },
+    min: () => TIMELINE_H.min,
+    max: () => Math.max(TIMELINE_H.min, Math.min(TIMELINE_H.max, app.clientHeight * TIMELINE_H.maxShare)),
+    initial: TIMELINE_H.initial,
+    total: () => app.clientHeight,
+  });
+
+  const all = [drawerHandle, timelineHandle, panelsHandle];
+  const onWindowResize = (): void => {
+    for (const h of all) h.reclamp();
+    refit();
+  };
+  window.addEventListener("resize", onWindowResize);
+  return {
+    refresh: () => all.forEach((h) => h.refresh()),
+    dispose: () => {
+      window.removeEventListener("resize", onWindowResize);
+      all.forEach((h) => h());
+    },
+  };
+}
+const splitters = setupSplitters();
 
 let session: Session | null = null;
 let selectSeq = 0;
@@ -430,81 +507,6 @@ async function boot(): Promise<void> {
   }
 }
 
-const DRAWER_INITIAL = 460;
-const TIMELINE_H = { initial: 168, min: 80, max: 400, maxShare: 0.5 };
-
-function setupSplitters(): { refresh(): void; dispose(): void } {
-  const app = byId("app");
-  const body = byId("body");
-  const drawer = byId("drawer");
-  const left = byId("panel-left");
-  const right = byId("panel-right");
-  const refit = (): void => dualView?.resize();
-  const width = (el: HTMLElement): number => el.getBoundingClientRect().width;
-  const panelsTotal = (): number => width(left) + width(right);
-  const panelMin = (): number => panelMinFor(panelsTotal());
-  document.documentElement.style.setProperty("--stage-min", `${STAGE_MIN_PX}px`);
-  document.documentElement.style.setProperty("--drawer-min", `${DRAWER_MIN_PX}px`);
-
-  const panelsHandle = attachSplitter(byId("split-panels"), {
-    axis: "x",
-    get: () => width(left),
-    set: (px) => {
-      const total = panelsTotal();
-      if (total <= 0) return;
-      panels.style.setProperty("--left-fr", `${(px / total) * 100}fr`);
-      panels.style.setProperty("--right-fr", `${((total - px) / total) * 100}fr`);
-      refit();
-    },
-    min: () => panelMin(),
-    max: () => panelsTotal() - panelMin(),
-    initial: () => panelsTotal() / 2,
-    total: panelsTotal,
-  });
-
-  const drawerHandle = attachSplitter(byId("split-drawer"), {
-    axis: "x",
-    invert: true,
-    get: () => width(drawer),
-    set: (px) => {
-      drawer.style.setProperty("--drawer-w", `${px}px`);
-      refit();
-    },
-    min: () => DRAWER_MIN_PX,
-    max: () => drawerMax(body.clientWidth),
-    initial: DRAWER_INITIAL,
-    total: () => body.clientWidth,
-  });
-
-  const timelineHandle = attachSplitter(byId("split-timeline"), {
-    axis: "y",
-    invert: true,
-    get: () => timelineEl.getBoundingClientRect().height,
-    set: (px) => {
-      app.style.setProperty("--timeline-h", `${px}px`);
-      refit();
-    },
-    min: () => TIMELINE_H.min,
-    max: () => Math.max(TIMELINE_H.min, Math.min(TIMELINE_H.max, app.clientHeight * TIMELINE_H.maxShare)),
-    initial: TIMELINE_H.initial,
-    total: () => app.clientHeight,
-  });
-
-  const all = [drawerHandle, timelineHandle, panelsHandle];
-  const onWindowResize = (): void => {
-    for (const h of all) h.reclamp();
-    refit();
-  };
-  window.addEventListener("resize", onWindowResize);
-  return {
-    refresh: () => all.forEach((h) => h.refresh()),
-    dispose: () => {
-      window.removeEventListener("resize", onWindowResize);
-      all.forEach((h) => h());
-    },
-  };
-}
-const splitters = setupSplitters();
 
 if (dualView) {
   const view = dualView;
@@ -512,7 +514,6 @@ if (dualView) {
     e.preventDefault();
     failRender(new Error(COPY.contextLost));
   });
-  window.addEventListener("resize", () => view.resize());
   const stageObserver = new ResizeObserver(() => view.resize());
   for (const el of [stage, leftEl, rightEl]) stageObserver.observe(el);
   requestAnimationFrame(frame);

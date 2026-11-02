@@ -17,13 +17,14 @@ export function clampSize(v: number, min: number, max: number): number {
 }
 
 export const STAGE_MIN_PX = 640;
+export const HANDLE_PX = 8;
 export const DRAWER_MIN_PX = 300;
 export const DRAWER_MAX_SHARE = 0.7;
 const PANEL_MIN_SHARE = 0.2;
 const PANEL_MIN_PX = 264;
 
 export function drawerMax(bodyWidth: number): number {
-  return Math.max(DRAWER_MIN_PX, Math.min(bodyWidth * DRAWER_MAX_SHARE, bodyWidth - STAGE_MIN_PX));
+  return Math.max(DRAWER_MIN_PX, Math.min(bodyWidth * DRAWER_MAX_SHARE, bodyWidth - STAGE_MIN_PX - HANDLE_PX));
 }
 
 export function panelMin(panelsTotal: number): number {
@@ -81,6 +82,7 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): Spli
     const id = drag.id;
     drag = null;
     release(id);
+    if (document.activeElement === handle) handle.blur();
   };
 
   const end = (e: PointerEvent): void => {

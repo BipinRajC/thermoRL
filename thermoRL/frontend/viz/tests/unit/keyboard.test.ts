@@ -39,7 +39,7 @@ test("arrows step the player and Space toggles play from the page body", () => {
   expect(togglePlay).toHaveBeenCalledTimes(1);
 });
 
-test.each(["ArrowLeft", "ArrowRight", " "])("%s on a role=separator target does not drive playback", (k) => {
+test.each(["ArrowLeft", "ArrowRight", "Home", "End"])("%s on a role=separator target does not drive playback", (k) => {
   const sep = document.createElement("div");
   sep.setAttribute("role", "separator");
   sep.tabIndex = 0;
@@ -48,6 +48,17 @@ test.each(["ArrowLeft", "ArrowRight", " "])("%s on a role=separator target does 
   press(sep, k, true);
   expect(player.tick).toBe(100);
   expect(togglePlay).not.toHaveBeenCalled();
+});
+
+test("Space on a role=separator target still toggles playback (a separator has no Space action)", () => {
+  const sep = document.createElement("div");
+  sep.setAttribute("role", "separator");
+  sep.tabIndex = 0;
+  document.body.append(sep);
+  const ev = press(sep, " ");
+  expect(togglePlay).toHaveBeenCalledTimes(1);
+  expect(ev.defaultPrevented).toBe(true);
+  expect(player.tick).toBe(100);
 });
 
 test("a child of a separator is also skipped", () => {

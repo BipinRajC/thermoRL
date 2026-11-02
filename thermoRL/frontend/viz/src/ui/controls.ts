@@ -113,7 +113,7 @@ export function installKeyboard(getControls: () => Controls, getPlayer: () => Pl
     const t = e.target as HTMLElement | null;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (t && /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(t.tagName)) return;
-    if (t?.closest?.('[role="separator"]')) return;
+    if (e.key !== " " && t?.closest?.('[role="separator"]')) return;
     const player = getPlayer();
     const cat = getCat();
     if (!player || !cat) return;

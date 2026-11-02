@@ -210,7 +210,7 @@ test.describe("fixture layout splitters", () => {
     const leftBefore = await widthOf(page, "#view-left");
     await drag(page, "#split-drawer", -150, 0);
     await expect.poll(() => widthOf(page, "#drawer")).toBeGreaterThanOrEqual(before + 100);
-    expect(await widthOf(page, "#drawer")).toBeLessThanOrEqual(800 + 1);
+    expect(await widthOf(page, "#drawer")).toBeLessThanOrEqual(792 + 1);
     await expect.poll(() => widthOf(page, "#view-left")).toBeLessThan(leftBefore);
     await stageUsable(page);
     expect(await tooltipOnLeftGrid(page)).toBe(true);
@@ -320,8 +320,8 @@ test.describe("fixture layout splitters", () => {
     await ready(page);
     await page.locator("#split-drawer").focus();
     await page.keyboard.press("End");
-    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(800, 0);
-    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(630);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(792, 0);
+    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(640);
     await stageUsable(page);
     expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(120);
     expect(await widthOf(page, "#view-right")).toBeGreaterThanOrEqual(120);
@@ -335,21 +335,46 @@ test.describe("fixture layout splitters", () => {
     await page.screenshot({ path: `${SHOTS}/drawer-max-1440.png` });
   });
 
+  test("Space and arrow shortcuts keep working after a mouse resize", async ({ page }) => {
+    await ready(page);
+    await drag(page, "#split-drawer", -100, 0);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeGreaterThan(540);
+    await expect(page.locator("#split-drawer")).not.toBeFocused();
+    await expect(clock(page)).toContainText("tick 0/400");
+
+    await page.keyboard.press("ArrowRight");
+    await expect(clock(page)).toContainText("tick 1/400");
+    await page.keyboard.press("ArrowLeft");
+    await expect(clock(page)).toContainText("tick 0/400");
+
+    await page.keyboard.press(" ");
+    await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+    await expect(clock(page)).not.toContainText("tick 0/400");
+    await page.keyboard.press(" ");
+    await expect(page.getByRole("button", { name: "Play" })).toBeVisible();
+
+    await page.locator("#split-panels").focus();
+    await page.keyboard.press(" ");
+    await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+    await page.keyboard.press(" ");
+    await expect(page.getByRole("button", { name: "Play" })).toBeVisible();
+  });
+
   test("shrinking the window re-clamps a wide drawer so the grids stay usable", async ({ page }) => {
     await ready(page);
     await page.locator("#split-drawer").focus();
     await page.keyboard.press("End");
-    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(800, 0);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(792, 0);
 
     await page.setViewportSize({ width: 1100, height: 700 });
-    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(460, 0);
-    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(630);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(452, 0);
+    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(640);
     await stageUsable(page);
     const handle = await boxOf(page, "#split-drawer");
     expect(handle.x).toBeGreaterThan(0);
     expect(handle.x + handle.width).toBeLessThanOrEqual(1100);
     await page.locator("#split-drawer").dblclick();
-    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(460, 0);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(452, 0);
     expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(120);
 
     await page.locator("#split-drawer").focus();
