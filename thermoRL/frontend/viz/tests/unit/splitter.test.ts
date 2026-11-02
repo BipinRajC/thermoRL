@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import { attachSplitter, clampSize, type SplitterHandle } from "../../src/ui/splitter";
+import { readFileSync } from "node:fs";
+import { attachSplitter, clampSize, DRAWER_MAX_SHARE, DRAWER_MIN_PX, drawerMax, panelMin, STAGE_MIN_PX, type SplitterHandle } from "../../src/ui/splitter";
 
 type Opts = Parameters<typeof attachSplitter>[1];
 
@@ -447,5 +448,36 @@ describe("aria-valuetext", () => {
     value = 333;
     handle.dispatchEvent(new Event("pointerenter"));
     expect(handle.getAttribute("aria-valuenow")).toBe("333");
+  });
+});
+
+describe("drawerMax", () => {
+  test("keeps STAGE_MIN_PX for the stage, capped at 70% and floored at the drawer minimum", () => {
+    expect(STAGE_MIN_PX).toBe(640);
+    expect(DRAWER_MIN_PX).toBe(300);
+    expect(DRAWER_MAX_SHARE).toBe(0.7);
+    expect(drawerMax(1440)).toBe(800);
+    expect(drawerMax(1000)).toBe(360);
+    expect(drawerMax(800)).toBe(300);
+    expect(drawerMax(0)).toBe(300);
+  });
+
+  test("uses the 70% share on very wide windows", () => {
+    expect(drawerMax(4000)).toBe(2800);
+    expect(drawerMax(2000)).toBe(1360);
+  });
+
+  test("CSS fallback values match the exported constants", () => {
+    const css = readFileSync("src/style.css", "utf8");
+    expect(css).toContain(`max-width: max(var(--drawer-min, ${DRAWER_MIN_PX}px), min(${DRAWER_MAX_SHARE * 100}%, calc(100% - var(--stage-min, ${STAGE_MIN_PX}px))))`);
+  });
+});
+
+describe("panelMin", () => {
+  test("keeps at least a 120 px grid beside the 132 px legend, never more than half", () => {
+    expect(panelMin(610)).toBeGreaterThanOrEqual(132 + 8 + 120);
+    expect(panelMin(920)).toBeGreaterThanOrEqual(132 + 8 + 120);
+    expect(panelMin(400)).toBe(200);
+    expect(panelMin(2000)).toBe(400);
   });
 });

@@ -293,7 +293,7 @@ h1 {
 
 #drawer {
   width: var(--drawer-w, 460px);
-  max-width: 70%;
+  max-width: max(var(--drawer-min, 300px), min(70%, calc(100% - var(--stage-min, 640px))));
   flex: none;
   overflow-y: auto;
   border-left: 1px solid var(--line);

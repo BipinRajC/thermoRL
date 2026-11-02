@@ -210,7 +210,7 @@ test.describe("fixture layout splitters", () => {
     const leftBefore = await widthOf(page, "#view-left");
     await drag(page, "#split-drawer", -150, 0);
     await expect.poll(() => widthOf(page, "#drawer")).toBeGreaterThanOrEqual(before + 100);
-    expect(await widthOf(page, "#drawer")).toBeLessThanOrEqual(1440 * 0.7 + 1);
+    expect(await widthOf(page, "#drawer")).toBeLessThanOrEqual(800 + 1);
     await expect.poll(() => widthOf(page, "#view-left")).toBeLessThan(leftBefore);
     await stageUsable(page);
     expect(await tooltipOnLeftGrid(page)).toBe(true);
@@ -316,22 +316,58 @@ test.describe("fixture layout splitters", () => {
     expect(await clock(page).innerText()).toBe(clockBefore);
   });
 
-  test("shrinking the window re-clamps a wide drawer so the stage stays usable", async ({ page }) => {
+  test("the drawer at its maximum leaves the grids usable at 1440 px", async ({ page }) => {
     await ready(page);
     await page.locator("#split-drawer").focus();
     await page.keyboard.press("End");
-    await expect.poll(() => widthOf(page, "#drawer")).toBeGreaterThan(1000);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(800, 0);
+    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(630);
+    await stageUsable(page);
+    expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(120);
+    expect(await widthOf(page, "#view-right")).toBeGreaterThanOrEqual(120);
+    await drag(page, "#split-drawer", -400, 0);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeLessThanOrEqual(801);
+    await drag(page, "#split-panels", -1000, 0);
+    await expect.poll(() => widthOf(page, "#view-left")).toBeGreaterThanOrEqual(120);
+    await drag(page, "#split-panels", 2000, 0);
+    await expect.poll(() => widthOf(page, "#view-right")).toBeGreaterThanOrEqual(120);
+    expect(await tooltipOnLeftGrid(page)).toBe(true);
+    await page.screenshot({ path: `${SHOTS}/drawer-max-1440.png` });
+  });
+
+  test("shrinking the window re-clamps a wide drawer so the grids stay usable", async ({ page }) => {
+    await ready(page);
+    await page.locator("#split-drawer").focus();
+    await page.keyboard.press("End");
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(800, 0);
+
     await page.setViewportSize({ width: 1100, height: 700 });
-    await expect.poll(() => widthOf(page, "#drawer")).toBeLessThanOrEqual(1100 * 0.7 + 1);
-    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(1100 * 0.3 - 10);
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(460, 0);
+    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(630);
     await stageUsable(page);
     const handle = await boxOf(page, "#split-drawer");
     expect(handle.x).toBeGreaterThan(0);
     expect(handle.x + handle.width).toBeLessThanOrEqual(1100);
     await page.locator("#split-drawer").dblclick();
     await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(460, 0);
-    expect(await widthOf(page, "#view-left")).toBeGreaterThan(100);
-    await page.screenshot({ path: `${SHOTS}/split-window-shrunk.png` });
+    expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(120);
+
+    await page.locator("#split-drawer").focus();
+    await page.keyboard.press("Home");
+    await page.keyboard.press("End");
+    await page.setViewportSize({ width: 900, height: 700 });
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(300, 0);
+    await page.locator("#split-drawer").focus();
+    await page.keyboard.press("End");
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(300, 0);
+    await expect.poll(() => widthOf(page, "#stage")).toBeGreaterThanOrEqual(580);
+    await stageUsable(page);
+    expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(100);
+    expect(await widthOf(page, "#view-right")).toBeGreaterThanOrEqual(100);
+    await page.locator("#split-drawer").dblclick();
+    await expect.poll(() => widthOf(page, "#drawer")).toBeCloseTo(300, 0);
+    expect(await widthOf(page, "#view-left")).toBeGreaterThanOrEqual(100);
+    await page.screenshot({ path: `${SHOTS}/drawer-max-900.png` });
   });
 });
 

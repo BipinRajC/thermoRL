@@ -29,7 +29,7 @@ import { renderLegend } from "./ui/legend";
 import { renderOutcome } from "./ui/outcomeCard";
 import { renderSparkline, type Sparkline } from "./ui/sparkline";
 import { Status } from "./ui/status";
-import { attachSplitter } from "./ui/splitter";
+import { attachSplitter, DRAWER_MIN_PX, drawerMax, panelMin as panelMinFor, STAGE_MIN_PX } from "./ui/splitter";
 import { Timeline } from "./ui/timeline";
 import { placeTooltip, tooltipHtml } from "./ui/tooltip";
 import { renderWhy, updateWhyHeader, whyWindowKey } from "./ui/whyDrawer";
@@ -430,10 +430,8 @@ async function boot(): Promise<void> {
   }
 }
 
-const DRAWER_W = { initial: 460, min: 300, maxShare: 0.7 };
+const DRAWER_INITIAL = 460;
 const TIMELINE_H = { initial: 168, min: 80, max: 400, maxShare: 0.5 };
-const PANEL_MIN_SHARE = 0.2;
-const PANEL_MIN_PX = 240;
 
 function setupSplitters(): { refresh(): void; dispose(): void } {
   const app = byId("app");
@@ -444,7 +442,9 @@ function setupSplitters(): { refresh(): void; dispose(): void } {
   const refit = (): void => dualView?.resize();
   const width = (el: HTMLElement): number => el.getBoundingClientRect().width;
   const panelsTotal = (): number => width(left) + width(right);
-  const panelMin = (): number => Math.min(panelsTotal() / 2, Math.max(panelsTotal() * PANEL_MIN_SHARE, PANEL_MIN_PX));
+  const panelMin = (): number => panelMinFor(panelsTotal());
+  document.documentElement.style.setProperty("--stage-min", `${STAGE_MIN_PX}px`);
+  document.documentElement.style.setProperty("--drawer-min", `${DRAWER_MIN_PX}px`);
 
   const panelsHandle = attachSplitter(byId("split-panels"), {
     axis: "x",
@@ -470,9 +470,9 @@ function setupSplitters(): { refresh(): void; dispose(): void } {
       drawer.style.setProperty("--drawer-w", `${px}px`);
       refit();
     },
-    min: () => DRAWER_W.min,
-    max: () => Math.max(DRAWER_W.min, body.clientWidth * DRAWER_W.maxShare),
-    initial: DRAWER_W.initial,
+    min: () => DRAWER_MIN_PX,
+    max: () => drawerMax(body.clientWidth),
+    initial: DRAWER_INITIAL,
     total: () => body.clientWidth,
   });
 

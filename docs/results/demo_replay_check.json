@@ -14,21 +14,21 @@
   "tests": {
     "vitest": {
       "files": 17,
-      "tests": 219,
-      "passed": 219,
+      "tests": 223,
+      "passed": 223,
       "failed": 0
     },
     "tsc_noEmit": "clean",
     "playwright": {
       "fixture_project": {
-        "tests": 19,
-        "passed": 19
+        "tests": 20,
+        "passed": 20
       },
       "real_project": {
         "tests": 10,
         "passed": 10
       },
-      "total": 29,
+      "total": 30,
       "renderer": "bundled Chromium, swiftshader"
     },
     "test_scripts": {
@@ -1360,8 +1360,10 @@
       "1469584 feat(viz): draggable splitters for panels, drawer and timeline",
       "4c98efa fix(viz): splitter keys no longer drive playback; drag robustness; re-clamp on window resize",
       "d9bbeb1 feat(viz): plain-words About and Why? with collapsible technical detail; readable type",
-      "09a2aa0 fix(viz): reproducibility plain line matches verbatim scope; visible toggle marker"
+      "09a2aa0 fix(viz): reproducibility plain line matches verbatim scope; visible toggle marker",
+      "7d9f04f test(viz): e2e for splitters and collapsible detail; README layout tips",
+      "fix(viz): keep the stage usable at the drawer's maximum width (drawer max = max(300, min(70%, body - 640 px)); grids >= 120 px at 1440 px)"
     ],
-    "counts_after": "vitest 17 files / 219 tests; playwright fixture 19 + real 10 = 29; test:scripts 10"
+    "counts_after": "vitest 17 files / 223 tests; playwright fixture 20 + real 10 = 30; test:scripts 10"
   }
 }
