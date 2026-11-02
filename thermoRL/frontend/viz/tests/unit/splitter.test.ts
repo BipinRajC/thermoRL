@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import { attachSplitter, clampSize } from "../../src/ui/splitter";
+import { attachSplitter, clampSize, type SplitterHandle } from "../../src/ui/splitter";
 
 type Opts = Parameters<typeof attachSplitter>[1];
 
@@ -17,7 +17,7 @@ beforeEach(() => {
   setCalls = [];
 });
 
-function attach(extra: Partial<Opts> = {}): () => void {
+function attach(extra: Partial<Opts> = {}): SplitterHandle {
   return attachSplitter(handle, {
     axis: "x",
     get: () => value,
@@ -32,11 +32,12 @@ function attach(extra: Partial<Opts> = {}): () => void {
   });
 }
 
-function pointer(type: string, clientX: number, clientY = 0, id = 1): void {
+function pointer(type: string, clientX: number, clientY = 0, id = 1, buttons?: number): void {
   const ev = new Event(type, { bubbles: true, cancelable: true }) as Event & Record<string, unknown>;
   ev.clientX = clientX;
   ev.clientY = clientY;
   ev.pointerId = id;
+  if (buttons !== undefined) ev.buttons = buttons;
   handle.dispatchEvent(ev);
 }
 
@@ -292,5 +293,159 @@ describe("dispose", () => {
     const dispose = attach();
     dispose();
     expect(() => dispose()).not.toThrow();
+  });
+});
+
+describe("key events stay on the handle", () => {
+  test("handled keys stop propagating; unhandled keys still bubble", () => {
+    attach();
+    const seen: string[] = [];
+    const onKey = (e: KeyboardEvent): void => void seen.push(e.key);
+    document.body.addEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey);
+    for (const k of ["ArrowLeft", "ArrowRight", "Home", "End"]) key(k);
+    expect(seen).toEqual([]);
+    key("a");
+    key(" ");
+    expect(seen).toEqual(["a", "a", " ", " "]);
+    document.body.removeEventListener("keydown", onKey);
+    window.removeEventListener("keydown", onKey);
+  });
+
+  test("keys for the other axis keep bubbling", () => {
+    attach();
+    const seen: string[] = [];
+    const onKey = (e: KeyboardEvent): void => void seen.push(e.key);
+    document.body.addEventListener("keydown", onKey);
+    key("ArrowUp");
+    expect(seen).toEqual(["ArrowUp"]);
+    document.body.removeEventListener("keydown", onKey);
+  });
+});
+
+describe("drag robustness", () => {
+  test("a move with no button pressed ends the drag even if capture failed", () => {
+    (handle as unknown as { setPointerCapture: () => void }).setPointerCapture = () => {
+      throw new Error("no such pointer");
+    };
+    attach();
+    pointer("pointerdown", 1000, 0, 1, 1);
+    pointer("pointermove", 1020, 0, 1, 1);
+    expect(value).toBe(220);
+    pointer("pointermove", 1100, 0, 1, 0);
+    expect(value).toBe(220);
+    pointer("pointermove", 1200, 0, 1, 1);
+    expect(value).toBe(220);
+  });
+
+  test("a second pointer's pointerdown is ignored while dragging", () => {
+    attach();
+    pointer("pointerdown", 1000, 0, 1);
+    pointer("pointerdown", 2000, 0, 2);
+    pointer("pointermove", 1040, 0, 1);
+    expect(value).toBe(240);
+    pointer("pointermove", 2100, 0, 2);
+    expect(value).toBe(240);
+    pointer("pointerup", 2100, 0, 2);
+    pointer("pointermove", 1060, 0, 1);
+    expect(value).toBe(260);
+  });
+
+  test("a second pointer cannot capture, release or restart the drag", () => {
+    const seen: string[] = [];
+    (handle as unknown as { setPointerCapture: (id: number) => void }).setPointerCapture = (id) => seen.push(`set${id}`);
+    attach();
+    pointer("pointerdown", 1000, 0, 1);
+    pointer("pointerdown", 2000, 0, 2);
+    expect(seen).toEqual(["set1"]);
+  });
+
+  test("dispose in the middle of a drag releases the pointer capture", () => {
+    const seen: string[] = [];
+    (handle as unknown as { releasePointerCapture: (id: number) => void }).releasePointerCapture = (id) => seen.push(`rel${id}`);
+    const dispose = attach();
+    pointer("pointerdown", 1000, 0, 5);
+    dispose();
+    expect(seen).toEqual(["rel5"]);
+  });
+
+  test("dispose without a drag releases nothing", () => {
+    const seen: string[] = [];
+    (handle as unknown as { releasePointerCapture: (id: number) => void }).releasePointerCapture = (id) => seen.push(`rel${id}`);
+    attach()();
+    expect(seen).toEqual([]);
+  });
+});
+
+describe("reclamp", () => {
+  test("pulls an out-of-range value back inside and refreshes aria", () => {
+    const s = attach();
+    value = 700;
+    s.reclamp();
+    expect(value).toBe(500);
+    expect(handle.getAttribute("aria-valuenow")).toBe("500");
+    value = 40;
+    s.reclamp();
+    expect(value).toBe(100);
+  });
+
+  test("does not call set when the value is already in range", () => {
+    const s = attach();
+    s.reclamp();
+    expect(setCalls).toEqual([]);
+  });
+
+  test("follows shrinking bounds", () => {
+    let hi = 500;
+    const s = attach({ max: () => hi });
+    value = 400;
+    hi = 300;
+    s.reclamp();
+    expect(value).toBe(300);
+    expect(handle.getAttribute("aria-valuemax")).toBe("300");
+  });
+
+  test("a size of zero (not laid out / hidden) is left alone", () => {
+    const s = attach();
+    value = 0;
+    s.reclamp();
+    expect(setCalls).toEqual([]);
+  });
+
+  test("is still a plain dispose function", () => {
+    const s = attach();
+    expect(typeof s).toBe("function");
+    s();
+    value = 700;
+    s.reclamp();
+    expect(setCalls).toEqual([]);
+  });
+});
+
+describe("aria-valuetext", () => {
+  test("is a percentage of the total when a total is given", () => {
+    attach({ total: () => 800 });
+    expect(handle.getAttribute("aria-valuetext")).toBe("25%");
+    key("End");
+    expect(handle.getAttribute("aria-valuetext")).toBe("63%");
+  });
+
+  test("is absent without a total", () => {
+    attach();
+    expect(handle.hasAttribute("aria-valuetext")).toBe(false);
+  });
+
+  test("refresh() re-reads the current size", () => {
+    const s = attach();
+    value = 321;
+    s.refresh();
+    expect(handle.getAttribute("aria-valuenow")).toBe("321");
+  });
+
+  test("pointerenter refreshes stale values", () => {
+    attach();
+    value = 333;
+    handle.dispatchEvent(new Event("pointerenter"));
+    expect(handle.getAttribute("aria-valuenow")).toBe("333");
   });
 });

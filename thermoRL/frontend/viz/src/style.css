@@ -25,6 +25,7 @@ body {
 
 #app {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) var(--timeline-h, 168px) auto;
   height: 100%;
 }
@@ -343,6 +344,11 @@ h1 {
 .splitter:hover::after,
 .splitter:focus-visible::after {
   background: var(--accent);
+}
+
+.splitter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .splitter-x {

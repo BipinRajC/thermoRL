@@ -104,6 +104,7 @@ function setStage(state: "loading" | "error" | "ready" | "fallback"): void {
   stage.dataset.state = state;
   panels.hidden = state !== "ready";
   timelineEl.classList.toggle("is-idle", state !== "ready");
+  splitters.refresh();
 }
 
 let hover: { side: Side; r: number; x: number; y: number } | null = null;
@@ -434,7 +435,7 @@ const TIMELINE_H = { initial: 168, min: 80, max: 400, maxShare: 0.5 };
 const PANEL_MIN_SHARE = 0.2;
 const PANEL_MIN_PX = 240;
 
-function setupSplitters(): void {
+function setupSplitters(): { refresh(): void; dispose(): void } {
   const app = byId("app");
   const body = byId("body");
   const drawer = byId("drawer");
@@ -445,7 +446,7 @@ function setupSplitters(): void {
   const panelsTotal = (): number => width(left) + width(right);
   const panelMin = (): number => Math.min(panelsTotal() / 2, Math.max(panelsTotal() * PANEL_MIN_SHARE, PANEL_MIN_PX));
 
-  attachSplitter(byId("split-panels"), {
+  const panelsHandle = attachSplitter(byId("split-panels"), {
     axis: "x",
     get: () => width(left),
     set: (px) => {
@@ -458,9 +459,10 @@ function setupSplitters(): void {
     min: () => panelMin(),
     max: () => panelsTotal() - panelMin(),
     initial: () => panelsTotal() / 2,
+    total: panelsTotal,
   });
 
-  attachSplitter(byId("split-drawer"), {
+  const drawerHandle = attachSplitter(byId("split-drawer"), {
     axis: "x",
     invert: true,
     get: () => width(drawer),
@@ -471,9 +473,10 @@ function setupSplitters(): void {
     min: () => DRAWER_W.min,
     max: () => Math.max(DRAWER_W.min, body.clientWidth * DRAWER_W.maxShare),
     initial: DRAWER_W.initial,
+    total: () => body.clientWidth,
   });
 
-  attachSplitter(byId("split-timeline"), {
+  const timelineHandle = attachSplitter(byId("split-timeline"), {
     axis: "y",
     invert: true,
     get: () => timelineEl.getBoundingClientRect().height,
@@ -484,9 +487,24 @@ function setupSplitters(): void {
     min: () => TIMELINE_H.min,
     max: () => Math.max(TIMELINE_H.min, Math.min(TIMELINE_H.max, app.clientHeight * TIMELINE_H.maxShare)),
     initial: TIMELINE_H.initial,
+    total: () => app.clientHeight,
   });
+
+  const all = [drawerHandle, timelineHandle, panelsHandle];
+  const onWindowResize = (): void => {
+    for (const h of all) h.reclamp();
+    refit();
+  };
+  window.addEventListener("resize", onWindowResize);
+  return {
+    refresh: () => all.forEach((h) => h.refresh()),
+    dispose: () => {
+      window.removeEventListener("resize", onWindowResize);
+      all.forEach((h) => h());
+    },
+  };
 }
-setupSplitters();
+const splitters = setupSplitters();
 
 if (dualView) {
   const view = dualView;

@@ -7,7 +7,10 @@ export interface SplitterOptions {
   initial: number | (() => number);
   step?: number;
   invert?: boolean;
+  total?(): number;
 }
+
+export type SplitterHandle = (() => void) & { reclamp(): void; refresh(): void };
 
 export function clampSize(v: number, min: number, max: number): number {
   return Math.max(min, Math.min(v, max));
@@ -15,18 +18,32 @@ export function clampSize(v: number, min: number, max: number): number {
 
 const DEFAULT_STEP = 16;
 
-export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () => void {
+export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): SplitterHandle {
   const step = opts.step ?? DEFAULT_STEP;
   const sign = opts.invert ? -1 : 1;
   let drag: { id: number; origin: number; start: number } | null = null;
+  let disposed = false;
 
   const bounds = (): [number, number] => [opts.min(), opts.max()];
 
   const refresh = (): void => {
     const [lo, hi] = bounds();
-    handle.setAttribute("aria-valuenow", String(Math.round(opts.get())));
+    const now = opts.get();
+    handle.setAttribute("aria-valuenow", String(Math.round(now)));
     handle.setAttribute("aria-valuemin", String(Math.round(lo)));
     handle.setAttribute("aria-valuemax", String(Math.round(hi)));
+    const total = opts.total?.() ?? 0;
+    if (total > 0) handle.setAttribute("aria-valuetext", `${Math.round((now / total) * 100)}%`);
+  };
+
+  const reclamp = (): void => {
+    if (disposed) return;
+    const now = opts.get();
+    if (!(now > 0)) return;
+    const [lo, hi] = bounds();
+    const next = clampSize(now, lo, hi);
+    if (Math.abs(next - now) >= 0.5) opts.set(next);
+    refresh();
   };
 
   const apply = (v: number): void => {
@@ -37,10 +54,7 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
 
   const coord = (e: PointerEvent): number => (opts.axis === "x" ? e.clientX : e.clientY);
 
-  const end = (e: PointerEvent): void => {
-    if (!drag || e.pointerId !== drag.id) return;
-    const id = drag.id;
-    drag = null;
+  const release = (id: number): void => {
     try {
       handle.releasePointerCapture(id);
     } catch {
@@ -48,8 +62,20 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
     }
   };
 
+  const stop = (): void => {
+    if (!drag) return;
+    const id = drag.id;
+    drag = null;
+    release(id);
+  };
+
+  const end = (e: PointerEvent): void => {
+    if (drag && e.pointerId === drag.id) stop();
+  };
+
   const onDown = (e: PointerEvent): void => {
     if (e.button) return;
+    if (drag && e.pointerId !== drag.id) return;
     drag = { id: e.pointerId, origin: coord(e), start: opts.get() };
     try {
       handle.setPointerCapture(e.pointerId);
@@ -61,6 +87,10 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
 
   const onMove = (e: PointerEvent): void => {
     if (!drag || e.pointerId !== drag.id) return;
+    if (e.buttons === 0) {
+      stop();
+      return;
+    }
     apply(drag.start + sign * (coord(e) - drag.origin));
   };
 
@@ -74,6 +104,7 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
     else if (e.key === "End") apply(bounds()[1]);
     else return;
     e.preventDefault();
+    e.stopPropagation();
   };
 
   const onDouble = (): void => {
@@ -93,8 +124,12 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
   handle.addEventListener("keydown", onKey);
   handle.addEventListener("dblclick", onDouble);
   handle.addEventListener("focus", refresh);
+  handle.addEventListener("pointerenter", refresh);
 
-  return () => {
+  const dispose = (): void => {
+    if (disposed) return;
+    disposed = true;
+    stop();
     handle.removeEventListener("pointerdown", onDown);
     handle.removeEventListener("pointermove", onMove);
     handle.removeEventListener("pointerup", end);
@@ -103,6 +138,7 @@ export function attachSplitter(handle: HTMLElement, opts: SplitterOptions): () =
     handle.removeEventListener("keydown", onKey);
     handle.removeEventListener("dblclick", onDouble);
     handle.removeEventListener("focus", refresh);
-    drag = null;
+    handle.removeEventListener("pointerenter", refresh);
   };
+  return Object.assign(dispose, { reclamp, refresh });
 }
